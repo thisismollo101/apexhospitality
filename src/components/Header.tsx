@@ -79,7 +79,7 @@ export default function Header() {
     const onResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false);
     };
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY >= 40);   // v34's threshold
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('keydown', onKey);

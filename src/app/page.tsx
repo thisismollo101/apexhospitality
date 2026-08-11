@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import HeroReveal from '@/components/HeroReveal';
 import ProofTiles from '@/components/home/ProofTiles';
 import FeatureTabs from '@/components/home/FeatureTabs';
 import { nav } from '@/lib/nav';
@@ -56,19 +57,7 @@ const FEATURE_TABS = [
 export default function Home() {
   return (
     <main className="home">
-      <section className="hero">
-        <div className="hero-copy">
-          <h1>Turn Your Property Into A Digital Booking Machine.</h1>
-          <p>
-            Deliver the immersive, short-form video content that modern travelers expect,
-            without the logistical headaches of a traditional film crew.
-          </p>
-          <div className="herocta">
-            <Link className="btn btn-solid" href="/library">View the Gallery</Link>
-            <Link className="btn btn-ghost" href="/contact-sales">Talk to sales</Link>
-          </div>
-        </div>
-      </section>
+      <HeroReveal />
 
       <ProofTiles
         caption="The numbers the category is already moving on"

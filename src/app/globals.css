@@ -541,16 +541,6 @@ body.dark{
 .phead h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;font-weight:800}
 .plede{margin-top:16px;font-size:18px;line-height:1.6;color:var(--muted)}
 
-/* home */
-.home{padding-top:calc(var(--sales-h) + var(--nav-h))}
-.hero{min-height:76vh;display:flex;align-items:center;
-  background:linear-gradient(180deg,var(--surface),var(--bg))}
-.hero .hero-copy{max-width:1240px;margin:0 auto;padding:80px 24px;width:100%}
-.hero h1{font-size:clamp(38px,6.2vw,76px);line-height:1.02;letter-spacing:-.035em;
-  font-weight:900;max-width:17ch}
-.hero p{margin-top:22px;font-size:clamp(17px,2vw,21px);line-height:1.55;color:var(--muted);max-width:60ch}
-.herocta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-
 .hcats{padding:96px 0}
 .catgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--card-gap)}
 .catcard{border:1px solid var(--line);border-radius:var(--card-radius);padding:28px;
@@ -749,4 +739,28 @@ body.dark{
 
 @media (prefers-reduced-motion:reduce){
   .ftabsbglayer,.ftabspanel,.ftab{transition:none}
+}
+
+/* ---- hero deck: the six cards that land on the sheet ----
+   v34's .fcard is position:absolute because its marquee places each card by
+   transform. This grid places them instead, so the card's own styling
+   (.fmedia/.fbody/.ftitle) is reused while the positioning is not. The fanning
+   marquee is a separate port. */
+.hdeck{display:grid;gap:14px;padding:0 24px;max-width:1240px;margin:0 auto;
+  grid-template-columns:repeat(6,minmax(0,1fr))}
+.hdeck .fcard{position:static;width:100%;visibility:visible;opacity:1;
+  transform:none;text-decoration:none}
+.hdeck .fmedia{aspect-ratio:4/5}
+.hdeck .fbody{padding:12px 14px 15px;gap:7px}
+.hdeck .ftitle{font-size:.95rem}
+.hdeck .fkick{font-size:10px}
+.hdeck .fprods span{font-size:11.5px;line-height:1.35}
+
+@media (max-width:1100px){
+  .hdeck{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .hdeck .fprods{display:none}
+}
+@media (max-width:640px){
+  .hdeck{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hdeck .fmedia{aspect-ratio:1}
 }
