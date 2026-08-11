@@ -2,11 +2,8 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useRef } from 'react';
-import { nav } from '@/lib/nav';
-import type { NavColumn, NavDropdown } from '@/lib/nav';
+import CategoryCarousel from '@/components/home/CategoryCarousel';
 
-const products = (nav.header.dropdowns as NavDropdown[]).find((d) => d.id === 'products');
-const categories = (products?.columns ?? []) as NavColumn[];
 
 const clamp = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
 const map = (x: number, a: number, b: number) => clamp((x - a) / (b - a));
@@ -135,19 +132,8 @@ export default function HeroReveal() {
           <p>Each one holds three. Open any of them.</p>
         </div>
 
-        <div className="deck hdeck" ref={deck}>
-          {categories.map((c, i) => (
-            <Link className="fcard" key={c.heading} href={c.href}>
-              <span className="fmedia" aria-hidden="true" />
-              <span className="fbody">
-                <span className="fkick">{String(i + 1).padStart(2, '0')}</span>
-                <span className="ftitle">{c.heading}</span>
-                <span className="fprods">
-                  {c.items.map((it) => <span key={it.href}>{it.label}</span>)}
-                </span>
-              </span>
-            </Link>
-          ))}
+        <div className="deck" ref={deck}>
+          <CategoryCarousel />
         </div>
 
         <div className="hint" aria-hidden="true"><span /></div>

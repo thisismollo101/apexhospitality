@@ -225,26 +225,42 @@
   .ftabsbglayer,.ftabspanel,.ftab{transition:none}
 }
 
-/* ---- hero deck: the six cards that land on the sheet ----
-   v34's .fcard is position:absolute because its marquee places each card by
-   transform. This grid places them instead, so the card's own styling
-   (.fmedia/.fbody/.ftitle) is reused while the positioning is not. The fanning
-   marquee is a separate port. */
-.hdeck{display:grid;gap:14px;padding:0 24px;max-width:1240px;margin:0 auto;
-  grid-template-columns:repeat(6,minmax(0,1fr))}
-.hdeck .fcard{position:static;width:100%;visibility:visible;opacity:1;
-  transform:none;text-decoration:none}
-.hdeck .fmedia{aspect-ratio:4/5}
-.hdeck .fbody{padding:12px 14px 15px;gap:7px}
-.hdeck .ftitle{font-size:.95rem}
-.hdeck .fkick{font-size:10px}
-.hdeck .fprods span{font-size:11.5px;line-height:1.35}
+/* ---- category carousel ----
+   Geometry ported from Revolut's feature-items carousel: five slots visible,
+   the rest staged off-screen. Their gap and card ratio are kept exactly; the
+   card skins are v34's own gradients. */
 
-@media (max-width:1100px){
-  .hdeck{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .hdeck .fprods{display:none}
-}
-@media (max-width:640px){
-  .hdeck{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .hdeck .fmedia{aspect-ratio:1}
-}
+.hcar{--hcar-gap:16px;width:100%}
+@media (min-width:840px){.hcar{--hcar-gap:8%}}
+
+.hcarstage{position:relative;height:min(412px,42vh);margin:0 auto}
+@media (min-width:1200px){.hcarstage{height:min(508px,52vh)}}
+@media (min-width:1920px){.hcarstage{height:min(643px,58vh)}}
+
+.hcard{position:absolute;inset:0;
+  transition:transform 350ms ease,opacity 350ms ease;
+  will-change:transform,opacity}
+/* A wrapping card jumps several slots at once; animating that would drag it
+   across the middle, so its transition is dropped for exactly one frame. */
+.hcard.is-instant{transition:none}
+.hcard.is-off{pointer-events:none}
+
+.hcardin{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:flex-start;gap:10px;padding:24px;margin:0;border:0;
+  border-radius:20px;overflow:hidden;cursor:pointer;text-align:left;
+  color:#fff;font-family:inherit;text-decoration:none;width:100%;
+  box-shadow:0 18px 44px rgba(20,40,80,.24)}
+@media (min-width:1200px){.hcardin{padding:32px;border-radius:24px}}
+@media (min-width:1920px){.hcardin{padding:40px}}
+
+.hcardtitle{font-size:clamp(18px,1.5vw,24px);line-height:1.15;font-weight:700;
+  letter-spacing:-.015em;max-width:12ch;text-shadow:0 2px 16px rgba(0,0,0,.38)}
+@media (min-width:1200px){.hcardtitle{font-size:32px;line-height:1.12}}
+@media (min-width:1920px){.hcardtitle{font-size:40px}}
+
+.hcardgo{margin-top:auto;font-size:13.5px;font-weight:600;letter-spacing:.01em;
+  opacity:.92;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+
+.px-dots li{display:flex}
+
+@media (prefers-reduced-motion:reduce){.hcard{transition:none}}
