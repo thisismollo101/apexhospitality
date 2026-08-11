@@ -48,9 +48,17 @@ export default function HeroReveal() {
     const root = getComputedStyle(document.documentElement);
     const navH = parseFloat(root.getPropertyValue('--nav-h')) || 72;
     const salesH = parseFloat(root.getPropertyValue('--sales-h')) || 54;
-    const top = salesH + navH + 18;
+    const bars = salesH + navH;
+
+    // Centre copy and deck together in the space the fixed bars leave, rather
+    // than pinning the heading just under them. Falls back to the old 18px
+    // offset when the pair is taller than the space, so nothing is ever pushed
+    // up behind the nav.
+    const gap = Math.max(24, window.innerHeight * 0.045);
+    const block = c.offsetHeight + gap + d.offsetHeight;
+    const top = bars + Math.max(18, (window.innerHeight - bars - block) / 2);
     c.style.top = `${top}px`;
-    d.style.top = `${top + c.offsetHeight + Math.max(24, window.innerHeight * 0.045)}px`;
+    d.style.top = `${top + c.offsetHeight + gap}px`;
   }, []);
 
   useEffect(() => {

@@ -255,13 +255,22 @@
 .hcard.is-instant{transition:none}
 .hcard.is-off{pointer-events:none}
 
+/* Side padding is derived, not picked: it is half the space "Accommodation"
+   — the longest line in the set — leaves over, so that title sits equidistant
+   from both edges and the rest left-align to it. Card width tracks viewport
+   height through the stage's aspect ratio, so a fixed value could only ever be
+   right at one size; this holds at every size. The subtracted widths are the
+   rendered width of "Accommodation" at each title size (22px, then 27px). The
+   floor stops it collapsing on the narrowest cards. */
 .hcardin{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:flex-start;gap:10px;padding:24px;margin:0;border:0;
+  align-items:flex-start;gap:10px;margin:0;border:0;
+  padding:24px max(16px,calc((100% - 172.5px) / 2));
   border-radius:20px;overflow:hidden;cursor:pointer;text-align:left;
   color:#fff;font-family:inherit;text-decoration:none;width:100%;
   box-shadow:0 18px 44px rgba(20,40,80,.24)}
-@media (min-width:1200px){.hcardin{padding:32px;border-radius:24px}}
-@media (min-width:1920px){.hcardin{padding:40px}}
+@media (min-width:1200px){.hcardin{padding-block:32px;border-radius:24px}}
+@media (min-width:1920px){.hcardin{
+  padding:40px max(20px,calc((100% - 211.7px) / 2))}}
 
 /* Every card carries white text, including the yellow one, which on its own
    would not hold it. This scrim is what makes that work: it darkens the top of
@@ -273,7 +282,7 @@
    which are themselves positioned and would otherwise cover static children. */
 .hcardtitle{position:relative;z-index:1;
   font-size:clamp(15px,1.15vw,19px);line-height:1.16;font-weight:700;
-  letter-spacing:-.015em;max-width:13ch;text-shadow:0 2px 14px rgba(0,0,0,.42);
+  letter-spacing:-.015em;text-shadow:0 2px 14px rgba(0,0,0,.42);
   transition:transform 460ms cubic-bezier(.22,1,.36,1)}
 @media (min-width:1200px){.hcardtitle{font-size:22px;line-height:1.14}}
 @media (min-width:1920px){.hcardtitle{font-size:27px}}
@@ -284,11 +293,11 @@
 .hcardgo{position:relative;z-index:1;margin-top:auto;
   display:inline-flex;align-items:center;
   background:#fff;color:var(--fg);border-radius:999px;
-  padding:7px 16px;font-size:13px;font-weight:500;letter-spacing:0;
+  padding:6px 14px;font-size:12px;font-weight:500;letter-spacing:0;
   box-shadow:0 8px 22px rgba(0,0,0,.18);
   opacity:0;transform:translateY(10px);
   transition:opacity 320ms ease,transform 380ms cubic-bezier(.22,1,.36,1)}
-@media (min-width:1200px){.hcardgo{padding:8px 18px;font-size:13.5px}}
+@media (min-width:1200px){.hcardgo{padding:7px 16px;font-size:12px}}
 
 .px-dots li{display:flex}
 

@@ -133,6 +133,16 @@ export default function CategoryCarousel() {
           const d = slotFor(i, active, n);
           const p = placement(d);
           const isCentre = d === 0;
+          // Every title is "Apex <module>", broken after Apex so all seven sit
+          // on two lines rather than the short ones riding up onto one.
+          const [word, ...rest] = c.title.split(' ');
+          const label = (
+            <span className="hcardtitle">
+              {word}
+              <br />
+              {rest.join(' ')}
+            </span>
+          );
           return (
             <div
               key={c.title}
@@ -152,7 +162,7 @@ export default function CategoryCarousel() {
               >
                 {isCentre ? (
                   <Link className="hcardin" href={c.href} style={{ background: c.bg }}>
-                    <span className="hcardtitle">{c.title}</span>
+                    {label}
                     <span className="hcardgo">Explore</span>
                   </Link>
                 ) : (
@@ -173,7 +183,7 @@ export default function CategoryCarousel() {
                        seeing it move through the middle. */
                     onClick={() => go(active + Math.sign(d))}
                   >
-                    <span className="hcardtitle">{c.title}</span>
+                    {label}
                   </button>
                 )}
               </div>
