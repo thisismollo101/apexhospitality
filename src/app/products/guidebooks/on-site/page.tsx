@@ -1,13 +1,13 @@
-import PageShell from '@/components/PageShell';
+import ProductDetail, { catalogue } from '@/components/ProductDetail';
 
 export const metadata = { title: "On-site Guide" };
 
 export default function Page() {
   return (
-    <PageShell
+    <ProductDetail
       path="/products/guidebooks/on-site"
       title={"On-site Guide"}
-      lede="This page is scaffolded from navigation.json. Content lands with its template."
+      product={catalogue["/products/guidebooks/on-site"]}
     />
   );
 }

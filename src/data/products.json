@@ -1,0 +1,176 @@
+{
+  "/products/signature-films/flagship": {
+    "rank": 1,
+    "tier": "Tier 1 — Core Masterpieces",
+    "concept": "The definitive digital entrance to the property, where “the grid stops being a scroll and starts being a storefront.” A high-density 3×60-second window format — Hero, Support A, Support B — serving as the bird’s-eye view of the property.",
+    "math": "Engineered to be entirely self-explaining, so a General Manager can screenshot it, hand it upstairs to the owner, and look like a hero. To deliver an Early Win on day one, we animate your existing high-resolution photography before our crew even unpacks their cameras — instant capability proof, zero client risk.",
+    "quote": "Your property’s new digital front door. A high-density, three-window cinematic entrance that freezes the scroll and transforms your static landing page into a high-prestige, high-converting digital storefront on Day 1."
+  },
+  "/products/signature-films/anthem": {
+    "rank": 2,
+    "tier": "Tier 1 — Core Masterpieces",
+    "concept": "The stand-alone 60-second cinematic crown jewel, designed to sell the soul of the brand. Not an operational walkthrough and not a promotion — a high-prestige emotional showpiece around which all other property content orbits.",
+    "math": "Traditional companies spend upwards of $5 million for 30 seconds of this level of cultural dominance on television. This is the ultimate closing weapon: it elevates independent hotels to the level of Ritz-Carlton, Aman or Rosewood instantly.",
+    "quote": "This is not a promotional video. It is a Super-Bowl-grade cinematic showpiece that captures the raw heritage and sensory atmosphere of your estate, forcing high-net-worth travelers to mentally rehearse their stay."
+  },
+  "/products/billboards/accommodation": {
+    "rank": 3,
+    "tier": "Tier 1 — Core Masterpieces",
+    "concept": "The high-precision sales component engineered specifically to move the property’s most high-value inventory: top-tier suites and villas.",
+    "math": "Luxury hotels make their highest margins on suites and villas, yet these are the hardest to book online because travelers are skeptical of deceptive wide-angle photography. Unedited vertical micro-tours — closet space, window views, bedside power outlets — reduce the “uncertainty tax” that causes abandoned carts, raising conversion by up to 270%. Travelers exposed to property video are 74% more likely to book within seven days.",
+    "quote": "Stop losing high-margin suite bookings to flat, deceptive wide-angle photography. We bring your most premium villas to life with unedited, high-definition vertical micro-tours, reducing the ‘uncertainty tax’ and boosting booking conversion by up to 270%."
+  },
+  "/products/specialized-venues/weddings": {
+    "rank": 4,
+    "tier": "Tier 2 — High-Margin Revenue Centers",
+    "plan": "Premium",
+    "concept": "A high-impact commercial weapon designed to secure a multi-year waiting list for a property’s wedding and reception venues. An Elite-tier container that expands the standard 5-clip framework into a comprehensive 10-clip “Day 1 + Day 2” double-layer blueprint.",
+    "math": "Weddings are the single most profitable event a luxury hotel can host, often driving six-figure weekend revenues. Experience-based bundled packages outperform hotel-only offers by 37%. A single wedding hosts 100–200 high-worth guests, and 92% of global consumers trust recommendations from friends and family above all other marketing.",
+    "quote": "Capture the six-figure emotional gravity of weddings. We deploy a comprehensive, 10-clip ‘Day 1 + Day 2’ cinematic blueprint that resolves complex planning logistics and builds a multi-year venue waiting list.",
+    "why": [
+      [
+        "Hacking benign envy via telepresence",
+        "Wedding decisions are deeply emotional. Slow-motion push-passes of a real setup — light through the reception windows, precision table alignments, the clink of champagne flutes — trigger benign envy. Future couples do not look at your hall; they rehearse their own day in it."
+      ],
+      [
+        "The “concierge in your pocket” relief",
+        "Planners spend months answering the same logistical questions. Apex Weddings acts as a proactive visual concierge, so guests arrive informed and relaxed and your staff are freed from routine coordination."
+      ]
+    ],
+    "personas": [
+      [
+        "Wedding & Event Coordinators",
+        "Showcase layout flexibility, operational precision, and multi-day venue hosting capability."
+      ],
+      [
+        "Banquet Sales Directors",
+        "Deploy the Elite carousel to couples and planners to validate six-figure weekend pricing instantly."
+      ]
+    ],
+    "blueprint": {
+      "format": "10 individual 15-second vertical clips",
+      "groups": [
+        [
+          "Day 1 — The Main Event",
+          [
+            "Arrival & venue map — navigating the grounds, parking, and exactly where the ceremony is",
+            "Ceremony logistics — timings, seating protocol, device reminders",
+            "Welcome drinks & canapés — guiding guests to the garden while the couple takes photos",
+            "Dinner & speeches — table layouts, service timing, when speeches begin",
+            "The first dance & band starting — a high-motion celebratory transition",
+            "Late night logistics — late-night menus, bar extension, transport details"
+          ]
+        ],
+        [
+          "Day 2 — The Recovery & Gathering",
+          [
+            "The recovery breakfast — morning window and the property’s gourmet spreads",
+            "The Day 2 venue or pub — where the afternoon barbecue is and when it starts",
+            "Day 2 entertainment — when the acoustic musician or band kicks off",
+            "Checkout & farewell — late checkout parameters and safe travel reminders"
+          ]
+        ]
+      ]
+    }
+  },
+  "/products/specialized-venues/corporate-events": {
+    "rank": 5,
+    "tier": "Tier 2 — High-Margin Revenue Centers",
+    "plan": "Premium",
+    "concept": "The definitive B2B commercial acquisition engine, designed to capture corporate buyouts, professional workshops and luxury tech-sector mixers.",
+    "math": "Corporate bookings are the lifeblood of off-peak and mid-week occupancy. This is an authoritative proof engine, showing planners real configurations — tech panels, round-table setups, AV staging — in motion. It removes the burden of proof for a $50,000 to $250,000 property buyout.",
+    "quote": "Fill your conference rooms and secure high-yield mid-week corporate buyouts. Our B2B proof engine visually demonstrates your property’s high-performance operational capacity, erasing B2B planner skepticism instantly."
+  },
+  "/products/billboards/dining": {
+    "rank": 6,
+    "tier": "Tier 2 — High-Margin Revenue Centers",
+    "concept": "A sensory visual monetization engine built to drive revenue, mid-week occupancy and ancillary spend for on-site restaurants, cafes and bars.",
+    "math": "On-site F&B heavily drives hotel profitability, but luxury restaurants suffer slow weekdays. Culinary travel content drives a 52% boost in engagement, and 35% of travelers choose destinations based on food culture. Sensory ASMR clips and the “Tuesday Hack” promotion bypass cognitive evaluation to drive resident and non-resident covers.",
+    "quote": "Turn your restaurant into a high-yield guest acquisition funnel. We replace sterile menu listings with sensory culinary ASMR and targeted midweek ‘Tuesday Hacks’ that drive direct table bookings and boost F&B profitability."
+  },
+  "/products/specialized-venues/health-wellness": {
+    "rank": 7,
+    "tier": "Tier 2 — High-Margin Revenue Centers",
+    "concept": "A sensory monetization showcase that takes the invisible benefits of wellness — therapeutic relaxation, physical restoration — and renders them visually tangible and desirable.",
+    "math": "Spas carry exceptionally high margins, often 70% or more, so every unfilled therapist slot is a direct commercial loss. Micro-cinematography and sensory ASMR triggers — the crackle of hot stones, the resonance of a singing bowl — bypass price resistance and keep schedules booked.",
+    "quote": "Activate your highest-margin, under-utilized physical space. Our Health & Wellness showcase renders the ‘invisible benefits’ of wellness visually tangible, keeping your 70%-margin therapists fully booked year-round."
+  },
+  "/products/vip-guest-services/invite": {
+    "rank": 8,
+    "tier": "Tier 3 — Conversion & Referral Engines",
+    "concept": "“A film studio in your pocket” — a closed-loop referral engine that turns every guest booking into an organic 30-second personalized video gift to share with their social circle.",
+    "math": "Over 80% of travel social sharing happens inside dark social channels — WhatsApp, DMs, private groups. Giving booked guests an elite video of themselves hijacks those private loops. Wharton data shows referred customers carry 16% higher lifetime value and convert at 3–5× the rate of ad-driven traffic.",
+    "quote": "Hijack private ‘Dark Social’ loops where 80% of travel sharing occurs. We turn your booked guests into active sales representatives with personalized, high-definition cinematic invitations that drive referred bookings with a 16% higher LTV."
+  },
+  "/products/signature-films/international": {
+    "rank": 9,
+    "tier": "Tier 3 — Conversion & Referral Engines",
+    "plan": "Global",
+    "concept": "An AI-assisted translation and voiceover pipeline that takes master cinematic assets and renders them in 30+ languages with natural fluency.",
+    "math": "Properties marketing only in English leave significant international revenue on the table. With Asian outbound travel to Europe up 41%, localizing into Mandarin, Korean or Japanese yields a 2.4–3× lift in engagement and a 41% increase in international bookings. Phoneme-level voice cloning replicates your actual staff’s voice, eliminating the uncanny valley.",
+    "quote": "Speak natively to the world’s biggest growth markets. We localize your master cinematic assets into 30+ languages using phoneme-level AI voice cloning, unlocking a 2.4x conversion multiplier at near-zero marginal cost."
+  },
+  "/products/vip-guest-services/welcome": {
+    "rank": 10,
+    "tier": "Tier 3 — Conversion & Referral Engines",
+    "concept": "The handshake before the handshake — a hyper-personalized, voice-cloned arrival welcome integrated directly into the check-in workflow.",
+    "math": "Staff record a single one-time 15-second raw welcome audio greeting a guest by name. Our engine lip-syncs and bolts that audio onto pre-produced cinematic visuals, welcoming up to 50 guests a day and eliminating front-desk friction.",
+    "quote": "Redefine luxury guest check-in. A single, 15-second staff audio upload is AI-bolted to pre-produced cinema to welcome up to 50 guests a day, eliminating front-desk friction."
+  },
+  "/products/vip-guest-services/goodbye": {
+    "rank": 10,
+    "tier": "Tier 3 — Conversion & Referral Engines",
+    "concept": "The lasting impression — a personalized departure farewell fired off at checkout, closing the stay on the same cinematic register it opened on.",
+    "math": "The Goodbye carries an Easter Egg QR code that gamifies guest loyalty and drives direct repeat bookings, converting a completed stay into the opening move of the next one.",
+    "quote": "Close the stay the way it opened. A personalized cinematic farewell with an embedded ‘Easter Egg’ that gamifies loyalty and drives direct repeat bookings at the moment of highest goodwill."
+  },
+  "/products/guidebooks/atlas": {
+    "rank": 11,
+    "tier": "Tier 4 — Strategic Context & Discovery",
+    "concept": "A fully managed, permanent digital concierge and visual search engine, built as a dedicated secondary Instagram page housing the property’s complete info book in 15-second vertical clips.",
+    "math": "Over 80% of younger travelers discover and vet destinations on Reels and TikTok. Organising rooms, spa times, pool rules and off-site excursions into an un-buriable 18-post grid takes the weight of FAQs off the main feed and provides the visual due diligence guests demand.",
+    "quote": "Meet the social search revolution. We build a permanent, searchable visual guidebook on a secondary grid that answers every guest FAQ in 15-second cinematic clips, capturing organic search traffic and removing booking friction."
+  },
+  "/products/billboards/grounds-recreation": {
+    "rank": 12,
+    "tier": "Tier 4 — Strategic Context & Discovery",
+    "concept": "The spatial monetization engine, built to activate and capitalise on a property’s non-revenue-generating physical assets — gardens, infinity pools, running trails.",
+    "math": "Luxury properties spend millions on architectural walkways and marble pools. Left unfilmed, that capital is commercially under-productive. Cinematic motion hooks act as a visual stun gun that freezes the scroll of high-net-worth buyers, driving 2.8× more engagement than static ads.",
+    "quote": "Unleash the value of your silent real estate. We turn non-revenue-generating physical footprint — your gardens, trails, and infinity pools — into a high-engagement visual magnet that drives 2.8x more engagement than static ads."
+  },
+  "/products/events-promotions/events": {
+    "rank": 13,
+    "tier": "Tier 4 — Strategic Context & Discovery",
+    "concept": "High-octane coverage of calendar-defining moments — a Formula One race weekend, an exclusive light show, the dates the property is known for.",
+    "math": "We weaponize a strict 7-day announcement sequence, dropping a deliberately incomplete, loop-opening cinematic clip seven days out to build anticipation and transactional FOMO before tickets or reservations launch.",
+    "quote": "Dominate your property’s biggest calendar moments. We deploy a loop-opening, 7-day announcement sequence that builds rabid digital anticipation and drives immediate booking frenzy."
+  },
+  "/products/events-promotions/promotions": {
+    "rank": 14,
+    "tier": "Tier 4 — Strategic Context & Discovery",
+    "concept": "Hyper-focused tactical strikes built to fill immediate booking gaps — a localized wine lunch special, a seasonal midweek package.",
+    "math": "When a restaurant or property hits a slow monthly block, we dedicate an entire storefront window to dominating that promotion and driving direct, friction-free bookings.",
+    "quote": "Deploy tactical visual strikes to solve low midweek occupancy. We isolate and dominate your seasonal promotions, turning immediate dining or room specials into direct-booking revenue engines."
+  },
+  "/products/events-promotions/live": {
+    "rank": 15,
+    "tier": "Tier 4 — Strategic Context & Discovery",
+    "concept": "Real-time operational protection. When weather shifts or schedules change on the day of a major property event, we execute a fast-call correction that guides guests seamlessly.",
+    "math": "Operates at two speeds: a 30-minute fast call for immediate shifts, and a 3-hour reactive update for structural reshuffles — keeping guest friction at zero.",
+    "quote": "Eliminate guest friction in real-time. Our reactive ‘fast-call’ visual layer updates your digital storefront in under 30 minutes to adapt to live weather shifts or operational changes."
+  },
+  "/products/guidebooks/on-site": {
+    "rank": 16,
+    "tier": "Tier 5 — Foundational Platforms",
+    "concept": "A third-person establishing pass that anchors the guest’s understanding of the property’s physical layout, on-site facilities and geographic context.",
+    "math": "Serves as the cinematic trailer built to detonate interest and earn the click, funnelling curiosity directly into the permanent Atlas storefront.",
+    "quote": "The cinematic trailer of your estate. An establishing-perspective visual pass that maps your property’s physical layout, ensuring prospective guests can geographically rehearse their arrival."
+  },
+  "/products/guidebooks/off-site": {
+    "rank": 17,
+    "tier": "Tier 5 — Foundational Platforms",
+    "concept": "Cinema-grade hyper-local exploration clips highlighting nearby landmarks, national parks, exclusive golf courses and hidden regional gems.",
+    "math": "By mapping the surrounding area you educate the guest on what to do in your region, positioning the property as the authority and gateway for the entire destination.",
+    "quote": "Establish absolute regional authority. We produce high-fidelity exploration clips of your destination’s hidden gems, positioning your hotel as the uncompromised gateway to the entire region."
+  }
+}

@@ -1,13 +1,13 @@
-import PageShell from '@/components/PageShell';
+import ProductDetail, { catalogue } from '@/components/ProductDetail';
 
 export const metadata = { title: "Health & Wellness" };
 
 export default function Page() {
   return (
-    <PageShell
+    <ProductDetail
       path="/products/specialized-venues/health-wellness"
       title={"Health & Wellness"}
-      lede="This page is scaffolded from navigation.json. Content lands with its template."
+      product={catalogue["/products/specialized-venues/health-wellness"]}
     />
   );
 }

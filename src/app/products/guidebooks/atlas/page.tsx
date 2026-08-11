@@ -1,13 +1,13 @@
-import PageShell from '@/components/PageShell';
+import ProductDetail, { catalogue } from '@/components/ProductDetail';
 
 export const metadata = { title: "Apex Atlas" };
 
 export default function Page() {
   return (
-    <PageShell
+    <ProductDetail
       path="/products/guidebooks/atlas"
       title={"Apex Atlas"}
-      lede="This page is scaffolded from navigation.json. Content lands with its template."
+      product={catalogue["/products/guidebooks/atlas"]}
     />
   );
 }

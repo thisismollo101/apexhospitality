@@ -579,3 +579,40 @@ body.dark{
   .hstats,.catgrid{grid-template-columns:1fr}
   .page{padding-top:calc(var(--nav-h) + 28px)}
 }
+
+/* ---- product detail template ---- */
+
+.prank{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:-28px 0 32px}
+.pill{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:999px;
+  background:var(--surface-2);color:var(--fg);font-size:12.5px;font-weight:700;letter-spacing:.01em}
+.ptier{font-size:13px;color:var(--muted-2);font-weight:500}
+
+.pmedia{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;
+  border:1px solid var(--line);border-radius:var(--card-radius);
+  background:linear-gradient(135deg,var(--surface),var(--surface-2));
+  color:var(--muted-2);font-size:13.5px;letter-spacing:.02em;margin-bottom:64px}
+
+.psec{max-width:78ch;margin-bottom:56px}
+.psec h2{font-size:clamp(21px,2.5vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:18px}
+.psec h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--fg)}
+.psec p{font-size:17px;line-height:1.68;color:var(--muted)}
+
+.pdefs{display:grid;gap:26px}
+.pdefs dt{font-size:16px;font-weight:700;color:var(--fg);margin-bottom:6px}
+.pdefs dd{margin:0;font-size:16px;line-height:1.65;color:var(--muted)}
+
+.pformat{font-size:13.5px!important;color:var(--muted-2)!important;margin-bottom:26px}
+.pphase{margin-bottom:30px}
+.pclips{margin:0;padding-left:20px;display:grid;gap:10px}
+.pclips li{font-size:15.5px;line-height:1.6;color:var(--muted);padding-left:4px}
+.pclips li::marker{color:var(--muted-2);font-variant-numeric:tabular-nums}
+
+.pquote{margin:0 0 64px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pquote blockquote{margin:0;font-size:clamp(19px,2.6vw,26px);line-height:1.4;
+  font-weight:700;letter-spacing:-.02em;color:var(--fg);max-width:42ch}
+
+.pband{display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between;
+  padding:34px;border:1px solid var(--line);border-radius:var(--card-radius);background:var(--surface)}
+.pband h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.pband p{font-size:15px;line-height:1.6;color:var(--muted);max-width:56ch}
+.pbandcta{display:flex;flex-wrap:wrap;gap:10px}
