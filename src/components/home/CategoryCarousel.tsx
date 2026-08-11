@@ -8,25 +8,34 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
  * existing product page — these are the real leaf routes, not categories, so a
  * card now lands the reader straight on the module it names.
  *
+ * `video` names a clip in public/media/cards. Five of the seven have one; the
+ * gradient shows through on Dining and Corporate until clips arrive for them,
+ * and stands in behind the poster on the rest while they load.
+ *
  * Gradients keep v34's form (160°, mid tone at 55%, dark at both ends). Yellow
  * is the true hue at 53°, a clear step off orange at 27°.
  */
 const CARDS = [
   { title: 'Apex International', href: '/products/signature-films/international',
+    video: 'international',
     bg: 'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)' }, // red
   { title: 'Apex Weddings', href: '/products/specialized-venues/weddings',
+    video: 'weddings',
     bg: 'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)' }, // orange
   { title: 'Apex Welcome', href: '/products/vip-guest-services/welcome',
+    video: 'welcome',
     bg: 'linear-gradient(160deg,#e8c81a,#f5de3c 55%,#c9a400)' }, // yellow
   { title: 'Apex Dining', href: '/products/billboards/dining',
     bg: 'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)' }, // green
   { title: 'Apex Accommodation', href: '/products/billboards/accommodation',
+    video: 'accommodation',
     bg: 'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)' }, // blue
   { title: 'Apex Flagship', href: '/products/signature-films/flagship',
+    video: 'flagship',
     bg: 'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)' }, // indigo
   { title: 'Apex Corporate', href: '/products/specialized-venues/corporate-events',
     bg: 'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)' }, // violet
-];
+] as { title: string; href: string; bg: string; video?: string }[];
 
 /**
  * Category carousel — geometry ported from Revolut's feature-items carousel.
@@ -80,8 +89,56 @@ export default function CategoryCarousel() {
   const [stepping, setStepping] = useState(false);
   const prev = useRef<number[] | null>(null);
   const first = useRef(true);
+  const vids = useRef<(HTMLVideoElement | null)[]>([]);
+  const [armed, setArmed] = useState(false);
 
   const go = useCallback((i: number) => setActive(((i % n) + n) % n), [n]);
+
+  // Nothing downloads on first paint. The deck only becomes visible part-way
+  // through the hero reveal, so the first scroll is both the earliest moment a
+  // clip could be seen and enough lead time to buffer before it is. Reduced
+  // motion never arms — those readers keep the poster stills.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.scrollY > 0) {
+      setArmed(true);
+      return;
+    }
+    const on = () => setArmed(true);
+    window.addEventListener('scroll', on, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, []);
+
+  // Below the carousel's own breakpoint the outer cards sit largely off-screen,
+  // so a phone would be paying for five clips to watch one. There, only the
+  // centre card plays, and preload="none" keeps the other four unfetched until
+  // they reach the middle.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 839px)');
+    const on = () => setNarrow(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+
+  // Drives what decodes. A <video> whose sources appear after mount will not
+  // fetch them on its own, hence the explicit load on first arming. Play is
+  // best-effort — a browser that blocks it still shows the poster.
+  useEffect(() => {
+    if (!armed) return;
+    vids.current.forEach((v, i) => {
+      if (!v) return;
+      const slot = slotFor(i, active, n);
+      const wanted = narrow ? slot === 0 : Math.abs(slot) <= 2;
+      if (!wanted) {
+        v.pause();
+        return;
+      }
+      if (v.networkState === HTMLMediaElement.NETWORK_EMPTY) v.load();
+      if (v.paused) void v.play().catch(() => {});
+    });
+  }, [armed, active, n, narrow]);
 
   // Marks the placement transition as in flight so the Explore pill does not
   // flicker on a card that is only passing under the cursor. 350ms is the
@@ -136,6 +193,35 @@ export default function CategoryCarousel() {
           // Every title is "Apex <module>", broken after Apex so all seven sit
           // on two lines rather than the short ones riding up onto one.
           const [word, ...rest] = c.title.split(' ');
+          // autoplay overrides preload="none" and would fetch all five clips on
+          // a phone, so on narrow it comes off the element and the centre card
+          // is started by hand in the effect above instead.
+          const media = c.video ? (
+            <video
+              ref={(el) => {
+                vids.current[i] = el;
+              }}
+              className="hcardvid"
+              poster={`/media/cards/${c.video}.jpg`}
+              muted
+              loop
+              playsInline
+              autoPlay={!narrow}
+              preload={narrow ? 'none' : 'auto'}
+              tabIndex={-1}
+              aria-hidden
+            >
+              {/* VP9 first: it is the smaller file everywhere it is supported,
+                  and it is the only one some Chromium builds ship a decoder
+                  for. H.264 covers the rest, Safari included. */}
+              {armed ? (
+                <>
+                  <source src={`/media/cards/${c.video}.webm`} type="video/webm" />
+                  <source src={`/media/cards/${c.video}.mp4`} type="video/mp4" />
+                </>
+              ) : null}
+            </video>
+          ) : null;
           const label = (
             <span className="hcardtitle">
               <span className="hcardword">{word}</span>
@@ -162,6 +248,7 @@ export default function CategoryCarousel() {
               >
                 {isCentre ? (
                   <Link className="hcardin" href={c.href} style={{ background: c.bg }}>
+                    {media}
                     {label}
                     <span className="hcardgo">Explore</span>
                   </Link>
@@ -183,6 +270,7 @@ export default function CategoryCarousel() {
                        seeing it move through the middle. */
                     onClick={() => go(active + Math.sign(d))}
                   >
+                    {media}
                     {label}
                   </button>
                 )}
