@@ -148,10 +148,12 @@
   grid-template-areas:'content' 'media' 'tabs';
   grid-template-rows:auto 1fr auto;
   align-content:center;text-align:start;
-  padding-block:48px;min-height:640px}
+  padding-block:48px;min-height:560px}
 @media (min-width:840px){.ftabsgrid{text-align:center}}
-@media (min-width:1200px){.ftabsgrid{padding-block:64px;min-height:max(640px,100vh)}}
-@media (min-width:1920px){.ftabsgrid{padding-block:80px;min-height:max(864px,100vh)}}
+@media (min-width:1200px){.ftabsgrid{padding-block:64px;
+  min-height:max(560px,calc(100vh - var(--sales-h) - var(--nav-h)))}}
+@media (min-width:1920px){.ftabsgrid{padding-block:80px;
+  min-height:max(760px,calc(100vh - var(--sales-h) - var(--nav-h)))}}
 
 /* Every tab's copy is stacked in one grid cell, inactive ones held at
    visibility:hidden. That reserves the tallest tab's height so the media
@@ -279,4 +281,49 @@
 
 @media (prefers-reduced-motion:reduce){
   .hcardrise{transform:none;opacity:var(--t,1)}
+}
+
+/* ============================================================
+   Section snapping
+
+   v34 sets scroll-snap-type on html globally, which is wrong for a site: it
+   applies on every route and, more importantly, it fights the hero. The reveal
+   needs 220vh of free travel to scrub through, and v34's own stylesheet warns
+   about exactly this — "NO snap point on .scroller itself… it dragged you back
+   to the top the moment you tried to scroll into the reveal".
+
+   So snapping is off by default and HeroReveal switches it on only once the
+   reveal has finished scrubbing. Below that point the page locks section to
+   section; above it, the hero scrubs freely.
+   ============================================================ */
+
+html{scroll-snap-type:none;scroll-behavior:smooth}
+html.snap-on{scroll-snap-type:y mandatory}
+
+/* A section taller than the space below the fixed bars would trap the reader
+   under mandatory snapping — they could never reach its bottom. Short
+   viewports fall back to proximity, which only snaps when you are already
+   near a boundary and so can always be scrolled through. */
+@media (max-height:860px){html.snap-on{scroll-snap-type:y proximity}}
+
+/* scroll-margin per section rather than scroll-padding on the container, so
+   .snapmark can rest exactly where the reveal ends with no offset applied. */
+.home > .proof,
+.home > .ftabs,
+.home > .hcats,
+.home > .hcta{
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  scroll-margin-top:calc(var(--sales-h) + var(--nav-h));
+}
+.snapmark{scroll-snap-stop:always}
+
+@media (max-height:860px){
+  .ftabsmedia{max-height:min(500px,40vh)}
+  .hcats{padding:56px 0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  html.snap-on{scroll-snap-type:none}
 }

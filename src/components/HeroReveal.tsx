@@ -94,6 +94,15 @@ export default function HeroReveal() {
         ds.pointerEvents = smooth(0.10, 0.38, v) > 0.6 ? 'auto' : 'none';
       }
 
+      // Section snapping is enabled only after the reveal has finished
+      // scrubbing. Turning it on earlier would let the browser snap away from
+      // the middle of the 220vh travel, which is the failure v34's stylesheet
+      // warns about. The two thresholds are deliberately apart so scrolling
+      // across the boundary cannot flip the class on and off repeatedly.
+      const root = document.documentElement;
+      if (v >= 0.995) root.classList.add('snap-on');
+      else if (v <= 0.9) root.classList.remove('snap-on');
+
       raf.current = Math.abs(target.current - p.current) > 0.0002
         ? requestAnimationFrame(frame)
         : null;
@@ -116,6 +125,7 @@ export default function HeroReveal() {
       removeEventListener('scroll', kick);
       removeEventListener('resize', onResize);
       if (raf.current) cancelAnimationFrame(raf.current);
+      document.documentElement.classList.remove('snap-on');
     };
   }, [measure]);
 
