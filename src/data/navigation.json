@@ -1,0 +1,516 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-08-06",
+  "brand": {
+    "wordmark": "APEX",
+    "legalEntity": "Atlas Elite LLC",
+    "tradingName": "Apex Hospitality",
+    "jurisdiction": "Delaware",
+    "entityType": "limited liability company",
+    "officeCity": "Miami",
+    "copyright": "© 2026 Atlas Elite LLC. Apex Hospitality is a trading name of Atlas Elite LLC, a Delaware limited liability company. All rights reserved."
+  },
+  "header": {
+    "auth": [
+      {
+        "label": "Log in",
+        "href": "/login",
+        "style": "text"
+      },
+      {
+        "label": "Sign up",
+        "href": "/signup",
+        "style": "button"
+      }
+    ],
+    "dropdowns": [
+      {
+        "id": "products",
+        "label": "Products",
+        "panelWidth": "full",
+        "columns": [
+          {
+            "heading": "Signature Films",
+            "href": "/products/signature-films",
+            "items": [
+              {
+                "label": "Apex Anthem",
+                "href": "/products/signature-films/anthem"
+              },
+              {
+                "label": "Apex Flagship",
+                "href": "/products/signature-films/flagship"
+              },
+              {
+                "label": "Apex International",
+                "href": "/products/signature-films/international"
+              }
+            ]
+          },
+          {
+            "heading": "Billboards",
+            "href": "/products/billboards",
+            "items": [
+              {
+                "label": "Dining",
+                "href": "/products/billboards/dining"
+              },
+              {
+                "label": "Accommodation",
+                "href": "/products/billboards/accommodation"
+              },
+              {
+                "label": "Grounds & Recreation",
+                "href": "/products/billboards/grounds-recreation"
+              }
+            ]
+          },
+          {
+            "heading": "Specialized Venues",
+            "href": "/products/specialized-venues",
+            "items": [
+              {
+                "label": "Health & Wellness",
+                "href": "/products/specialized-venues/health-wellness"
+              },
+              {
+                "label": "Weddings",
+                "href": "/products/specialized-venues/weddings"
+              },
+              {
+                "label": "Corporate Events",
+                "href": "/products/specialized-venues/corporate-events"
+              }
+            ]
+          },
+          {
+            "heading": "Events & Promotions",
+            "href": "/products/events-promotions",
+            "items": [
+              {
+                "label": "Apex Events",
+                "href": "/products/events-promotions/events"
+              },
+              {
+                "label": "Apex Promotions",
+                "href": "/products/events-promotions/promotions"
+              },
+              {
+                "label": "Apex Live",
+                "href": "/products/events-promotions/live"
+              }
+            ]
+          },
+          {
+            "heading": "VIP Guest Services",
+            "href": "/products/vip-guest-services",
+            "items": [
+              {
+                "label": "Apex Invite",
+                "href": "/products/vip-guest-services/invite"
+              },
+              {
+                "label": "Apex Welcome",
+                "href": "/products/vip-guest-services/welcome"
+              },
+              {
+                "label": "Apex Goodbye",
+                "href": "/products/vip-guest-services/goodbye"
+              }
+            ]
+          },
+          {
+            "heading": "Guidebooks",
+            "href": "/products/guidebooks",
+            "items": [
+              {
+                "label": "Apex Atlas",
+                "href": "/products/guidebooks/atlas"
+              },
+              {
+                "label": "On-site Guide",
+                "href": "/products/guidebooks/on-site"
+              },
+              {
+                "label": "Off-site Guide",
+                "href": "/products/guidebooks/off-site"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "resources",
+        "label": "Resources",
+        "panelWidth": "content",
+        "columns": [
+          {
+            "heading": "Learn",
+            "items": [
+              {
+                "label": "Library",
+                "href": "/library"
+              },
+              {
+                "label": "Product Tour",
+                "href": "/product-tour"
+              },
+              {
+                "label": "Dashboard Tour",
+                "href": "/dashboard-tour"
+              }
+            ]
+          },
+          {
+            "heading": "My Property",
+            "requiresAuth": true,
+            "items": [
+              {
+                "label": "Account",
+                "href": "/app/account"
+              },
+              {
+                "label": "Approval",
+                "href": "/app/approval"
+              },
+              {
+                "label": "365 Daily",
+                "href": "/app/daily"
+              },
+              {
+                "label": "Contact Support",
+                "href": "/support"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "company",
+        "label": "Company",
+        "panelWidth": "content",
+        "columns": [
+          {
+            "heading": "About",
+            "items": [
+              {
+                "label": "About Us",
+                "href": "/about"
+              },
+              {
+                "label": "Careers",
+                "href": "/careers"
+              },
+              {
+                "label": "Media",
+                "href": "/media"
+              }
+            ]
+          },
+          {
+            "heading": "Contact",
+            "items": [
+              {
+                "label": "Contact Sales",
+                "href": "/contact-sales"
+              },
+              {
+                "label": "Locations",
+                "href": "/locations"
+              },
+              {
+                "label": "Partners",
+                "href": "/partners"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "clusters": [
+      {
+        "heading": "Signature Films",
+        "items": [
+          {
+            "label": "Apex Anthem",
+            "href": "/products/signature-films/anthem"
+          },
+          {
+            "label": "Apex Flagship",
+            "href": "/products/signature-films/flagship"
+          },
+          {
+            "label": "Apex International",
+            "href": "/products/signature-films/international"
+          }
+        ]
+      },
+      {
+        "heading": "Billboards",
+        "items": [
+          {
+            "label": "Dining",
+            "href": "/products/billboards/dining"
+          },
+          {
+            "label": "Accommodation",
+            "href": "/products/billboards/accommodation"
+          },
+          {
+            "label": "Grounds & Recreation",
+            "href": "/products/billboards/grounds-recreation"
+          }
+        ]
+      },
+      {
+        "heading": "Specialized Venues",
+        "items": [
+          {
+            "label": "Health & Wellness",
+            "href": "/products/specialized-venues/health-wellness"
+          },
+          {
+            "label": "Weddings",
+            "href": "/products/specialized-venues/weddings"
+          },
+          {
+            "label": "Corporate Events",
+            "href": "/products/specialized-venues/corporate-events"
+          }
+        ]
+      },
+      {
+        "heading": "Events & Promotions",
+        "items": [
+          {
+            "label": "Apex Events",
+            "href": "/products/events-promotions/events"
+          },
+          {
+            "label": "Apex Promotions",
+            "href": "/products/events-promotions/promotions"
+          },
+          {
+            "label": "Apex Live",
+            "href": "/products/events-promotions/live"
+          }
+        ]
+      },
+      {
+        "heading": "VIP Guest Services",
+        "items": [
+          {
+            "label": "Apex Invite",
+            "href": "/products/vip-guest-services/invite"
+          },
+          {
+            "label": "Apex Welcome",
+            "href": "/products/vip-guest-services/welcome"
+          },
+          {
+            "label": "Apex Goodbye",
+            "href": "/products/vip-guest-services/goodbye"
+          }
+        ]
+      },
+      {
+        "heading": "Guidebooks",
+        "items": [
+          {
+            "label": "Apex Atlas",
+            "href": "/products/guidebooks/atlas"
+          },
+          {
+            "label": "On-site Guide",
+            "href": "/products/guidebooks/on-site"
+          },
+          {
+            "label": "Off-site Guide",
+            "href": "/products/guidebooks/off-site"
+          }
+        ]
+      },
+      {
+        "heading": "Plans",
+        "items": [
+          {
+            "label": "Signature",
+            "href": "/plans/signature"
+          },
+          {
+            "label": "Premium",
+            "href": "/plans/premium"
+          },
+          {
+            "label": "Elite",
+            "href": "/plans/elite"
+          },
+          {
+            "label": "Global",
+            "href": "/plans/global"
+          },
+          {
+            "label": "Compare plans",
+            "href": "/plans"
+          }
+        ]
+      },
+      {
+        "heading": "The Layers",
+        "items": [
+          {
+            "label": "Explore",
+            "href": "/layers/explore"
+          },
+          {
+            "label": "Experience",
+            "href": "/layers/experience"
+          },
+          {
+            "label": "Discover",
+            "href": "/layers/discover"
+          },
+          {
+            "label": "Select",
+            "href": "/layers/select"
+          }
+        ]
+      },
+      {
+        "heading": "Deployment",
+        "items": [
+          {
+            "label": "On-site Visit",
+            "href": "/deployment/on-site-visit"
+          },
+          {
+            "label": "Onboarding",
+            "href": "/deployment/onboarding"
+          },
+          {
+            "label": "Deposit",
+            "href": "/deployment/deposit"
+          },
+          {
+            "label": "Contract Terms",
+            "href": "/deployment/contract-terms"
+          }
+        ]
+      },
+      {
+        "heading": "Learn",
+        "items": [
+          {
+            "label": "Library",
+            "href": "/library"
+          },
+          {
+            "label": "Product Tour",
+            "href": "/product-tour"
+          },
+          {
+            "label": "Dashboard Tour",
+            "href": "/dashboard-tour"
+          }
+        ]
+      },
+      {
+        "heading": "My Property",
+        "items": [
+          {
+            "label": "Account",
+            "href": "/app/account"
+          },
+          {
+            "label": "Approval",
+            "href": "/app/approval"
+          },
+          {
+            "label": "365 Daily",
+            "href": "/app/daily"
+          },
+          {
+            "label": "Contact Support",
+            "href": "/support"
+          }
+        ]
+      },
+      {
+        "heading": "Company",
+        "items": [
+          {
+            "label": "About Us",
+            "href": "/about"
+          },
+          {
+            "label": "Careers",
+            "href": "/careers"
+          },
+          {
+            "label": "Media",
+            "href": "/media"
+          },
+          {
+            "label": "Contact Sales",
+            "href": "/contact-sales"
+          },
+          {
+            "label": "Locations",
+            "href": "/locations"
+          },
+          {
+            "label": "Partners",
+            "href": "/partners"
+          }
+        ]
+      }
+    ],
+    "disclosure": "Pricing and menu information shown in Apex Select is anchored to data verified by the property. Asset ownership and transfer are governed by the terms of the service agreement. The $5,000 setup deposit covers the on-site visit and is rolled into the first month if received within the agreed time frame, usually 48 to 96 hours. All sales are final.",
+    "social": [
+      {
+        "network": "instagram",
+        "href": "https://instagram.com/",
+        "icon": "instagram"
+      },
+      {
+        "network": "linkedin",
+        "href": "https://linkedin.com/",
+        "icon": "linkedin"
+      },
+      {
+        "network": "youtube",
+        "href": "https://youtube.com/",
+        "icon": "youtube"
+      },
+      {
+        "network": "tiktok",
+        "href": "https://tiktok.com/",
+        "icon": "tiktok"
+      }
+    ],
+    "locale": {
+      "label": "United States · English",
+      "code": "en-US"
+    },
+    "legal": [
+      {
+        "label": "Privacy",
+        "href": "/legal/privacy"
+      },
+      {
+        "label": "Terms",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Cookies",
+        "href": "/legal/cookies"
+      },
+      {
+        "label": "Accessibility",
+        "href": "/legal/accessibility"
+      }
+    ]
+  }
+}

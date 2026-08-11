@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+build/
+.env
+.env*.local
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# v34 prototype is a 9.3MB design reference, not shipped code.
+# Tracked deliberately so extraction is reproducible; see scripts/extract-v34.ts
+!apexherorevealv34.html
