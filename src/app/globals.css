@@ -527,7 +527,7 @@ body.dark{
    ============================================================ */
 
 .pwrap{max-width:1240px;margin:0 auto;padding:0 24px}
-.page{padding:calc(var(--nav-h) + 48px) 0 96px}
+.page{padding:calc(var(--sales-h) + var(--nav-h) + 48px) 0 96px}
 
 .crumbs ol{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px;padding:0}
 .crumbs li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted-2)}
@@ -542,7 +542,7 @@ body.dark{
 .plede{margin-top:16px;font-size:18px;line-height:1.6;color:var(--muted)}
 
 /* home */
-.home{padding-top:var(--nav-h)}
+.home{padding-top:calc(var(--sales-h) + var(--nav-h))}
 .hero{min-height:76vh;display:flex;align-items:center;
   background:linear-gradient(180deg,var(--surface),var(--bg))}
 .hero .hero-copy{max-width:1240px;margin:0 auto;padding:80px 24px;width:100%}
@@ -577,7 +577,7 @@ body.dark{
 }
 @media (max-width:640px){
   .hstats,.catgrid{grid-template-columns:1fr}
-  .page{padding-top:calc(var(--nav-h) + 28px)}
+  .page{padding-top:calc(var(--sales-h) + var(--nav-h) + 28px)}
 }
 
 /* ---- product detail template ---- */

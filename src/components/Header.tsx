@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { nav } from '@/lib/nav';
 import type { NavColumn, NavDropdown } from '@/lib/nav';
@@ -31,6 +32,13 @@ export default function Header() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [accordions, setAccordions] = useState<Record<string, boolean>>({});
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // v34's nav is transparent white over the hero and turns solid on scroll.
+  // Only Home has that hero, so every other route is solid from the start —
+  // otherwise the header renders white-on-white.
+  const solid = pathname !== '/' || scrolled;
   const navRef = useRef<HTMLElement>(null);
   const shutTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trigRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -71,6 +79,9 @@ export default function Header() {
     const onResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false);
     };
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('keydown', onKey);
     document.addEventListener('click', onAway);
     document.addEventListener('focusin', onAway);
@@ -80,6 +91,7 @@ export default function Header() {
       document.removeEventListener('click', onAway);
       document.removeEventListener('focusin', onAway);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onScroll);
     };
   }, [openId, menuOpen, closeAll]);
 
@@ -95,7 +107,12 @@ export default function Header() {
         <Link href="/library">See the trends</Link>
       </div>
 
-      <nav id="nav" ref={navRef} aria-label="Primary" className={menuOpen ? 'menu-open' : undefined}>
+      <nav
+        id="nav"
+        ref={navRef}
+        aria-label="Primary"
+        className={[solid ? 'solid' : '', menuOpen ? 'menu-open' : ''].filter(Boolean).join(' ') || undefined}
+      >
         <Link className="brand" href="/" aria-label="Apex Hospitality — home">
           Apex <em>Hospitality</em>
         </Link>
