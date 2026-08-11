@@ -235,9 +235,13 @@
 .hcar{--hcar-gap:16px;width:100%}
 @media (min-width:840px){.hcar{--hcar-gap:8%}}
 
-.hcarstage{position:relative;height:min(412px,42vh);margin:0 auto}
-@media (min-width:1200px){.hcarstage{height:min(508px,52vh)}}
-@media (min-width:1920px){.hcarstage{height:min(643px,58vh)}}
+/* Card size drives everything else: width comes from the aspect ratio, and the
+   ±95%/±185% slot offsets plus the 8% gap are percentages of card width. So
+   dropping the height 20% shrinks the whole carousel by 20% and hands that
+   space back to the page margins. */
+.hcarstage{position:relative;height:min(330px,34vh);margin:0 auto}
+@media (min-width:1200px){.hcarstage{height:min(406px,42vh)}}
+@media (min-width:1920px){.hcarstage{height:min(514px,46vh)}}
 
 .hcard{position:absolute;inset:0;
   transition:transform 350ms ease,opacity 350ms ease;
@@ -255,17 +259,55 @@
 @media (min-width:1200px){.hcardin{padding:32px;border-radius:24px}}
 @media (min-width:1920px){.hcardin{padding:40px}}
 
-.hcardtitle{font-size:clamp(18px,1.5vw,24px);line-height:1.15;font-weight:700;
-  letter-spacing:-.015em;max-width:12ch;text-shadow:0 2px 16px rgba(0,0,0,.38)}
-@media (min-width:1200px){.hcardtitle{font-size:32px;line-height:1.12}}
-@media (min-width:1920px){.hcardtitle{font-size:40px}}
+/* Both spans are positioned so they paint above .hcardin::before, which is
+   itself positioned and would otherwise sit on top of static children. */
+.hcardtitle{position:relative;z-index:1;
+  font-size:clamp(17px,1.35vw,22px);line-height:1.15;font-weight:700;
+  letter-spacing:-.015em;max-width:12ch;text-shadow:0 2px 16px rgba(0,0,0,.38);
+  transition:transform 460ms cubic-bezier(.22,1,.36,1)}
+@media (min-width:1200px){.hcardtitle{font-size:27px;line-height:1.12}}
+@media (min-width:1920px){.hcardtitle{font-size:34px}}
 
-.hcardgo{margin-top:auto;font-size:13.5px;font-weight:600;letter-spacing:.01em;
-  opacity:.92;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+/* Explore reads as a real button now — the same white pill as .btn-solid over
+   the transparent nav — and stays out of the way until the card is hovered. It
+   keeps its footprint while hidden so nothing reflows on the way in. */
+.hcardgo{position:relative;z-index:1;margin-top:auto;
+  display:inline-flex;align-items:center;
+  background:#fff;color:var(--fg);border-radius:999px;
+  padding:9px 20px;font-size:14px;font-weight:500;letter-spacing:0;
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+  opacity:0;transform:translateY(10px);
+  transition:opacity 320ms ease,transform 380ms cubic-bezier(.22,1,.36,1)}
+@media (min-width:1200px){.hcardgo{padding:10px 22px;font-size:15px}}
 
 .px-dots li{display:flex}
 
-@media (prefers-reduced-motion:reduce){.hcard{transition:none}}
+/* ---- card hover ----
+   A third transform layer, under .hcard (carousel placement, 350ms) and
+   .hcardrise (scroll reveal, written per frame). Keeping them separate is what
+   lets the hover ease slowly without dragging on either of the others. */
+@media (hover:hover){
+  .hcardin{transition:transform 460ms cubic-bezier(.22,1,.36,1),
+                      box-shadow 460ms ease}
+  .hcardin::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 78% at 50% 0%,rgba(255,255,255,.30),transparent 62%);
+    opacity:0;transition:opacity 460ms ease}
+  .hcard:hover .hcardin,.hcard .hcardin:focus-visible{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 34px 70px rgba(20,40,80,.36)}
+  .hcard:hover .hcardin::before,
+  .hcard .hcardin:focus-visible::before{opacity:1}
+  .hcard:hover .hcardtitle,
+  .hcard .hcardin:focus-visible .hcardtitle{transform:translateY(-3px)}
+  .hcard:hover .hcardgo,
+  .hcard .hcardin:focus-visible .hcardgo{opacity:1;transform:none}
+}
+/* Touch has no hover state, so a hover-only pill would never be reachable. */
+@media (hover:none){.hcardgo{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .hcard,.hcardin,.hcardgo,.hcardtitle{transition:none}
+}
 
 /* ---- card reveal ----
    A separate layer from the carousel placement above. That one transitions over

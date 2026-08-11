@@ -6,23 +6,37 @@ import { nav } from '@/lib/nav';
 import type { NavColumn, NavDropdown } from '@/lib/nav';
 
 const products = (nav.header.dropdowns as NavDropdown[]).find((d) => d.id === 'products');
-const categories = (products?.columns ?? []) as NavColumn[];
 
-/** v34's own card gradients, from the CARDS array in script 1. */
+/**
+ * One card per rainbow colour — seven. The six product categories come from the
+ * nav verbatim; Plans is the seventh, and is a real top-level route rather than
+ * a duplicated or invented category, so every card still goes somewhere.
+ */
+const categories: NavColumn[] = [
+  ...((products?.columns ?? []) as NavColumn[]),
+  { heading: 'Plans', href: '/plans', items: [] } as unknown as NavColumn,
+];
+
+/**
+ * ROYGBIV, in v34's gradient form (160°, mid tone at 55%, dark at both ends).
+ * Deepened from the pure hues — the cards carry white text, and spectral yellow
+ * and orange cannot hold it.
+ */
 const SKINS = [
-  'linear-gradient(160deg,#8a6b52,#c8a07a 55%,#5c4634)',
-  'linear-gradient(160deg,#4b86c7,#2f6bb0 60%,#1f4f8c)',
-  'linear-gradient(160deg,#233a2a,#3f6b49 55%,#16241a)',
-  'linear-gradient(160deg,#3a2f57,#6d5aa3 55%,#241d38)',
-  'linear-gradient(160deg,#57323a,#a35a6d 55%,#381d24)',
-  'linear-gradient(160deg,#2f4a57,#5a92a3 55%,#1d2f38)',
+  'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)', // red
+  'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)', // orange
+  'linear-gradient(160deg,#a8790a,#dbb022 55%,#6f4e05)', // yellow
+  'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)', // green
+  'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)', // blue
+  'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)', // indigo
+  'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)', // violet
 ];
 
 /**
  * Category carousel — geometry ported from Revolut's feature-items carousel.
  *
- * Five slots are visible at once and the rest stage off-screen, so with six
- * categories one is always waiting to come around. Their exact numbers:
+ * Five slots are visible at once and the rest stage off-screen, so with seven
+ * cards two are always waiting to come around. Their exact numbers:
  *
  *   centre   translateX(0 × gap)  translateX(0%)              scale 1
  *   ±1       translateX(±1 × gap) translateX(±95%)            scale 0.9
@@ -125,7 +139,7 @@ export default function CategoryCarousel() {
                 {isCentre ? (
                   <Link className="hcardin" href={c.href} style={{ background: SKINS[i % SKINS.length] }}>
                     <span className="hcardtitle">{c.heading}</span>
-                    <span className="hcardgo">Explore →</span>
+                    <span className="hcardgo">Explore</span>
                   </Link>
                 ) : (
                   <button

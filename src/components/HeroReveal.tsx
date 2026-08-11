@@ -147,8 +147,8 @@ export default function HeroReveal() {
         <div className="sheet" />
 
         <div className="salary-copy" ref={copy}>
-          <h2>Six things we build, running all year.</h2>
-          <p>Each one holds three. Open any of them.</p>
+          <h2>Everything we build, running all year.</h2>
+          <p>Seven ways in. Open any of them.</p>
         </div>
 
         <div className="deck" ref={deck}>
