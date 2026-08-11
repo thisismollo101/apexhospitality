@@ -232,8 +232,12 @@
    the rest staged off-screen. Their gap and card ratio are kept exactly; the
    card skins are v34's own gradients. */
 
-.hcar{--hcar-gap:16px;width:100%}
-@media (min-width:840px){.hcar{--hcar-gap:8%}}
+/* --hcar-gap is exactly the visual gap between two cards: a neighbour sits at
+   translateX(gap + 95%) scaled 0.9, so its scaled left edge lands one gap clear
+   of the centre card's right edge, and the same holds for the outer pair. Up
+   30% from Revolut's 8%. */
+.hcar{--hcar-gap:21px;width:100%}
+@media (min-width:840px){.hcar{--hcar-gap:10.4%}}
 
 /* Card size drives everything else: width comes from the aspect ratio, and the
    ±95%/±185% slot offsets plus the 8% gap are percentages of card width. So
@@ -274,11 +278,19 @@
 .hcardgo{position:relative;z-index:1;margin-top:auto;
   display:inline-flex;align-items:center;
   background:#fff;color:var(--fg);border-radius:999px;
-  padding:9px 20px;font-size:14px;font-weight:500;letter-spacing:0;
+  padding:7px 16px;font-size:13px;font-weight:500;letter-spacing:0;
   box-shadow:0 8px 22px rgba(0,0,0,.18);
   opacity:0;transform:translateY(10px);
   transition:opacity 320ms ease,transform 380ms cubic-bezier(.22,1,.36,1)}
-@media (min-width:1200px){.hcardgo{padding:10px 22px;font-size:15px}}
+@media (min-width:1200px){.hcardgo{padding:8px 18px;font-size:13.5px}}
+
+/* The yellow card is the one light skin in the set, so it inverts: dark ink,
+   and the dark pill the site uses on light backgrounds. A white pill on yellow
+   would have almost no edge against the card. */
+.hcardin.is-lit{color:#1c1405}
+.hcardin.is-lit .hcardtitle{text-shadow:none}
+.hcardin.is-lit .hcardgo{background:var(--fg);color:var(--bg);
+  box-shadow:0 8px 22px rgba(0,0,0,.26)}
 
 .px-dots li{display:flex}
 
@@ -301,6 +313,15 @@
   .hcard .hcardin:focus-visible .hcardtitle{transform:translateY(-3px)}
   .hcard:hover .hcardgo,
   .hcard .hcardin:focus-visible .hcardgo{opacity:1;transform:none}
+
+  /* Clicking a side card recentres it, which slides it out from under the
+     cursor. In flight the newly-centred card is momentarily hovered, so the
+     pill would fade in and straight back out. Ignore hover on the pill for the
+     length of the placement transition — :hover is still tracked throughout,
+     so if the pointer really is over the centre card once it settles, the pill
+     appears then, properly. */
+  .hcarstage.is-stepping .hcardgo{
+    opacity:0;transform:translateY(10px);transition:none}
 }
 /* Touch has no hover state, so a hover-only pill would never be reachable. */
 @media (hover:none){.hcardgo{opacity:1;transform:none}}

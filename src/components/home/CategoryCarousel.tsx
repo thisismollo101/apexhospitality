@@ -19,17 +19,20 @@ const categories: NavColumn[] = [
 
 /**
  * ROYGBIV, in v34's gradient form (160°, mid tone at 55%, dark at both ends).
- * Deepened from the pure hues — the cards carry white text, and spectral yellow
- * and orange cannot hold it.
+ *
+ * Yellow is the true hue rather than the gold it started as — at 53° it sits a
+ * clear step off orange at 27°, where the previous 45° did not. A yellow that
+ * reads as yellow is necessarily light, so that one card flips to dark ink;
+ * `lit` carries that through to the CSS.
  */
-const SKINS = [
-  'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)', // red
-  'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)', // orange
-  'linear-gradient(160deg,#a8790a,#dbb022 55%,#6f4e05)', // yellow
-  'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)', // green
-  'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)', // blue
-  'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)', // indigo
-  'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)', // violet
+const SKINS: { bg: string; lit?: boolean }[] = [
+  { bg: 'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)' }, // red
+  { bg: 'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)' }, // orange
+  { bg: 'linear-gradient(160deg,#e8c81a,#f5de3c 55%,#c9a400)', lit: true }, // yellow
+  { bg: 'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)' }, // green
+  { bg: 'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)' }, // blue
+  { bg: 'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)' }, // indigo
+  { bg: 'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)' }, // violet
 ];
 
 /**
@@ -81,9 +84,24 @@ export default function CategoryCarousel() {
   const n = categories.length;
   const [active, setActive] = useState(0);
   const [instant, setInstant] = useState<number[]>([]);
+  const [stepping, setStepping] = useState(false);
   const prev = useRef<number[] | null>(null);
+  const first = useRef(true);
 
   const go = useCallback((i: number) => setActive(((i % n) + n) % n), [n]);
+
+  // Marks the placement transition as in flight so the Explore pill does not
+  // flicker on a card that is only passing under the cursor. 350ms is the
+  // transition; the extra 30ms covers the frame it is scheduled on.
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    setStepping(true);
+    const t = setTimeout(() => setStepping(false), 380);
+    return () => clearTimeout(t);
+  }, [active]);
 
   // A card that wraps jumps several slots at once. Animating that would drag it
   // across the middle of the carousel, so its transition is dropped for one
@@ -114,11 +132,15 @@ export default function CategoryCarousel() {
 
   return (
     <div className="hcar" id="catcar">
-      <div className="hcarstage" style={{ aspectRatio: String(RATIO) }}>
+      <div
+        className={`hcarstage${stepping ? ' is-stepping' : ''}`}
+        style={{ aspectRatio: String(RATIO) }}
+      >
         {categories.map((c, i) => {
           const d = slotFor(i, active, n);
           const p = placement(d);
           const isCentre = d === 0;
+          const skin = SKINS[i % SKINS.length];
           return (
             <div
               key={c.heading}
@@ -137,15 +159,19 @@ export default function CategoryCarousel() {
                 style={{ ['--t' as string]: `var(--ring-${Math.min(Math.abs(d), 2)}, 1)` } as React.CSSProperties}
               >
                 {isCentre ? (
-                  <Link className="hcardin" href={c.href} style={{ background: SKINS[i % SKINS.length] }}>
+                  <Link
+                    className={`hcardin${skin.lit ? ' is-lit' : ''}`}
+                    href={c.href}
+                    style={{ background: skin.bg }}
+                  >
                     <span className="hcardtitle">{c.heading}</span>
                     <span className="hcardgo">Explore</span>
                   </Link>
                 ) : (
                   <button
                     type="button"
-                    className="hcardin"
-                    style={{ background: SKINS[i % SKINS.length] }}
+                    className={`hcardin${skin.lit ? ' is-lit' : ''}`}
+                    style={{ background: skin.bg }}
                     tabIndex={p.hidden ? -1 : 0}
                     aria-label={`Show ${c.heading}`}
                     onClick={() => go(i)}
