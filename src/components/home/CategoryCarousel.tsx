@@ -8,9 +8,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
  * existing product page — these are the real leaf routes, not categories, so a
  * card now lands the reader straight on the module it names.
  *
- * `video` names a clip in public/media/cards. Five of the seven have one; the
- * gradient shows through on Dining and Corporate until clips arrive for them,
- * and stands in behind the poster on the rest while they load.
+ * `video` names a clip in public/media/cards. All seven have one; the gradient
+ * now only stands in behind the poster while a clip loads.
  *
  * Gradients keep v34's form (160°, mid tone at 55%, dark at both ends). Yellow
  * is the true hue at 53°, a clear step off orange at 27°.
@@ -26,6 +25,7 @@ const CARDS = [
     video: 'welcome',
     bg: 'linear-gradient(160deg,#e8c81a,#f5de3c 55%,#c9a400)' }, // yellow
   { title: 'Apex Dining', href: '/products/billboards/dining',
+    video: 'dining',
     bg: 'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)' }, // green
   { title: 'Apex Accommodation', href: '/products/billboards/accommodation',
     video: 'accommodation',
@@ -34,6 +34,7 @@ const CARDS = [
     video: 'flagship',
     bg: 'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)' }, // indigo
   { title: 'Apex Corporate', href: '/products/specialized-venues/corporate-events',
+    video: 'corporate',
     bg: 'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)' }, // violet
 ] as { title: string; href: string; bg: string; video?: string }[];
 
