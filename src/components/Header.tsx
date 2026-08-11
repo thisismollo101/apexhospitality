@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { nav } from '@/lib/nav';
 import type { NavColumn, NavDropdown } from '@/lib/nav';
 
@@ -42,9 +42,26 @@ export default function Header() {
   const navRef = useRef<HTMLElement>(null);
   const shutTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trigRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const panelRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const returningFocus = useRef(false);
 
   const closeAll = useCallback(() => setOpenId(null), []);
+
+  /**
+   * v34's place(): a `.panel.content` is absolutely positioned with no `left`,
+   * so it has to be aligned to its own trigger or it lands wherever the flex
+   * container puts it. `.panel.full` sets left/right in CSS and is left alone.
+   * This is why Products looked right and Resources/Company did not.
+   */
+  const place = useCallback((id: string | null) => {
+    if (!id) return;
+    const panel = panelRefs.current[id];
+    const trig = trigRefs.current[id];
+    if (!panel || !trig || !panel.classList.contains('content')) return;
+    panel.style.left = `${trig.offsetLeft}px`;
+  }, []);
+
+  useLayoutEffect(() => { place(openId); }, [openId, place]);
 
   const open = useCallback((id: string) => {
     if (shutTimer.current) clearTimeout(shutTimer.current);
@@ -78,6 +95,7 @@ export default function Header() {
     };
     const onResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false);
+      place(openId);
     };
     const onScroll = () => setScrolled(window.scrollY >= 40);   // v34's threshold
     onScroll();
@@ -93,7 +111,7 @@ export default function Header() {
       window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onScroll);
     };
-  }, [openId, menuOpen, closeAll]);
+  }, [openId, menuOpen, closeAll, place]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -165,6 +183,7 @@ export default function Header() {
         {dropdowns.map((d) => (
           <div
             key={d.id}
+            ref={(el) => { panelRefs.current[d.id] = el; }}
             className={`panel ${d.panelWidth === 'full' ? 'full' : 'content'}${openId === d.id ? ' open' : ''}`}
             id={`panel-${d.id}`}
             role="region"

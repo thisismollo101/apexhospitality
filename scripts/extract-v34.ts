@@ -99,7 +99,17 @@ console.log(`  parsed ${tokens.size} design tokens (all ${EXPECTED_TOKENS.length
 
 // Everything after :root is layout/component CSS. Carried over as-is: it is the
 // "look and layout" the owner asked to keep.
-const componentCss = css.slice((rootMatch.index ?? 0) + rootMatch[0].length).trim();
+//
+// One rewrite is applied. v34 styles its header with a bare `nav` element
+// selector, which is safe in a single-page document with exactly one <nav> but
+// not in a site: it captured our breadcrumb <nav> too, turning it into a second
+// fixed bar at the same z-index that swallowed every pointer event in the
+// header. v34's own markup already carries id="nav", so the selector is scoped
+// to #nav. Class selectors (.navlinks, .navtrig, ...) are left alone.
+const componentCss = css
+  .slice((rootMatch.index ?? 0) + rootMatch[0].length)
+  .trim()
+  .replace(/(^|,)(\s*)nav(?![\w-])/gm, '$1$2#nav');
 
 const tokenLines = [...tokens].map(([k, v]) => `  --${k}: ${v};`).join('\n');
 
@@ -122,13 +132,12 @@ const themeLines = [...tokens]
   .join('\n');
 
 write(
-  'src/app/globals.css',
-  `@import 'tailwindcss';
-
-/* ============================================================
+  'src/app/v34.css',
+  `/* ============================================================
    Apex Hospitality — design system
-   Ported verbatim from apexherorevealv34.html by scripts/extract-v34.ts.
-   Do not hand-edit: re-run \`npm run extract:v34\` to regenerate.
+   Ported from apexherorevealv34.html by scripts/extract-v34.ts.
+   GENERATED — do not hand-edit. Re-run \`npm run extract:v34\`.
+   Hand-written styles live in globals.css, which imports this file.
    ============================================================ */
 
 :root {
