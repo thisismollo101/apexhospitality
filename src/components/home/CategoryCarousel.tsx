@@ -138,7 +138,7 @@ export default function CategoryCarousel() {
           const [word, ...rest] = c.title.split(' ');
           const label = (
             <span className="hcardtitle">
-              {word}
+              <span className="hcardword">{word}</span>
               <br />
               {rest.join(' ')}
             </span>
