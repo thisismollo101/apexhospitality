@@ -147,8 +147,15 @@ export default function HeroReveal() {
         <div className="sheet" />
 
         <div className="salary-copy" ref={copy}>
-          <h2>Everything we build, running all year.</h2>
-          <p>Seven ways in. Open any of them.</p>
+          {/* TODO(copy): the first half of this heading was cut off in the
+              brief — only "& Stop Revenue Leakage." came through. The opening
+              clause below is a stand-in; swap it for the real one. */}
+          <h2>Convert Attention Into Bookings &amp; Stop Revenue Leakage.</h2>
+          <p>
+            Seven visual conversion modules engineered specifically for luxury
+            hospitality. From high yield suite sales to automated pre-arrival
+            upsells!
+          </p>
         </div>
 
         <div className="deck" ref={deck}>

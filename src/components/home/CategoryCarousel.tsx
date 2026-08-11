@@ -2,37 +2,30 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { nav } from '@/lib/nav';
-import type { NavColumn, NavDropdown } from '@/lib/nav';
-
-const products = (nav.header.dropdowns as NavDropdown[]).find((d) => d.id === 'products');
 
 /**
- * One card per rainbow colour — seven. The six product categories come from the
- * nav verbatim; Plans is the seventh, and is a real top-level route rather than
- * a duplicated or invented category, so every card still goes somewhere.
- */
-const categories: NavColumn[] = [
-  ...((products?.columns ?? []) as NavColumn[]),
-  { heading: 'Plans', href: '/plans', items: [] } as unknown as NavColumn,
-];
-
-/**
- * ROYGBIV, in v34's gradient form (160°, mid tone at 55%, dark at both ends).
+ * The seven modules, one per rainbow colour, in ROYGBIV order. Every href is an
+ * existing product page — these are the real leaf routes, not categories, so a
+ * card now lands the reader straight on the module it names.
  *
- * Yellow is the true hue rather than the gold it started as — at 53° it sits a
- * clear step off orange at 27°, where the previous 45° did not. A yellow that
- * reads as yellow is necessarily light, so that one card flips to dark ink;
- * `lit` carries that through to the CSS.
+ * Gradients keep v34's form (160°, mid tone at 55%, dark at both ends). Yellow
+ * is the true hue at 53°, a clear step off orange at 27°.
  */
-const SKINS: { bg: string; lit?: boolean }[] = [
-  { bg: 'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)' }, // red
-  { bg: 'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)' }, // orange
-  { bg: 'linear-gradient(160deg,#e8c81a,#f5de3c 55%,#c9a400)', lit: true }, // yellow
-  { bg: 'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)' }, // green
-  { bg: 'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)' }, // blue
-  { bg: 'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)' }, // indigo
-  { bg: 'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)' }, // violet
+const CARDS = [
+  { title: 'Apex International', href: '/products/signature-films/international',
+    bg: 'linear-gradient(160deg,#c0392b,#e74c3c 55%,#7d2018)' }, // red
+  { title: 'Apex Weddings', href: '/products/specialized-venues/weddings',
+    bg: 'linear-gradient(160deg,#c2571a,#ef8f3c 55%,#7d3410)' }, // orange
+  { title: 'Apex Welcome', href: '/products/vip-guest-services/welcome',
+    bg: 'linear-gradient(160deg,#e8c81a,#f5de3c 55%,#c9a400)' }, // yellow
+  { title: 'Apex Dining', href: '/products/billboards/dining',
+    bg: 'linear-gradient(160deg,#1f7a4d,#35a86c 55%,#12492e)' }, // green
+  { title: 'Apex Accommodation', href: '/products/billboards/accommodation',
+    bg: 'linear-gradient(160deg,#1f5fa8,#3d86d8 55%,#123a68)' }, // blue
+  { title: 'Apex Flagship', href: '/products/signature-films/flagship',
+    bg: 'linear-gradient(160deg,#332f7a,#514bb0 55%,#1d1a4a)' }, // indigo
+  { title: 'Apex Corporate', href: '/products/specialized-venues/corporate-events',
+    bg: 'linear-gradient(160deg,#6a2a86,#9d4bc4 55%,#401a52)' }, // violet
 ];
 
 /**
@@ -81,7 +74,7 @@ function placement(d: number) {
 }
 
 export default function CategoryCarousel() {
-  const n = categories.length;
+  const n = CARDS.length;
   const [active, setActive] = useState(0);
   const [instant, setInstant] = useState<number[]>([]);
   const [stepping, setStepping] = useState(false);
@@ -107,7 +100,7 @@ export default function CategoryCarousel() {
   // across the middle of the carousel, so its transition is dropped for one
   // frame and restored immediately after.
   useLayoutEffect(() => {
-    const now = categories.map((_, i) => slotFor(i, active, n));
+    const now = CARDS.map((_, i) => slotFor(i, active, n));
     const before = prev.current;
     prev.current = now;
     if (!before) return;
@@ -136,14 +129,13 @@ export default function CategoryCarousel() {
         className={`hcarstage${stepping ? ' is-stepping' : ''}`}
         style={{ aspectRatio: String(RATIO) }}
       >
-        {categories.map((c, i) => {
+        {CARDS.map((c, i) => {
           const d = slotFor(i, active, n);
           const p = placement(d);
           const isCentre = d === 0;
-          const skin = SKINS[i % SKINS.length];
           return (
             <div
-              key={c.heading}
+              key={c.title}
               className={`hcard${p.hidden ? ' is-off' : ''}${instant.includes(i) ? ' is-instant' : ''}`}
               aria-hidden={p.hidden}
               style={{
@@ -159,24 +151,29 @@ export default function CategoryCarousel() {
                 style={{ ['--t' as string]: `var(--ring-${Math.min(Math.abs(d), 2)}, 1)` } as React.CSSProperties}
               >
                 {isCentre ? (
-                  <Link
-                    className={`hcardin${skin.lit ? ' is-lit' : ''}`}
-                    href={c.href}
-                    style={{ background: skin.bg }}
-                  >
-                    <span className="hcardtitle">{c.heading}</span>
+                  <Link className="hcardin" href={c.href} style={{ background: c.bg }}>
+                    <span className="hcardtitle">{c.title}</span>
                     <span className="hcardgo">Explore</span>
                   </Link>
                 ) : (
                   <button
                     type="button"
-                    className={`hcardin${skin.lit ? ' is-lit' : ''}`}
-                    style={{ background: skin.bg }}
+                    className="hcardin"
+                    style={{ background: c.bg }}
                     tabIndex={p.hidden ? -1 : 0}
-                    aria-label={`Show ${c.heading}`}
-                    onClick={() => go(i)}
+                    aria-label={
+                      Math.abs(d) === 1
+                        ? `Show ${c.title}`
+                        : d > 0
+                          ? 'Next module'
+                          : 'Previous module'
+                    }
+                    /* One slot per click. Sending the outer card straight to the
+                       centre skipped a card past the reader without them ever
+                       seeing it move through the middle. */
+                    onClick={() => go(active + Math.sign(d))}
                   >
-                    <span className="hcardtitle">{c.heading}</span>
+                    <span className="hcardtitle">{c.title}</span>
                   </button>
                 )}
               </div>
@@ -185,14 +182,14 @@ export default function CategoryCarousel() {
         })}
       </div>
 
-      <ul className="px-dots" role="tablist" aria-label="Categories">
-        {categories.map((c, i) => (
-          <li key={c.heading}>
+      <ul className="px-dots" role="tablist" aria-label="Modules">
+        {CARDS.map((c, i) => (
+          <li key={c.title}>
             <button
               type="button"
               role="tab"
               aria-current={i === active}
-              aria-label={c.heading}
+              aria-label={c.title}
               onClick={() => go(i)}
             />
           </li>
