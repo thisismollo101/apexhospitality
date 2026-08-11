@@ -36,6 +36,11 @@ const SKINS = [
  * far right never animates through the middle. We keep one node per category
  * and suppress its transition for the frame in which it wraps, which gets the
  * same result without cloning content.
+ *
+ * The scroll reveal lives on an inner element rather than this one. Carousel
+ * placement is transitioned over 350ms; the reveal is driven per rAF frame from
+ * HeroReveal, and sharing a transitioned transform would make it lag the
+ * scroll by a third of a second.
  */
 const RATIO = 0.7086614173228346;
 
@@ -113,23 +118,28 @@ export default function CategoryCarousel() {
                 zIndex: isCentre ? 2 : 1,
               }}
             >
-              {isCentre ? (
-                <Link className="hcardin" href={c.href} style={{ background: SKINS[i % SKINS.length] }}>
-                  <span className="hcardtitle">{c.heading}</span>
-                  <span className="hcardgo">Explore →</span>
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className="hcardin"
-                  style={{ background: SKINS[i % SKINS.length] }}
-                  tabIndex={p.hidden ? -1 : 0}
-                  aria-label={`Show ${c.heading}`}
-                  onClick={() => go(i)}
-                >
-                  <span className="hcardtitle">{c.heading}</span>
-                </button>
-              )}
+              <div
+                className="hcardrise"
+                style={{ ['--t' as string]: `var(--ring-${Math.min(Math.abs(d), 2)}, 1)` } as React.CSSProperties}
+              >
+                {isCentre ? (
+                  <Link className="hcardin" href={c.href} style={{ background: SKINS[i % SKINS.length] }}>
+                    <span className="hcardtitle">{c.heading}</span>
+                    <span className="hcardgo">Explore →</span>
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    className="hcardin"
+                    style={{ background: SKINS[i % SKINS.length] }}
+                    tabIndex={p.hidden ? -1 : 0}
+                    aria-label={`Show ${c.heading}`}
+                    onClick={() => go(i)}
+                  >
+                    <span className="hcardtitle">{c.heading}</span>
+                  </button>
+                )}
+              </div>
             </div>
           );
         })}

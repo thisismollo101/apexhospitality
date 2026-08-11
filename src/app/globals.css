@@ -264,3 +264,19 @@
 .px-dots li{display:flex}
 
 @media (prefers-reduced-motion:reduce){.hcard{transition:none}}
+
+/* ---- card reveal ----
+   A separate layer from the carousel placement above. That one transitions over
+   350ms when you step; this one is written every rAF frame by HeroReveal and
+   must not transition, or it would trail the scroll. Cards arrive by ring —
+   centre, then neighbours, then the outer pair — rising rather than blinking. */
+.hcar{--hcar-rise:clamp(18px,3.4vh,42px)}
+.hcardrise{position:absolute;inset:0;
+  transform:translateY(calc((1 - var(--t,1)) * var(--hcar-rise)))
+            scale(calc(.955 + .045 * var(--t,1)));
+  opacity:var(--t,1);will-change:transform,opacity}
+.hcar .px-dots{opacity:var(--ring-2,1)}
+
+@media (prefers-reduced-motion:reduce){
+  .hcardrise{transform:none;opacity:var(--t,1)}
+}

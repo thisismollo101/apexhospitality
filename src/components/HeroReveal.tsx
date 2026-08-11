@@ -25,7 +25,9 @@ const smooth = (a: number, b: number, x: number) => {
  *   --sheet  s(0.28,0.86)      the white panel rises: this is the reveal
  *   --txt    s(0.50,0.96)      section copy fades in
  *   --dot    s(0.62,1.00)      dots fade in
- *   deck     s(0.05,0.24)      the six cards fade up
+ *   ring-0   s(0.10,0.38)      centre card rises
+ *   ring-1   s(0.18,0.48)      its neighbours follow
+ *   ring-2   s(0.26,0.60)      the outer pair last
  */
 export default function HeroReveal() {
   const scroller = useRef<HTMLDivElement>(null);
@@ -79,10 +81,17 @@ export default function HeroReveal() {
       s.setProperty('--dot', smooth(0.62, 1.0, v).toFixed(4));
       document.documentElement.style.setProperty('--navbg', smooth(0.01, 0.12, v).toFixed(4));
 
-      const cards = smooth(0.05, 0.24, v);
+      // The cards arrive in rings rather than as one block: centre first, then
+      // its neighbours, then the outer pair. The windows overlap and run to
+      // 0.60, so the deck is still assembling while the sheet is still rising
+      // instead of being fully in by 0.24 and waiting on an empty screen.
       if (deck.current) {
-        deck.current.style.opacity = cards.toFixed(4);
-        deck.current.style.pointerEvents = cards > 0.6 ? 'auto' : 'none';
+        const ds = deck.current.style;
+        ds.setProperty('--ring-0', smooth(0.10, 0.38, v).toFixed(4));
+        ds.setProperty('--ring-1', smooth(0.18, 0.48, v).toFixed(4));
+        ds.setProperty('--ring-2', smooth(0.26, 0.60, v).toFixed(4));
+        ds.opacity = '1';
+        ds.pointerEvents = smooth(0.10, 0.38, v) > 0.6 ? 'auto' : 'none';
       }
 
       raf.current = Math.abs(target.current - p.current) > 0.0002
