@@ -102,7 +102,7 @@ export default function SamplePageOne() {
 
       {/* 2 ── feature items, cards variant */}
       <section>
-        <div className="wrap feat feat-center pad-b">
+        <div className="feat feat-center is-bleed pad-b">
           <div className="copy cards-copy">
             <h2 className="t-h2">Sync your company spend</h2>
             <span className="lede t-lede">
@@ -138,7 +138,7 @@ export default function SamplePageOne() {
       {/* 3 ── feature items, media variant: looping video behind black copy */}
       <section className="mediaband">
         <div className="bandmedia"><BgVideo name={MEDIA.bandVideo} /></div>
-        <div className="wrap feat feat-center">
+        <div className="feat feat-center">
           <div className="copy copy-onlight">
             <h2 className="t-h2s">Pay suppliers in 150+ destinations with Revolut BillPay</h2>
             <span className="lede t-lede">
@@ -149,13 +149,13 @@ export default function SamplePageOne() {
             </span>
             <span className="cta"><a className="btn btn-solid" href="#">Get started</a></span>
           </div>
-          <div className="mediacol" />
+          <div className="mediacol is-spacer" />
         </div>
       </section>
 
       {/* 4 ── feature items, carousel variant: copy left, phones right */}
       <section>
-        <div className="wrap feat feat-split pad-b">
+        <div className="feat feat-split pad-b">
           <div className="copy copy-split">
             <h2 className="t-h2s">All your purchasing, fully integrated</h2>
             <span className="lede t-lede">
@@ -188,7 +188,7 @@ export default function SamplePageOne() {
 
       {/* 5 ── feature items, media variant reversed: image left, copy right */}
       <section>
-        <div className="wrap feat feat-split is-reversed">
+        <div className="feat feat-split is-reversed">
           <div className="copy copy-split">
             <h2 className="t-h2">Keep team spend on your terms</h2>
             <span className="lede t-lede">

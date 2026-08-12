@@ -159,20 +159,32 @@
    put their video in an absolutely positioned sibling, and an absolute box
    paints above in-flow content, so without a positioned context here the copy
    disappears behind the film. */
-.rv1 .feat { position: relative; padding-block: var(--s48); text-align: start; }
+.rv1 .feat {
+  position: relative;
+  width: 100%; max-width: var(--max); margin-inline: auto;
+  padding-block: var(--s48); text-align: start;
+}
 @media (min-width: 1200px) { .rv1 .feat { padding-block: 64px; } }
 @media (min-width: 1920px) { .rv1 .feat { padding-block: 80px; } }
 
 /* Centred variant: a column, copy over media. */
 .rv1 .feat-center {
   display: flex; flex-direction: column; justify-content: center;
-  max-width: var(--max);
+}
+@media (min-width: 840px) { .rv1 .feat-center { text-align: center; } }
+
+/* Only the cards block carries this. It has two width rules and the later one
+   wins: sc-52120e58-0 caps it at the layout width, then sc-c169b8fd-1 reopens
+   it to 100%. So that block alone runs the full viewport and the deck bleeds
+   off both edges — the copy inside still stops at the 1000px column. Leaving it
+   capped guillotines the outer cards and makes the deck read as oversized. */
+.rv1 .is-bleed {
+  max-width: 100%;
   /* clip, not hidden: the outer cards sit past this edge, and `hidden` leaves a
      scroll container that focus or scrollIntoView can still shift sideways —
      which drags the whole deck off centre and never puts it back. */
   overflow: clip;
 }
-@media (min-width: 840px) { .rv1 .feat-center { text-align: center; } }
 
 /* Split variants: copy and media side by side from 1200px. */
 .rv1 .feat-split {
@@ -203,10 +215,13 @@
   grid-area: content;
   display: flex; flex-direction: column; align-items: flex-start;
   flex-shrink: 0; max-width: var(--max);
+  /* The gutter lives on the copy, not on the block — which is how the deck
+     above can run edge to edge while the text stays off the screen edge. */
+  padding-inline: var(--s20);
   gap: var(--s16); margin-bottom: var(--s24);
 }
 @media (min-width: 840px)  { .rv1 .copy { align-items: center; } }
-@media (min-width: 1200px) { .rv1 .copy { gap: var(--s24); margin-bottom: var(--s32); align-self: center; } }
+@media (min-width: 1200px) { .rv1 .copy { padding-inline: 0; gap: var(--s24); margin-bottom: var(--s32); align-self: center; } }
 @media (min-width: 1920px) { .rv1 .copy { gap: var(--s32); margin-bottom: var(--s48); } }
 
 /* .hlQsZC — copy stack in a split variant: stays left on desktop */
@@ -368,6 +383,12 @@
 }
 @media (min-width: 1200px) { .rv1 .mediacol { height: 600px; max-height: 600px; } }
 @media (min-width: 1920px) { .rv1 .mediacol { height: 860px; max-height: 860px; } }
+
+/* The media block on the video band holds nothing — its column is an empty div,
+   and their rule frees the minimum height above 840px, so the row collapses and
+   the section is just copy over the film. Below that it keeps the 446px so the
+   video still gets room under the copy on a phone. */
+@media (min-width: 840px) { .rv1 .mediacol.is-spacer { height: 0; max-height: 0; } }
 
 /* ---- 4. phone carousel ----------------------------------------------- */
 
