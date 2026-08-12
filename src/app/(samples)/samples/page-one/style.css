@@ -288,19 +288,27 @@
 
 .rv1 .cards-copy { color: var(--white); }
 
-/* .fqrLdb — the stage.
-   Height is what is fixed here; the width falls out of the card ratio, which is
-   why the deck steps up with the breakpoint rather than with the text column.
-   Their rule pins min-height and max-height to the same number and then frees
-   the minimum above 840px, leaving the cap to do the work — so the cap is the
-   height. Without a definite one the aspect-ratio has nothing to divide and the
-   whole deck collapses to zero width. */
+/* .fqrLdb — the stage. Height is set here; the card width follows from the
+   0.70866 ratio, and the deck's total span is then a fixed multiple of it:
+   the outer card reaches 2·gap + 2.80w on each side, so span = 4.92w.
+
+   Their max-heights are a ceiling, not the height. Measured off the live page
+   at a 2091px viewport the card is 308 × 434, well under the 643 ceiling that
+   applies there — and 434 is 43% of that window's height. That is what their
+   `min-height: initial` above 840px is for: below it the card is pinned at
+   412px so it cannot shrink on a small phone, above it the height tracks the
+   viewport and is allowed to fall below 412 on a short laptop screen.
+
+   Taking the ceiling as the height instead makes the deck span 117% of the
+   viewport and shoulders the outer pair off both edges. At 43vh it spans about
+   three quarters, which is how the real page reads. */
 .rv1 .cardstage {
   position: relative; align-self: center; margin-inline: auto;
   height: 412px; max-height: 412px;
 }
-@media (min-width: 1200px) { .rv1 .cardstage { height: 508px; max-height: 508px; } }
-@media (min-width: 1920px) { .rv1 .cardstage { height: 643px; max-height: 643px; } }
+@media (min-width: 840px)  { .rv1 .cardstage { height: 43vh; } }
+@media (min-width: 1200px) { .rv1 .cardstage { max-height: 508px; } }
+@media (min-width: 1920px) { .rv1 .cardstage { max-height: 643px; } }
 
 /* ---- the carousel itself (shared by both decks) ---------------------- */
 
@@ -332,6 +340,9 @@
   position: relative; height: 100%; overflow: hidden;
   background: var(--grey-tone-5);
   border-radius: var(--card-radius);
+  /* The card is its own query container — see the cqw rules below. */
+  container-type: inline-size;
+  container-name: feature-items-cards;
 }
 .rv1 .cardface img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
@@ -348,6 +359,19 @@
 @media (min-width: 1920px) { .rv1 .cardcopy { padding: var(--s40); } }
 
 .rv1 .cardcopy .t-card { margin-block-start: var(--s8); color: var(--white); }
+
+/* Once the card is narrow enough, its padding, gap and title all switch off the
+   page's type ramp and onto the card's own width. This is shipped as an inline
+   <style> on the page rather than in the stylesheet, which is how I missed it
+   first time round — and it is the whole reason their titles sit on two lines.
+   A 307px card gives 24.6px text against the 40px the ramp would have applied,
+   which is why mine were breaking to four lines at the same card size. */
+@media (min-width: 720px) {
+  @container feature-items-cards (max-width: 380px) {
+    .rv1 .cardcopy { padding: 10cqw; gap: 5cqw; }
+    .rv1 .cardcopy .t-card { font-size: 8cqw; line-height: 1.2; }
+  }
+}
 
 /* .kir1zx0 — dots hang below the stage rather than inside it */
 .rv1 .dots {
@@ -368,7 +392,11 @@
 
 /* ---- 3. full-bleed media block --------------------------------------- */
 
-.rv1 .mediaband { position: relative; background: var(--black); }
+/* This block is a full-screen panel: the film covers the whole viewport and the
+   copy sits in the top third of it, so the section is pinned to 100vh rather
+   than sized by its own content. */
+.rv1 .mediaband { position: relative; background: var(--black); min-height: 100vh; display: flex; }
+.rv1 .mediaband .feat { min-height: 100vh; justify-content: flex-start; }
 .rv1 .bandmedia { position: absolute; inset: 0; overflow: hidden; }
 .rv1 .bandmedia video { width: 100%; height: 100%; object-fit: cover; }
 
