@@ -1,0 +1,18 @@
+{
+  "note": "Revolut design references under /samples. Kept out of navigation.json on purpose: that file is the source of truth for the real route tree and the catch-all generates every href in it, so a sample listed there would collide with its own page.tsx. Adding an entry here adds it to the header dropdown and the /samples index; the page itself lives at src/app/(samples)/samples/<slug>/page.tsx.",
+  "label": "Sample Pages",
+  "items": [
+    {
+      "slug": "page-one",
+      "label": "Sample Page One",
+      "summary": "Revolut Business — Bills. Hero video, card carousel, phone carousel, testimonial, FAQ.",
+      "status": "live"
+    },
+    {
+      "slug": "kit",
+      "label": "Placeholder kit",
+      "summary": "Every stand-in image and crop available to a sample page.",
+      "status": "live"
+    }
+  ]
+}

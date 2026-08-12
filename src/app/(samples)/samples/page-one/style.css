@@ -1,0 +1,481 @@
+/*
+ * Sample Page One — Revolut Business "Bills" (revolut.com/business/bills/).
+ *
+ * Rebuilt from their rendered markup. Revolut ships styled-components with
+ * hashed class names and a token layer (--rui-*), so this is the same cascade
+ * written out longhand: tokens first, then one block per page section in
+ * document order. Values — type ramps, breakpoints, spacing, the carousel
+ * geometry — are transcribed from their stylesheet rather than eyeballed.
+ *
+ * Their breakpoints, used throughout: 600 / 840 / 1200 / 1600 / 1920.
+ *
+ * Everything is scoped under .rv1 so this file cannot reach another sample.
+ */
+
+.rv1 {
+  /* Dark theme — the page ships data-theme="dark" and a black background. */
+  --bg: #000;
+  --fg: #fff;
+  --white: #fff;
+  --black: #000;
+  --grey-50: #8e8e93;      /* captions */
+  --grey-20: #c7c7cc;      /* dim body text, inactive dots */
+  --grey-tone-20: #2c2c2e; /* card hairline */
+  --grey-tone-5: #141414;  /* image placeholder plate */
+
+  /* --website-layout-max-width */
+  --max: 1000px;
+
+  /* --rui-space-* : 1:1 with px on their scale */
+  --s4: 4px; --s8: 8px; --s16: 16px; --s20: 20px;
+  --s24: 24px; --s32: 32px; --s40: 40px; --s48: 48px;
+
+  /* Aeonik Pro is Revolut's licensed brand face and is not ours to ship, so
+     headings fall through to Inter. Everything else about the ramp is theirs. */
+  --brand: 'Aeonik Pro', Inter, ui-sans-serif, system-ui, sans-serif;
+  --text: Inter, ui-sans-serif, system-ui, sans-serif;
+
+  --round: 999px;
+  --card-radius: 16px;
+  --card-border: 1px solid var(--grey-tone-20);
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+@media (min-width: 1200px) { .rv1 { --card-radius: 24px; } }
+@media (min-width: 1920px) { .rv1 { --max: 1432px; } }
+
+.rv1 p { margin: 0; }
+.rv1 h1, .rv1 h2, .rv1 h3 { margin: 0; font-weight: 500; }
+.rv1 a { color: inherit; text-decoration: none; }
+.rv1 ul { margin: 0; padding: 0; list-style: none; }
+
+/* ---- type ramp ------------------------------------------------------- */
+
+/* .Text lcWYjV — hero caption */
+.rv1 .t-caption {
+  font-family: var(--brand); font-weight: 500;
+  font-size: 1.375rem; line-height: 1.625rem; letter-spacing: -0.01375rem;
+}
+@media (min-width: 1200px) { .rv1 .t-caption { font-size: 1.5rem; line-height: 1.75rem; letter-spacing: -0.015rem; } }
+@media (min-width: 1920px) { .rv1 .t-caption { font-size: 2rem; line-height: 2.375rem; letter-spacing: -0.02rem; } }
+
+/* .Text ceSXXX — hero h1 */
+.rv1 .t-h1 {
+  font-family: var(--brand); font-weight: 500;
+  font-size: 2.5rem; line-height: 1; white-space: pre-line;
+}
+@media (min-width: 600px)  { .rv1 .t-h1 { font-size: clamp(2rem, 0.75rem + 2.7333vw, 2.5rem); } }
+@media (min-width: 840px)  { .rv1 .t-h1 { font-size: clamp(3rem, 1.4444rem + 2.4296vw, 5rem); letter-spacing: -0.075rem; } }
+@media (min-width: 1920px) { .rv1 .t-h1 { font-size: 6rem; letter-spacing: -0.0975rem; } }
+
+/* .Text hIcOqA — the larger section h2 */
+.rv1 .t-h2 {
+  font-family: var(--brand); font-weight: 500;
+  font-size: 2.25rem; line-height: 1; white-space: pre-wrap;
+}
+@media (min-width: 840px)  { .rv1 .t-h2 { font-size: clamp(3rem, 2.4167rem + 0.9111vw, 3.75rem); letter-spacing: -0.0375rem; } }
+@media (min-width: 1920px) { .rv1 .t-h2 { font-size: 5rem; letter-spacing: -0.05rem; } }
+
+/* .Text mLnoo — the smaller section h2 */
+.rv1 .t-h2s {
+  font-family: var(--brand); font-weight: 500;
+  font-size: 2.25rem; line-height: 1; white-space: pre-wrap;
+}
+@media (min-width: 840px)  { .rv1 .t-h2s { font-size: 3rem; letter-spacing: -0.03rem; } }
+@media (min-width: 1920px) { .rv1 .t-h2s { font-size: 3.75rem; letter-spacing: -0.0375rem; } }
+
+/* .Text fnNCuP / cDbcjE — hero and section body */
+.rv1 .t-lede {
+  font-family: var(--brand); font-weight: 400;
+  font-size: 1.125rem; line-height: 1.5rem;
+}
+@media (min-width: 1920px) { .rv1 .t-lede { font-size: 1.5rem; line-height: 2rem; } }
+
+/* .Text bdPDlD — carousel card title, testimonial quote */
+.rv1 .t-card {
+  font-family: var(--brand); font-weight: 500;
+  font-size: 1.5rem; line-height: 1.75rem; letter-spacing: -0.015rem;
+}
+@media (min-width: 1200px) { .rv1 .t-card { font-size: 2rem; line-height: 2.375rem; letter-spacing: -0.02rem; } }
+@media (min-width: 1920px) { .rv1 .t-card { font-size: 2.5rem; line-height: 3rem; letter-spacing: -0.025rem; } }
+
+/* .Text hAhkur — the legal/footnote size */
+.rv1 .t-small {
+  font-family: var(--text); font-weight: 400;
+  font-size: 0.75rem; line-height: 1.125rem; letter-spacing: 0.01125rem;
+}
+@media (min-width: 1920px) { .rv1 .t-small { font-size: 1rem; line-height: 1.5rem; letter-spacing: 0.015rem; } }
+
+/* .Text ckfHak / dlOQeP — default Inter body */
+.rv1 .t-body {
+  font-family: var(--text); font-weight: 400;
+  font-size: 1rem; line-height: 1.5rem; letter-spacing: -0.01rem;
+}
+@media (min-width: 1920px) { .rv1 .t-body { font-size: 1.25rem; line-height: 2rem; letter-spacing: -0.0125rem; } }
+
+/* ---- buttons --------------------------------------------------------- */
+
+/* width:min-content on their button only shrink-wraps because the label span
+   is white-space:nowrap. Expressed directly here. */
+.rv1 .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  box-sizing: border-box; border: 0; cursor: pointer;
+  font-family: var(--brand); font-weight: 500;
+  font-size: 1rem; line-height: 1.375rem;
+  padding: 10px var(--s24);
+  max-width: 240px; white-space: nowrap;
+  border-radius: var(--round);
+  transition: opacity 200ms ease, background-color 200ms ease;
+}
+@media (min-width: 1920px) {
+  .rv1 .btn { font-size: 1.25rem; line-height: 1.75rem; padding: 14px var(--s32); }
+}
+.rv1 .btn:hover { opacity: 0.85; }
+.rv1 .btn:active { opacity: 0.75; }
+
+.rv1 .btn-solid { background: var(--fg); color: var(--bg); }
+.rv1 .btn-outline {
+  background: transparent; color: var(--fg);
+  border: 2px solid var(--fg); padding-block: 8px;
+}
+@media (min-width: 1920px) { .rv1 .btn-outline { padding-block: 12px; } }
+
+/* ---- shared layout --------------------------------------------------- */
+
+/* .cphwlp / .hoUHPR / .dQmdvf — the centred max-width column */
+.rv1 .wrap {
+  width: 100%; max-width: var(--max);
+  margin-inline: auto; padding-inline: var(--s20);
+  box-sizing: border-box;
+}
+@media (min-width: 1200px) { .rv1 .wrap { padding-inline: 0; } }
+
+/* .fSvtX / .hCTFxj / .kzzXDz — the feature-items block.
+   position:relative is load-bearing, not decorative: the media-variant blocks
+   put their video in an absolutely positioned sibling, and an absolute box
+   paints above in-flow content, so without a positioned context here the copy
+   disappears behind the film. */
+.rv1 .feat { position: relative; padding-block: var(--s48); text-align: start; }
+@media (min-width: 1200px) { .rv1 .feat { padding-block: 64px; } }
+@media (min-width: 1920px) { .rv1 .feat { padding-block: 80px; } }
+
+/* Centred variant: a column, copy over media. */
+.rv1 .feat-center {
+  display: flex; flex-direction: column; justify-content: center;
+  max-width: var(--max);
+  /* clip, not hidden: the outer cards sit past this edge, and `hidden` leaves a
+     scroll container that focus or scrollIntoView can still shift sideways —
+     which drags the whole deck off centre and never puts it back. */
+  overflow: clip;
+}
+@media (min-width: 840px) { .rv1 .feat-center { text-align: center; } }
+
+/* Split variants: copy and media side by side from 1200px. */
+.rv1 .feat-split {
+  display: grid; grid-template-areas: 'content' 'media';
+  grid-template-rows: auto 1fr; grid-template-columns: 1fr;
+  justify-content: space-between;
+}
+@media (min-width: 840px)  { .rv1 .feat-split { text-align: center; } }
+@media (min-width: 1200px) {
+  .rv1 .feat-split {
+    grid-template-areas: 'content media';
+    grid-template-rows: initial; grid-template-columns: 488px 450px;
+    text-align: start;
+  }
+}
+@media (min-width: 1920px) { .rv1 .feat-split { grid-template-columns: 696px 600px; } }
+
+@media (min-width: 1200px) {
+  .rv1 .feat-split.is-reversed {
+    grid-template-areas: 'media content';
+    grid-template-columns: 450px 488px;
+  }
+}
+@media (min-width: 1920px) { .rv1 .feat-split.is-reversed { grid-template-columns: 600px 696px; } }
+
+/* .gxxxCF — copy stack in the centred variant */
+.rv1 .copy {
+  grid-area: content;
+  display: flex; flex-direction: column; align-items: flex-start;
+  flex-shrink: 0; max-width: var(--max);
+  gap: var(--s16); margin-bottom: var(--s24);
+}
+@media (min-width: 840px)  { .rv1 .copy { align-items: center; } }
+@media (min-width: 1200px) { .rv1 .copy { gap: var(--s24); margin-bottom: var(--s32); align-self: center; } }
+@media (min-width: 1920px) { .rv1 .copy { gap: var(--s32); margin-bottom: var(--s48); } }
+
+/* .hlQsZC — copy stack in a split variant: stays left on desktop */
+.rv1 .copy-split { align-items: flex-start; }
+@media (min-width: 1200px) { .rv1 .copy-split { align-items: flex-start; margin-bottom: 0; } }
+@media (min-width: 1920px) { .rv1 .copy-split { margin-bottom: 0; } }
+
+.rv1 .copy .lede { display: block; }
+@media (min-width: 1200px) { .rv1 .feat-center .copy .lede { width: 60%; } }
+@media (min-width: 1920px) { .rv1 .feat-center .copy .lede { width: 80%; } }
+
+.rv1 .copy .cta { margin-block-start: var(--s4); }
+@media (min-width: 1200px) { .rv1 .copy .cta { margin-block-start: var(--s8); } }
+
+/* ---- 1. hero --------------------------------------------------------- */
+
+.rv1 .hero {
+  position: relative; display: flex;
+  background: var(--bg);
+  min-height: max(840px, 100vh);
+}
+@media (min-width: 1200px) { .rv1 .hero { min-height: 100vh; } }
+
+.rv1 .heromedia {
+  position: absolute; inset-inline-start: 0; top: 0;
+  width: 100%; height: 100%; max-height: max(840px, 100vh);
+  overflow: hidden;
+}
+.rv1 .heromedia video { width: 100%; height: 100%; object-fit: cover; }
+
+/* .dECKvg — the hero's inner row */
+.rv1 .heroin {
+  position: relative; display: flex; flex: 1; flex-direction: column;
+  margin-block: var(--s48); padding-block-start: var(--s40);
+}
+@media (min-width: 1200px) {
+  .rv1 .heroin { flex-direction: row; justify-content: space-between; margin-block: 80px; padding-block-start: 0; }
+}
+@media (min-width: 1920px) { .rv1 .heroin { margin-block: 160px; } }
+
+/* .cJIUQS */
+.rv1 .herocopy {
+  display: grid; align-content: center; justify-items: start;
+  gap: var(--s16); width: 100%; margin-inline: auto; text-align: start;
+}
+@media (min-width: 1200px) {
+  .rv1 .herocopy { max-width: 65%; gap: var(--s24); margin-inline: 0; min-height: 200px; }
+}
+@media (min-width: 1920px) { .rv1 .herocopy { gap: var(--s32); } }
+
+/* .enSlbG */
+.rv1 .herotext { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s8); }
+@media (min-width: 1200px) { .rv1 .herotext { gap: var(--s24); } }
+
+.rv1 .herotext .t-caption { color: var(--grey-50); }
+.rv1 .herobtns { display: flex; flex-wrap: wrap; justify-content: start; gap: var(--s16); }
+
+/* ---- 2. card carousel ------------------------------------------------ */
+
+/* .gJCozy — the extra bottom room this block carries */
+.rv1 .pad-b { padding-bottom: 64px; }
+@media (min-width: 1200px) { .rv1 .pad-b { padding-bottom: 88px; } }
+@media (min-width: 1920px) { .rv1 .pad-b { padding-bottom: 112px; } }
+
+.rv1 .cards-copy { color: var(--white); }
+
+/* .fqrLdb — the stage.
+   Height is what is fixed here; the width falls out of the card ratio, which is
+   why the deck steps up with the breakpoint rather than with the text column.
+   Their rule pins min-height and max-height to the same number and then frees
+   the minimum above 840px, leaving the cap to do the work — so the cap is the
+   height. Without a definite one the aspect-ratio has nothing to divide and the
+   whole deck collapses to zero width. */
+.rv1 .cardstage {
+  position: relative; align-self: center; margin-inline: auto;
+  height: 412px; max-height: 412px;
+}
+@media (min-width: 1200px) { .rv1 .cardstage { height: 508px; max-height: 508px; } }
+@media (min-width: 1920px) { .rv1 .cardstage { height: 643px; max-height: 643px; } }
+
+/* ---- the carousel itself (shared by both decks) ---------------------- */
+
+/* .dukAgM / .dHyPfN — the inter-card gap */
+.rv1 .car {
+  --gap: 16px;
+  position: relative; height: 100%; margin: auto;
+}
+@media (min-width: 840px) { .rv1 .car { --gap: 8%; } }
+
+/* .ljwQp / .kHttmL — every card is absolutely placed and transitions in */
+.rv1 .caritem {
+  position: absolute; top: 0; bottom: 0; inset-inline-start: 0;
+  transition: transform 350ms ease, opacity 350ms ease;
+}
+.rv1 .caritem.is-centre { z-index: 1; }
+/* A card wrapping from one end to the other would otherwise animate straight
+   through the middle of the deck, so its transition is dropped for one frame. */
+.rv1 .caritem.is-instant { transition: none; }
+
+.rv1 .carbtn {
+  display: block; width: 100%; height: 100%;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: inherit; text-align: inherit;
+}
+.rv1 .caritem[aria-hidden='true'] .carbtn { pointer-events: none; }
+
+.rv1 .cardface {
+  position: relative; height: 100%; overflow: hidden;
+  background: var(--grey-tone-5);
+  border-radius: var(--card-radius);
+}
+.rv1 .cardface img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* .cOzaAa — card copy sits at the top, not the bottom */
+.rv1 .cardcopy {
+  position: absolute; top: 0; inset-inline-start: 0;
+  display: flex; flex-direction: column;
+  width: 100%; height: 100%; box-sizing: border-box;
+  padding: var(--s24); gap: var(--s16);
+  text-align: start;
+}
+@media (min-width: 840px)  { .rv1 .cardcopy { gap: var(--s24); } }
+@media (min-width: 1200px) { .rv1 .cardcopy { padding: var(--s32); } }
+@media (min-width: 1920px) { .rv1 .cardcopy { padding: var(--s40); } }
+
+.rv1 .cardcopy .t-card { margin-block-start: var(--s8); color: var(--white); }
+
+/* .kir1zx0 — dots hang below the stage rather than inside it */
+.rv1 .dots {
+  position: absolute; inset-block-start: 100%; inset-inline: 0;
+  margin-block-start: var(--s16);
+  display: flex; justify-content: center; gap: var(--s8);
+}
+@media (min-width: 840px)  { .rv1 .dots { margin-block-start: var(--s24); } }
+@media (min-width: 1920px) { .rv1 .dots { margin-block-start: var(--s32); } }
+
+.rv1 .dots button {
+  width: 8px; height: 8px; padding: 0; border: 0; cursor: pointer;
+  border-radius: var(--round);
+  background: rgb(255 255 255 / 0.3);
+  transition: background-color 200ms ease;
+}
+.rv1 .dots button[aria-current='true'] { background: var(--white); }
+
+/* ---- 3. full-bleed media block --------------------------------------- */
+
+.rv1 .mediaband { position: relative; background: var(--black); }
+.rv1 .bandmedia { position: absolute; inset: 0; overflow: hidden; }
+.rv1 .bandmedia video { width: 100%; height: 100%; object-fit: cover; }
+
+/* Their copy for this block is set to black, over a light product animation. */
+.rv1 .copy-onlight { color: var(--black); }
+
+/* .eWprkP — the media column in a split block */
+.rv1 .mediacol {
+  position: relative; grid-area: media;
+  width: 100%; align-self: center;
+  height: 446px; max-height: 446px;
+}
+@media (min-width: 1200px) { .rv1 .mediacol { height: 600px; max-height: 600px; } }
+@media (min-width: 1920px) { .rv1 .mediacol { height: 860px; max-height: 860px; } }
+
+/* ---- 4. phone carousel ----------------------------------------------- */
+
+.rv1 .phonestage {
+  position: relative; grid-area: media;
+  height: 412px; max-height: 412px;
+}
+@media (min-width: 1200px) { .rv1 .phonestage { height: 568px; max-height: 568px; } }
+@media (min-width: 1920px) { .rv1 .phonestage { height: 752px; max-height: 752px; } }
+
+.rv1 .phonestage .car { position: absolute; top: 0; inset-inline-start: 0; height: 100%; }
+/* In the dark theme these cards carry a hairline; in light they have none. */
+.rv1 .phonestage .cardface { border: var(--card-border); }
+
+/* ---- 5. contained image ---------------------------------------------- */
+
+/* .jAGWHY — inset from the viewport edge until the column takes over */
+.rv1 .mediafit {
+  position: absolute; top: 0; bottom: 0; left: var(--s20); right: var(--s20);
+  margin: auto; max-height: 100%;
+}
+@media (min-width: 1200px) { .rv1 .mediafit { left: 0; right: 0; } }
+.rv1 .mediafit img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---- 6. testimonial -------------------------------------------------- */
+
+.rv1 .quote {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--s32); width: 100%;
+  margin-block: var(--s48);
+}
+@media (min-width: 1200px) { .rv1 .quote { margin-block: 80px; } }
+@media (min-width: 1920px) { .rv1 .quote { margin-block: 160px; } }
+
+.rv1 .quotein {
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: var(--s24); text-align: start;
+}
+@media (min-width: 840px)  { .rv1 .quotein { align-items: center; text-align: center; } }
+@media (min-width: 1200px) { .rv1 .quotein { align-items: flex-start; text-align: start; } }
+
+/* The avatar's glow is a tinted plate behind the image plus an inset hairline. */
+.rv1 .avatar {
+  width: 76px; height: 76px; flex: none;
+  border-radius: var(--round); overflow: hidden;
+  background: rgb(255 255 255 / 0.1);
+  box-shadow: 0 0 0 2px inset rgb(255 255 255 / 0.05);
+}
+.rv1 .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.rv1 .quotein .attrib { color: var(--fg); }
+
+/* ---- 7. FAQ ---------------------------------------------------------- */
+
+.rv1 .faq { display: flex; flex-direction: column; gap: var(--s16); }
+@media (min-width: 840px)  { .rv1 .faq { gap: var(--s24); } }
+@media (min-width: 1920px) { .rv1 .faq { gap: var(--s32); } }
+
+.rv1 .faqhead { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s16); }
+@media (min-width: 840px)  { .rv1 .faqhead { align-items: center; text-align: center; } }
+@media (min-width: 1200px) { .rv1 .faqhead { gap: var(--s24); } }
+@media (min-width: 1920px) { .rv1 .faqhead { gap: var(--s32); } }
+.rv1 .faqhead .t-caption { color: var(--grey-50); }
+
+.rv1 .faqitem {
+  margin-block-end: var(--s16);
+  border-block-end: 1px solid var(--grey-50);
+}
+@media (min-width: 1200px) { .rv1 .faqitem { margin-block-end: var(--s24); } }
+@media (min-width: 1920px) { .rv1 .faqitem { margin-block-end: var(--s40); } }
+
+.rv1 .faqtrig {
+  display: flex; align-items: center; gap: var(--s24);
+  width: 100%; padding: 0 0 var(--s16); margin: 0;
+  border: 0; background: none; cursor: pointer;
+  font: inherit; color: inherit; text-align: start;
+}
+.rv1 .faqtrig h3 { flex: 1; }
+.rv1 .faqicon { flex: 0 0 auto; width: 32px; height: 32px; transition: transform 250ms ease; }
+.rv1 .faqtrig[aria-expanded='true'] .faqicon { transform: rotate(45deg); }
+
+/* Height is animated by the grid-rows trick so the panel can size to content. */
+.rv1 .faqpanel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 300ms ease; }
+.rv1 .faqpanel.is-open { grid-template-rows: 1fr; }
+.rv1 .faqpanel > div { overflow: hidden; }
+.rv1 .faqpanel p { padding-block-end: var(--s16); color: var(--grey-20); }
+
+/* ---- 8/9. footnotes -------------------------------------------------- */
+
+.rv1 .note { color: var(--fg); }
+.rv1 .note p + p { margin-block-start: var(--s16); }
+.rv1 .note a { text-decoration: none; }
+.rv1 .note a:hover { text-decoration: underline; }
+.rv1 .note-last { padding-bottom: 60px; }
+@media (min-width: 1600px) { .rv1 .note-last { padding-bottom: 120px; } }
+
+/* ---- reference chrome ------------------------------------------------
+   Not Revolut's. A way back to the index, since these pages render with no
+   header of ours. */
+.rv1 .backbar {
+  position: fixed; z-index: 9; inset-block-start: 12px; inset-inline-start: 12px;
+  padding: 7px 14px; border-radius: var(--round);
+  background: rgb(0 0 0 / 0.55); backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  font-family: var(--text); font-size: 13px; color: #fff;
+}
+.rv1 .backbar:hover { background: rgb(0 0 0 / 0.8); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv1 .caritem, .rv1 .faqpanel, .rv1 .faqicon, .rv1 .btn { transition: none; }
+}

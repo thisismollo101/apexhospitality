@@ -1,0 +1,84 @@
+/*
+ * The only global stylesheet a sample page gets.
+ *
+ * Just a reset plus the index page's own styling. Nothing here should describe
+ * what a sample looks like — each sample ships its own stylesheet, so that a
+ * page can be lifted out (or thrown away) on its own.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img, video, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* ---- the index at /samples ------------------------------------------- */
+
+.sx {
+  --sx-fg: #0b1220;
+  --sx-mut: #5b6577;
+  --sx-line: #e4e8ef;
+  --sx-bg: #fff;
+  min-height: 100vh;
+  padding: 56px 24px 96px;
+  background: var(--sx-bg);
+  color: var(--sx-fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+.sxin { max-width: 900px; margin: 0 auto; }
+
+.sx h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.sxlede { margin: 0 0 8px; max-width: 62ch; font-size: 17px; line-height: 1.55; color: var(--sx-mut); }
+.sxback { display: inline-block; margin-bottom: 34px; font-size: 14px; color: var(--sx-mut); }
+
+.sxlist { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--sx-line); }
+.sxlist li { border-bottom: 1px solid var(--sx-line); }
+
+.sxrow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 18px 4px;
+  color: inherit;
+  text-decoration: none;
+}
+a.sxrow:hover { background: #f7f9fc; }
+.sxrow b { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+.sxrow span { flex: 1; font-size: 14px; color: var(--sx-mut); }
+.sxrow code { font-size: 12.5px; color: var(--sx-mut); }
+
+/* A slot that has been registered but whose markup has not landed yet. */
+.sxrow.is-empty { opacity: 0.55; cursor: default; }
+.sxtag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #eef1f6;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sx-mut);
+}
+.sxtag.is-live { background: #e7f6ee; color: #16794a; }
+
+.sxnote {
+  margin-top: 40px;
+  padding: 18px 20px;
+  border: 1px solid var(--sx-line);
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sx-mut);
+}
+.sxnote b { color: var(--sx-fg); }
+.sxnote code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #f2f4f8;
+  font-size: 12.5px;
+}

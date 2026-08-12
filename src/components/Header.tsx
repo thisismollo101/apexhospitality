@@ -5,8 +5,29 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { nav } from '@/lib/nav';
 import type { NavColumn, NavDropdown } from '@/lib/nav';
+import { liveSamples, samplesLabel } from '@/lib/samples';
 
-const dropdowns = nav.header.dropdowns as NavDropdown[];
+/**
+ * The design references get a dropdown of their own, built here rather than
+ * added to navigation.json: that file drives the catch-all route, and a
+ * /samples href in it would have the catch-all generate a page that already
+ * exists as a file. Sourced from samples.json so registering a sample in one
+ * place puts it in both the menu and the index.
+ */
+const sampleMenu: NavDropdown = {
+  id: 'samples',
+  label: samplesLabel,
+  panelWidth: 'content',
+  columns: [
+    {
+      heading: 'Revolut references',
+      href: '/samples',
+      items: liveSamples().map((s) => ({ label: s.label, href: `/samples/${s.slug}` })),
+    },
+  ],
+};
+
+const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), sampleMenu];
 const auth = nav.header.auth as { label: string; href: string; style: string }[];
 
 function Caret() {
@@ -18,11 +39,22 @@ function Caret() {
   );
 }
 
+/**
+ * /samples sits under its own root layout, so entering it has to replace the
+ * document — a client-side push would keep this stylesheet alive underneath
+ * the sample and colour it.
+ */
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return href.startsWith('/samples')
+    ? <a href={href}>{children}</a>
+    : <Link href={href}>{children}</Link>;
+}
+
 function ColumnLinks({ items }: { items: { label: string; href: string }[] }) {
   return (
     <ul>
       {items.map((i) => (
-        <li key={i.href}><Link href={i.href}>{i.label}</Link></li>
+        <li key={i.href}><NavLink href={i.href}>{i.label}</NavLink></li>
       ))}
     </ul>
   );
@@ -194,7 +226,7 @@ export default function Header() {
             <div className="pinner">
               {(d.columns ?? []).map((c: NavColumn) => (
                 <div className="pcol" key={c.heading}>
-                  <h3>{c.href ? <Link href={c.href}>{c.heading}</Link> : c.heading}</h3>
+                  <h3>{c.href ? <NavLink href={c.href}>{c.heading}</NavLink> : c.heading}</h3>
                   <ColumnLinks items={c.items} />
                 </div>
               ))}
