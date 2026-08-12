@@ -395,8 +395,8 @@
 /* This block is a full-screen panel: the film covers the whole viewport and the
    copy sits in the top third of it, so the section is pinned to 100vh rather
    than sized by its own content. */
-.rv1 .mediaband { position: relative; background: var(--black); min-height: 100vh; display: flex; }
-.rv1 .mediaband .feat { min-height: 100vh; justify-content: flex-start; }
+.rv1 .mediaband { position: relative; background: var(--black); min-height: 105vh; display: flex; }
+.rv1 .mediaband .feat { min-height: 105vh; justify-content: flex-start; }
 .rv1 .bandmedia { position: absolute; inset: 0; overflow: hidden; }
 .rv1 .bandmedia video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -420,12 +420,14 @@
 
 /* ---- 4. phone carousel ----------------------------------------------- */
 
+/* Deliberately 90% of the source values (412 / 568 / 752) — a house preference,
+   not a transcription. Keep the three in step if this is dialled again. */
 .rv1 .phonestage {
   position: relative; grid-area: media;
-  height: 412px; max-height: 412px;
+  height: 371px; max-height: 371px;
 }
-@media (min-width: 1200px) { .rv1 .phonestage { height: 568px; max-height: 568px; } }
-@media (min-width: 1920px) { .rv1 .phonestage { height: 752px; max-height: 752px; } }
+@media (min-width: 1200px) { .rv1 .phonestage { height: 511px; max-height: 511px; } }
+@media (min-width: 1920px) { .rv1 .phonestage { height: 677px; max-height: 677px; } }
 
 .rv1 .phonestage .car { position: absolute; top: 0; inset-inline-start: 0; height: 100%; }
 /* In the dark theme these cards carry a hairline; in light they have none. */
