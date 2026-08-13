@@ -12,6 +12,7 @@ export type Product = {
   quote: string;
   why?: [string, string][];
   personas?: [string, string][];
+  pipeline?: string[];
   blueprint?: Blueprint;
 };
 
@@ -81,6 +82,15 @@ export default function ProductDetail({
               </div>
             ))}
           </dl>
+        </section>
+      )}
+
+      {product.pipeline && (
+        <section className="psec">
+          <h2>How it is produced</h2>
+          <ol className="pclips">
+            {product.pipeline.map((step) => <li key={step}>{step}</li>)}
+          </ol>
         </section>
       )}
 
