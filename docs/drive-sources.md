@@ -45,8 +45,30 @@ template in `src/components/ProductDetail.tsx` as:
 | On Site Guide | `apex-product-18-onsite-guide.md` | `/products/guidebooks/on-site` |
 | Off Site Guide | `apex-product-19-offsite-guide.md` | `/products/guidebooks/off-site` |
 
+## Page wireframes
+
+Product specs say what a product *is*. Page wireframes say what its landing page
+*does* — sections, widgets, layout, and the copy in place. They live in
+`docs/pages/`, one file per page, and are committed so the spec travels with the
+code it describes.
+
+| Page | Wireframe | Route |
+| --- | --- | --- |
+| Apex Welcome | `docs/pages/apex-welcome-landing-v4.md` | `/products/vip-guest-services/welcome` |
+
+A page with a wireframe gets a real route file and is built to it. Everything
+else still renders through the shared `ProductDetail` template off
+`products.json`.
+
+One deliberate departure from the Welcome wireframe: it specifies a dark
+charcoal-and-gold design system with its own sticky header and Playfair Display
+headlines. That is not used. The page is reached from the Apex header and has to
+look like the rest of the site, so it is built on v34's tokens — light ground,
+Inter, the shared `.btn` and `.pwrap`. The structure, the copy and the
+seven-section order are the wireframe's.
+
 ## Status
 
-Only **Apex Welcome** has been written from its specification in full. The other
-seventeen routes still carry the short three-field placeholder copy
+**Apex Welcome** has a full landing page and product copy written from source.
+The other seventeen routes still carry the short three-field placeholder copy
 (`concept` / `math` / `quote`) and have not been reconciled against Drive.
