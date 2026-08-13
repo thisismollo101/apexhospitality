@@ -13,8 +13,26 @@ import { internalHrefs, breadcrumbs } from '@/lib/nav';
  */
 export const dynamicParams = false;
 
+/**
+ * Paths that have a page.tsx of their own and must not also be generated here.
+ *
+ * Next resolves a static segment ahead of a catch-all at request time, but the
+ * build is a different matter: both pages write into one map keyed by pathname,
+ * so whichever is emitted last wins. Today the static page happens to win, and
+ * only because '[' sorts before the letter the real path starts with. If that
+ * ever flipped, the catch-all would overwrite the real page and the route would
+ * still prerender, still pass verify:routes, and quietly serve the scaffold
+ * instead of its content — a silent swap with nothing to catch it.
+ *
+ * So the override is declared rather than left to sort order. Add a path here
+ * when you add a route file that shadows one of NAV's hrefs.
+ */
+const OVERRIDDEN = new Set(['/products/vip-guest-services/welcome']);
+
 export function generateStaticParams() {
-  return internalHrefs().map((href) => ({ slug: href.replace(/^\//, '').split('/') }));
+  return internalHrefs()
+    .filter((href) => !OVERRIDDEN.has(href))
+    .map((href) => ({ slug: href.replace(/^\//, '').split('/') }));
 }
 
 function titleFor(path: string): string {
