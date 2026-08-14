@@ -1,12 +1,9 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { breadcrumbs, internalHrefs } from '@/lib/nav';
-import { catalogue } from '@/components/ProductDetail';
 import AutoPilot from './AutoPilot';
 import Cadence from './Cadence';
 import CompareCarousel from './CompareCarousel';
 import ModuleCards from './ModuleCards';
-import Nav from './Nav';
 import Objections from './Objections';
 import RoiCalculator from './RoiCalculator';
 import VslMatrix from './VslMatrix';
@@ -33,46 +30,12 @@ export const metadata: Metadata = {
   description: HERO.subhead,
 };
 
-const PATH = '/products/vip-guest-services/welcome';
-
-/**
- * Same trail PageShell renders, with one difference: a crumb whose href the nav
- * never declares is plain text rather than a link. breadcrumbs() builds one
- * segment per path part, so /products/... yields a /products crumb — and
- * /products is a grouping label, not a route, so linking it 404s.
- */
-function Crumbs() {
-  const routes = new Set(internalHrefs());
-  const trail = breadcrumbs(PATH);
-  return (
-    <nav className="crumbs" aria-label="Breadcrumb">
-      <ol>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        {trail.map((c, i) => (
-          <li key={c.href}>
-            {i === trail.length - 1 || !routes.has(c.href) ? (
-              <span aria-current={i === trail.length - 1 ? 'page' : undefined}>{c.label}</span>
-            ) : (
-              <Link href={c.href}>{c.label}</Link>
-            )}
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
-}
-
 export default function WelcomePage() {
-  const product = catalogue[PATH];
-
   return (
     <main className="page wpage">
       {/* ---- 1. Hero ------------------------------------------------------ */}
       <section id="hero" className="wsec wsec-hero">
         <div className="pwrap">
-          <Crumbs />
           <div className="whero">
             <div className="whero-copy">
               <p className="weyebrow">{HERO.eyebrow}</p>
@@ -92,11 +55,6 @@ export default function WelcomePage() {
                 <summary>Where the money actually leaks</summary>
                 <p>{HERO.narrative}</p>
               </details>
-
-              <div className="prank">
-                <span className="pill">Rank {product.rank} of 18</span>
-                <span className="ptier">{product.tier}</span>
-              </div>
             </div>
 
             <div className="whero-widget">
@@ -105,8 +63,6 @@ export default function WelcomePage() {
           </div>
         </div>
       </section>
-
-      <Nav />
 
       {/* ---- 1B. The VSL matrix ------------------------------------------- */}
       <section id="vsl" className="wsec">

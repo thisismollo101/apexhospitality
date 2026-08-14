@@ -11,18 +11,6 @@
  * repo already ships, standing in until the real per-section assets land.
  */
 
-export type Section = { id: string; label: string };
-
-/** Anchor links in the sticky header, in scroll order. */
-export const SECTIONS: Section[] = [
-  { id: 'hero', label: 'Hero' },
-  { id: 'vsl', label: 'Executive VSL' },
-  { id: 'previews', label: 'Demographic Previews' },
-  { id: 'cadence', label: '4-Touchpoint Cadence' },
-  { id: 'mechanics', label: 'Operational Mechanics' },
-  { id: 'roi', label: 'ROI Calculator' },
-];
-
 /* ---- Section 1: hero ---------------------------------------------------- */
 
 export const HERO = {

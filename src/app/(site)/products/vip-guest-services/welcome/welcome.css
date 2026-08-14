@@ -20,9 +20,9 @@
 .wpage .wsec {
   padding: 88px 0;
   border-top: 1px solid var(--line);
-  /* Anchor jumps have to clear both the fixed site header and the sticky rail
-     that parks under it, or the section heading lands behind them. */
-  scroll-margin-top: calc(var(--sales-h) + var(--nav-h) + 58px + 20px);
+  /* Anchor jumps have to clear the fixed site header, or the section heading
+     lands behind it. */
+  scroll-margin-top: calc(var(--sales-h) + var(--nav-h) + 20px);
 }
 .wpage .wsec-hero {
   padding-top: 0;
@@ -137,10 +137,6 @@
   font-size: 15.5px;
   line-height: 1.7;
   color: var(--muted);
-}
-
-.wpage .prank {
-  margin: 28px 0 0;
 }
 
 /* ---- 1. the comparison carousel ----------------------------------------- */
@@ -453,58 +449,6 @@
 }
 .wvsl-metric .is-yield dd {
   color: var(--live);
-}
-
-/* ---- the section rail ---------------------------------------------------- */
-
-.wrail {
-  position: sticky;
-  top: calc(var(--sales-h) + var(--nav-h));
-  z-index: 40;
-  background: rgba(247, 247, 248, 0.86);
-  backdrop-filter: blur(12px) saturate(150%);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.wrail-in {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 58px;
-}
-.wrail-links {
-  display: flex;
-  gap: 2px;
-  flex: 1;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.wrail-links::-webkit-scrollbar {
-  display: none;
-}
-.wrail-links a {
-  padding: 7px 14px;
-  border-radius: 999px;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-  transition: background 0.18s, color 0.18s;
-}
-.wrail-links a:hover {
-  background: var(--hover);
-  color: var(--fg);
-}
-.wrail-links a.is-active {
-  background: var(--surface-2);
-  color: var(--fg);
-  font-weight: 600;
-}
-.wrail-cta {
-  flex: none;
-  padding: 8px 18px;
-  font-size: 14px;
 }
 
 /* ---- 2. demographic modules --------------------------------------------- */
@@ -1256,9 +1200,6 @@
   }
   .wcmp-stage {
     grid-template-columns: 1fr;
-  }
-  .wrail-cta {
-    display: none;
   }
   .wdark,
   .wvsl-detail,
