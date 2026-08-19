@@ -1,0 +1,984 @@
+/*
+ * Apex Sections — the 22-component landing page, as a sample.
+ *
+ * The design system is Apex Welcome's, taken directly: v34's tokens and the
+ * shared .pwrap / .btn scaffolding come in via globals.css, then welcome.css
+ * itself, and the markup reuses those classes wherever a widget already exists
+ * — .wsec, .wsec-head, .wtabs, .wcalc, .wfield, .wout, .wauto, .wswitch,
+ * .wsteps, .wlife, .wdark, .wstats, .wdrawer, .wsources, .wv916.
+ *
+ * Both are pulled in here rather than imported alongside this file from
+ * page.tsx: three sibling global imports on one page left Turbopack emitting
+ * this sheet as a chunk it never linked, so the widget rules below silently
+ * did not load. One @import chain is one stylesheet, in a guaranteed order.
+ *
+ * This file adds only the widgets Welcome has no pattern for: the full-bleed
+ * video hero, the receipt-versus-storefront windows, the four-box showcase,
+ * the three-column VSL dashboard, the vertical timeline, the sixteen-cell
+ * matrix and its modal, the bento fallacy, and the pricing tiers.
+ *
+ * No new palette and no second typeface — same rule Welcome holds itself to.
+ * Scoped under .axpage so nothing here can reach another route.
+ */
+
+@import '../../../globals.css';
+@import '../../../(site)/products/vip-guest-services/welcome/welcome.css';
+
+/* ---- page frame ---------------------------------------------------------- */
+
+/* The samples root layout renders no site header, so the header offset that
+   .page and .wsec carry on the real site would open a gap at the top and
+   misplace every anchor jump. Both are wound back here. */
+.axpage.page {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.axpage .wsec {
+  scroll-margin-top: 0;
+}
+
+.axback {
+  position: fixed;
+  z-index: 40;
+  top: 16px;
+  left: 16px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  backdrop-filter: blur(10px);
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.axback:hover {
+  color: var(--fg);
+}
+
+/* ---- 1. the hero --------------------------------------------------------- */
+
+.axhero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 0;
+  padding: 0;
+}
+.axhero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.axhero-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* The vignette is what makes the headline legible over a bright frame. Two
+   stops rather than one: a floor under the type and a wash across the whole
+   frame, so a pale sky at the top edge cannot bleach the first line. */
+.axhero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 38%, rgba(0, 0, 0, 0.78) 100%),
+    radial-gradient(120% 80% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+}
+.axhero-in {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: 96px;
+  padding-bottom: 96px;
+  color: #fff;
+}
+.axhero-copy {
+  max-width: min(1000px, 100%);
+}
+.axhero h1 {
+  /* Measured on the h1 itself, where 1ch is the headline's own advance width. */
+  max-width: 16ch;
+  font-size: clamp(34px, 5.4vw, 74px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  text-wrap: balance;
+  margin: 0;
+}
+.axhero-sub {
+  margin: 22px 0 0;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.7vw, 21px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  text-wrap: balance;
+}
+.axhero-cta {
+  margin-top: 34px;
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 30px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.axhero-cta:hover {
+  background: #fff;
+  color: var(--fg);
+  border-color: #fff;
+}
+.axscroll {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 26px;
+  translate: -50% 0;
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.75));
+}
+
+/* ---- 2. them versus us --------------------------------------------------- */
+
+.axvs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--card-gap);
+  align-items: stretch;
+}
+.axwin {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.axwin.is-us {
+  border-color: var(--line-2);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.09);
+}
+.axwin-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.axwin-head h3 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axwin-flag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hot);
+}
+.axwin.is-us .axwin-flag {
+  color: var(--live);
+}
+.axwin-verdict {
+  margin: 0;
+  padding: 18px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* The receipt. Deliberately drab — the argument is that it is lifeless, so it
+   is rendered as the real thing rather than described. */
+.axrcpt {
+  flex: 1;
+  padding: 22px 20px;
+  background: var(--surface-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.axrcpt-meta {
+  display: grid;
+  gap: 3px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line-2);
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+.axrcpt-subject {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.axrcpt-lines {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.axrcpt-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  padding: 9px 13px;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  background: var(--surface);
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+.axrcpt-file span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 26px;
+  border-radius: 3px;
+  background: var(--muted-2);
+  color: var(--surface);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.axrcpt-foot {
+  margin: 16px 0 0;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--muted-2);
+}
+
+.axstore {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--fg);
+}
+.axstore .wv916 {
+  width: min(258px, 70%);
+}
+.axstore-type {
+  position: absolute;
+  left: 50%;
+  bottom: 46px;
+  translate: -50% 0;
+  width: min(300px, 80%);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.axstore-type strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.axstore-type em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ---- 2b. the four-box showcase ------------------------------------------- */
+
+.axboxes {
+  margin-top: var(--card-gap);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--card-gap);
+}
+.axbox {
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.axbox .wv916 {
+  width: 100%;
+}
+.axbox-body {
+  padding: 16px 18px 20px;
+}
+.axbox-n {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axbox h3 {
+  margin: 7px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axbox p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---- 3. the VSL dashboard ------------------------------------------------ */
+
+.axvsl {
+  display: grid;
+  grid-template-columns: 40fr 25fr 35fr;
+  gap: var(--card-gap);
+  padding: var(--card-gap);
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  align-items: start;
+}
+.axvsl-play {
+  margin: 0;
+}
+.axvsl-play .wv916 {
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+.axseek {
+  margin-top: 12px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.axseek span {
+  display: block;
+  height: 100%;
+  background: var(--fg);
+  transition: width 0.4s var(--ease);
+}
+.axasmr {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axasmr::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--live);
+  animation: axpulse 1.9s ease-in-out infinite;
+}
+@keyframes axpulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.axnext {
+  display: grid;
+  gap: 10px;
+}
+.axnext-lab {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axthumb {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 11px;
+  align-items: center;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.axthumb:hover {
+  border-color: var(--line-2);
+  background: var(--surface);
+}
+.axthumb .wv916 {
+  width: 52px;
+  border-radius: 7px;
+}
+.axthumb strong {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.axthumb em {
+  display: block;
+  margin-top: 3px;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted-2);
+}
+
+.axproof h3 {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.axmetric {
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  margin-bottom: 16px;
+}
+.axmetric dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.axmetric dd {
+  margin: 4px 0 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.axmetric.is-yield dd {
+  color: var(--live);
+}
+
+.axscript {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.axscript summary {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  cursor: pointer;
+}
+.axscript p {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.axscript-note {
+  margin-top: 9px !important;
+  font-size: 11.5px !important;
+  color: var(--muted-2) !important;
+}
+
+/* ---- shared callout ------------------------------------------------------ */
+
+.axcall {
+  margin-top: var(--card-gap);
+  padding: 32px 34px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  text-align: center;
+}
+.axcall-tag {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axcall p {
+  margin: 0 auto;
+  max-width: 78ch;
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+/* ---- 4. the arsenal drawer ----------------------------------------------- */
+
+.axarsenal {
+  margin-top: var(--card-gap);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--card-gap);
+  align-items: start;
+}
+.axarsenal-body h3 {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.axarsenal-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axarsenal-body p {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ---- 5. the vertical timeline -------------------------------------------- */
+
+.axtl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+.axtl li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 132px 96px 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+}
+.axtl li:first-child {
+  border-top: 0;
+}
+.axtl-when strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axtl-when span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--muted-2);
+  font-variant-numeric: tabular-nums;
+}
+.axtl-n {
+  display: inline-block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axtl .wv916 {
+  width: 96px;
+  border-radius: 10px;
+}
+.axtl-body h3 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axtl-body p {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 72ch;
+}
+.axtl-gate {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border: 1px dashed var(--line-2);
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+
+/* ---- 7. the sixteen-cell matrix ------------------------------------------ */
+
+.axmx {
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.axmx-row {
+  display: grid;
+  grid-template-columns: 148px repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.axmx-row:first-child {
+  border-top: 0;
+  background: var(--bg);
+}
+.axmx-head {
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  align-self: center;
+}
+.axmx-row:first-child .axmx-head {
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+}
+.axmx-cell {
+  position: relative;
+  padding: 14px;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.axmx-cell:hover {
+  background: var(--hover);
+}
+.axmx-cell .wv916 {
+  width: 100%;
+  border-radius: 9px;
+}
+.axmx-cell span {
+  display: block;
+  margin-top: 9px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.axmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+.axmodal-card {
+  width: min(620px, 100%);
+  max-height: 84vh;
+  overflow-y: auto;
+  padding: 30px 32px;
+  border-radius: var(--card-radius);
+  background: var(--surface);
+}
+.axmodal-card h3 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.axmodal-who {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axmodal-card dl {
+  margin: 22px 0 0;
+  display: grid;
+  gap: 18px;
+}
+.axmodal-card dt {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 5px;
+}
+.axmodal-card dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.axmodal-close {
+  margin-top: 26px;
+}
+
+/* ---- 8. the bento fallacy ------------------------------------------------ */
+
+.axbento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--card-gap);
+}
+.axbw {
+  padding: 24px 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+}
+.axbw.is-wide {
+  grid-column: span 2;
+}
+.axbw-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.axbw h3 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axbw-sub {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--muted-2);
+}
+.axbw-total {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--hot);
+  white-space: nowrap;
+}
+.axbw ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+}
+.axbw li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.axbw.is-wide ul {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+}
+
+/* ---- 9. pricing ---------------------------------------------------------- */
+
+.axtiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--card-gap);
+  align-items: start;
+}
+.axtier {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+}
+.axtier.is-featured {
+  border-color: var(--fg);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.11);
+}
+.axtier-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axtier-price {
+  margin: 12px 0 2px;
+  font-size: clamp(30px, 3.6vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.axtier-price em {
+  font-style: normal;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--muted-2);
+}
+.axtier-note {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.axtier ul {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+}
+.axtier li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.axtier li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--live);
+}
+
+/* ---- responsive ---------------------------------------------------------- */
+
+@media (max-width: 1040px) {
+  .axvsl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .axvsl-play {
+    grid-column: span 2;
+  }
+  .axboxes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .axtiers,
+  .axbento {
+    grid-template-columns: 1fr;
+  }
+  .axbw.is-wide {
+    grid-column: auto;
+  }
+  .axmx-row {
+    grid-template-columns: 110px repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .axvs,
+  .axvsl,
+  .axarsenal {
+    grid-template-columns: 1fr;
+  }
+  .axvsl-play {
+    grid-column: auto;
+  }
+  .axtl li {
+    grid-template-columns: 84px 1fr;
+    gap: 16px;
+  }
+  .axtl-media {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .axtl-when {
+    grid-column: 2;
+  }
+  .axtl-body {
+    grid-column: 1 / -1;
+  }
+  /* The matrix stops being a grid on a phone and becomes four stacked
+     persona ribbons, which is the only honest way to keep sixteen video
+     cells legible at 390px. */
+  .axmx-row {
+    grid-template-columns: 1fr;
+  }
+  .axmx-row:first-child {
+    display: none;
+  }
+  .axmx-cell {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .axmx-cell span {
+    margin-top: 0;
+  }
+  .axbw.is-wide ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Anchor jumps from the hero CTA glide rather than cut. */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ---- calculator additions ------------------------------------------------ */
+
+.axcalc-formula {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted-2);
+}
+/* The third outcome is neither loss nor recovery but volume, so it takes the
+   neutral brand blue rather than borrowing red or green and muddling both. */
+.axpage .wout.is-flow {
+  background: color-mix(in srgb, var(--brandblue) 10%, transparent);
+}
+.axpage .wout.is-flow strong {
+  color: var(--open);
+}
+.axpage .wroi {
+  align-items: start;
+}
+
+/* ---- height caps --------------------------------------------------------- */
+
+/* A true 9:16 cell is ~400px tall at this column width, which makes the matrix
+   2,300px of mostly letterbox. Cropping to 4:5 keeps the vertical read of the
+   format while halving the section. object-fit on .wv916 already covers. */
+.axpage .axmx-cell .wv916 {
+  aspect-ratio: 4 / 5;
+}
+
+/* Same problem in the VSL dashboard: 9:16 across a 40% column outruns the
+   proof beside it by 400px and leaves the right-hand column stranded. */
+.axpage .axvsl-play .wv916 {
+  aspect-ratio: 3 / 4;
+  max-height: 620px;
+}
+
+/* The showcase row reads better as a set of matched portraits than as four
+   full-height verticals stacked beside the comparison above them. */
+.axpage .axbox .wv916 {
+  aspect-ratio: 4 / 5;
+}
