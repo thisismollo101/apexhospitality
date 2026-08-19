@@ -1,27 +1,33 @@
 import { FALLACY, FALLACY_ANCHOR, LIFECYCLE } from './data';
 
+/** Components 19 and 20, each its own section. */
+
+/** Component 19 — the three lifecycle boundaries. */
+export function LifecycleScope() {
+  return (
+    <ol className="wlife">
+      {LIFECYCLE.map((p) => (
+        <li key={p.phase} className={p.active ? 'is-active' : undefined}>
+          <span className="wlife-phase">{p.phase}</span>
+          <h3>{p.product}</h3>
+          <ul>
+            <li>{p.body}</li>
+          </ul>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 /**
- * Components 19 and 20 — the three lifecycle boundaries and the $2M in-house
- * fallacy rendered as a bento.
+ * Component 20 — the in-house fallacy bento.
  *
- * The four widgets carry their own totals so the anchor line is checkable
- * rather than asserted: 1,085 + 280 + 145 + 490 is the two million it claims.
+ * Each widget carries its own total so the anchor line is checkable rather
+ * than asserted: 1,085 + 280 + 145 + 490 is the two million it claims.
  */
-export default function LifecycleBoundaries() {
+export function InHouseFallacy() {
   return (
     <>
-      <ol className="wlife">
-        {LIFECYCLE.map((p) => (
-          <li key={p.phase} className={p.active ? 'is-active' : undefined}>
-            <span className="wlife-phase">{p.phase}</span>
-            <h3>{p.product}</h3>
-            <ul>
-              <li>{p.body}</li>
-            </ul>
-          </li>
-        ))}
-      </ol>
-
       <div className="axbento">
         {FALLACY.map((w) => (
           <article className={`axbw${w.wide ? ' is-wide' : ''}`} key={w.key}>

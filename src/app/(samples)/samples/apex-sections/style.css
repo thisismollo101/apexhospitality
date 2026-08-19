@@ -982,3 +982,229 @@ html { scroll-behavior: smooth; }
 .axpage .axbox .wv916 {
   aspect-ratio: 4 / 5;
 }
+
+/* ---- catalogue furniture -------------------------------------------------- */
+
+/* This page is a catalogue of components, so each section is labelled with the
+   category it belongs to as well as its number. */
+.axcat {
+  margin-bottom: 22px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.axhero-tag {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* Section 2 shows the trigger on a light ground, so it needs the inverse of
+   the hero's over-video treatment. */
+.axhero-cta.is-dark {
+  border-color: var(--line-2);
+  color: var(--fg);
+}
+.axhero-cta.is-dark:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+.axtrigger {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+.axtrigger p {
+  max-width: 74ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.axtrigger code {
+  font-size: 13px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--surface-2);
+}
+
+/* ---- 5. the couples preview ---------------------------------------------- */
+
+.axpreview {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.axphone {
+  padding: 10px;
+  border-radius: 34px;
+  background: var(--fg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+.axphone-screen {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+}
+.axpreview-body h3 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.axpreview-body p {
+  margin-top: 12px;
+  max-width: 62ch;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---- 7. the transcripts --------------------------------------------------- */
+
+.axscripts {
+  border-top: 1px solid var(--line);
+}
+.axscript-row {
+  border-bottom: 1px solid var(--line);
+}
+.axscript-row summary {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.axscript-row summary::-webkit-details-marker {
+  display: none;
+}
+.axscript-n {
+  flex: none;
+  width: 92px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axscript-t {
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.axscript-row p {
+  margin: 0 0 22px 108px;
+  max-width: 82ch;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.axscripts .axscript-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.axcall.is-wide p {
+  max-width: 92ch;
+  font-size: 15.5px;
+}
+
+/* ---- 18. the blueprint set ------------------------------------------------ */
+
+.axbps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--card-gap);
+}
+.axbp-group h3 {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.axbp-rows {
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.axbp {
+  border-top: 1px solid var(--line);
+}
+.axbp:first-child {
+  border-top: 0;
+}
+.axbp summary {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.axbp summary::-webkit-details-marker {
+  display: none;
+}
+.axbp-who {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.axbp-type {
+  font-size: 13px;
+  color: var(--muted);
+}
+.axbp dl {
+  margin: 0;
+  padding: 0 16px 16px;
+  display: grid;
+  gap: 10px;
+}
+.axbp dt {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 3px;
+}
+.axbp dd {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .axpreview,
+  .axbps {
+    grid-template-columns: 1fr;
+  }
+  .axbp summary {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .axscript-row summary {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .axscript-row p {
+    margin-left: 0;
+  }
+}
