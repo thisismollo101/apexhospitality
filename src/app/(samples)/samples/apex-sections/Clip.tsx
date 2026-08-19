@@ -28,6 +28,13 @@ export default function Clip({
   const ref = useRef<HTMLVideoElement>(null);
   const onScreen = useRef(false);
 
+  // Swapping the <source> element's src is invisible to a <video> that has
+  // already selected a resource: without an explicit load() the player keeps
+  // showing the previous clip while every caption around it updates.
+  useEffect(() => {
+    ref.current?.load();
+  }, [name]);
+
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
@@ -48,7 +55,7 @@ export default function Clip({
     io.observe(v);
     sync();
     return () => io.disconnect();
-  }, [active]);
+  }, [active, name]);
 
   return (
     <video

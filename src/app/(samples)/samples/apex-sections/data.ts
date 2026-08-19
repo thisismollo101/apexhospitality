@@ -20,7 +20,7 @@ export const HERO = {
   headline: 'Your $10M physical estate is bleeding 18% of its revenue to a plain-text email receipt.',
   subhead: 'Why is your pre-arrival experience still a sterile, invoice-like black box?',
   cta: '[ Observe Emotion ]',
-  ctaHref: '#us-vs-them',
+  ctaHref: '#c3',
 };
 
 /* ---- 2. Them vs Us ------------------------------------------------------ */
