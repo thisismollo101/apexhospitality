@@ -103,7 +103,7 @@ export function ProductionBlueprints() {
   return (
     <div className="axbps">
       {MATRIX.map((row, t) => (
-        <section className="axbp-group" key={TOUCHPOINTS[t].n}>
+        <div className="axbp-group" key={TOUCHPOINTS[t].n}>
           <h3>
             {t + 1}. {TOUCHPOINTS[t].title}
           </h3>
@@ -127,7 +127,7 @@ export function ProductionBlueprints() {
               </details>
             ))}
           </div>
-        </section>
+        </div>
       ))}
     </div>
   );

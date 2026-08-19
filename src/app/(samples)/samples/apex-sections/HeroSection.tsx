@@ -17,7 +17,7 @@ export function HeroFrame() {
       </div>
 
       <div className="pwrap axhero-in">
-        <span className="axhero-tag">Section 1 — Full-bleed cinematic background</span>
+        <span className="axhero-tag">Section 1</span>
         <div className="axhero-copy">
           <h1>{HERO.headline}</h1>
           <p className="axhero-sub">{HERO.subhead}</p>
