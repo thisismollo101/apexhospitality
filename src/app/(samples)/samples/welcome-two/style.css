@@ -168,9 +168,12 @@
      section is scrolled to rather than landed on, so there is no gap to open. */
   min-height: 100svh;
   display: flex;
-  /* The heading sits along the bottom, so the mark keeps the whole frame. */
+  /* The lockup sits along the bottom, so the mark keeps the whole frame. */
   align-items: end;
   background: #000;
+  /* .wsec's own 88px band would hold the lockup well clear of the bottom
+     edge; it sits low deliberately, so the section owns its spacing. */
+  padding: 0;
   /* welcome.css gives every .wsec a 146px scroll-margin so a heading does not
      land behind the fixed chrome. On a section that is exactly one viewport
      tall that offset pushes its last 146px — the heading — below the fold on
@@ -205,44 +208,45 @@
   z-index: 1;
   width: 100%;
   text-align: center;
-  padding-bottom: 72px;
-}
-/* The section is black, so the shared head styles have to invert here. */
-.w2page .axbg-content .wsec-tag {
-  margin-bottom: 12px;
-  color: rgba(255, 255, 255, 0.55);
+  padding-bottom: 52px;
 }
 /* ---- the lockup, in place of a heading ---------------------------------- */
 
+/* Proportions are the reference lockup's: a 74px mark against a ~37px
+   wordmark, roughly 2:1, with the mark's own gap standing in for the rule
+   that used to divide them. */
 .axlock {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 26px;
 }
 .axlock-mark {
-  width: clamp(64px, 8vw, 110px);
-  height: clamp(64px, 8vw, 110px);
+  width: clamp(48px, 6.2vw, 74px);
+  height: clamp(48px, 6.2vw, 74px);
   flex: none;
   color: var(--brandblue);
 }
-/* The nav's own wordmark treatment — .brand in v34: 900, uppercase, .11em,
-   with the second word in brand blue. Restated rather than reused because
-   .brand also carries nav-specific layout and a 16px size. */
+/* Not the nav's treatment: no uppercase transform and negative tracking
+   rather than +0.11em, so "Apex" keeps its capital A and lowercase p-e-x.
+   Only HOSPITALITY is capitalised, and it is capitalised in the markup's
+   own element rather than by transforming the whole line. */
 .axlock-words {
-  font-size: clamp(24px, 3.6vw, 46px);
-  font-weight: 900;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  font-size: clamp(24px, 3.4vw, 37px);
+  font-weight: 600;
+  letter-spacing: -0.022em;
   white-space: nowrap;
   color: #fff;
   /* Closed until the section is reached; the animation below opens it. */
   clip-path: inset(0 100% 0 0);
 }
 .axlock-words em {
-  font-style: normal;
-  color: var(--brandblue);
-  margin-inline-start: 0.42em;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: uppercase;
+  /* White, carried at the reference's weight so it sits behind "Apex"
+     rather than competing with it. */
+  color: rgba(255, 255, 255, 0.56);
 }
 .axlock.is-in .axlock-words {
   animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;
@@ -717,7 +721,7 @@ body.w2exp-locked {
     gap: 18px;
   }
   .axlock-words {
-    font-size: clamp(22px, 6vw, 34px);
+    font-size: clamp(20px, 5.4vw, 30px);
   }
 
   .w2feat-grid {

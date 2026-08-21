@@ -26,15 +26,8 @@ export const HERO = {
   ctaHref: '#s2',
 };
 
-/* ---- 2. the particle field ----------------------------------------------- */
-
-/**
- * No written heading. The lockup sits at the bottom instead — the mark
- * assembling itself is the argument, and a sentence over it competes.
- */
-export const FIELD = {
-  tag: 'Section 2',
-};
+/* Section 2 carries no copy at all — the lockup is the only thing in it, and
+   it is markup rather than a string, so nothing for this file to hold. */
 
 /* ---- 3. latest posts ----------------------------------------------------- */
 

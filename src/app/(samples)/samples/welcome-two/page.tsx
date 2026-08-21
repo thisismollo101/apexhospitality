@@ -6,7 +6,7 @@ import ApexSectionBackground from './ApexSectionBackground';
 import Clip from './Clip';
 import FeatureCards from './FeatureCards';
 import PostsMarquee from './PostsMarquee';
-import { FEATURES, FIELD, HERO, POSTS } from './data';
+import { FEATURES, HERO, POSTS } from './data';
 
 // One stylesheet, which itself @imports globals.css and welcome.css so the whole
 // page ships as a single sheet in a guaranteed order. See style.css.
@@ -68,7 +68,6 @@ export default function WelcomeTwoPage() {
               the wordmark wipes across after it, both held until the section is
               reached. Centred along the bottom; nothing sits over the field. */}
           <div className="pwrap axbg-content">
-            <span className="wsec-tag">{FIELD.tag}</span>
             <ApexLockup />
           </div>
         </section>

@@ -59,10 +59,12 @@ export default function ApexMark({
   className?: string;
 }) {
   const ref = useRef<SVGSVGElement>(null);
+  const restRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
     const svg = ref.current;
-    if (!svg) return;
+    const rest = restRef.current;
+    if (!svg || !rest) return;
 
     const TAU = Math.PI * 2;
     const R = 1;
@@ -129,7 +131,17 @@ export default function ApexMark({
     const pr = (p: Vec, sc: number): [number, number] => [50 + p[0] * SC * XS * sc, CY - p[1] * SC * sc];
 
     const NS = 'http://www.w3.org/2000/svg';
-    svg.innerHTML = '';
+
+    /* The animation gets its own layer, created here and never mentioned in
+       JSX, and the server-rendered rest pose is hidden rather than deleted.
+       Clearing the <svg> outright does not hold: React re-applies the rest
+       pose's dangerouslySetInnerHTML on the next render, frame() re-appends
+       the animated polygons over the top, and the flat mark ends up sitting
+       behind the spinning one — six faces drawn instead of three. Scoping
+       React's html to its own <g> keeps the two from overwriting each other. */
+    rest.style.display = 'none';
+    const layer = document.createElementNS(NS, 'g');
+    svg.appendChild(layer);
 
     const ghostEl = document.createElementNS(NS, 'polygon');
     ghostEl.setAttribute('points', '50,11 9,85 91,85');
@@ -138,12 +150,12 @@ export default function ApexMark({
     ghostEl.setAttribute('stroke-width', '0.7');
     ghostEl.setAttribute('stroke-linejoin', 'round');
     ghostEl.setAttribute('opacity', '0');
-    if (ghost) svg.appendChild(ghostEl);
+    if (ghost) layer.appendChild(ghostEl);
 
     const poly = F.map(() => {
       const el = document.createElementNS(NS, 'polygon');
       el.setAttribute('fill', 'currentColor');
-      svg.appendChild(el);
+      layer.appendChild(el);
       return el;
     });
 
@@ -152,7 +164,7 @@ export default function ApexMark({
     accentEl.setAttribute('cy', '11');
     accentEl.setAttribute('fill', 'currentColor');
     accentEl.setAttribute('r', '0');
-    if (accent) svg.appendChild(accentEl);
+    if (accent) layer.appendChild(accentEl);
 
     const DUR = anim === 'shatter' ? 1.75 : anim === 'fold' ? 1.6 : 1.35;
 
@@ -305,9 +317,9 @@ export default function ApexMark({
         let op = TONE[d.fi];
         if (depth && !whole && zhi > zlo) op *= 0.62 + 0.38 * ((d.z - zlo) / (zhi - zlo));
         el.setAttribute('opacity', op.toFixed(3));
-        svg.appendChild(el);
+        layer.appendChild(el);
       });
-      if (accent) svg.appendChild(accentEl);
+      if (accent) layer.appendChild(accentEl);
 
       if (!reduced && vis) raf = requestAnimationFrame(frame);
     };
@@ -346,20 +358,19 @@ export default function ApexMark({
       io.disconnect();
       svg.removeEventListener('pointermove', onMove);
       svg.removeEventListener('pointerleave', onLeave);
-      // Leave the rest pose behind, so a re-mount starts from the real mark
-      // rather than an empty box.
-      svg.innerHTML = REST_MARKUP;
+      // Hand the frame back to the rest pose, so a re-mount starts from the
+      // real mark rather than an empty box.
+      layer.remove();
+      rest.style.display = '';
     };
   }, [anim, parallax, ghost, accent, depth]);
 
   return (
-    <svg
-      ref={ref}
-      className={className}
-      viewBox="0 0 100 100"
-      aria-hidden="true"
-      focusable="false"
-      dangerouslySetInnerHTML={{ __html: REST_MARKUP }}
-    />
+    <svg ref={ref} className={className} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      {/* React owns this group and nothing else in the svg. The effect hides it
+          and draws into a sibling layer of its own, so a re-render re-applying
+          this html cannot land on top of the animation. */}
+      <g ref={restRef} dangerouslySetInnerHTML={{ __html: REST_MARKUP }} />
+    </svg>
   );
 }
