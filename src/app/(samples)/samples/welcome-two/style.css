@@ -262,7 +262,7 @@
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--brandblue);
-  margin-inline-start: 0.42em;
+  margin-inline-start: 0.033em;
 }
 .axlock.is-in .axlock-words {
   animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;

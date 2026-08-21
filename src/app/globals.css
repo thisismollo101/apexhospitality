@@ -462,12 +462,17 @@ html.snap-on{scroll-snap-type:y mandatory}
   text-transform:uppercase;
   /* <em> is italic by default; v34 normalised it under .brand only. */
   font-style:normal;
+  /* The gap between the words is the word space, this margin, and the two side
+     bearings. Measured ink to ink at 4x, the pair used to stand 10.75px apart
+     at the nav's 19px; .033em lands it on 5.4px — half. The space itself stays:
+     it is the word boundary for selection and for a screen reader, not
+     decoration, which is why the margin carries the adjustment instead. */
   /* Set so HOSPITALITY's capitals stand exactly as tall as the "pex" beside
      them, top and bottom: Inter's cap height is .73em and its x-height .54em,
      so .54/.73 is the size that makes one match the other. Both words share a
      baseline, so matching the height aligns both edges. */
   font-size:.74em;font-weight:500;letter-spacing:.2em;
-  margin-inline-start:.42em;color:var(--brandblue)
+  margin-inline-start:.033em;color:var(--brandblue)
 }
 /* Over the transparent nav v34 turns the second word white, and that stays.
    The lockup is drawn blue-on-near-black; the hero underneath it is a video
