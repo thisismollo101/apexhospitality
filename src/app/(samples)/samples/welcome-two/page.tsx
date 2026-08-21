@@ -53,9 +53,12 @@ export default function WelcomeTwoPage() {
 
         {/* ---- 2. the particle field -------------------------------------- */}
         <section id="s2" className="wsec axbg-host">
-          {/* Well under the component's 155k default: this page also decodes
-              video, and the field is scenery rather than the subject. */}
-          <ApexSectionBackground count={90000} />
+          {/* No count override. The component's own 155k default is what gives
+              the field its density — at 90k the stars thin out and the mark
+              loses its edge. Every clip on this page pauses off-screen, so
+              nothing is decoding video while this section is up; there is no
+              budget to save here. */}
+          <ApexSectionBackground />
 
           <div className="pwrap axbg-content">
             <header className="wsec-head">
