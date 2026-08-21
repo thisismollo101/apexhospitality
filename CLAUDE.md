@@ -143,11 +143,19 @@ Clear space is one third of its width; minimum size 16px.
 |---|---|
 | Browser tab, iOS, link previews | `src/app/{favicon.ico,icon.svg,apple-icon.png}` and `src/app/(site)/opengraph-image.png` — Next's file conventions emit the tags |
 
-The three icons carry the mark on its own `#06080F` ground, not on transparency:
-the `.45` and `.22` faces wash out to nothing against a light browser tab.
-`icon.svg` is the source of truth — `favicon.ico` is six PNG frames rendered from
-it (16/32/48/64/128/256) and re-rendering is a headless-Chromium screenshot per
-size, assembled into an ICO.
+The tab icons carry no ground — `icon.svg` and `favicon.ico` are transparent —
+but they state the three face tones outright (`#163C7B` / `#2A7BFF` / `#0E2144`)
+rather than using the pack's `.45 / 1 / .22` on one ink. Those opacities only
+draw the mark over near-black; on a light tab the two minor faces wash out and
+it becomes a single triangle. The tones are that ink flattened onto `#06080F`,
+which is exactly what `ApexMark` does at runtime, so every surface matches.
+
+`apple-icon.png` keeps its solid ground — iOS composites a transparent icon onto
+black regardless, so the ground belongs in the file.
+
+`icon.svg` is the source of truth for the tab icons. `favicon.ico` is six PNG
+frames rendered from it (16/32/48/64/128/256); re-rendering is a
+headless-Chromium screenshot per size, assembled into an ICO.
 | The nav, and anywhere the mark should move | `src/components/ApexMark.tsx` |
 | Anywhere else | `public/brand/svg/` and `public/brand/png/` (blue, white, black, currentcolor; 11 raster sizes) |
 
