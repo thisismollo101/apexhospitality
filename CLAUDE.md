@@ -142,7 +142,7 @@ Clear space is one third of its width; minimum size 16px.
 | Where | What |
 |---|---|
 | Browser tab, iOS, link previews | `src/app/{favicon.ico,icon.svg,apple-icon.png}` and `src/app/(site)/opengraph-image.png` — Next's file conventions emit the tags |
-| The nav | `ApexMark` inlined in `Header.tsx` |
+| The nav, and anywhere the mark should move | `src/components/ApexMark.tsx` |
 | Anywhere else | `public/brand/svg/` and `public/brand/png/` (blue, white, black, currentcolor; 11 raster sizes) |
 
 **Prefer the `currentcolor` mark.** It inherits the surrounding text colour, so it
@@ -153,11 +153,23 @@ white over the hero and dark once the nav turns solid.
 `src/app/` but the OG convention needs a segment that actually has a layout, and
 `src/app/` has none — both layouts live inside route groups.
 
-⚠️ **Two different blues.** The pack's brand blue is `#2A7BFF`; v34's `--brandblue`
-token is `#5f9bef`, and that token colours "Hospitality" in the nav and the
-`--brandblue` focus rings. They have not been reconciled — decide deliberately
-before changing `--brandblue`, since it is generated into `v34.css` and used
-site-wide.
+`ApexMark` is the pack's 3D mark: the tetrahedron tumbles, folds or shatters into
+its rest pose, and the rest pose is the drawn artwork to a fraction of a pixel, so
+it drops in wherever the flat mark was without shifting anything. The nav plays
+`tumble` once on arrival. Under `prefers-reduced-motion` it renders one static
+frame in the rest pose.
+
+It server-renders the flat mark through `dangerouslySetInnerHTML`, so the logo is
+correct in the HTML before any JS runs — and because React does not diff that
+subtree, the effect is free to rewrite it. Everything is torn down on unmount;
+`reactStrictMode` is on, so a leaked rAF loop would double on every dev mount.
+
+**Brand blue is `#2A7BFF`.** v34 was built on `#5f9bef`, so `globals.css`
+overrides `--brandblue` after the `v34.css` import. Do **not** "fix" it in
+`v34.css` — that file is generated from the v34 export, which really does contain
+`#5f9bef`, and the next `npm run extract:v34` would put it back. `#2A7BFF` on
+white is ~4.0:1, under AA for 16px text; the pack's light-ground variant
+`#1E56D6` clears it at ~6.4:1 if contrast beats exact hue.
 
 ## Commands
 
