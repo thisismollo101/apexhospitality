@@ -19,6 +19,12 @@
       "label": "Apex Sections",
       "summary": "Apex Welcome as 22 components across 9 sections. Built on Welcome's own design system — v34 tokens plus welcome.css.",
       "status": "live"
+    },
+    {
+      "slug": "welcome-two",
+      "label": "Welcome Page Two",
+      "summary": "Second pass at Welcome, carrying the real site chrome. Full-bleed video hero, WebGL particle field, post marquee, and product cards that expand in place.",
+      "status": "live"
     }
   ]
 }
