@@ -55,7 +55,13 @@ export default function WelcomeTwoPage() {
             No count override — density is set by the component's own CONFIG,
             so there is one place to tune it rather than two that can disagree. */}
         <section id="s2" className="wsec axbg-host">
-          <ApexSectionBackground />
+          {/* clickToShift cycles Cobalt -> Nebula -> Ember -> Aurora on click.
+              The component defaults its prop to false even though BASE_CONFIG
+              says true, so it has to be asked for. Note the listener is on the
+              window, not this section: it ignores links, buttons and form
+              controls, but a click anywhere else on the page still advances
+              the palette. */}
+          <ApexSectionBackground clickToShift />
 
           {/* One line, centred along the bottom. Nothing sits over the mark. */}
           <div className="pwrap axbg-content">

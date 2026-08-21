@@ -38,7 +38,7 @@ const BASE_CONFIG = {
 
   // ---- scale -------------------------------------------------------------
   count: 108500,        // particle total
-  cycleSec: 17.5,       // one full loop
+  cycleSec: 18.13,      // one full loop
   /* pointScale sizes each dot; projScale spreads the field across the frame.
      They are independent — gl_PointSize never reads uProj — so pulling the
      camera back without also shrinking the dots reads as MORE crowded, not
@@ -49,13 +49,23 @@ const BASE_CONFIG = {
   /* ---- timeline ----------------------------------------------------------
      Cumulative fractions of the cycle. MUST ascend and stay below 1.
      The pyramid is the only resting point — the windows on the burst, the
-     sheet and the shell are collapsed to ~0.05s so the field never parks
+     sheet and the shell are collapsed to ~0.10s so the field never parks
      anywhere else.
 
        hold (pyramid)  1.75s     morph -> wide   5.06s
-       BANG            0.58s     morph -> shell  5.44s
-       burst           0.05s     home (gather)   4.52s                     */
-  T: [0.1000, 0.1333, 0.1361, 0.4250, 0.4278, 0.7389, 0.7417],
+       BANG            1.16s     morph -> shell  5.44s
+       burst           0.10s     home (gather)   4.52s
+
+     The blast runs at half its old rate. Everything inside it is normalised
+     on q = (x - T[0]) / (T[2] - T[0]) — the throw, the draw-back, the flash,
+     the camera lunge, all of it — so that window's WIDTH is the only thing
+     that sets the explosion's speed. It was 0.63s; doubling it to 1.26s
+     halves the rate, and there is no separate control for the tail.
+
+     cycleSec absorbs the extra 0.63s rather than the later phases giving it
+     up, so the morphs and the gather keep exactly the pace they had. Every
+     fraction below is therefore recomputed against 18.13s, not 17.5s. */
+  T: [0.0965, 0.1605, 0.1660, 0.4451, 0.4479, 0.7479, 0.7507],
 
   // ---- framing -----------------------------------------------------------
   /* Dead centre horizontally at every width — the copy no longer shares the
