@@ -94,12 +94,9 @@ export default function FeatureCards({ features }: { features: Feature[] }) {
   /** Which card to hand focus back to once the panel has actually unmounted. */
   const returnFocusTo = useRef<number | null>(null);
 
-  const [mounted, setMounted] = useState(false);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [geo, setGeo] = useState<Geo>({ left: 0, width: 0, top: 0, height: 0, radius: 12 });
-
-  useEffect(() => setMounted(true), []);
 
   /* ---- the staggered lift on scroll ------------------------------------- */
   useEffect(() => {
@@ -282,7 +279,10 @@ export default function FeatureCards({ features }: { features: Feature[] }) {
         ))}
       </div>
 
-      {mounted && open
+      {/* No mounted guard: open is null until a click, so this never renders
+          on the server or in the hydrating pass, and document always exists
+          by the time it does. */}
+      {open
         ? createPortal(
             <>
               <div

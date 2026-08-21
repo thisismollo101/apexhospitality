@@ -1,0 +1,33 @@
+name: CI
+
+# Every push and every pull request. The point is that a broken build is caught
+# here rather than by Vercel after it has already gone out, or by a person
+# opening the page and finding it blank.
+on:
+  push:
+  pull_request:
+
+# A new push to the same branch makes the previous run irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # ci, not install: installs exactly what package-lock.json pins, and
+      # fails if the lockfile and package.json disagree.
+      - run: npm ci
+
+      - run: npm run lint
+
+      # Also runs tsc — next build type-checks the whole project.
+      - run: npm run build

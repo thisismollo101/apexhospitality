@@ -218,7 +218,7 @@ export default function ApexSectionBackground({
     let transStart = 0;
     const transDur = reduced ? 400 : CONFIG.transitionMs;
 
-    let mouse: [number, number] = [0.5, 0.5];
+    const mouse: [number, number] = [0.5, 0.5];
     let mouseTarget: [number, number] = [0.5, 0.5];
 
     const vw = host.clientWidth || window.innerWidth;
