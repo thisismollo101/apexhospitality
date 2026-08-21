@@ -132,6 +132,33 @@ the section (see `PostsMarquee.tsx`).
 Set `muted` as a property in an effect, not just the JSX attribute — React does not
 reliably emit it into the server HTML, and an unmuted clip is refused autoplay.
 
+## Brand
+
+The mark is a tetrahedron, apex-up: three faces on a 100×100 grid at fixed
+opacities — left `.45`, right `1.0`, base `.22`. Never recolour a face on its own,
+flatten the opacities, add a stroke or shadow, stretch it off-square, or rotate it.
+Clear space is one third of its width; minimum size 16px.
+
+| Where | What |
+|---|---|
+| Browser tab, iOS, link previews | `src/app/{favicon.ico,icon.svg,apple-icon.png}` and `src/app/(site)/opengraph-image.png` — Next's file conventions emit the tags |
+| The nav | `ApexMark` inlined in `Header.tsx` |
+| Anywhere else | `public/brand/svg/` and `public/brand/png/` (blue, white, black, currentcolor; 11 raster sizes) |
+
+**Prefer the `currentcolor` mark.** It inherits the surrounding text colour, so it
+follows the theme with no second file — which is exactly how the nav mark goes
+white over the hero and dark once the nav turns solid.
+
+`opengraph-image.png` sits in `(site)`, not at the app root. Icons resolve from
+`src/app/` but the OG convention needs a segment that actually has a layout, and
+`src/app/` has none — both layouts live inside route groups.
+
+⚠️ **Two different blues.** The pack's brand blue is `#2A7BFF`; v34's `--brandblue`
+token is `#5f9bef`, and that token colours "Hospitality" in the nav and the
+`--brandblue` focus rings. They have not been reconciled — decide deliberately
+before changing `--brandblue`, since it is generated into `v34.css` and used
+site-wide.
+
 ## Commands
 
 ```

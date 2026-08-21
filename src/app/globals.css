@@ -411,3 +411,18 @@ html.snap-on{scroll-snap-type:y mandatory}
   html{scroll-behavior:auto}
   html.snap-on{scroll-snap-type:none}
 }
+
+/* ============================================================
+   The Apex mark in the nav.
+
+   Not in v34.css — that file is generated from the v34 export by
+   scripts/extract-v34.ts, which has no mark in it. .brand there is
+   the wordmark alone; this sits in front of it.
+
+   Sized against the wordmark's 16px uppercase rather than the nav
+   height, so the two read as one lockup. The margin is the pack's
+   clear-space rule — one third of the mark's width, rounded up.
+   It inherits the nav's colour, so it turns white over the hero
+   and dark once the nav goes solid with no second asset.
+   ============================================================ */
+.brand-mark{width:21px;height:21px;flex:none;margin-inline-end:9px}

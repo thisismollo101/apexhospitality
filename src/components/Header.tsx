@@ -30,6 +30,26 @@ const sampleMenu: NavDropdown = {
 const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), sampleMenu];
 const auth = nav.header.auth as { label: string; href: string; style: string }[];
 
+/**
+ * The Apex mark — a tetrahedron, three faces at fixed opacities, apex-up.
+ *
+ * Inlined rather than loaded from /brand/svg/apex-mark-currentcolor.svg because
+ * it fills with currentColor: as an <img> it would lose that and need a second
+ * file for the transparent-over-hero nav, where the brand turns white. Inline,
+ * it follows the nav's own colour through both states with nothing to swap.
+ *
+ * Do not recolour the faces individually, flatten the opacities, or rotate it.
+ */
+function ApexMark() {
+  return (
+    <svg className="brand-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <polygon points="50,11 9,85 50,63" fill="currentColor" opacity=".45" />
+      <polygon points="50,11 91,85 50,63" fill="currentColor" />
+      <polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22" />
+    </svg>
+  );
+}
+
 function Caret() {
   return (
     <svg className="car" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -164,6 +184,7 @@ export default function Header() {
         className={[solid ? 'solid' : '', menuOpen ? 'menu-open' : ''].filter(Boolean).join(' ') || undefined}
       >
         <Link className="brand" href="/" aria-label="Apex Hospitality — home">
+          <ApexMark />
           Apex <em>Hospitality</em>
         </Link>
 

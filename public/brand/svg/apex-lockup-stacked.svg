@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 190" width="240" height="190" role="img" aria-label="Apex Hospitality">
+  <g transform="translate(70 0)">
+    <polygon points="50,11 9,85 50,63" fill="currentColor" opacity=".45"/>
+    <polygon points="50,11 91,85 50,63" fill="currentColor"/>
+    <polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22"/>
+  </g>
+  <text x="120" y="132" text-anchor="middle"
+        font-family="Aeonik, Inter, Helvetica, Arial, sans-serif"
+        font-size="30" font-weight="600" letter-spacing="-0.6" fill="currentColor">Apex</text>
+  <text x="120" y="166" text-anchor="middle"
+        font-family="Aeonik, Inter, Helvetica, Arial, sans-serif"
+        font-size="30" font-weight="400" font-style="italic" letter-spacing="-0.6"
+        fill="currentColor" opacity=".62">Hospitality</text>
+</svg>
