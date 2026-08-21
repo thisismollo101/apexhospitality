@@ -208,7 +208,10 @@
   z-index: 1;
   width: 100%;
   text-align: center;
-  padding-bottom: 52px;
+  /* A fifth of the viewport below it. svh rather than %, because the section's
+     height comes from min-height and a percentage padding would resolve
+     against the flex container's *width*, not its height. */
+  padding-bottom: 20svh;
 }
 /* ---- the lockup, in place of a heading ---------------------------------- */
 
@@ -237,16 +240,20 @@
   letter-spacing: -0.022em;
   white-space: nowrap;
   color: #fff;
+  /* clip-path measures the border box, and the final glyph's ink can sit a
+     shade past the end of its advance — negative tracking pulls the box in
+     further still, which sliced the Y of HOSPITALITY down its stem. The
+     padding widens the box, not the line: it is trailing space on a centred
+     row, so nothing shifts. */
+  padding-right: 0.1em;
   /* Closed until the section is reached; the animation below opens it. */
   clip-path: inset(0 100% 0 0);
 }
+/* One face across the whole lockup: HOSPITALITY differs from Apex by its
+   capitals and nothing else — same weight, same tracking, same white. */
 .axlock-words em {
-  font-style: italic;
-  font-weight: 400;
+  font-style: normal;
   text-transform: uppercase;
-  /* White, carried at the reference's weight so it sits behind "Apex"
-     rather than competing with it. */
-  color: rgba(255, 255, 255, 0.56);
 }
 .axlock.is-in .axlock-words {
   animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;
