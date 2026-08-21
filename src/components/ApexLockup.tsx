@@ -10,10 +10,9 @@ import ApexMark from '@/components/ApexMark';
  *
  *  - No rule between the two. The reference scaled a 1px divider up from zero
  *    between mark and words; it is gone, and the gap alone carries the join.
- *  - The wordmark is one face throughout: "Apex" as drawn, HOSPITALITY in
- *    capitals, same weight and colour. Not the nav's `.brand` treatment (900
- *    weight, +.11em tracking, blue second word) and not the reference's
- *    italic second word either. Only the reveal is borrowed.
+ *  - The wordmark is the nav's relationship at display size: "Apex" heavy and
+ *    white as drawn, HOSPITALITY smaller, lighter, widely tracked and blue.
+ *    Not the reference's italic second word. Only the reveal is borrowed.
  *
  * The wipe is a clip-path animation held until the lockup is actually on
  * screen, so it plays on arrival rather than having finished somewhere above

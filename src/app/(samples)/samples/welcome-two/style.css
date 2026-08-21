@@ -236,24 +236,31 @@
    own element rather than by transforming the whole line. */
 .axlock-words {
   font-size: clamp(24px, 3.4vw, 37px);
-  font-weight: 600;
-  letter-spacing: -0.022em;
+  font-weight: 800;
+  letter-spacing: -0.018em;
   white-space: nowrap;
   color: #fff;
   /* clip-path measures the border box, and the final glyph's ink can sit a
-     shade past the end of its advance — negative tracking pulls the box in
-     further still, which sliced the Y of HOSPITALITY down its stem. The
-     padding widens the box, not the line: it is trailing space on a centred
-     row, so nothing shifts. */
+     shade past the end of its advance — which sliced the Y of HOSPITALITY
+     down its stem. The padding widens the box, not the line: it is trailing
+     space on a centred row, so nothing shifts. */
   padding-right: 0.1em;
   /* Closed until the section is reached; the animation below opens it. */
   clip-path: inset(0 100% 0 0);
 }
-/* One face across the whole lockup: HOSPITALITY differs from Apex by its
-   capitals and nothing else — same weight, same tracking, same white. */
+/* HOSPITALITY is the counterweight, not a continuation: set smaller, lighter
+   and widely tracked in brand blue against Apex's heavy white, which is the
+   nav's own relationship — the words carry the weight, the blue carries the
+   name. The margin is on top of the space already in the markup; wide tracking
+   adds a trailing gap of its own, so the pair needs the extra to breathe. */
 .axlock-words em {
   font-style: normal;
   text-transform: uppercase;
+  font-size: 0.72em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--brandblue);
+  margin-inline-start: 0.16em;
 }
 .axlock.is-in .axlock-words {
   animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;
