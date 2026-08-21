@@ -26,6 +26,17 @@ export const HERO = {
   ctaHref: '#s2',
 };
 
+/* ---- 2. the particle field ----------------------------------------------- */
+
+/**
+ * One line, centred across the bottom of the section. No subhead — the mark
+ * assembling itself is the argument, and copy over it competes with it.
+ */
+export const FIELD = {
+  tag: 'Section 2',
+  heading: 'Built frame by frame. Felt all at once.',
+};
+
 /* ---- 3. latest posts ----------------------------------------------------- */
 
 /**

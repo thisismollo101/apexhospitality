@@ -37,10 +37,14 @@ type Props = {
 const BASE_CONFIG = {
 
   // ---- scale -------------------------------------------------------------
-  count: 155000,        // particle total; drop to 130000 for weak hardware
+  count: 108500,        // particle total
   cycleSec: 17.5,       // one full loop
-  pointScale: 3.0,
-  projScale: 1.85,
+  /* pointScale sizes each dot; projScale spreads the field across the frame.
+     They are independent — gl_PointSize never reads uProj — so pulling the
+     camera back without also shrinking the dots reads as MORE crowded, not
+     less. Lower both or neither. */
+  pointScale: 2.35,
+  projScale: 1.48,      // lower = further back
 
   /* ---- timeline ----------------------------------------------------------
      Cumulative fractions of the cycle. MUST ascend and stay below 1.
@@ -54,14 +58,10 @@ const BASE_CONFIG = {
   T: [0.1000, 0.1333, 0.1361, 0.4250, 0.4278, 0.7389, 0.7417],
 
   // ---- framing -----------------------------------------------------------
+  /* Dead centre horizontally at every width — the copy no longer shares the
+     frame with it, so there is nothing to move aside for. */
   centerY: 0.02,        // NDC; lower sits the mark further down the screen
-  centerYMobile: -0.34, // no room for two columns on a phone, so it drops below the copy
-
-  /* NDC, added straight to clip x. Clip space runs -1..1, so 0.44 lands the
-     mark at ~72% across — the right column, clear of the headline. Wide only:
-     a phone stacks instead, which is what centerYMobile above is for. */
-  centerX: 0.44,
-  centerXMobile: 0,
+  centerYMobile: 0.02,
   tiltDeg: 30,          // resting camera elevation
   pyrScale: 0.66,
   tetraR: 1.15,         // circumradius of the tetrahedron
@@ -87,8 +87,8 @@ const BASE_CONFIG = {
   blastMin: 2.20,       // floor launch speed
   blastSpread: 3.00,    // extra speed on top, varies per particle
   blastKick: 0.30,      // outward shove at detonation
-  blastFlash: 2.30,     // brightness kick
-  whiteFlash: 0.72,     // how far the flash blows out to white
+  blastFlash: 1.65,     // brightness kick
+  whiteFlash: 0.42,     // how far the flash blows out to white
   blastOut: 0.46, blastOutAt: 0.18,   // thrown outward...
   blastIn : 0.32, blastInAt : 0.66,   // ...then drawn back in
 
@@ -99,8 +99,8 @@ const BASE_CONFIG = {
   dolly: 1.05,          // then lunges in
   burstToward: 0.40,    // extra camera-ward throw (applied in CAMERA space)
   comeAt: 1.20,         // forward acceleration out of the detonation
-  passNear: 0.55,       // debris fades as it crosses the camera plane
-  spreadNear: 0.75,     // near debris flung past the frame edges
+  passNear: 0.42,       // debris fades as it crosses the camera plane
+  spreadNear: 0.26,     // near debris flung past the frame edges
 
   /* ---- morph shapes ------------------------------------------------------ */
   burstNear: 0.75, burstFar: 3.60, burstWide: 1.40,
@@ -607,7 +607,9 @@ export default function ApexSectionBackground({
       float boost = 1.0, push = 0.0, comeEnv = 0.0;
       if(x >= uT[0] && x < uT[2]){
         float qb = (x-uT[0])/(uT[2]-uT[0]);
-        boost   = 1.0 + 2.80*exp(-pow((qb-0.10)/0.22, 2.0));
+        /* Fattens and brightens every point through the blast. Was 2.80, which
+           on top of the depth magnification above is most of the flash. */
+        boost   = 1.0 + 1.55*exp(-pow((qb-0.10)/0.22, 2.0));
         push    = exp(-pow((qb-0.070)/0.115, 2.0));            // the camera lunge
         /* Zero at both ends, peaking just after detonation. Debris accelerates
            toward the viewer rather than easing to a stop, which is what makes it
@@ -656,9 +658,12 @@ export default function ApexSectionBackground({
          positive z scales up hard — that is what reads as coming through the
          screen rather than merely getting brighter. */
       float dist = 3.30 + uDollyBack*antic - uDolly*push;
-      /* Clamp dropped from 0.28 to 0.12, roughly doubling peak magnification, so
-         debris can genuinely fill and overrun the frame. */
-      float wdep = max(dist - p.z, 0.12);
+      /* The depth divisor. Anything with positive z divides by a smaller number
+         and scales up hard, so this clamp sets peak magnification.
+         Was 0.12, which existed to let debris fill and overrun the frame — that
+         is exactly the blow-out we do not want, so it goes back near the 0.28
+         it was lowered from. Halves the peak. */
+      float wdep = max(dist - p.z, 0.26);
       /* How close this point is to the camera plane, 0 far -> 1 right on top. */
       float near = clamp((uPassNear*2.4 - wdep)/(uPassNear*2.4), 0.0, 1.0);
       vec2 proj = p.xy * (uProj / wdep);
@@ -851,14 +856,10 @@ export default function ApexSectionBackground({
       }
       gl.uniform1f(u.aspect, w / h);
       gl.uniform1f(u.pointScale, CONFIG.pointScale * dpr);
-      // One threshold for both axes: above it the section is two columns and
-      // the mark moves aside; below it there is one, and the mark drops under
-      // the copy instead.
-      const wide = host.clientWidth >= 900;
       gl.uniform2f(
         u.center,
-        wide ? CONFIG.centerX : CONFIG.centerXMobile,
-        wide ? CONFIG.centerY : CONFIG.centerYMobile,
+        0,
+        host.clientWidth >= 900 ? CONFIG.centerY : CONFIG.centerYMobile,
       );
     };
     size();

@@ -168,8 +168,15 @@
      section is scrolled to rather than landed on, so there is no gap to open. */
   min-height: 100svh;
   display: flex;
-  align-items: center;
+  /* The heading sits along the bottom, so the mark keeps the whole frame. */
+  align-items: end;
   background: #000;
+  /* welcome.css gives every .wsec a 146px scroll-margin so a heading does not
+     land behind the fixed chrome. On a section that is exactly one viewport
+     tall that offset pushes its last 146px — the heading — below the fold on
+     arrival. Nothing here needs clearing: the content sits at the bottom and
+     the chrome floats over the top of the field. */
+  scroll-margin-top: 0;
 }
 .w2page .axbg {
   position: absolute;
@@ -190,33 +197,30 @@
   height: 100%;
   display: block;
 }
-/* Two columns, so the copy never sits on top of the mark. The right column is
-   deliberately empty — it is the mark's, and the canvas underneath puts it
-   there via CONFIG.centerX rather than anything in this grid. Keeping the
-   column here rather than just narrowing the text means the two stay in step:
-   the gap the copy leaves is the gap the mark occupies. */
+/* One centred column along the bottom. No grid and no breakpoint: the mark is
+   dead centre at every width and nothing shares its row, so there is nothing to
+   lay out around. */
 .w2page .axbg-content {
   position: relative;
   z-index: 1;
   width: 100%;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 48px;
-  align-items: center;
+  text-align: center;
+  padding-bottom: 72px;
 }
-/* The section is black, so the shared section head has to invert here. */
-.w2page .axbg-content .wsec-head {
-  margin-bottom: 0;
-  max-width: 100%;
-}
-.w2page .axbg-content .wsec-head h2 {
-  color: #fff;
-}
-.w2page .axbg-content .wsec-head p {
-  color: rgba(255, 255, 255, 0.72);
-}
+/* The section is black, so the shared head styles have to invert here. */
 .w2page .axbg-content .wsec-tag {
-  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+.w2page .axbg-content h2 {
+  margin: 0 auto;
+  max-width: 24ch;
+  font-size: clamp(24px, 3.2vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+  color: #fff;
 }
 
 /* ---- 3. latest posts ----------------------------------------------------- */
@@ -671,20 +675,6 @@ body.w2exp-locked {
 @media (max-width: 860px) {
   .w2exp-head {
     grid-template-columns: 1fr;
-  }
-}
-
-/* Same 900px threshold the component uses to decide where to put the mark.
-   Below it there is no second column to move the mark into, so it drops below
-   the copy (CONFIG.centerYMobile) and the copy takes the top of the frame. */
-@media (max-width: 899px) {
-  .w2page .axbg-content {
-    grid-template-columns: 1fr;
-    align-items: start;
-    padding-top: calc(var(--sales-h) + var(--nav-h) + 32px);
-  }
-  .w2page .axbg-host {
-    align-items: start;
   }
 }
 

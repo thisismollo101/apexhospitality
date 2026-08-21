@@ -5,7 +5,7 @@ import ApexSectionBackground from './ApexSectionBackground';
 import Clip from './Clip';
 import FeatureCards from './FeatureCards';
 import PostsMarquee from './PostsMarquee';
-import { FEATURES, HERO, POSTS } from './data';
+import { FEATURES, FIELD, HERO, POSTS } from './data';
 
 // One stylesheet, which itself @imports globals.css and welcome.css so the whole
 // page ships as a single sheet in a guaranteed order. See style.css.
@@ -51,24 +51,16 @@ export default function WelcomeTwoPage() {
           <span className="w2scroll" aria-hidden />
         </section>
 
-        {/* ---- 2. the particle field -------------------------------------- */}
+        {/* ---- 2. the particle field --------------------------------------
+            No count override — density is set by the component's own CONFIG,
+            so there is one place to tune it rather than two that can disagree. */}
         <section id="s2" className="wsec axbg-host">
-          {/* No count override. The component's own 155k default is what gives
-              the field its density — at 90k the stars thin out and the mark
-              loses its edge. Every clip on this page pauses off-screen, so
-              nothing is decoding video while this section is up; there is no
-              budget to save here. */}
           <ApexSectionBackground />
 
+          {/* One line, centred along the bottom. Nothing sits over the mark. */}
           <div className="pwrap axbg-content">
-            <header className="wsec-head">
-              <span className="wsec-tag">Section 2</span>
-              <h2>The mark, taken apart and put back together</h2>
-              <p>
-                Seventeen and a half seconds, one draw call, no dependencies. It holds a single frame under reduced
-                motion and falls back to a flat panel where WebGL is unavailable.
-              </p>
-            </header>
+            <span className="wsec-tag">{FIELD.tag}</span>
+            <h2>{FIELD.heading}</h2>
           </div>
         </section>
 
