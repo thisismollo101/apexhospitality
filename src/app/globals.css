@@ -471,7 +471,7 @@ html.snap-on{scroll-snap-type:y mandatory}
      them, top and bottom: Inter's cap height is .73em and its x-height .54em,
      so .54/.73 is the size that makes one match the other. Both words share a
      baseline, so matching the height aligns both edges. */
-  font-size:.74em;font-weight:500;letter-spacing:.2em;
+  font-size:.74em;font-weight:500;letter-spacing:.13em;
   margin-inline-start:.033em;color:var(--brandblue)
 }
 /* Over the transparent nav v34 turns the second word white, and that stays.

@@ -251,8 +251,7 @@
 /* HOSPITALITY is the counterweight, not a continuation: set smaller, lighter
    and widely tracked in brand blue against Apex's heavy white, which is the
    nav's own relationship — the words carry the weight, the blue carries the
-   name. The margin is on top of the space already in the markup; wide tracking
-   adds a trailing gap of its own, so the pair needs the extra to breathe. */
+   name. Kept in step with .brand em in globals.css: same ratios, larger root. */
 .axlock-words em {
   font-style: normal;
   text-transform: uppercase;
@@ -260,7 +259,7 @@
      stand exactly as tall as the "pex" beside them. */
   font-size: 0.74em;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.13em;
   color: var(--brandblue);
   margin-inline-start: 0.033em;
 }
