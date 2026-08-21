@@ -169,7 +169,14 @@ export default function Header() {
             within (site) keeps this Header mounted and does not replay it. */}
         <Link className="brand" href="/" aria-label="Apex Hospitality — home">
           <ApexMark className="brand-mark" anim="tumble" />
-          Apex <em>Hospitality</em>
+          {/* Both words in one span, not loose in the flex row. Every element
+              child of a flex container is its own item and a run of text is an
+              anonymous one, so <em> on its own would be aligned by
+              align-items — centred, not on the shared baseline. One span makes
+              them one item with an ordinary inline context inside it. */}
+          <span className="brandwords">
+            Apex <em>Hospitality</em>
+          </span>
         </Link>
 
         <div className="navlinks">

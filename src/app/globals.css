@@ -452,6 +452,10 @@ html.snap-on{scroll-snap-type:y mandatory}
    a dark ground, which is where these values were drawn.
    ============================================================ */
 .brand{font-size:19px;font-weight:800;letter-spacing:-.018em;text-transform:none}
+/* The two words as one flex item. Loose in the row, <em> is an item of its own
+   and align-items centres it against "Apex" rather than sitting it on the same
+   baseline — a 1px lift at nav size, and it grows with the type. */
+.brandwords{display:block;white-space:nowrap}
 .brand em,.fbrand em{
   /* v34 uppercased the whole run from .brand; only the second word is
      capitalised now, so the transform moves onto the word itself. */

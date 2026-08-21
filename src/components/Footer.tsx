@@ -28,7 +28,10 @@ export default function Footer() {
             is actually reached. */}
         <Link className="fbrand" href="/" aria-label="Apex Hospitality — home">
           <ApexMark className="fbrand-mark" anim="fold" />
-          Apex <em>Hospitality</em>
+          {/* One span, for the reason given in Header. */}
+          <span className="brandwords">
+            Apex <em>Hospitality</em>
+          </span>
         </Link>
 
         <div className="fclusters">
