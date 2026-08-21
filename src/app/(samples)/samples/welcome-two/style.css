@@ -162,8 +162,11 @@
   position: relative;
   overflow: hidden;
   border-top: 0;
-  /* The layer is inset:0 and creates no height of its own. */
-  min-height: min(760px, 86svh);
+  /* Fills the screen while you are on it. The layer is inset:0 and creates no
+     height of its own, so the section has to state one. The fixed chrome floats
+     over the top of it rather than being subtracted — unlike the hero, this
+     section is scrolled to rather than landed on, so there is no gap to open. */
+  min-height: 100svh;
   display: flex;
   align-items: center;
   background: #000;
@@ -187,14 +190,24 @@
   height: 100%;
   display: block;
 }
+/* Two columns, so the copy never sits on top of the mark. The right column is
+   deliberately empty — it is the mark's, and the canvas underneath puts it
+   there via CONFIG.centerX rather than anything in this grid. Keeping the
+   column here rather than just narrowing the text means the two stay in step:
+   the gap the copy leaves is the gap the mark occupies. */
 .w2page .axbg-content {
   position: relative;
   z-index: 1;
   width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
 }
 /* The section is black, so the shared section head has to invert here. */
 .w2page .axbg-content .wsec-head {
   margin-bottom: 0;
+  max-width: 100%;
 }
 .w2page .axbg-content .wsec-head h2 {
   color: #fff;
@@ -660,6 +673,21 @@ body.w2exp-locked {
     grid-template-columns: 1fr;
   }
 }
+
+/* Same 900px threshold the component uses to decide where to put the mark.
+   Below it there is no second column to move the mark into, so it drops below
+   the copy (CONFIG.centerYMobile) and the copy takes the top of the frame. */
+@media (max-width: 899px) {
+  .w2page .axbg-content {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding-top: calc(var(--sales-h) + var(--nav-h) + 32px);
+  }
+  .w2page .axbg-host {
+    align-items: start;
+  }
+}
+
 @media (max-width: 640px) {
   .w2feat-grid {
     grid-template-columns: 1fr;
@@ -667,9 +695,6 @@ body.w2exp-locked {
   .w2mq-card {
     flex-basis: 160px;
     margin-right: 14px;
-  }
-  .w2page .axbg-host {
-    min-height: 560px;
   }
 }
 

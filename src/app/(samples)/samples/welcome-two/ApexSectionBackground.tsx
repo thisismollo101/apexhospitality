@@ -55,7 +55,13 @@ const BASE_CONFIG = {
 
   // ---- framing -----------------------------------------------------------
   centerY: 0.02,        // NDC; lower sits the mark further down the screen
-  centerYMobile: 0.02,
+  centerYMobile: -0.34, // no room for two columns on a phone, so it drops below the copy
+
+  /* NDC, added straight to clip x. Clip space runs -1..1, so 0.44 lands the
+     mark at ~72% across — the right column, clear of the headline. Wide only:
+     a phone stacks instead, which is what centerYMobile above is for. */
+  centerX: 0.44,
+  centerXMobile: 0,
   tiltDeg: 30,          // resting camera elevation
   pyrScale: 0.66,
   tetraR: 1.15,         // circumradius of the tetrahedron
@@ -78,21 +84,21 @@ const BASE_CONFIG = {
      a lingering pyramid or a field that vanishes.                          */
   blastScramble: 0.05,  // TIMING — fraction of the blast to finish scrambling
   scrambleAmount: 0.55, // DISTANCE — enough to destroy structure, not teleport
-  blastMin: 3.0,        // floor launch speed
-  blastSpread: 4.0,     // extra speed on top, varies per particle
-  blastKick: 0.42,      // outward shove at detonation
-  blastFlash: 3.20,     // brightness kick
-  whiteFlash: 0.92,     // how far the flash blows out to white
+  blastMin: 2.20,       // floor launch speed
+  blastSpread: 3.00,    // extra speed on top, varies per particle
+  blastKick: 0.30,      // outward shove at detonation
+  blastFlash: 2.30,     // brightness kick
+  whiteFlash: 0.72,     // how far the flash blows out to white
   blastOut: 0.46, blastOutAt: 0.18,   // thrown outward...
   blastIn : 0.32, blastInAt : 0.66,   // ...then drawn back in
 
   /* ---- coming at you -----------------------------------------------------
      Looming is the cue. Things must EXPAND fast and leave past the edges of
      the frame; brightness alone never reads as approach.                   */
-  dollyBack: 0.26,      // camera pulls back first — raise with dolly
-  dolly: 1.62,          // then lunges in
-  burstToward: 0.95,    // extra camera-ward throw (applied in CAMERA space)
-  comeAt: 2.30,         // forward acceleration out of the detonation
+  dollyBack: 0.18,      // camera pulls back first — raise with dolly
+  dolly: 1.05,          // then lunges in
+  burstToward: 0.40,    // extra camera-ward throw (applied in CAMERA space)
+  comeAt: 1.20,         // forward acceleration out of the detonation
   passNear: 0.55,       // debris fades as it crosses the camera plane
   spreadNear: 0.75,     // near debris flung past the frame edges
 
@@ -138,10 +144,10 @@ const BASE_CONFIG = {
   hoverBreath: 1.7,
 
   // ---- input -------------------------------------------------------------
-  mouseYaw: 1.45,
-  mouseTilt: 0.80,
-  mouseLift: 0.78,
-  mouseEase: 0.12,
+  mouseYaw: 2.90,
+  mouseTilt: 1.55,
+  mouseLift: 1.40,
+  mouseEase: 0.14,
   clickToShift: true,   // false locks the palette to Cobalt
 
   // ---- colour ------------------------------------------------------------
@@ -845,10 +851,14 @@ export default function ApexSectionBackground({
       }
       gl.uniform1f(u.aspect, w / h);
       gl.uniform1f(u.pointScale, CONFIG.pointScale * dpr);
+      // One threshold for both axes: above it the section is two columns and
+      // the mark moves aside; below it there is one, and the mark drops under
+      // the copy instead.
+      const wide = host.clientWidth >= 900;
       gl.uniform2f(
         u.center,
-        0,
-        host.clientWidth >= 900 ? CONFIG.centerY : CONFIG.centerYMobile,
+        wide ? CONFIG.centerX : CONFIG.centerXMobile,
+        wide ? CONFIG.centerY : CONFIG.centerYMobile,
       );
     };
     size();
