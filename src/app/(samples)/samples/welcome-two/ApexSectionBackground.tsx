@@ -39,6 +39,11 @@ const BASE_CONFIG = {
   // ---- scale -------------------------------------------------------------
   count: 108500,        // particle total
   cycleSec: 18.13,      // one full loop
+  /* Where in the loop the field is when you arrive, measured in seconds AFTER
+     the blast — so it opens on the debris already spreading rather than on the
+     assembled mark counting down to a detonation nobody is watching for. The
+     loop itself is untouched: this only picks the entry point. */
+  startAfterBlast: 3.0,
   /* pointScale sizes each dot; projScale spreads the field across the frame.
      They are independent — gl_PointSize never reads uProj — so pulling the
      camera back without also shrinking the dots reads as MORE crowded, not
@@ -906,13 +911,19 @@ export default function ApexSectionBackground({
     };
     if (CONFIG.clickToShift) window.addEventListener('click', onClick);
 
-    /* ---- loop ---- */
+    /* ---- loop ----
+       The clock does not start at zero. Offsetting it rather than uPhase keeps
+       uTime and uPhase in lockstep, which the spin accumulator depends on: it
+       reads floor(uTime/uCycleSec) for the cycle count and uPhase for the
+       position inside it, and the two disagreeing would put a jump at every
+       wrap. Blast is at T[0] of the cycle; startAfterBlast is added to it. */
+    const startSec = CONFIG.T[0] * CONFIG.cycleSec + CONFIG.startAfterBlast;
     const t0 = performance.now();
     let raf = 0;
     let visible = true;
 
     const draw = (now: number) => {
-      const el = (now - t0) / 1000;
+      const el = (now - t0) / 1000 + startSec;
 
       if (mix < 1) {
         const q = Math.min(1, (now - transStart) / transDur);
@@ -926,6 +937,8 @@ export default function ApexSectionBackground({
       mouse[1] += (mouseTarget[1] - mouse[1]) * CONFIG.mouseEase;
 
       gl.uniform1f(u.time, el);
+      /* Reduced motion holds an assembled frame, not the entry point: one still
+         of the mark is the useful thing to show, and debris is not. */
       gl.uniform1f(u.phase, reduced ? 0.02 : (el / CONFIG.cycleSec) % 1);
       gl.uniform1f(u.mix, mix);
       gl.uniform2f(u.mouse, mouse[0], mouse[1]);

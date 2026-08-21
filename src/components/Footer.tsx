@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ApexMark from '@/components/ApexMark';
 import { nav, brand } from '@/lib/nav';
 
 const footer = nav.footer as {
@@ -21,6 +22,15 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="fwrap">
+        {/* The same lockup as the nav, a step down in size. `fold` rather
+            than `tumble`: the nav's sting is the arrival: down here the mark
+            settles rather than announces, and it only plays once the footer
+            is actually reached. */}
+        <Link className="fbrand" href="/" aria-label="Apex Hospitality — home">
+          <ApexMark className="fbrand-mark" anim="fold" />
+          Apex <em>Hospitality</em>
+        </Link>
+
         <div className="fclusters">
           {footer.clusters.map((c) => (
             <div className="fcl" key={c.heading}>

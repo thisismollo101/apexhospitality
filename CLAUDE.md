@@ -142,8 +142,26 @@ Clear space is one third of its width; minimum size 16px.
 | Where | What |
 |---|---|
 | Browser tab, iOS, link previews | `src/app/{favicon.ico,icon.svg,apple-icon.png}` and `src/app/(site)/opengraph-image.png` — Next's file conventions emit the tags |
+
+The three icons carry the mark on its own `#06080F` ground, not on transparency:
+the `.45` and `.22` faces wash out to nothing against a light browser tab.
+`icon.svg` is the source of truth — `favicon.ico` is six PNG frames rendered from
+it (16/32/48/64/128/256) and re-rendering is a headless-Chromium screenshot per
+size, assembled into an ICO.
 | The nav, and anywhere the mark should move | `src/components/ApexMark.tsx` |
 | Anywhere else | `public/brand/svg/` and `public/brand/png/` (blue, white, black, currentcolor; 11 raster sizes) |
+
+**The wordmark is a lockup, not one run of type.** "Apex" is heavy (800) and
+mixed-case; HOSPITALITY is `0.72em`, weight 500, `+0.2em` tracking, brand blue.
+The words carry the weight and the blue carries the name. It runs at three
+sizes — 37px in welcome-two's section 2, 19px in the nav, 17px in the footer —
+so every ratio is in `em` and only the root size changes. `v34.css` still has
+the old treatment (16px/900/uppercase/`+.11em`); `globals.css` restates that
+half of `.brand` after the import, the same way it does `--brandblue`.
+
+The one exception is the transparent nav over the hero, where HOSPITALITY stays
+white at `.72`: the ground there is whatever video frame is playing, and brand
+blue lands on a mid blue in most of them.
 
 **Prefer the `currentcolor` mark.** It inherits the surrounding text colour, so it
 follows the theme with no second file — which is exactly how the nav mark goes

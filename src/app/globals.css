@@ -435,18 +435,51 @@ html.snap-on{scroll-snap-type:y mandatory}
 :root{--brandblue:#2A7BFF}
 
 /* ============================================================
-   The Apex mark in the nav.
+   The lockup — mark plus wordmark — in the nav and the footer.
 
-   Not in v34.css — that file is generated, and has no mark in it.
-   .brand there is the wordmark alone; this sits in front of it.
+   v34.css sets .brand as a 16px, 900-weight, uppercase run with
+   +.11em tracking and the second word in blue. That is one texture
+   across both words; the lockup is not. "Apex" is drawn heavy and
+   mixed-case, HOSPITALITY smaller, lighter, widely tracked and blue:
+   the words carry the weight, the blue carries the name. These rules
+   land after the v34 import and restate that half of .brand.
 
-   Sized against the wordmark's 16px uppercase rather than the nav
-   height, so the two read as one lockup. The margin is the pack's
-   clear-space rule — one third of the mark's width, rounded up.
+   The same treatment runs at three sizes — 37px in the welcome-two
+   field, 19px here, 17px in the footer — so the ratios live in em
+   and only the root size changes.
 
-   Brand blue in both nav states, as the lockup has it: the mark
-   carries the colour and the words carry the weight. Over the hero
-   the wordmark goes white and the mark stays blue, which is the
-   same relationship on a dark ground.
+   Blue in both nav states. Over the hero the whole lockup sits on
+   a dark ground, which is where these values were drawn.
    ============================================================ */
-.brand-mark{width:21px;height:21px;flex:none;margin-inline-end:9px;color:var(--brandblue)}
+.brand{font-size:19px;font-weight:800;letter-spacing:-.018em;text-transform:none}
+.brand em,.fbrand em{
+  /* v34 uppercased the whole run from .brand; only the second word is
+     capitalised now, so the transform moves onto the word itself. */
+  text-transform:uppercase;
+  /* <em> is italic by default; v34 normalised it under .brand only. */
+  font-style:normal;
+  font-size:.72em;font-weight:500;letter-spacing:.2em;
+  margin-inline-start:.42em;color:var(--brandblue)
+}
+/* Over the transparent nav v34 turns the second word white, and that stays.
+   The lockup is drawn blue-on-near-black; the hero underneath it is a video
+   whose ground is whatever frame is playing, and brand blue lands on a mid
+   blue in most of them. White holds at every frame; the mark keeps the
+   colour, which is the same division of labour. */
+#nav:not(.solid) .brand em{color:#fff;opacity:.72}
+
+/* The mark. Not in v34.css — that file is generated, and has no mark in
+   it. Sized off the wordmark rather than the nav height so the two read
+   as one lockup: 1.28em, which is the drawn lockup's ratio of mark
+   height to cap height. The margin clears the pack's minimum — one
+   third of the mark's width. */
+.brand-mark{width:24px;height:24px;flex:none;margin-inline-end:11px;color:var(--brandblue)}
+
+/* The same lockup closing the footer, a step down in size. On the
+   footer's light ground "Apex" takes --fg rather than white. */
+.fbrand{
+  display:inline-flex;align-items:center;text-decoration:none;color:var(--fg);
+  white-space:nowrap;font-size:17px;font-weight:800;letter-spacing:-.018em;
+  margin-bottom:38px
+}
+.fbrand-mark{width:22px;height:22px;flex:none;margin-inline-end:10px;color:var(--brandblue)}
