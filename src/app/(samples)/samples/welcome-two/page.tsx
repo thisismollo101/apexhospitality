@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import ApexLockup from '@/components/ApexLockup';
 import ApexSectionBackground from './ApexSectionBackground';
 import Clip from './Clip';
 import FeatureCards from './FeatureCards';
@@ -63,10 +64,12 @@ export default function WelcomeTwoPage() {
               the palette. */}
           <ApexSectionBackground clickToShift />
 
-          {/* One line, centred along the bottom. Nothing sits over the mark. */}
+          {/* The lockup rather than a written heading — the mark tumbles in and
+              the wordmark wipes across after it, both held until the section is
+              reached. Centred along the bottom; nothing sits over the field. */}
           <div className="pwrap axbg-content">
             <span className="wsec-tag">{FIELD.tag}</span>
-            <h2>{FIELD.heading}</h2>
+            <ApexLockup />
           </div>
         </section>
 

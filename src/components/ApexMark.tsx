@@ -230,7 +230,12 @@ export default function ApexMark({
     }
 
     let raf = 0;
-    const t0 = performance.now();
+    /* Reset the first time the mark is actually on screen. Mounting starts the
+       clock, so an instance below the fold would have run its whole animation
+       before anyone scrolled to it and would arrive already settled. Reassigned
+       in the observer below, hence let. */
+    let t0 = performance.now();
+    let started = false;
     let vis = true;
     let mx = 0;
     let my = 0;
@@ -323,6 +328,10 @@ export default function ApexMark({
 
     const io = new IntersectionObserver((es) => {
       vis = es[0].isIntersecting;
+      if (vis && !started) {
+        started = true;
+        t0 = performance.now();
+      }
       if (vis && !raf) raf = requestAnimationFrame(frame);
       if (!vis && raf) {
         cancelAnimationFrame(raf);

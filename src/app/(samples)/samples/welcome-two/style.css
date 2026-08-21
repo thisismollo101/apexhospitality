@@ -212,15 +212,45 @@
   margin-bottom: 12px;
   color: rgba(255, 255, 255, 0.55);
 }
-.w2page .axbg-content h2 {
-  margin: 0 auto;
-  max-width: 24ch;
-  font-size: clamp(24px, 3.2vw, 40px);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  font-weight: 800;
-  text-wrap: balance;
+/* ---- the lockup, in place of a heading ---------------------------------- */
+
+.axlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+.axlock-mark {
+  width: clamp(64px, 8vw, 110px);
+  height: clamp(64px, 8vw, 110px);
+  flex: none;
+  color: var(--brandblue);
+}
+/* The nav's own wordmark treatment — .brand in v34: 900, uppercase, .11em,
+   with the second word in brand blue. Restated rather than reused because
+   .brand also carries nav-specific layout and a 16px size. */
+.axlock-words {
+  font-size: clamp(24px, 3.6vw, 46px);
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: #fff;
+  /* Closed until the section is reached; the animation below opens it. */
+  clip-path: inset(0 100% 0 0);
+}
+.axlock-words em {
+  font-style: normal;
+  color: var(--brandblue);
+  margin-inline-start: 0.42em;
+}
+.axlock.is-in .axlock-words {
+  animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;
+}
+@keyframes axwipe {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 /* ---- 3. latest posts ----------------------------------------------------- */
@@ -679,6 +709,17 @@ body.w2exp-locked {
 }
 
 @media (max-width: 640px) {
+  /* Stacked rather than shrunk: kept on one line the wordmark's tracking runs
+     it past the gutter, and dropping the size far enough to fit makes the
+     lockup smaller than the label above it. */
+  .axlock {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .axlock-words {
+    font-size: clamp(22px, 6vw, 34px);
+  }
+
   .w2feat-grid {
     grid-template-columns: 1fr;
   }
@@ -693,6 +734,13 @@ body.w2exp-locked {
    components; everything that is CSS-driven is wound back here. */
 
 @media (prefers-reduced-motion: reduce) {
+  /* Never armed, so the wordmark is simply there from the first paint. */
+  .axlock-words,
+  .axlock.is-in .axlock-words {
+    clip-path: none;
+    animation: none;
+  }
+
   .w2mq-track {
     animation: none;
   }
