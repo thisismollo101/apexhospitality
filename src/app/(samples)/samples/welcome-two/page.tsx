@@ -6,6 +6,8 @@ import ApexSectionBackground from './ApexSectionBackground';
 import Clip from './Clip';
 import FeatureCards from './FeatureCards';
 import PostsMarquee from './PostsMarquee';
+import Revolut from './sections/Revolut';
+import { LIFTED } from './sections/lifted';
 import { FEATURES, HERO, POSTS } from './data';
 
 // One stylesheet, which itself @imports globals.css and welcome.css so the whole
@@ -97,6 +99,32 @@ export default function WelcomeTwoPage() {
             <FeatureCards features={FEATURES} />
           </div>
         </section>
+
+        {/* ---- 5-26. lifted from Welcome and Apex Sections -----------------
+            Twenty-two sections that already share this page's shape — .wsec,
+            .pwrap, .wsec-head — so they render through one loop rather than
+            twenty-two near-identical blocks. What each one is and where it came
+            from lives in sections/lifted.tsx.
+
+            The alternating ground is computed here, not carried in the data:
+            .is-alt has to alternate against whatever sits above it, and hard-
+            coding a flag per section would have to be re-checked by hand every
+            time the order changes. Section 4 is alt, so section 5 is not. */}
+        {LIFTED.map((s, i) => (
+          <section key={s.n} id={`s${s.n}`} className={`wsec${i % 2 ? ' is-alt' : ''}`}>
+            <div className="pwrap">
+              <header className="wsec-head">
+                <span className="wsec-tag">Section {s.n}</span>
+                <h2>{s.title}</h2>
+                <p>{s.lede}</p>
+              </header>
+              {s.body}
+            </div>
+          </section>
+        ))}
+
+        {/* ---- 27-30. lifted from Sample Page One -------------------------- */}
+        <Revolut />
 
         <div className="pwrap">
           <a className="w2back" href="/samples">

@@ -23,7 +23,7 @@
     {
       "slug": "welcome-two",
       "label": "Welcome Page Two",
-      "summary": "Second pass at Welcome, carrying the real site chrome. Full-bleed video hero, WebGL particle field, post marquee, and product cards that expand in place.",
+      "summary": "Second pass at Welcome, carrying the real site chrome. Thirty sections: video hero, WebGL particle field, post marquee and expanding product cards, then twenty-two lifted from Welcome and Apex Sections and four from Sample Page One.",
       "status": "live"
     }
   ]

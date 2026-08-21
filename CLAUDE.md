@@ -115,6 +115,22 @@ blocks sample pages.
 - **One component per section**, `'use client'` only where it needs hooks or the DOM.
 - **`page.tsx`** is just the section order.
 
+## Lifting a section from another page
+
+Copy it in; do not import across routes. A page under `/samples` is a draft being tuned,
+and a shared component means every tweak there also changes the page it came from.
+
+`welcome-two/sections/` is the worked example — `welcome/`, `apex/` and `rv/`, one folder
+per source page, each holding that page's component files verbatim along with the `data.ts`
+and `math.ts` they import. Keeping the folder shape means the components' own relative
+imports still resolve, and it sidesteps the three-way `RoiCalculator.tsx` / `Clip.tsx` /
+`data.ts` name clash between the sources.
+
+CSS is pasted into the route's one stylesheet, never added as a second `import`. Check for
+selector collisions first — the three pages here turned out to share only `.page` and
+`.btn`, both of which come from globals rather than being defined — and drop any `@import`
+lines the destination already has, or globals.css ships twice.
+
 ## Media
 
 Lives in `public/media/`, referenced root-relative.
