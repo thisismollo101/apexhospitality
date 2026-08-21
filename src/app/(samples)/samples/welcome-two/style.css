@@ -256,7 +256,9 @@
 .axlock-words em {
   font-style: normal;
   text-transform: uppercase;
-  font-size: 0.72em;
+  /* .54/.73 — Inter's x-height over its cap height, so HOSPITALITY's caps
+     stand exactly as tall as the "pex" beside them. */
+  font-size: 0.74em;
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--brandblue);

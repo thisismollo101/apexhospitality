@@ -31,11 +31,30 @@ import { useEffect, useRef } from 'react';
 
 export type ApexAnim = 'shatter' | 'tumble' | 'fold';
 
-/** The mark at rest. Matches svg/apex-mark-currentcolor.svg face for face. */
+/* The ground the mark is drawn against. The pack's three faces are one ink at
+   .45 / 1 / .22, which only produces the drawn logo when what is behind them is
+   near-black — the app icon's #06080F. Let them fall on the white nav instead
+   and the two minor faces wash out to almost nothing, which is the mark reduced
+   to a single triangle.
+
+   So the faces are composited against that ground rather than against whatever
+   the page happens to be. Nothing is recoloured: the ratios are the pack's, and
+   on a dark ground the result is the same pixel it always was. */
+const GROUND: [number, number, number] = [6, 8, 15];
+
+/** Face ink at `t` of full strength, flattened onto GROUND. */
+function shade(ink: [number, number, number], t: number) {
+  const c = (i: number) => Math.round(GROUND[i] + (ink[i] - GROUND[i]) * t);
+  return `rgb(${c(0)},${c(1)},${c(2)})`;
+}
+
+/** The mark at rest. Matches svg/apex-mark-currentcolor.svg face for face —
+    the same .45 / 1 / .22, expressed as a mix rather than an opacity so it is
+    the ground above and not the page that shows through. */
 const REST_MARKUP =
-  '<polygon points="50,11 9,85 50,63" fill="currentColor" opacity=".45"/>' +
+  '<polygon points="50,11 9,85 50,63" fill="color-mix(in srgb, currentColor 45%, #06080F)"/>' +
   '<polygon points="50,11 91,85 50,63" fill="currentColor"/>' +
-  '<polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22"/>';
+  '<polygon points="9,85 91,85 50,63" fill="color-mix(in srgb, currentColor 22%, #06080F)"/>';
 
 type Vec = [number, number, number];
 
@@ -152,9 +171,15 @@ export default function ApexMark({
     ghostEl.setAttribute('opacity', '0');
     if (ghost) layer.appendChild(ghostEl);
 
+    /* The ink the faces are mixed from. Read once: every caller sets it from a
+       token that does not change while the mark is mounted. */
+    const INK: [number, number, number] = (() => {
+      const m = /(\d+),\s*(\d+),\s*(\d+)/.exec(getComputedStyle(svg).color);
+      return m ? [+m[1], +m[2], +m[3]] : [42, 123, 255];
+    })();
+
     const poly = F.map(() => {
       const el = document.createElementNS(NS, 'polygon');
-      el.setAttribute('fill', 'currentColor');
       layer.appendChild(el);
       return el;
     });
@@ -310,13 +335,18 @@ export default function ApexMark({
       poly.forEach((p) => {
         p.setAttribute('points', '');
         p.setAttribute('opacity', '0');
+        p.setAttribute('fill', 'none');
       });
       list.forEach((d) => {
         const el = poly[d.fi];
         el.setAttribute('points', d.pts.map((p) => `${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(' '));
+        /* Depth shading rides the mix, not the opacity — fading a face toward
+           transparent on a light page lightens it, where the drawn mark darkens
+           it toward the ground. */
         let op = TONE[d.fi];
         if (depth && !whole && zhi > zlo) op *= 0.62 + 0.38 * ((d.z - zlo) / (zhi - zlo));
-        el.setAttribute('opacity', op.toFixed(3));
+        el.setAttribute('opacity', '1');
+        el.setAttribute('fill', shade(INK, op));
         layer.appendChild(el);
       });
       if (accent) layer.appendChild(accentEl);

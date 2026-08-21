@@ -152,7 +152,9 @@ size, assembled into an ICO.
 | Anywhere else | `public/brand/svg/` and `public/brand/png/` (blue, white, black, currentcolor; 11 raster sizes) |
 
 **The wordmark is a lockup, not one run of type.** "Apex" is heavy (800) and
-mixed-case; HOSPITALITY is `0.72em`, weight 500, `+0.2em` tracking, brand blue.
+mixed-case; HOSPITALITY is `0.74em`, weight 500, `+0.2em` tracking, brand blue.
+That `0.74` is `.54/.73` — Inter's x-height over its cap height — so the capitals
+stand exactly as tall as the "pex" beside them, top and bottom.
 The words carry the weight and the blue carries the name. It runs at three
 sizes — 37px in welcome-two's section 2, 19px in the nav, 17px in the footer —
 so every ratio is in `em` and only the root size changes. `v34.css` still has
