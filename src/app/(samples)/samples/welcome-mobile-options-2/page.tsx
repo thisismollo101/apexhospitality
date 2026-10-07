@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v5: real fullscreen, edge to edge on all four sides (Fullscreen API, iOS native player), points card on exit
+            Build {BUILD} · E1 v6: full-bleed overlay on iOS (no native player), cover-cropped, Fullscreen API only where supported
           </p>
         </footer>
       </main>

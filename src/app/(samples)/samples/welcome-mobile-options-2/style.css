@@ -906,10 +906,19 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
    bar and notch; the safe-area insets only pad the text. The clip-path animates
    from the tapped tile's rectangle to the full screen and back again. */
 .wmo .tk {
-  /* CSS fallback when real fullscreen isn't granted. Large-viewport height last,
-     so where it's supported the film runs under any toolbar that slides away. */
-  position: fixed; top: 0; left: 0; right: 0; z-index: 2147483000;
-  width: 100vw; height: 100vh; height: 100svh; height: 100dvh; height: 100lvh;
+  /* Full bleed on all four sides. As tall as the tallest viewport unit the
+     browser offers (a browser without lvh/dvh drops the max() and keeps 100vh),
+     and pulled out past the safe-area insets so it runs under the notch, the
+     status bar and the home indicator. Anything beyond the screen is simply
+     off screen; nothing can leave a gap on screen. */
+  position: fixed; z-index: 2147483000;
+  top: calc(0px - env(safe-area-inset-top, 0px));
+  bottom: calc(0px - env(safe-area-inset-bottom, 0px));
+  left: calc(0px - env(safe-area-inset-left, 0px));
+  right: calc(0px - env(safe-area-inset-right, 0px));
+  width: calc(100vw + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
+  height: calc(100vh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  height: calc(max(100vh, 100dvh, 100lvh) + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
   margin: 0; padding: 0; border: 0; border-radius: 0; overflow: hidden;
   background: #000; color: #fff; touch-action: none; overscroll-behavior: none;
   transition: clip-path .46s cubic-bezier(.22, .61, .36, 1);
@@ -917,7 +926,7 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 /* Parked: mounted so a tap can hand it to fullscreen, but invisible and inert. */
 .wmo .tk--off { visibility: hidden; pointer-events: none; transition: none; }
 /* Real fullscreen: the element owns the whole screen, so no clip and no fallback sizing. */
-.wmo .tk:fullscreen, .wmo .tk--real { width: 100vw; height: 100vh; clip-path: none !important; transition: none; }
+.wmo .tk:fullscreen, .wmo .tk--real { top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; clip-path: none !important; transition: none; }
 .wmo .tk:-webkit-full-screen { width: 100vw; height: 100vh; clip-path: none !important; }
 .wmo .tk::backdrop { background: #000; }
 /* Edge to edge, all four sides, whatever the browser's own fullscreen stylesheet
@@ -930,13 +939,18 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 }
 .wmo .tk, .wmo .tk__film { border-radius: 0 !important; outline: 0; box-shadow: none; }
 .wmo .tk__film { min-width: 100%; min-height: 100%; max-width: none; }
-.wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; background: #000; opacity: 0; }
+.wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 0; background: #000; opacity: 0; transform: scale(1.04); transform-origin: center; }
 .wmo .tk__film.is-on { opacity: 1; }
 /* The text layer is held to the visible viewport, so in the CSS fallback the pill
    and arrow never sit under a toolbar the film runs beneath. */
-.wmo .tk__ui { position: absolute; top: 0; left: 0; right: 0; height: 100%; height: 100dvh; pointer-events: none; }
+.wmo .tk__ui {
+  /* The overlay starts above the screen by the top inset; the text layer starts
+     at the screen's own top and spans what is actually visible. */
+  position: absolute; top: env(safe-area-inset-top, 0px); left: env(safe-area-inset-left, 0px); right: env(safe-area-inset-right, 0px);
+  height: 100vh; height: 100dvh; pointer-events: none;
+}
 .wmo .tk__ui > * { pointer-events: auto; }
-.wmo .tk:fullscreen .tk__ui, .wmo .tk--real .tk__ui { height: 100%; }
+.wmo .tk:fullscreen .tk__ui, .wmo .tk--real .tk__ui { top: 0; left: 0; right: 0; height: 100%; }
 .wmo .tk__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(0, 0, 0, .38), transparent 18%, transparent 62%, rgba(0, 0, 0, .5)); }
 .wmo .tk__when, .wmo .tk__pill, .wmo .tk__down, .wmo .tk__x { transition: opacity .25s ease; }
 .wmo .tk--opening .tk__when, .wmo .tk--opening .tk__pill, .wmo .tk--opening .tk__down, .wmo .tk--opening .tk__x,
@@ -1126,3 +1140,16 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 
 /* Build stamp: which commit is live. */
 .wmo .outro__build { margin-top: 10px; font-size: 11px; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+
+/* E1 sound: the film starts muted; the whole film is the tap target to turn sound on. */
+.wmo .tk__tap { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; background: transparent; cursor: pointer; }
+.wmo .tk__shade { z-index: 1; }
+.wmo .tk__ui { z-index: 2; }
+.wmo .tk__sound {
+  /* Icon only, mirroring the X on the left, inside the space the centred label leaves free. */
+  position: absolute; top: calc(env(safe-area-inset-top, 0px) + 10px); left: calc(env(safe-area-inset-left, 0px) + 10px);
+  width: 32px; height: 32px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, .22); opacity: .8; font-size: 14px; line-height: 1; pointer-events: none !important;
+  transition: opacity .25s ease;
+}
+.wmo .tk--opening .tk__sound, .wmo .tk--closing .tk__sound { opacity: 0; }
