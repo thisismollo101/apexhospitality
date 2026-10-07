@@ -906,13 +906,27 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
    bar and notch; the safe-area insets only pad the text. The clip-path animates
    from the tapped tile's rectangle to the full screen and back again. */
 .wmo .tk {
-  position: fixed; inset: 0; z-index: 2147483000;
-  width: 100vw; height: 100vh; height: 100svh; height: 100dvh;
+  /* CSS fallback when real fullscreen isn't granted. Large-viewport height last,
+     so where it's supported the film runs under any toolbar that slides away. */
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2147483000;
+  width: 100vw; height: 100vh; height: 100svh; height: 100dvh; height: 100lvh;
   margin: 0; padding: 0; border: 0; border-radius: 0; overflow: hidden;
   background: #000; color: #fff; touch-action: none; overscroll-behavior: none;
   transition: clip-path .46s cubic-bezier(.22, .61, .36, 1);
 }
-.wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+/* Parked: mounted so a tap can hand it to fullscreen, but invisible and inert. */
+.wmo .tk--off { visibility: hidden; pointer-events: none; transition: none; }
+/* Real fullscreen: the element owns the whole screen, so no clip and no fallback sizing. */
+.wmo .tk:fullscreen, .wmo .tk--real { width: 100vw; height: 100vh; clip-path: none !important; transition: none; }
+.wmo .tk:-webkit-full-screen { width: 100vw; height: 100vh; clip-path: none !important; }
+.wmo .tk::backdrop { background: #000; }
+.wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; background: #000; opacity: 0; }
+.wmo .tk__film.is-on { opacity: 1; }
+/* The text layer is held to the visible viewport, so in the CSS fallback the pill
+   and arrow never sit under a toolbar the film runs beneath. */
+.wmo .tk__ui { position: absolute; top: 0; left: 0; right: 0; height: 100%; height: 100dvh; pointer-events: none; }
+.wmo .tk__ui > * { pointer-events: auto; }
+.wmo .tk:fullscreen .tk__ui, .wmo .tk--real .tk__ui { height: 100%; }
 .wmo .tk__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(0, 0, 0, .38), transparent 18%, transparent 62%, rgba(0, 0, 0, .5)); }
 .wmo .tk__when, .wmo .tk__pill, .wmo .tk__down, .wmo .tk__x { transition: opacity .25s ease; }
 .wmo .tk--opening .tk__when, .wmo .tk--opening .tk__pill, .wmo .tk--opening .tk__down, .wmo .tk--opening .tk__x,

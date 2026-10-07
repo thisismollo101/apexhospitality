@@ -56,30 +56,110 @@ function Film({ m, className = '' }: { m: Moment; className?: string }) {
 }
 
 /* ---- 1 · Full-screen takeover (refined) --------------------------------------------
-   Tap a tile and its vertical film takes the whole screen: a fixed inset-0 layer
-   above everything, 100vw × 100dvh, object-fit cover, running under the status
-   bar and notch (the page sets viewport-fit=cover; safe-area insets only pad the
-   text). Nothing sits on the film but the timing (top centre), the blue
-   touchpoint pill (centred) and a down arrow.
+   Tap a tile and its vertical film takes the WHOLE phone screen: no status-bar
+   strip, no address bar, no toolbar. A fixed overlay alone can't do that; mobile
+   browsers keep their chrome around fixed elements. So the tap asks for real
+   fullscreen, best route first:
 
-   Scroll down, swipe up, press ↓ or tap the arrow, and the film flicks off: it
-   shrinks straight back into its own tile, and the touchpoint's points open in
-   a card directly under the grid. The points are live Welcome copy, as
-   placeholders for Aidan to reword. */
+     1. element.requestFullscreen() on the overlay (Android Chrome, desktop),
+     2. webkitRequestFullscreen() (older WebKit, iPadOS Safari),
+     3. video.webkitEnterFullscreen() (iPhone Safari and iOS in-app browsers,
+        where only a <video> may go fullscreen; the native player takes over).
+
+   All three must run synchronously inside the tap, so the overlay and all four
+   films are always mounted (hidden) and the tapped film is ready to go.
+
+   Underneath sits the CSS fallback: fixed, top/left 0, 100vw × 100lvh (with
+   svh/dvh fallbacks), object-fit: cover, a black ground, viewport-fit=cover.
+   While it is open, html, body and theme-color turn black so whatever chrome a
+   browser keeps blends into the film.
+
+   Leaving fullscreen by any route (the X, the back gesture, Esc, the native
+   player's Done, or scrolling down) flicks the film back into its tile, with the
+   touchpoint's points in a card under the grid. */
 
 /** Placeholder points per touchpoint, all live copy: the card line, the sheet's lede, and the journey footer. */
 const points = (m: Moment) => [m.desc, m.lede, WORKS.foot];
 
 type Phase = 'off' | 'opening' | 'full' | 'closing';
 
+type FsElement = HTMLElement & { webkitRequestFullscreen?: () => Promise<void> | void };
+type FsDocument = Document & { webkitFullscreenElement?: Element | null; webkitExitFullscreen?: () => Promise<void> | void };
+type IosVideo = HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitDisplayingFullscreen?: boolean };
+
+const fsElement = () => {
+  const d = document as FsDocument;
+  return d.fullscreenElement ?? d.webkitFullscreenElement ?? null;
+};
+
+/** Ask for real fullscreen on the overlay; true if a request was made. */
+function enterFullscreen(el: FsElement): boolean {
+  try {
+    if (el.requestFullscreen) {
+      el.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+      return true;
+    }
+    if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+      return true;
+    }
+  } catch {
+    /* fall through to the next route */
+  }
+  return false;
+}
+
+function exitFullscreen() {
+  const d = document as FsDocument;
+  if (!fsElement()) return;
+  try {
+    if (d.exitFullscreen) d.exitFullscreen().catch(() => {});
+    else d.webkitExitFullscreen?.();
+  } catch {
+    /* already out */
+  }
+}
+
+/** Black theme-color and a black html/body while the film is up, restored after. */
+function useBlackChrome(on: boolean) {
+  useEffect(() => {
+    if (!on) return;
+    const html = document.documentElement;
+    const body = document.body;
+    const prev = { html: html.style.background, body: body.style.background };
+    html.style.background = '#000';
+    body.style.background = '#000';
+    const metas = Array.from(document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]'));
+    const prevColors = metas.map((m) => m.content);
+    let added: HTMLMetaElement | null = null;
+    if (metas.length) metas.forEach((m) => (m.content = '#000000'));
+    else {
+      added = document.createElement('meta');
+      added.name = 'theme-color';
+      added.content = '#000000';
+      document.head.appendChild(added);
+    }
+    return () => {
+      html.style.background = prev.html;
+      body.style.background = prev.body;
+      metas.forEach((m, n) => (m.content = prevColors[n]));
+      added?.remove();
+    };
+  }, [on]);
+}
+
 function Takeover() {
   const [i, setI] = useState<number | null>(null); // the touchpoint on screen
   const [shown, setShown] = useState<number | null>(null); // the touchpoint whose points are open
   const [phase, setPhase] = useState<Phase>('off');
-  const [clip, setClip] = useState('inset(0px)');
+  const [clip, setClip] = useState('none');
+  const [real, setReal] = useState(false); // true while in real (element) fullscreen
   const box = useRef<HTMLDivElement>(null);
+  const layer = useRef<HTMLDivElement>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
+  const films = useRef<(HTMLVideoElement | null)[]>([]);
   const busy = useRef(false);
+  const cur = useRef<number | null>(null);
 
   /** The clip-path that crops the full screen down to tile n, where it sits right now. */
   const tileClip = (n: number) => {
@@ -89,53 +169,119 @@ function Takeover() {
     return `inset(${r.top}px ${window.innerWidth - r.right}px ${window.innerHeight - r.bottom}px ${r.left}px round 16px)`;
   };
 
+  // Keep every film muted (set as a property, not just the attribute) and parked.
+  useEffect(() => {
+    films.current.forEach((v) => {
+      if (v) v.muted = true;
+    });
+  }, []);
+
   const open = (n: number) => {
     if (busy.current) return;
     busy.current = true;
-    setClip(tileClip(n));
-    setI(n);
-    setPhase('opening');
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        setClip('inset(0px 0px 0px 0px round 0px)');
-        setPhase('full');
-        setTimeout(() => {
-          busy.current = false;
-        }, 480);
-      }),
-    );
-  };
-
-  /** Flick the film off: park the page on the grid (hidden under the film), open the points, then shrink into the tile. */
-  const flickOff = () => {
-    if (i === null || busy.current) return;
-    busy.current = true;
-    const n = i;
-    const b = box.current;
-    if (b) {
-      const top = b.getBoundingClientRect().top + window.scrollY - 56;
-      window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+    cur.current = n;
+    const v = films.current[n] as IosVideo | null;
+    const el = layer.current as FsElement | null;
+    // Everything below runs inside the tap, which is what fullscreen requires.
+    films.current.forEach((f, k) => {
+      if (f && k !== n) f.pause();
+    });
+    if (v) {
+      v.muted = true;
+      v.currentTime = 0;
+      v.play().catch(() => {});
     }
-    setShown(n);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        setClip(tileClip(n));
-        setPhase('closing');
-        setTimeout(() => {
-          setI(null);
-          setPhase('off');
-          busy.current = false;
-        }, 480);
-      }),
-    );
+    let route: 'element' | 'native' | 'css' = 'css';
+    if (el && enterFullscreen(el)) route = 'element';
+    else if (v?.webkitEnterFullscreen) {
+      try {
+        v.webkitEnterFullscreen();
+        route = 'native';
+      } catch {
+        route = 'css';
+      }
+    }
+    setI(n);
+    setReal(route === 'element');
+    if (route === 'css') {
+      // No real fullscreen on offer: grow the film out of its tile instead.
+      setClip(tileClip(n));
+      setPhase('opening');
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          setClip('inset(0px 0px 0px 0px round 0px)');
+          setPhase('full');
+        }),
+      );
+    } else {
+      setClip('none');
+      setPhase('full');
+    }
+    setTimeout(() => {
+      busy.current = false;
+    }, 500);
   };
 
-  useOverlay(i !== null, flickOff);
+  /** Flick the film off: leave fullscreen, park the page on the grid, open the points, shrink into the tile. */
+  const flickOff = () => {
+    const n = cur.current;
+    if (n === null || busy.current) return;
+    busy.current = true;
+    exitFullscreen();
+    // Give the browser a frame or two to restore its layout after fullscreen.
+    setTimeout(() => {
+      const b = box.current;
+      if (b) {
+        const top = b.getBoundingClientRect().top + window.scrollY - 56;
+        window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+      }
+      setShown(n);
+      setReal(false);
+      setClip('inset(0px 0px 0px 0px round 0px)');
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          setClip(tileClip(n));
+          setPhase('closing');
+          setTimeout(() => {
+            films.current[n]?.pause();
+            cur.current = null;
+            setI(null);
+            setPhase('off');
+            setClip('none');
+            busy.current = false;
+          }, 480);
+        }),
+      );
+    }, fsElement() ? 260 : 40);
+  };
+
+  const up = i !== null;
+  useOverlay(up, flickOff);
+  useBlackChrome(up);
+
+  // Leaving real fullscreen by the system (back gesture, Esc) or the native iOS player counts as leaving.
+  useEffect(() => {
+    const onFs = () => {
+      if (!fsElement() && cur.current !== null && !busy.current) flickOff();
+    };
+    const onNativeEnd = () => {
+      if (cur.current !== null && !busy.current) flickOff();
+    };
+    document.addEventListener('fullscreenchange', onFs);
+    document.addEventListener('webkitfullscreenchange', onFs);
+    const vids = films.current.filter(Boolean) as HTMLVideoElement[];
+    vids.forEach((v) => v.addEventListener('webkitendfullscreen', onNativeEnd));
+    return () => {
+      document.removeEventListener('fullscreenchange', onFs);
+      document.removeEventListener('webkitfullscreenchange', onFs);
+      vids.forEach((v) => v.removeEventListener('webkitendfullscreen', onNativeEnd));
+    };
+  });
 
   // Any downward intent while the film is up flicks it off: wheel, a swipe up, or the keys.
   const touchY = useRef<number | null>(null);
   useEffect(() => {
-    if (i === null) return;
+    if (!up) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (e.deltaY > 6) flickOff();
@@ -171,7 +317,7 @@ function Takeover() {
   const m = i === null ? null : MOMENTS[i];
   const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film fills the entire screen, edge to edge and under the notch, with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
+    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film goes truly full screen (the browser's bars and the status strip disappear), with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
       <div className="ebox" ref={box}>
         <Head />
         <div className="egrid">
@@ -218,28 +364,53 @@ function Takeover() {
           </div>
         )}
       </div>
-      {m && i !== null && (
-        <div className={`tk tk--${phase}`} style={{ clipPath: clip }} role="dialog" aria-modal="true" aria-label={`${m.kick} · ${m.title}`}>
-          <Film m={m} className="tk__film" />
-          <div className="tk__shade" aria-hidden="true" />
-          <span className="tk__when">
-            {m.fig} · {m.figSub}
-          </span>
-          <span className="tk__pill">
-            {m.kick} · {m.title}
-          </span>
-          <button type="button" className="tk__down" onClick={flickOff} aria-label="Scroll down to this touchpoint">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </button>
-          <button type="button" className="tk__x" onClick={flickOff} aria-label="Close">
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M3 3l10 10M13 3L3 13" />
-            </svg>
-          </button>
-        </div>
-      )}
+      {/* Always mounted, so a tap can hand it (or its film) to fullscreen synchronously. */}
+      <div
+        ref={layer}
+        className={`tk tk--${phase}${real ? ' tk--real' : ''}`}
+        style={{ clipPath: clip }}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!up}
+        aria-label={m ? `${m.kick} · ${m.title}` : undefined}
+      >
+        {MOMENTS.map((mm, n) => (
+          <video
+            key={mm.kick}
+            ref={(el) => {
+              films.current[n] = el;
+            }}
+            className={`tk__film${i === n ? ' is-on' : ''}`}
+            src={img(mm.clip)}
+            poster={img(mm.poster)}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        ))}
+        <div className="tk__shade" aria-hidden="true" />
+        {m && (
+          <div className="tk__ui">
+            <span className="tk__when">
+              {m.fig} · {m.figSub}
+            </span>
+            <span className="tk__pill">
+              {m.kick} · {m.title}
+            </span>
+            <button type="button" className="tk__down" onClick={flickOff} aria-label="Scroll down to this touchpoint">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <button type="button" className="tk__x" onClick={flickOff} aria-label="Close">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M3 3l10 10M13 3L3 13" />
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
     </Option>
   );
 }
