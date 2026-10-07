@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v4: real fullscreen (Fullscreen API, iOS native player), black chrome, points card on exit
+            Build {BUILD} · E1 v5: real fullscreen, edge to edge on all four sides (Fullscreen API, iOS native player), points card on exit
           </p>
         </footer>
       </main>
