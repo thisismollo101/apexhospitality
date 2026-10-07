@@ -168,6 +168,8 @@ function Takeover() {
   // The 9:19.5 films, laid out in the tiles (under the stills) so iOS has their metadata ready.
   const tileFilms = useRef<(HTMLVideoElement | null)[]>([]);
   const native = useRef<number | null>(null);
+  // Which route this phone actually took, shown under the grid so a test on a real phone reports itself.
+  const [route, setRoute] = useState('');
   const films = useRef<(HTMLVideoElement | null)[]>([]);
   const busy = useRef(false);
   const cur = useRef<number | null>(null);
@@ -201,23 +203,51 @@ function Takeover() {
       !!(d.fullscreenEnabled || d.webkitFullscreenEnabled) && !!(layerEl?.requestFullscreen || layerEl?.webkitRequestFullscreen);
     const tv = tileFilms.current[n] as NativeVideo | null;
     if (!elementFs && tv?.webkitEnterFullscreen) {
-      try {
-        tileFilms.current.forEach((f, k) => {
-          if (f && k !== n) f.pause();
-        });
-        tv.muted = false;
-        tv.currentTime = 0;
-        tv.play().catch(() => {
-          tv.muted = true;
-          tv.play().catch(() => {});
-        });
-        tv.webkitEnterFullscreen();
+      tileFilms.current.forEach((f, k) => {
+        if (f && k !== n) f.pause();
+      });
+      tv.muted = false;
+      tv.currentTime = 0;
+      tv.play().catch(() => {
+        tv.muted = true;
+        tv.play().catch(() => {});
+      });
+      const enter = () => {
+        tv.webkitEnterFullscreen?.();
         native.current = n;
+        setRoute('iPhone full-screen player: no clock, no Safari bars');
+      };
+      try {
+        enter();
         return;
-      } catch {
-        /* the player refused: fall through to the overlay */
+      } catch (err) {
+        // iOS refuses the player until the film has started loading. Retry the moment its
+        // metadata lands (still inside the tap's grace period); only if that fails too does
+        // the browser overlay take over, and the readout says why.
+        const why = err instanceof Error ? err.name : 'refused';
+        let settled = false;
+        const retry = () => {
+          if (settled) return;
+          settled = true;
+          tv.removeEventListener('loadedmetadata', retry);
+          try {
+            enter();
+          } catch (err2) {
+            setRoute(`iPhone player refused (${why}, then ${err2 instanceof Error ? err2.name : 'refused'}): showed the browser overlay`);
+            openOverlay(n);
+          }
+        };
+        tv.addEventListener('loadedmetadata', retry);
+        setTimeout(retry, 900);
+        return;
       }
     }
+    openOverlay(n);
+  };
+
+  /** The browser overlay: real element fullscreen where offered, else the fixed overlay. */
+  const openOverlay = (n: number) => {
+    if (busy.current) return;
     busy.current = true;
     cur.current = n;
     const v = films.current[n];
@@ -239,6 +269,7 @@ function Takeover() {
     setSound(false);
     setI(n);
     setReal(route === 'element');
+    setRoute((r) => (r.startsWith('iPhone player refused') ? r : route === 'element' ? 'browser fullscreen overlay (Android/desktop)' : 'browser overlay (no fullscreen available)'));
     if (route === 'css') {
       // No real fullscreen on offer: grow the film out of its tile instead.
       setClip(tileClip(n));
@@ -409,6 +440,7 @@ function Takeover() {
             </button>
           ))}
         </div>
+        {route && <p className="tk-route">Last tap on this device: {route}</p>}
         {p && shown !== null && (
           <div className="tk-points" key={shown} aria-live="polite">
             <div className="tk-points__head">
