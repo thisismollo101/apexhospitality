@@ -900,41 +900,61 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 
 /* ---------------------------- E · BENTO EXPAND ---------------------------- */
 
-/* E1 · Full-screen takeover: truly edge to edge, under the status bar and notch. */
-.wmo .he1 {
-  position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100vh; height: 100dvh;
-  overflow-y: auto; overscroll-behavior: contain; background: #000; color: #fff;
-  transition: clip-path .45s cubic-bezier(.22, .61, .36, 1);
+/* E1 · Full-screen takeover. The film owns the whole screen: a fixed inset-0
+   layer above everything, 100vw × 100dvh (100vh, then 100svh, as fallbacks), no
+   radius, no frame. viewport-fit=cover on the page lets it run under the status
+   bar and notch; the safe-area insets only pad the text. The clip-path animates
+   from the tapped tile's rectangle to the full screen and back again. */
+.wmo .tk {
+  position: fixed; inset: 0; z-index: 2147483000;
+  width: 100vw; height: 100vh; height: 100svh; height: 100dvh;
+  margin: 0; padding: 0; border: 0; border-radius: 0; overflow: hidden;
+  background: #000; color: #fff; touch-action: none; overscroll-behavior: none;
+  transition: clip-path .46s cubic-bezier(.22, .61, .36, 1);
 }
-.wmo .he1__screen { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
-.wmo .he1__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.wmo .he1__shade { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .45), transparent 20%, transparent 70%, rgba(0, 0, 0, .55)); }
-.wmo .he1__when {
-  position: absolute; left: 0; right: 0; top: calc(18px + env(safe-area-inset-top, 0px)); z-index: 2; text-align: center;
-  font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0, 0, 0, .5);
+.wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.wmo .tk__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(0, 0, 0, .38), transparent 18%, transparent 62%, rgba(0, 0, 0, .5)); }
+.wmo .tk__when, .wmo .tk__pill, .wmo .tk__down, .wmo .tk__x { transition: opacity .25s ease; }
+.wmo .tk--opening .tk__when, .wmo .tk--opening .tk__pill, .wmo .tk--opening .tk__down, .wmo .tk--opening .tk__x,
+.wmo .tk--closing .tk__when, .wmo .tk--closing .tk__pill, .wmo .tk--closing .tk__down, .wmo .tk--closing .tk__x { opacity: 0; }
+.wmo .tk__when {
+  position: absolute; z-index: 2; left: 50%; transform: translateX(-50%);
+  top: calc(env(safe-area-inset-top, 0px) + 18px); max-width: calc(100% - 120px);
+  text-align: center; white-space: nowrap; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, .55);
 }
-.wmo .he1__pill {
-  position: absolute; left: calc(16px + env(safe-area-inset-left, 0px)); bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 2;
-  padding: 8px 14px; border-radius: 999px; background: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .04em;
-  opacity: 0; transform: translateY(10px); transition: opacity .3s .25s, transform .3s .25s;
+.wmo .tk__pill {
+  position: absolute; z-index: 2; left: 50%; transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 92px); max-width: calc(100% - 40px);
+  padding: 9px 16px; border-radius: 999px; background: var(--accent); white-space: nowrap;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .03em; box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
 }
-.wmo .he1.is-on .he1__pill { opacity: 1; transform: none; }
-.wmo .he1__cue { position: absolute; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 2; font-size: 28px; line-height: 1; animation: wmo-cue 1.4s ease-in-out infinite; }
-@keyframes wmo-cue { 50% { transform: translateY(6px); } }
-.wmo .he1 .ex-x { position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); z-index: 3; }
-.wmo .he1__more { max-width: var(--col); margin: 0 auto; padding: 32px var(--pad) calc(48px + env(safe-area-inset-bottom, 0px)); background: #000; }
-.wmo .he1__more .kick { color: rgba(255, 255, 255, .55); }
-.wmo .he1__more h3 { margin-top: 6px; font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: -.025em; line-height: 1.08; }
-.wmo .he1__more p { margin-top: 10px; font-size: 16px; line-height: 1.55; color: rgba(255, 255, 255, .82); }
-.wmo .he1__meta { display: flex; align-items: baseline; gap: 10px; margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .14); }
-.wmo .he1__meta b { font-family: var(--display); font-size: 28px; }
-.wmo .he1__meta span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #8fb0ff; }
-.wmo .he1__othersh { margin-top: 30px; color: rgba(255, 255, 255, .5); }
-.wmo .he1__others { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-.wmo .he1__others button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px; border-radius: 14px; background: rgba(255, 255, 255, .07); }
-.wmo .he1__others img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; }
-.wmo .he1__others span { display: flex; flex-direction: column; font-size: 14px; font-weight: 600; }
-.wmo .he1__others b { font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #8fb0ff; }
+.wmo .tk__down {
+  position: absolute; z-index: 2; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 26px);
+  width: 48px; height: 48px; margin-left: -24px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .16); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: tk-bob 1.6s ease-in-out infinite;
+}
+.wmo .tk__down svg { width: 26px; height: 26px; stroke: #fff; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes tk-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+.wmo .tk__x {
+  position: absolute; z-index: 3; top: calc(env(safe-area-inset-top, 0px) + 10px); right: calc(env(safe-area-inset-right, 0px) + 10px);
+  width: 32px; height: 32px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, .22); opacity: .8;
+}
+.wmo .tk__x svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; }
+
+/* The points card the film flicks back into, directly under the grid. */
+.wmo .tk-points { margin-top: 12px; padding: 16px 16px 14px; border-radius: 18px; background: var(--paper); box-shadow: 0 10px 30px rgba(13, 14, 17, .1); animation: wmo-rise .45s ease .15s both; }
+.wmo .tk-points__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.wmo .tk-points__pill { padding: 6px 12px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .03em; }
+.wmo .tk-points__when { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+.wmo .tk-points ul { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.wmo .tk-points li { position: relative; padding-left: 22px; font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
+.wmo .tk-points li::before { content: ''; position: absolute; left: 4px; top: .55em; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+.wmo .tk-points__again { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--accent); }
+.wmo .tk-points__again .play { background: var(--accent); }
+.wmo .tk-points__again .play svg { fill: #fff; }
 
 /* E2 · Tall bottom sheet */
 .wmo .he2 { position: fixed; inset: 0; z-index: 1000; }

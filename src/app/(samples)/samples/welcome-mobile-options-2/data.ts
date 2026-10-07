@@ -113,13 +113,15 @@ export type Moment = {
   poster: string;
   /** The live journey's send date, and the matching milestone label. */
   when: string;
+  /** The live touchpoint sheet's lede, verbatim (src/app/(site)/products/vip-guest-services/welcome/data.ts). */
+  lede: string;
 };
 
 export const MOMENTS: Moment[] = [
-  { fig: 'Day 1', figSub: 'Morning after booking', kick: 'Touchpoint 01', title: 'Welcome By Name', desc: 'Your team welcomes the guest by name, in their own voice.', img: 't2.jpg', clip: 'm4.mp4', poster: 'm4.jpg', when: 'Day 1' },
-  { fig: '48 hours', figSub: 'After booking', kick: 'Touchpoint 02', title: 'Dining, In Close-Up', desc: 'Signature dishes in close-up, with one tap to book the table.', img: 'f6.jpg', clip: 'm7.mp4', poster: 'm7.jpg', when: '48 hours' },
-  { fig: '7 days', figSub: 'Before arrival', kick: 'Touchpoint 03', title: 'Spa, Matched To Open Hours', desc: 'A spa teaser matched to the hours still open on their dates.', img: 't9.jpg', clip: 'm2.mp4', poster: 'm2.jpg', when: '7 days out' },
-  { fig: '48 hours', figSub: 'Before arrival', kick: 'Touchpoint 04', title: 'Arrival And Extensions', desc: 'Valet, arrival, and one tap for early check-in or an extra night.', img: 't16.jpg', clip: 'm9.mp4', poster: 'm9.jpg', when: '48 hours out' },
+  { fig: 'Day 1', figSub: 'Morning after booking', kick: 'Touchpoint 01', title: 'Welcome By Name', desc: 'Your team welcomes the guest by name, in their own voice.', img: 't2.jpg', clip: 'm4.mp4', poster: 'm4.jpg', when: 'Day 1', lede: "Your own team, in their own cloned voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead." },
+  { fig: '48 hours', figSub: 'After booking', kick: 'Touchpoint 02', title: 'Dining, In Close-Up', desc: 'Signature dishes in close-up, with one tap to book the table.', img: 'f6.jpg', clip: 'm7.mp4', poster: 'm7.jpg', when: '48 hours', lede: "Fifteen seconds of signature dishes, the cocktail pour and the kitchen at work, with one tap to reserve the chef's table." },
+  { fig: '7 days', figSub: 'Before arrival', kick: 'Touchpoint 03', title: 'Spa, Matched To Open Hours', desc: 'A spa teaser matched to the hours still open on their dates.', img: 't9.jpg', clip: 'm2.mp4', poster: 'm2.jpg', when: '7 days out', lede: "A hydrotherapy teaser sent a week before arrival, matched to the therapist hours still open on the guest's dates." },
+  { fig: '48 hours', figSub: 'Before arrival', kick: 'Touchpoint 04', title: 'Arrival And Extensions', desc: 'Valet, arrival, and one tap for early check-in or an extra night.', img: 't16.jpg', clip: 'm9.mp4', poster: 'm9.jpg', when: '48 hours out', lede: "Valet, the chilled-towel greeting, and one tap to lock in early check-in, late checkout or an extra night." },
 ];
 
 /* ---- calendar: the 30 days from booking to arrival ------------------------ */
