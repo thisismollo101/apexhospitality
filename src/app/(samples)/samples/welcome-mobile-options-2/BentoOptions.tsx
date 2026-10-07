@@ -191,6 +191,9 @@ function Takeover() {
     const v = films.current[n];
     const el = layer.current as FsElement | null;
     // Everything below runs inside the tap, which is what fullscreen requires.
+    // The overlay is display:none while parked (so Safari 26 treats it as newly shown and
+    // re-samples its bar tint); bring it into layout now, before asking for fullscreen.
+    if (el) el.style.display = 'block';
     films.current.forEach((f, k) => {
       if (f && k !== n) f.pause();
     });
@@ -218,6 +221,10 @@ function Takeover() {
       setClip('none');
       setPhase('full');
     }
+    // Hand display back to the class once React has rendered the open phase.
+    requestAnimationFrame(() => {
+      if (el) el.style.display = '';
+    });
     setTimeout(() => {
       busy.current = false;
     }, 500);
@@ -317,7 +324,7 @@ function Takeover() {
   const m = i === null ? null : MOMENTS[i];
   const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film fills the whole screen, full bleed on all four sides and cropped rather than letterboxed, with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
+    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Our own overlay. Tap a tile: its vertical film fills everything the browser lets a page draw on, cropped rather than letterboxed, with the status-bar strip and Safari's bottom bar turned black around it. Only the timing and the touchpoint pill sit on the film. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
       <div className="ebox" ref={box}>
         <Head />
         <div className="egrid">
@@ -364,7 +371,16 @@ function Takeover() {
           </div>
         )}
       </div>
-      {/* Always mounted, so a tap can hand it (or its film) to fullscreen synchronously. */}
+      {/* Safari 26 tints its status-bar strip and bottom toolbar from an opaque fixed element
+          touching the edge (theme-color is ignored there). Two black strips appear with the
+          film so both bars go black instead of white; they sit under the film, unseen. */}
+      {up && (
+        <>
+          <div className="tk-tint tk-tint--top" aria-hidden="true" />
+          <div className="tk-tint tk-tint--bottom" aria-hidden="true" />
+        </>
+      )}
+      {/* Always mounted (display:none while parked), so a tap can hand it to fullscreen synchronously. */}
       <div
         ref={layer}
         className={`tk tk--${phase}${real ? ' tk--real' : ''}`}
@@ -420,6 +436,150 @@ function Takeover() {
               <svg viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M3 3l10 10M13 3L3 13" />
               </svg>
+            </button>
+          </div>
+        )}
+      </div>
+    </Option>
+  );
+}
+
+/* ---- 1b · Native player, pre-cropped (comparison) ------------------------------
+   For comparison with E1. The tap hands the film to the phone's own fullscreen
+   player (video.webkitEnterFullscreen on iPhone; requestFullscreen on the
+   video elsewhere). The native player hides the status bar and Safari's
+   toolbars completely, but it fits the film to the screen (aspect-fit), which
+   is what gave the thick black bars in v5. So these are separate versions of
+   the four films, centre-cropped with ffmpeg to the iPhone screen's own
+   9:19.5 shape (720×1560, /media/welcome/*-tall.mp4): fitting a film that is
+   already the screen's shape leaves no bars. No overlay text: the native
+   player shows only the film and its controls. Done returns to the grid with
+   the touchpoint's points underneath. */
+
+type NativeVideo = HTMLVideoElement & {
+  webkitEnterFullscreen?: () => void;
+  webkitRequestFullscreen?: () => Promise<void> | void;
+};
+
+const tall = (m: Moment) => ({ src: m.clip.replace(/\.mp4$/, '-tall.mp4'), poster: m.poster.replace(/\.jpg$/, '-tall.jpg') });
+
+function NativeTall() {
+  const [shown, setShown] = useState<number | null>(null);
+  const films = useRef<(HTMLVideoElement | null)[]>([]);
+  const cur = useRef<number | null>(null);
+
+  const done = () => {
+    const n = cur.current;
+    if (n === null) return;
+    cur.current = null;
+    const v = films.current[n];
+    if (v) {
+      v.pause();
+      v.muted = true;
+    }
+    setShown(n);
+  };
+
+  const open = (n: number) => {
+    const v = films.current[n] as NativeVideo | null;
+    if (!v) return;
+    cur.current = n;
+    films.current.forEach((f, k) => {
+      if (f && k !== n) f.pause();
+    });
+    // A tap is a user gesture, so the film may start with sound.
+    v.muted = false;
+    v.currentTime = 0;
+    v.play().catch(() => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+    try {
+      if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+      else if (v.requestFullscreen) v.requestFullscreen().catch(() => {});
+      else v.webkitRequestFullscreen?.();
+    } catch {
+      /* the inline film stays playing in its tile */
+    }
+  };
+
+  useEffect(() => {
+    const onFs = () => {
+      if (!fsElement() && cur.current !== null) done();
+    };
+    // Esc leaves too: exit fullscreen ourselves (fullscreenchange then brings back the points).
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || cur.current === null) return;
+      if (fsElement()) exitFullscreen();
+      else done();
+    };
+    const vids = films.current.filter(Boolean) as HTMLVideoElement[];
+    document.addEventListener('fullscreenchange', onFs);
+    document.addEventListener('webkitfullscreenchange', onFs);
+    document.addEventListener('keydown', onKey);
+    vids.forEach((v) => v.addEventListener('webkitendfullscreen', done));
+    return () => {
+      document.removeEventListener('fullscreenchange', onFs);
+      document.removeEventListener('webkitfullscreenchange', onFs);
+      document.removeEventListener('keydown', onKey);
+      vids.forEach((v) => v.removeEventListener('webkitendfullscreen', done));
+    };
+  });
+
+  const p = shown === null ? null : MOMENTS[shown];
+  return (
+    <Option block={B} n="1b" name="Native player, pre-cropped (comparison)" note="For comparison with E1. Tap a tile and the phone's own fullscreen player takes over, hiding the status bar and Safari's bars entirely. The four films are pre-cropped to the iPhone's 9:19.5 screen shape, so the player fills the screen with no black bars. The player shows only the film; Done returns here with the points below.">
+      <div className="ebox">
+        <Head />
+        <div className="egrid">
+          {MOMENTS.map((mm, n) => {
+            const t = tall(mm);
+            return (
+              <button
+                key={mm.kick}
+                type="button"
+                className={`etile nt-tile${shown === n ? ' is-open' : ''}`}
+                aria-label={`Play in the native player: ${mm.fig}, ${mm.figSub}: ${mm.title}`}
+                onClick={() => open(n)}
+              >
+                <video
+                  ref={(el) => {
+                    films.current[n] = el;
+                  }}
+                  src={img(t.src)}
+                  poster={img(t.poster)}
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <span className="etile__fig">
+                  {mm.fig}
+                  <small>{mm.figSub}</small>
+                </span>
+                <span className="etile__ex" aria-hidden="true">
+                  ▶
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        {p && shown !== null && (
+          <div className="tk-points" key={shown} aria-live="polite">
+            <div className="tk-points__head">
+              <span className="tk-points__pill">
+                {p.kick} · {p.title}
+              </span>
+              <span className="tk-points__when">
+                {p.fig} · {p.figSub}
+              </span>
+            </div>
+            <ul>
+              {points(p).map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+            <button type="button" className="tk-points__again" onClick={() => open(shown)}>
+              <PlayIcon size={22} /> Watch again
             </button>
           </div>
         )}
@@ -558,6 +718,7 @@ export default function BentoOptions() {
   return (
     <>
       <Takeover />
+      <NativeTall />
       <TallSheet />
       <Radio />
     </>
