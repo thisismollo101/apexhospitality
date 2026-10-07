@@ -1099,3 +1099,6 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 
 /* B3 · glowing rows on the banner */
 .wmo .vc-glow { display: flex; flex-direction: column; gap: 10px; margin-top: 34px; }
+
+/* Build stamp: which commit is live. */
+.wmo .outro__build { margin-top: 10px; font-size: 11px; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
