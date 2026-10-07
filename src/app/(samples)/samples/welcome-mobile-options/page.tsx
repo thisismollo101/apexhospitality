@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Hanken_Grotesk, Inter } from 'next/font/google';
+import ExpandOptions from './ExpandOptions';
 import HeroOptions from './HeroOptions';
 import MomentsOptions from './MomentsOptions';
 import WorksOptions from './WorksOptions';
@@ -9,8 +10,9 @@ import './style.css';
 
 /*
  * Welcome · mobile options. Three blocks of the live Welcome page, five
- * different ways to lay each one out on a phone: fifteen labelled variations
- * stacked down one column, with a sticky jump menu between the blocks.
+ * different ways to lay each one out on a phone, plus five ways a Four Moments
+ * bento tile can expand: twenty labelled variations down one column, with a
+ * sticky jump menu between them.
  *
  * Copy, palette, type and media are the live page's own. Nothing here is
  * imported from that route: per CLAUDE.md a sample copies, never shares.
@@ -23,7 +25,8 @@ export const metadata: Metadata = { title: 'Welcome · mobile options' };
 const BLOCKS = [
   { id: 'hero', label: 'Hero', title: 'Hero + top VSL + value cards' },
   { id: 'works', label: 'What Works', title: 'What Works · the 4-milestone journey' },
-  { id: 'moments', label: 'Four Moments', title: 'Four Films, Four Moments' },
+  { id: 'moments', label: 'Four Moments', title: 'Four Films, Four Moments: section layouts' },
+  { id: 'bento', label: 'Bento Expand', title: 'Bento Expand: how a tile opens' },
 ];
 
 export default function WelcomeMobileOptions() {
@@ -40,9 +43,10 @@ export default function WelcomeMobileOptions() {
       <main className="col">
         <header className="intro">
           <span className="eye">Sample · Welcome page</span>
-          <h1>Five mobile layouts for each of three blocks.</h1>
+          <h1>Five mobile options for each of four jobs.</h1>
           <p>
-            Fifteen variations, built to be reviewed on a phone. Every option uses the live Welcome copy, colours, type
+            Twenty variations, built to be reviewed on a phone: five layouts each for the hero, What Works and Four
+            Moments, then five ways a Four Moments bento tile can open. Every option uses the live Welcome copy, colours, type
             and placeholder media. Only the layout changes.
           </p>
         </header>
@@ -65,10 +69,18 @@ export default function WelcomeMobileOptions() {
 
         <section id="moments" className="blk">
           <h2 className="blk__title">
-            <span>C</span>
+            <span>C1</span>
             {BLOCKS[2].title}
           </h2>
           <MomentsOptions />
+        </section>
+
+        <section id="bento" className="blk">
+          <h2 className="blk__title">
+            <span>C2</span>
+            {BLOCKS[3].title}
+          </h2>
+          <ExpandOptions />
         </section>
 
         <footer className="outro">
