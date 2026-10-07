@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
 import { useEffect, useRef, useState } from 'react';
-import { MOMENTS, MOMENTS_HEAD, img, type Moment } from './data';
+import { MOMENTS, MOMENTS_HEAD, WORKS, img, type Moment } from './data';
 import { CloseX, Option, PlayIcon, useOverlay } from './parts';
 
 /*
@@ -56,86 +56,188 @@ function Film({ m, className = '' }: { m: Moment; className?: string }) {
 }
 
 /* ---- 1 · Full-screen takeover (refined) --------------------------------------------
-   True edge to edge: a fixed inset-0 layer above everything, sized to the dynamic
-   viewport and running under the status bar and notch (the page sets
-   viewport-fit=cover). The film fills the first screen with only the timing
-   centred at the top and the blue pill bottom-left. Scroll down and the film
-   gives way to the rest of the touchpoint. */
+   Tap a tile and its vertical film takes the whole screen: a fixed inset-0 layer
+   above everything, 100vw × 100dvh, object-fit cover, running under the status
+   bar and notch (the page sets viewport-fit=cover; safe-area insets only pad the
+   text). Nothing sits on the film but the timing (top centre), the blue
+   touchpoint pill (centred) and a down arrow.
+
+   Scroll down, swipe up, press ↓ or tap the arrow, and the film flicks off: it
+   shrinks straight back into its own tile, and the touchpoint's points open in
+   a card directly under the grid. The points are live Welcome copy, as
+   placeholders for Aidan to reword. */
+
+/** Placeholder points per touchpoint, all live copy: the card line, the sheet's lede, and the journey footer. */
+const points = (m: Moment) => [m.desc, m.lede, WORKS.foot];
+
+type Phase = 'off' | 'opening' | 'full' | 'closing';
+
 function Takeover() {
-  const [i, setI] = useState<number | null>(null);
-  const [rect, setRect] = useState('inset(0)');
-  const [full, setFull] = useState(false);
-  const from = useRef('inset(0)');
-  const close = () => {
-    setFull(false);
-    setRect(from.current);
-    setTimeout(() => setI(null), 460);
-  };
-  useOverlay(i !== null, close);
-  const open = (n: number, el: HTMLButtonElement) => {
+  const [i, setI] = useState<number | null>(null); // the touchpoint on screen
+  const [shown, setShown] = useState<number | null>(null); // the touchpoint whose points are open
+  const [phase, setPhase] = useState<Phase>('off');
+  const [clip, setClip] = useState('inset(0px)');
+  const box = useRef<HTMLDivElement>(null);
+  const tiles = useRef<(HTMLButtonElement | null)[]>([]);
+  const busy = useRef(false);
+
+  /** The clip-path that crops the full screen down to tile n, where it sits right now. */
+  const tileClip = (n: number) => {
+    const el = tiles.current[n];
+    if (!el) return 'inset(50% 50% 50% 50%)';
     const r = el.getBoundingClientRect();
-    from.current = `inset(${r.top}px ${window.innerWidth - r.right}px ${window.innerHeight - r.bottom}px ${r.left}px round 16px)`;
-    setRect(from.current);
+    return `inset(${r.top}px ${window.innerWidth - r.right}px ${window.innerHeight - r.bottom}px ${r.left}px round 16px)`;
+  };
+
+  const open = (n: number) => {
+    if (busy.current) return;
+    busy.current = true;
+    setClip(tileClip(n));
     setI(n);
+    setPhase('opening');
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        setRect('inset(0px 0px 0px 0px round 0px)');
-        setFull(true);
+        setClip('inset(0px 0px 0px 0px round 0px)');
+        setPhase('full');
+        setTimeout(() => {
+          busy.current = false;
+        }, 480);
       }),
     );
   };
+
+  /** Flick the film off: park the page on the grid (hidden under the film), open the points, then shrink into the tile. */
+  const flickOff = () => {
+    if (i === null || busy.current) return;
+    busy.current = true;
+    const n = i;
+    const b = box.current;
+    if (b) {
+      const top = b.getBoundingClientRect().top + window.scrollY - 56;
+      window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+    }
+    setShown(n);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        setClip(tileClip(n));
+        setPhase('closing');
+        setTimeout(() => {
+          setI(null);
+          setPhase('off');
+          busy.current = false;
+        }, 480);
+      }),
+    );
+  };
+
+  useOverlay(i !== null, flickOff);
+
+  // Any downward intent while the film is up flicks it off: wheel, a swipe up, or the keys.
+  const touchY = useRef<number | null>(null);
+  useEffect(() => {
+    if (i === null) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (e.deltaY > 6) flickOff();
+    };
+    const onStart = (e: TouchEvent) => {
+      touchY.current = e.touches[0].clientY;
+    };
+    const onMove = (e: TouchEvent) => {
+      e.preventDefault();
+      if (touchY.current !== null && touchY.current - e.touches[0].clientY > 24) {
+        touchY.current = null;
+        flickOff();
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
+        e.preventDefault();
+        flickOff();
+      }
+    };
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onStart, { passive: true });
+    window.addEventListener('touchmove', onMove, { passive: false });
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onStart);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('keydown', onKey);
+    };
+  });
+
   const m = i === null ? null : MOMENTS[i];
+  const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Liked, refined: truly edge to edge, under the status bar and notch. Only the timing (top centre) and the blue touchpoint pill (bottom left) sit on the film; scroll down out of it into the rest of the touchpoint.">
-      <div className="ebox">
+    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film fills the entire screen, edge to edge and under the notch, with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
+      <div className="ebox" ref={box}>
         <Head />
         <div className="egrid">
           {MOMENTS.map((mm, n) => (
-            <Tile key={mm.kick} m={mm} onOpen={(el) => open(n, el)} open={i === n} />
+            <button
+              key={mm.kick}
+              ref={(el) => {
+                tiles.current[n] = el;
+              }}
+              type="button"
+              className={`etile${shown === n ? ' is-open' : ''}`}
+              aria-label={`Play full screen: ${mm.fig}, ${mm.figSub}: ${mm.title}`}
+              onClick={() => open(n)}
+            >
+              <img src={img(mm.img)} alt="" />
+              <span className="etile__fig">
+                {mm.fig}
+                <small>{mm.figSub}</small>
+              </span>
+              <span className="etile__ex" aria-hidden="true">
+                ▶
+              </span>
+            </button>
           ))}
         </div>
+        {p && shown !== null && (
+          <div className="tk-points" key={shown} aria-live="polite">
+            <div className="tk-points__head">
+              <span className="tk-points__pill">
+                {p.kick} · {p.title}
+              </span>
+              <span className="tk-points__when">
+                {p.fig} · {p.figSub}
+              </span>
+            </div>
+            <ul>
+              {points(p).map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+            <button type="button" className="tk-points__again" onClick={() => open(shown)}>
+              <PlayIcon size={22} /> Watch again
+            </button>
+          </div>
+        )}
       </div>
       {m && i !== null && (
-        <div className={`he1${full ? ' is-on' : ''}`} style={{ clipPath: rect }} role="dialog" aria-modal="true" aria-label={m.title}>
-          <section className="he1__screen">
-            <Film m={m} className="he1__film" />
-            <div className="he1__shade" aria-hidden="true" />
-            <span className="he1__when">
-              {m.fig} · {m.figSub}
-            </span>
-            <span className="he1__pill">
-              {m.kick} · {m.title}
-            </span>
-            <span className="he1__cue" aria-hidden="true">
-              ⌄
-            </span>
-          </section>
-          <section className="he1__more">
-            <span className="kick">{m.kick}</span>
-            <h3>{m.title}</h3>
-            <p>{m.desc}</p>
-            <div className="he1__meta">
-              <b>{m.fig}</b>
-              <span>{m.figSub}</span>
-            </div>
-            <span className="tl__kick he1__othersh">The four films</span>
-            <ul className="he1__others">
-              {MOMENTS.map((o, n) =>
-                n === i ? null : (
-                  <li key={o.kick}>
-                    <button type="button" onClick={() => setI(n)}>
-                      <img src={img(o.img)} alt="" />
-                      <span>
-                        <b>{o.fig}</b>
-                        {o.title}
-                      </span>
-                    </button>
-                  </li>
-                ),
-              )}
-            </ul>
-          </section>
-          <CloseX onClick={close} light />
+        <div className={`tk tk--${phase}`} style={{ clipPath: clip }} role="dialog" aria-modal="true" aria-label={`${m.kick} · ${m.title}`}>
+          <Film m={m} className="tk__film" />
+          <div className="tk__shade" aria-hidden="true" />
+          <span className="tk__when">
+            {m.fig} · {m.figSub}
+          </span>
+          <span className="tk__pill">
+            {m.kick} · {m.title}
+          </span>
+          <button type="button" className="tk__down" onClick={flickOff} aria-label="Scroll down to this touchpoint">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <button type="button" className="tk__x" onClick={flickOff} aria-label="Close">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 3l10 10M13 3L3 13" />
+            </svg>
+          </button>
         </div>
       )}
     </Option>
