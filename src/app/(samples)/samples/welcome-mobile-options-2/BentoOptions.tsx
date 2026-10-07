@@ -56,27 +56,28 @@ function Film({ m, className = '' }: { m: Moment; className?: string }) {
 }
 
 /* ---- 1 · Full-screen takeover (refined) --------------------------------------------
-   Tap a tile and its vertical film takes the WHOLE phone screen: no status-bar
-   strip, no address bar, no toolbar. A fixed overlay alone can't do that; mobile
-   browsers keep their chrome around fixed elements. So the tap asks for real
-   fullscreen, best route first:
+   Tap a tile and its vertical film takes the WHOLE phone screen, full bleed on
+   all four sides, cropped to fill (cover) and never letterboxed.
 
-     1. element.requestFullscreen() on the overlay (Android Chrome, desktop),
-     2. webkitRequestFullscreen() (older WebKit, iPadOS Safari),
-     3. video.webkitEnterFullscreen() (iPhone Safari and iOS in-app browsers,
-        where only a <video> may go fullscreen; the native player takes over).
+   It is always our own overlay; the film is never handed to the iOS native
+   player, which letterboxes a vertical film with thick black bars. Where a
+   browser lets a non-video element go fullscreen (Android Chrome, desktop),
+   the tap also asks for real fullscreen on the overlay so the browser chrome
+   goes too; anywhere else (iPhone Safari, iOS in-app browsers) it falls back
+   silently to the overlay alone:
 
-   All three must run synchronously inside the tap, so the overlay and all four
-   films are always mounted (hidden) and the tapped film is ready to go.
+   - position fixed on all four sides, 100vw wide, as tall as the tallest
+     viewport unit the browser offers (max of 100vh, 100dvh, 100lvh), and
+     pulled out by the safe-area insets so it runs under the notch and home bar;
+   - the film plays inline (playsinline), muted so it can start at once, cover
+     fit and scaled 1.04 to crop any thin strips baked into the clip edges;
+     a tap on the film turns the sound on;
+   - html, body and theme-color go black and the page stops scrolling while it
+     is open, so whatever chrome an app keeps blends into the film.
 
-   Underneath sits the CSS fallback: fixed, top/left 0, 100vw × 100lvh (with
-   svh/dvh fallbacks), object-fit: cover, a black ground, viewport-fit=cover.
-   While it is open, html, body and theme-color turn black so whatever chrome a
-   browser keeps blends into the film.
-
-   Leaving fullscreen by any route (the X, the back gesture, Esc, the native
-   player's Done, or scrolling down) flicks the film back into its tile, with the
-   touchpoint's points in a card under the grid. */
+   Leaving by any route (the X, the back gesture, Esc, or scrolling down) flicks
+   the film back into its tile, with the touchpoint's points in a card under the
+   grid. */
 
 /** Placeholder points per touchpoint, all live copy: the card line, the sheet's lede, and the journey footer. */
 const points = (m: Moment) => [m.desc, m.lede, WORKS.foot];
@@ -85,14 +86,13 @@ type Phase = 'off' | 'opening' | 'full' | 'closing';
 
 type FsElement = HTMLElement & { webkitRequestFullscreen?: () => Promise<void> | void };
 type FsDocument = Document & { webkitFullscreenElement?: Element | null; webkitExitFullscreen?: () => Promise<void> | void };
-type IosVideo = HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitDisplayingFullscreen?: boolean };
 
 const fsElement = () => {
   const d = document as FsDocument;
   return d.fullscreenElement ?? d.webkitFullscreenElement ?? null;
 };
 
-/** Ask for real fullscreen on the overlay; true if a request was made. */
+/** Ask for real fullscreen on the overlay where non-video elements may have it; true if a request was made. */
 function enterFullscreen(el: FsElement): boolean {
   try {
     if (el.requestFullscreen) {
@@ -107,6 +107,13 @@ function enterFullscreen(el: FsElement): boolean {
     /* fall through to the next route */
   }
   return false;
+}
+
+/** Flip a film's sound; returns true when it is now audible. */
+function toggleSound(v: HTMLVideoElement): boolean {
+  v.muted = !v.muted;
+  if (!v.muted) v.play().catch(() => {});
+  return !v.muted;
 }
 
 function exitFullscreen() {
@@ -154,6 +161,7 @@ function Takeover() {
   const [phase, setPhase] = useState<Phase>('off');
   const [clip, setClip] = useState('none');
   const [real, setReal] = useState(false); // true while in real (element) fullscreen
+  const [sound, setSound] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
@@ -180,7 +188,7 @@ function Takeover() {
     if (busy.current) return;
     busy.current = true;
     cur.current = n;
-    const v = films.current[n] as IosVideo | null;
+    const v = films.current[n];
     const el = layer.current as FsElement | null;
     // Everything below runs inside the tap, which is what fullscreen requires.
     films.current.forEach((f, k) => {
@@ -191,16 +199,9 @@ function Takeover() {
       v.currentTime = 0;
       v.play().catch(() => {});
     }
-    let route: 'element' | 'native' | 'css' = 'css';
-    if (el && enterFullscreen(el)) route = 'element';
-    else if (v?.webkitEnterFullscreen) {
-      try {
-        v.webkitEnterFullscreen();
-        route = 'native';
-      } catch {
-        route = 'css';
-      }
-    }
+    // Real fullscreen only where a non-video element may have it; otherwise the overlay alone, silently.
+    const route: 'element' | 'css' = el && enterFullscreen(el) ? 'element' : 'css';
+    setSound(false);
     setI(n);
     setReal(route === 'element');
     if (route === 'css') {
@@ -243,7 +244,12 @@ function Takeover() {
           setClip(tileClip(n));
           setPhase('closing');
           setTimeout(() => {
-            films.current[n]?.pause();
+            const f = films.current[n];
+            if (f) {
+              f.pause();
+              f.muted = true;
+            }
+            setSound(false);
             cur.current = null;
             setI(null);
             setPhase('off');
@@ -259,22 +265,16 @@ function Takeover() {
   useOverlay(up, flickOff);
   useBlackChrome(up);
 
-  // Leaving real fullscreen by the system (back gesture, Esc) or the native iOS player counts as leaving.
+  // Leaving real fullscreen by the system (back gesture, Esc) counts as leaving.
   useEffect(() => {
     const onFs = () => {
       if (!fsElement() && cur.current !== null && !busy.current) flickOff();
     };
-    const onNativeEnd = () => {
-      if (cur.current !== null && !busy.current) flickOff();
-    };
     document.addEventListener('fullscreenchange', onFs);
     document.addEventListener('webkitfullscreenchange', onFs);
-    const vids = films.current.filter(Boolean) as HTMLVideoElement[];
-    vids.forEach((v) => v.addEventListener('webkitendfullscreen', onNativeEnd));
     return () => {
       document.removeEventListener('fullscreenchange', onFs);
       document.removeEventListener('webkitfullscreenchange', onFs);
-      vids.forEach((v) => v.removeEventListener('webkitendfullscreen', onNativeEnd));
     };
   });
 
@@ -317,7 +317,7 @@ function Takeover() {
   const m = i === null ? null : MOMENTS[i];
   const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film goes truly full screen (the browser's bars and the status strip disappear), with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
+    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Tap a tile: its vertical film fills the whole screen, full bleed on all four sides and cropped rather than letterboxed, with only the timing and the touchpoint pill centred on it. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
       <div className="ebox" ref={box}>
         <Head />
         <div className="egrid">
@@ -390,6 +390,16 @@ function Takeover() {
           />
         ))}
         <div className="tk__shade" aria-hidden="true" />
+        {/* The film starts muted so it can play at once; a tap on it turns the sound on. */}
+        <button
+          type="button"
+          className="tk__tap"
+          aria-label={sound ? 'Mute the film' : 'Turn the sound on'}
+          onClick={() => {
+            const v = i === null ? null : films.current[i];
+            if (v) setSound(toggleSound(v));
+          }}
+        />
         {m && (
           <div className="tk__ui">
             <span className="tk__when">
@@ -403,6 +413,9 @@ function Takeover() {
                 <path d="M6 9l6 6 6-6" />
               </svg>
             </button>
+            <span className="tk__sound" aria-hidden="true">
+              {sound ? '🔊' : '🔇'}
+            </span>
             <button type="button" className="tk__x" onClick={flickOff} aria-label="Close">
               <svg viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M3 3l10 10M13 3L3 13" />
