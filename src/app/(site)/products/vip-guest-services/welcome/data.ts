@@ -1,340 +1,175 @@
 /**
- * Every string on the Apex Welcome landing page, in one file.
+ * Copy and asset names for the parts of the Welcome page that are drawn by
+ * script: the touchpoint cards and their opened sheet, the reel, the guest-type
+ * frames, and the journey phone. Everything else is plain markup in WelcomeBody.tsx.
  *
- * The wireframe (v4) is the source of truth for this page and it is dense with
- * numbers — $121,500 of monthly leakage, 270% conversion, 16% LTV. Those need to
- * agree wherever they appear, and the calculator in Section 5 has to derive the
- * same figures the VSL quotes in Section 1B rather than restate them. Keeping
- * the copy out of the components is what makes that checkable.
- *
- * Clip names refer to public/media/cards. They are the hospitality footage the
- * repo already ships, standing in until the real per-section assets land.
+ * Figures marked * are unverified placeholders until the sources are checked.
  */
 
-/* ---- Section 1: hero ---------------------------------------------------- */
+/** Everything the page shows lives here, copied from the design artifact. */
+export const MEDIA = '/media/welcome/';
 
-export const HERO = {
-  eyebrow: 'Your physical asset is a $10M masterpiece.',
-  headline: 'Why is your pre-arrival experience still a plain-text receipt?',
-  subhead:
-    'Stop letting the “30-Day Pre-Arrival Dead Zone” bleed your high-margin revenue. Reclaim your direct booking authority, eliminate the OTA commission tax, and establish immediate telepresence before your guest ever sets foot on property.',
-  narrative:
-    'Standard confirmation workflows rely on clinical, text-heavy PDFs and sterile automated emails, creating an “uncertainty tax.” Lacking vertical visual proof of room reality — closet layouts, bed positioning, balcony views — guests exit to OTAs or TripAdvisor for secondary verification, costing you a brutal 15% to 30% commission tax to buy back the guest you already had.',
-  primaryCta: 'Reclaim direct revenue',
-  secondaryCta: 'Watch executive VSL',
-};
+export const img = (name: string) => `${MEDIA}${name}`;
 
-export type Suite = { name: string; clip: string; still: string; motion: string };
+/* ---- section 2 · the four touchpoint cards ------------------------------- */
 
-/** Section 1's side-by-side carousel: the same room, dead and alive. */
-export const SUITES: Suite[] = [
-  {
-    name: 'Presidential Ocean Suite',
-    clip: 'accommodation',
-    still: 'A flat, wide-angle JPEG. Beautiful, silent, and unverifiable — the guest cannot tell where the bed faces or what the balcony actually overlooks.',
-    motion:
-      'The same space in 4K. Morning sunlight drifts across the bed linens, water ripples in the private balcony pool, and typography floats over the frame.',
-  },
-  {
-    name: 'Cliffside Sanctuary',
-    clip: 'flagship',
-    still: 'Static photography crops out the approach, the drop, and the scale — the three things a high-net-worth traveler is actually buying.',
-    motion:
-      'A continuous move from the threshold to the edge, so the guest reads the elevation and the privacy in one unbroken shot.',
-  },
-  {
-    name: 'Honeymoon Garden Villa',
-    clip: 'weddings',
-    still: 'A gallery of stills makes a couple assemble the villa in their head, and doubt fills whatever the frame leaves out.',
-    motion:
-      'Bougainvillea moving in real air, the plunge pool catching light, the tasting table set — telepresence instead of inference.',
-  },
-];
-
-export const COMPARE = {
-  caption:
-    'Traditional images trigger zero anticipation and leave room configurations entirely unverified.',
-  subPlayer:
-    'When your physical asset is represented online by static 2D images, high-intent guests exit to Booking.com to find video reviews — costing you 15% to 30% in direct commission leakage. Apex Welcome installs the visual infrastructure to reclaim it.',
-  cta: 'Observe the specimen in motion',
-};
-
-/* ---- Section 1B: the four-part VSL matrix ------------------------------- */
-
-export type Chapter = {
-  tab: string;
+export type Card = {
+  kick: string;
   title: string;
-  clip: string;
-  hook: string;
-  narrative: string;
-  metric: { value: string; label: string };
+  img: string;
+  fig: string;
+  figSub: string;
+  desc: string;
+  lede: string;
+  pays: [string, string][];
+  cite: string;
 };
 
-export const CHAPTERS: Chapter[] = [
+export const TOUCHPOINTS: Card[] = [
   {
-    tab: 'What is it',
-    title: 'The 15% OTA commission tax exposure',
-    clip: 'welcome',
-    hook: 'Most luxury hotels spend $10 million on physical marble and gardens, then let their digital storefront sit completely silent.',
-    narrative:
-      'In 2026, travel social video shelf life has dropped to under 11 days, which makes a once-a-year commercial shoot active business negligence. Shifting bookings from OTAs back to direct channels recovers over $15,000 to $20,000 annually per room category, making the entire system self-funding.',
-    metric: { value: '$15k–$20k', label: 'Recovered annually per room category' },
+    kick: 'Touchpoint 01',
+    title: 'Welcome By Name',
+    img: 't2.jpg',
+    fig: 'Day 1',
+    figSub: 'Morning after booking',
+    desc: 'Your team welcomes the guest by name, in their own voice.',
+    lede: 'Your own team, in their own cloned voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead.',
+    pays: [
+      ['50%*', 'Lower cancellation rate. A direct human greeting within 24 hours takes the remorse out of the booking.'],
+      ['4x*', 'Conversion of personal video messages against generic email links.'],
+    ],
+    cite: '* Cloudbeds; Canary Technologies. Sources pending verification.',
   },
   {
-    tab: 'Why it matters',
-    title: 'The $10M masterpiece versus silent postcards',
-    clip: 'accommodation',
-    hook: 'Your highest-margin luxury suites are sitting empty because wealthy travelers don’t trust your wide-angle photography.',
-    narrative:
-      'With over 2.7 million fake reviews removed by TripAdvisor in 2024 alone, modern travelers demand unedited vertical micro-tours showing the actual bedroom layout, wardrobe space and balcony views. That proof triggers telepresence and raises suite conversions by up to 270%.',
-    metric: { value: '270%', label: 'Lift in suite conversion' },
+    kick: 'Touchpoint 02',
+    title: 'Dining, In Close-Up',
+    img: 'f6.jpg',
+    fig: '48 hours',
+    figSub: 'After booking',
+    desc: 'Signature dishes in close-up, with one tap to book the table.',
+    lede: "Fifteen seconds of signature dishes, the cocktail pour and the kitchen at work, with one tap to reserve the chef's table.",
+    pays: [
+      ['85–90%*', 'Off-site dining leakage, captured as dinner covers before guests research anywhere else.'],
+      ['380%*', 'Conversion lift on high-end culinary offers when backed by visual proof.'],
+    ],
+    cite: '* CBRE Americas / Regulr; Spiegel Research Center. Sources pending verification.',
   },
   {
-    tab: 'What’s involved',
-    title: 'The three core pillars',
-    clip: 'dining',
-    hook: 'Most GMs believe the five-star experience starts in the lobby. But the high-anxiety gap between booking and arrival is where guest retention is won or lost.',
-    narrative:
-      'Price resistance is bypassed pre-arrival with three pillars: the 200ms visual “stun gun,” sensory ASMR that drives 25% higher on-site spend on autopilot, and screenshot-ready “Easter egg” loyalty QR codes that gamify returning direct bookings.',
-    metric: { value: '+25%', label: 'On-site ancillary spend' },
+    kick: 'Touchpoint 03',
+    title: 'Spa, Matched To Open Hours',
+    img: 't9.jpg',
+    fig: '7 days',
+    figSub: 'Before arrival',
+    desc: 'A spa teaser matched to the hours still open on their dates.',
+    lede: "A hydrotherapy teaser sent a week before arrival, matched to the therapist hours still open on the guest's dates.",
+    pays: [
+      ['20–33%*', 'Departmental operating margin for resort and hotel spas, so every filled hour lands as profit.'],
+      ['Up to €250*', 'Per-guest spend lift from visual pre-arrival upselling, a 10% to 20% increase.'],
+    ],
+    cite: '* ISPA / PwC; Oaky / Akia. Sources pending verification.',
   },
   {
-    tab: 'How to use it',
-    title: 'Turnkey deployment and risk reversal',
-    clip: 'corporate',
-    hook: 'We do not run standardized sales meetings. Instead, we initiate our partnerships with an asset-compatibility study.',
-    narrative:
-      'A turnkey four-day on-site cinematic footprint with zero database integration. Staff spend under 15 seconds recording morning huddle voice notes. Backed by a six-month contract exit clause — you keep every asset — and a $5,000 setup deposit rolled forward as full credit.',
-    metric: { value: '4 days', label: 'On-site footprint, zero integration' },
-  },
-];
-
-/* ---- Section 2: guest-facing demographic modules ------------------------ */
-
-export type Module = { segment: string; frame: string; clip: string; body: string; beats: string[] };
-
-export const MODULES: Module[] = [
-  {
-    segment: 'Individual',
-    frame: 'Rest & work',
-    clip: 'flagship',
-    body: 'Targets solo executives protective of productivity and peace, replacing sterile local guides with spatial workspace proof.',
-    beats: ['Workspace POV', 'Sound bath ASMR', 'Nature trail'],
-  },
-  {
-    segment: 'Couple',
-    frame: 'Romance & luxury',
-    clip: 'weddings',
-    body: 'Drives luxury weekend bookings and high-yield private dining upsells before the guest has packed.',
-    beats: ['Honeymoon villa', 'Champagne cork pop ASMR', 'Tasting table'],
-  },
-  {
-    segment: 'Family',
-    frame: 'Experiential resorting',
-    clip: 'accommodation',
-    body: 'Eliminates parental anxiety on child safety and logistics by showing the rooms and routes as they actually are.',
-    beats: ['Secure family suite & balcony', 'Rabbit Cafe', 'Waterfall trail'],
-  },
-  {
-    segment: 'MICE & Weddings',
-    frame: 'The buyout',
-    clip: 'corporate',
-    body: 'Compresses corporate sales cycles from weeks to minutes by delivering immediate spatial proof of the whole property.',
-    beats: ['Grand foyer greeting', 'Boardroom screen descent', 'Golf drone sweep'],
+    kick: 'Touchpoint 04',
+    title: 'Arrival And Extensions',
+    img: 't16.jpg',
+    fig: '48 hours',
+    figSub: 'Before arrival',
+    desc: 'Valet, arrival, and one tap for early check-in or an extra night.',
+    lede: 'Valet, the chilled-towel greeting, and one tap to lock in early check-in, late checkout or an extra night.',
+    pays: [
+      ['65%*', 'Early check-in revenue captured through direct mobile triggers.'],
+      ['0', 'Front-desk queries about arrival. The guest already knows where to go and what happens next.'],
+    ],
+    cite: '* Source pending verification.',
   },
 ];
 
-/* ---- Section 3: the four-touchpoint cadence ----------------------------- */
+/* ---- section 2 · the journey phone --------------------------------------- */
 
-export type Touchpoint = {
-  n: number;
-  when: string;
+export type JourneyStep = {
+  day: number;
+  date: string;
   time: string;
+  img: string;
+  dur: string;
+  chip: string;
+  msg: string;
+};
+
+export const JOURNEY: JourneyStep[] = [
+  { day: 1, date: 'Mon 3 Nov', time: '08:02', img: 't2.jpg', dur: '0:30', chip: 'See the Ocean Suite', msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd." },
+  { day: 3, date: 'Wed 5 Nov', time: '18:40', img: 'f6.jpg', dur: '0:15', chip: "Reserve the chef's table", msg: 'Chef Aris is plating something new. Your terrace table is waiting.' },
+  { day: 23, date: 'Tue 25 Nov', time: '10:15', img: 't9.jpg', dur: '0:15', chip: 'Book a treatment', msg: 'Three treatment hours are still open during your stay.' },
+  { day: 28, date: 'Sun 30 Nov', time: '09:30', img: 't16.jpg', dur: '0:15', chip: 'Add early check-in', msg: 'Your driver will meet you at arrivals. Want your room ready early?' },
+];
+
+/* ---- section 3 · the reel ------------------------------------------------- */
+
+export type ReelStep = {
+  name: string;
+  c: string;
+  poster: string;
+  len: string;
+  fig: string;
+  figLab: string;
   title: string;
-  body: string;
-  explainerClip: string;
-  exampleClip: string;
+  desc: string;
+  foot: string;
 };
 
-export const TOUCHPOINTS: Touchpoint[] = [
+export const REEL: ReelStep[] = [
+  { name: 'Press play', c: '#2b59e0', poster: 'vsl-poster.jpg', len: '1:30', fig: 'Once', figLab: 'Your team records their voice', title: 'Ninety Seconds. The Whole Machine.', desc: 'One voice recording and one filming residency become a personal film for every guest who books.', foot: '4–5 days on site. Nothing for your team after that.' },
+  { name: 'Your property, starring', c: '#c9803a', poster: 'f4.jpg', len: '0:45', fig: '16', figLab: 'Clips in the matrix', title: 'Your Property, Filmed Before We Even Talk.', desc: 'Book a demo and we make a 4K spec film of your hotel first. You see it working before the first call.', foot: 'Day 1 proof, before any contract is signed.' },
+  { name: 'Your team, famous', c: '#b8902a', poster: 'f1.jpg', len: '0:45', fig: '88%*', figLab: 'Trust real people over ads', title: 'The Voice Your Guests Remember.', desc: 'We record your team once and clone their voice. Every welcome after that is theirs, cut with your 4K footage.', foot: '*Nielsen. Source pending verification.' },
+  { name: 'Your events, sold out', c: '#2e8b8f', poster: 'h19.jpg', len: '0:45', fig: '365', figLab: 'Days a year, one residency', title: 'Your Events, Booked Before Guests Arrive.', desc: 'Galas, chef pop-ups and seasonal menus go into the films of guests whose dates overlap, weeks ahead.', foot: 'Limited-capacity events fill before arrival.' },
+  { name: 'In every pocket', c: '#6a3fa0', poster: 'h5.jpg', len: '0:45', fig: '0', figLab: 'Apps, logins or portals', title: 'Your Brand, Straight to Their Phone.', desc: 'Triggered from OPERA or SynXis, delivered by SMS or WhatsApp. One tap and it plays.', foot: '*52% abandon clunky digital experiences (SiteMinder).' },
+];
+
+/* ---- section 4 · the marquee --------------------------------------------- */
+
+/** m0..m10, each a .mp4 with a .jpg poster. */
+export const MARQUEE_CLIPS = Array.from({ length: 11 }, (_, i) => i);
+
+/* ---- who it's for --------------------------------------------------------- */
+
+export const WHEN = ['The morning after booking', '48 hours later', '7 days before arrival', '48 hours before arrival'];
+
+export type Guest = { name: string; imgs: string[]; lines: string[]; data: string };
+
+export const GUESTS: Guest[] = [
   {
-    n: 1,
-    when: '24–36h post-booking',
-    time: '7:00 AM',
-    title: 'The handshake',
-    body: 'Confirms the booking, eliminates buyer’s remorse, establishes elite visual authority and introduces the key staff contact.',
-    explainerClip: 'welcome',
-    exampleClip: 'flagship',
+    name: 'Individual',
+    imgs: ['t2.jpg', 'f6.jpg', 't9.jpg', 'm2.jpg'],
+    lines: ['Welcomed by name, then their room', 'A seat at the chef’s counter', 'Wellness hours built around one', 'Late checkout and lounge access'],
+    data: '<span class="ast">*</span>Wellness travellers spend more per trip than the average tourist (GWI) [P08-5].',
   },
   {
-    n: 2,
-    when: '48h post-booking',
-    time: '7:00 AM',
-    title: 'Intro to Atlas',
-    body: 'Invites the guest into Apex Atlas — the dedicated secondary Instagram visual guide for native suite and path exploration.',
-    explainerClip: 'international',
-    exampleClip: 'accommodation',
+    name: 'Couple',
+    imgs: ['t2.jpg', 'f6.jpg', 't9.jpg', 'p27.jpg'],
+    lines: ['Welcomed by name, then the suite upgrade', 'The candlelit tasting menu', 'Couples’ spa, side by side', 'Champagne on arrival'],
+    data: '<span class="ast">*</span>75% of tourists are culinary travellers and rate food 8.2/10 when choosing a destination (WFTA 2026) [P05-4].',
   },
   {
-    n: 3,
-    when: '7 days pre-arrival',
-    time: '7:00 AM',
-    title: 'The pre-arrival teaser & spa',
-    body: 'Builds deep anticipation and presents sensory-rich offers — heated basalt spa sessions, private dining — using the visual stun gun.',
-    explainerClip: 'dining',
-    exampleClip: 'weddings',
-  },
-  {
-    n: 4,
-    when: '48h pre-arrival',
-    time: '7:00 AM',
-    title: 'Arrival pass & upgrades',
-    body: 'Solves packing anxiety with final logistics — weather, directions — paired with high-margin upsells: airport transfer, private butler, beach cabana.',
-    explainerClip: 'corporate',
-    exampleClip: 'dining',
+    name: 'Family',
+    imgs: ['t2.jpg', 'p23.jpg', 'm4.jpg', 't16.jpg'],
+    lines: ['Welcomed by name, connecting rooms confirmed', 'Family dining, booked ahead', 'The kids’ club schedule', 'A pool cabana, reserved'],
+    data: '',
   },
 ];
 
-export const SUPPRESSION =
-  'Smart suppression gate — for booking windows under three days, touchpoints suppress automatically to prevent guest spam and maintain brand posture.';
+/* ---- sources footer ------------------------------------------------------- */
 
-export const DARK_SOCIAL = {
-  shareFrame:
-    'Feel free to share this clip with your travel companions or family. Show them how a luxury stay should start: “Now THAT is how you welcome a guest!”',
-  bubble: 'Your suite at Cliffside is ready — look at this 👀',
-  stats: [
-    ['16%', 'Higher customer lifetime value'],
-    ['18%', 'Lower churn rate'],
-    ['3–5×', 'Conversion versus ad-driven traffic'],
-  ] as [string, string][],
-  note: 'Over 80% of travel sharing happens inside dark social channels — WhatsApp, DMs, SMS — where no ad platform can follow it.',
-};
-
-/* ---- Section 4: operational mechanics ----------------------------------- */
-
-export const STEPS: [string, string][] = [
-  ['Pick assets', 'GMs select room and amenity clips from their centralized library. Updated weekly or monthly.'],
-  ['Record audio', 'Staff record the guest’s name in 15 seconds during the standard morning huddle, on the tablet.'],
-  ['Apex 365 model', 'The engine clones and translates that voice natively into 30+ guest languages with perfect lip-sync.'],
-  ['Deliver', 'Webhooks deliver direct to the guest by SMS or WhatsApp. No database integration.'],
+export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
+  { claim: 'Front-desk upsells 2–5%; pre-arrival offers 15–25%.', src: 'BookingWhizz / Akia [P15-1]', vendor: true },
+  { claim: '52% booking abandonment.', src: 'SiteMinder Changing Traveller Report 2025' },
+  { claim: '85–90% of guests eat elsewhere; dinner capture 10–15%.', src: 'CBRE Americas / Regulr [P05-2]' },
+  { claim: 'OTA commission 15–30% vs 4–5% direct.', src: 'Cloudbeds / Lighthouse [G-09]' },
+  { claim: 'Cancellations 10.6% direct vs 21.8% OTA (a channel fact, not a Welcome result).', src: 'Cloudbeds [P03-6]', vendor: true },
+  { claim: 'Ancillary revenue is 18%+ of hotel income.', src: 'Cloudbeds [P15-3]', vendor: true },
+  { claim: '380% conversion lift on higher-priced items with reviews.', src: 'Spiegel Research Center [G-13]' },
+  { claim: '75% of tourists are culinary travellers; food rated 8.2/10.', src: 'World Food Travel Association 2026 [P05-4]' },
+  { claim: '$6.8T wellness economy, larger than global tourism.', src: 'Global Wellness Institute [P08-1]' },
+  { claim: 'Wellness travellers spend more per trip.', src: 'Global Wellness Institute [P08-5]' },
+  { claim: 'Ideal therapist utilisation 50–75%.', src: 'Cornell / Horwath [P08-4]' },
+  { claim: '88% trust recommendations from people they know.', src: 'Nielsen 2021 [G-02]' },
 ];
-
-export const AUTOPILOT =
-  'On high-volume check-in days — 200+ arrivals — management toggles Auto-Pilot with a single click. Personalized voice notes are instantly replaced with a pre-rendered executive GM greeting, while personalized text overlays are fully preserved.';
-
-/* ---- Section 5: the calculator ------------------------------------------ */
-
-export type Field = { key: string; label: string; hint: string; min: number; max: number; step: number; unit: '$' | '%' | '' };
-
-export const FIELDS: Field[] = [
-  { key: 'rooms', label: 'Room inventory', hint: 'R', min: 20, max: 600, step: 5, unit: '' },
-  { key: 'adr', label: 'Average daily rate', hint: 'ADR', min: 100, max: 2000, step: 25, unit: '$' },
-  { key: 'occ', label: 'Occupancy', hint: 'Occ%', min: 30, max: 100, step: 1, unit: '%' },
-  { key: 'ota', label: 'OTA share of bookings', hint: 'OTA%', min: 0, max: 100, step: 1, unit: '%' },
-  { key: 'comm', label: 'Average OTA commission', hint: 'Comm%', min: 5, max: 30, step: 1, unit: '%' },
-];
-
-/** The wireframe's worked example: 150 rooms at $450 leaks $121,500 a month. */
-export const DEFAULTS = { rooms: 150, adr: 450, occ: 75, ota: 40, comm: 20 };
-
-export const PROOF_CARDS: [string, string[]][] = [
-  [
-    'The Wharton study',
-    [
-      'Referred customers carry 16% higher lifetime value',
-      '18% lower churn than ad-driven acquisition',
-      'They convert at 3–5× the rate of paid traffic',
-    ],
-  ],
-  [
-    'The Tuesday restaurant ASMR calculator',
-    [
-      'Pre-sells lagging mid-week restaurant covers',
-      'Boosts on-site ancillary spa spend by +25%',
-      'Captures +$180 to +$500 in additional spend per stay',
-    ],
-  ],
-];
-
-/* ---- Section 6: lifecycle boundaries ------------------------------------ */
-
-export const LIFECYCLE: { phase: string; product: string; points: string[]; active: boolean }[] = [
-  {
-    phase: '1. Pre-arrival',
-    product: 'Apex Welcome',
-    points: ['Touchpoints 1–4', 'Closes the gap between booking and arrival'],
-    active: true,
-  },
-  {
-    phase: '2. On-site',
-    product: 'Apex Atlas',
-    points: ['Triggers at physical check-in', 'Dedicated Instagram guide', 'Replaces paper directories'],
-    active: false,
-  },
-  {
-    phase: '3. Post-departure',
-    product: 'Apex Goodbye',
-    points: ['Post-checkout incentives', 'Referral loop'],
-    active: false,
-  },
-];
-
-export const HANDOFFS: [string, string][] = [
-  [
-    'Handoff 1 — check-in',
-    'The moment the guest physically checks in the pre-arrival sequence ends, transferring operations to Apex Atlas: the secondary Instagram guidebook for visual navigation, menus and on-property schedules.',
-  ],
-  [
-    'Handoff 2 — check-out',
-    'Post-checkout, the guest transitions to Apex Goodbye to capture direct re-bookings, reviews and private referral loops.',
-  ],
-];
-
-/* ---- Section 7: verification, objections, close ------------------------- */
-
-export const SOURCES: [string, string][] = [
-  [
-    'Expedia Group Path-to-Purchase Report',
-    'Video-exposed travelers are 74% more likely to complete a booking within seven days than those viewing static images.',
-  ],
-  [
-    'TripAdvisor video performance metrics',
-    'Listings featuring high-quality video receive 138% more guest engagement and direct click-through.',
-  ],
-  [
-    'Wharton School customer acquisition data',
-    'Referred customers carry 16% higher lifetime value and 18% lower churn than ad-driven acquisitions.',
-  ],
-  [
-    'TripAdvisor trust verification report',
-    'Over 2.7 million fake reviews were removed in 2024 alone, making unedited vertical video the only trust source modern consumers believe.',
-  ],
-];
-
-export const OBJECTIONS: { who: string; objection: string; resolution: string }[] = [
-  {
-    who: 'The General Manager — operational time',
-    objection: 'My front-desk staff is already overworked. We don’t have time to act as filmmakers.',
-    resolution:
-      'Under 15 seconds of total staff effort per day, during the morning huddle. Zero editing, zero technical file handling, and Auto-Pilot covers high-volume peak days with a single button.',
-  },
-  {
-    who: 'The Revenue Director — proof of return',
-    objection: 'How do we prove this software investment actually recovers our direct booking margins?',
-    resolution:
-      'Recovering five direct bookings a month self-funds the entire Premium tier retainer, while pre-arrival sensory offers generate +$180 to +$500 in additional spend per stay. Backed by a 90-day direct booking target and a six-month risk-free exit clause.',
-  },
-  {
-    who: 'The Marketing Head — template compatibility',
-    objection: 'We already spent thousands designing our email confirmation templates and PDF guides.',
-    resolution:
-      'We do not replace your PMS email engine; we overlay elite visual infrastructure on top of it. Replacing static PDFs with dynamic vertical 60-second loops increases direct conversions by up to 270%.',
-  },
-];
-
-export const CLOSE = {
-  copy: 'Shall we establish total visual supremacy for your property and secure your regional slot?',
-  cta: 'Request a territory specimen evaluation',
-  href: 'https://apexaccess.com/welcome-intake',
-  note: 'Confirms territory availability and takes your website URL for the Day 1 rendering proof.',
-};
