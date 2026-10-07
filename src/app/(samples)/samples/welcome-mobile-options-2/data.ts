@@ -6,6 +6,24 @@
 
 export const img = (name: string) => `/media/welcome/${name}`;
 
+/*
+ * Three touchpoints play the supplied 1080×1920 films (/media/welcome/hq/), in the
+ * order they were sent: Welcome ← card, Dining ← apex-reveal, Spa ← screen. Each
+ * film has an H.264 copy every browser plays; where the master is HEVC, Safari
+ * and iPhone get that untouched master first (see <Sources> in parts.tsx). All
+ * are full resolution and served as plain files, so nothing ever plays a
+ * smaller version.
+ */
+const HEVC: Record<string, string> = {
+  'hq/card.mp4': 'hq/card-hevc.mp4',
+  'hq/screen.mp4': 'hq/screen-hevc.mp4',
+  'hq/card-tall.mp4': 'hq/card-tall-hevc.mp4',
+  'hq/screen-tall.mp4': 'hq/screen-tall-hevc.mp4',
+  'hq/apex-reveal-tall.mp4': 'hq/apex-reveal-tall-hevc.mp4',
+};
+/** The HEVC master for a film, if it has one. */
+export const hevc = (name: string): string | undefined => HEVC[name];
+
 /* ---- Block A · hero, top VSL, value cards -------------------------------- */
 
 export const HERO = {
@@ -84,9 +102,9 @@ export type Milestone = {
 };
 
 export const MILESTONES: Milestone[] = [
-  { clip: 'm4.mp4', poster: 'm4.jpg', when: 'Day 1', what: 'Welcome by name', day: 1, date: 'Mon 3 Nov', time: '08:02', img: 't2.jpg', dur: '0:30', chip: 'See the Ocean Suite', msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd." },
-  { clip: 'm7.mp4', poster: 'm7.jpg', when: '48 hours', what: 'Dining, in close-up', day: 3, date: 'Wed 5 Nov', time: '18:40', img: 'f6.jpg', dur: '0:15', chip: "Reserve the chef's table", msg: 'Chef Aris is plating something new. Your terrace table is waiting.' },
-  { clip: 'm2.mp4', poster: 'm2.jpg', when: '7 days out', what: 'Spa, matched to open hours', day: 23, date: 'Tue 25 Nov', time: '10:15', img: 't9.jpg', dur: '0:15', chip: 'Book a treatment', msg: 'Three treatment hours are still open during your stay.' },
+  { clip: 'hq/card.mp4', poster: 'hq/card.jpg', when: 'Day 1', what: 'Welcome by name', day: 1, date: 'Mon 3 Nov', time: '08:02', img: 'hq/card.jpg', dur: '0:30', chip: 'See the Ocean Suite', msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd." },
+  { clip: 'hq/apex-reveal.mp4', poster: 'hq/apex-reveal.jpg', when: '48 hours', what: 'Dining, in close-up', day: 3, date: 'Wed 5 Nov', time: '18:40', img: 'hq/apex-reveal-still.jpg', dur: '0:15', chip: "Reserve the chef's table", msg: 'Chef Aris is plating something new. Your terrace table is waiting.' },
+  { clip: 'hq/screen.mp4', poster: 'hq/screen.jpg', when: '7 days out', what: 'Spa, matched to open hours', day: 23, date: 'Tue 25 Nov', time: '10:15', img: 'hq/screen.jpg', dur: '0:15', chip: 'Book a treatment', msg: 'Three treatment hours are still open during your stay.' },
   { clip: 'm9.mp4', poster: 'm9.jpg', when: '48 hours out', what: 'Arrival and extensions', day: 28, date: 'Sun 30 Nov', time: '09:30', img: 't16.jpg', dur: '0:15', chip: 'Add early check-in', msg: 'Your driver will meet you at arrivals. Want your room ready early?' },
 ];
 
@@ -118,9 +136,9 @@ export type Moment = {
 };
 
 export const MOMENTS: Moment[] = [
-  { fig: 'Day 1', figSub: 'Morning after booking', kick: 'Touchpoint 01', title: 'Welcome By Name', desc: 'Your team welcomes the guest by name, in their own voice.', img: 't2.jpg', clip: 'm4.mp4', poster: 'm4.jpg', when: 'Day 1', lede: "Your own team, in their own cloned voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead." },
-  { fig: '48 hours', figSub: 'After booking', kick: 'Touchpoint 02', title: 'Dining, In Close-Up', desc: 'Signature dishes in close-up, with one tap to book the table.', img: 'f6.jpg', clip: 'm7.mp4', poster: 'm7.jpg', when: '48 hours', lede: "Fifteen seconds of signature dishes, the cocktail pour and the kitchen at work, with one tap to reserve the chef's table." },
-  { fig: '7 days', figSub: 'Before arrival', kick: 'Touchpoint 03', title: 'Spa, Matched To Open Hours', desc: 'A spa teaser matched to the hours still open on their dates.', img: 't9.jpg', clip: 'm2.mp4', poster: 'm2.jpg', when: '7 days out', lede: "A hydrotherapy teaser sent a week before arrival, matched to the therapist hours still open on the guest's dates." },
+  { fig: 'Day 1', figSub: 'Morning after booking', kick: 'Touchpoint 01', title: 'Welcome By Name', desc: 'Your team welcomes the guest by name, in their own voice.', img: 'hq/card.jpg', clip: 'hq/card.mp4', poster: 'hq/card.jpg', when: 'Day 1', lede: "Your own team, in their own cloned voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead." },
+  { fig: '48 hours', figSub: 'After booking', kick: 'Touchpoint 02', title: 'Dining, In Close-Up', desc: 'Signature dishes in close-up, with one tap to book the table.', img: 'hq/apex-reveal-still.jpg', clip: 'hq/apex-reveal.mp4', poster: 'hq/apex-reveal.jpg', when: '48 hours', lede: "Fifteen seconds of signature dishes, the cocktail pour and the kitchen at work, with one tap to reserve the chef's table." },
+  { fig: '7 days', figSub: 'Before arrival', kick: 'Touchpoint 03', title: 'Spa, Matched To Open Hours', desc: 'A spa teaser matched to the hours still open on their dates.', img: 'hq/screen.jpg', clip: 'hq/screen.mp4', poster: 'hq/screen.jpg', when: '7 days out', lede: "A hydrotherapy teaser sent a week before arrival, matched to the therapist hours still open on the guest's dates." },
   { fig: '48 hours', figSub: 'Before arrival', kick: 'Touchpoint 04', title: 'Arrival And Extensions', desc: 'Valet, arrival, and one tap for early check-in or an extra night.', img: 't16.jpg', clip: 'm9.mp4', poster: 'm9.jpg', when: '48 hours out', lede: "Valet, the chilled-towel greeting, and one tap to lock in early check-in, late checkout or an extra night." },
 ];
 

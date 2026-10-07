@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MOMENTS, MOMENTS_HEAD, img } from './data';
-import { Option } from './parts';
+import { Option, Sources } from './parts';
 
 /*
  * D · Four Moments. Bento Expanders is kept from round 1 (the only one that
@@ -97,7 +97,9 @@ function HighlightReel() {
           <div className="hd2__track" style={{ animationDuration: `${(DURATION * 2).toFixed(1)}s` }}>
             {reel.map((m, n) => (
               <div key={n} className="hd2__card" aria-hidden={n >= MOMENTS.length || undefined} style={{ flexBasis: CARD, marginRight: GAP }}>
-                <video src={img(m.clip)} poster={img(m.poster)} muted loop playsInline preload="metadata" />
+                <video poster={img(m.poster)} muted loop playsInline preload="metadata">
+                  <Sources name={m.clip} />
+                </video>
                 <span className="hd2__when">
                   {m.fig}
                   <small>{m.figSub}</small>

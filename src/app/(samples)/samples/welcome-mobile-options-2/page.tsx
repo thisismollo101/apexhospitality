@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v12 · E1c added: the landscape file with the film turned inside, to compare on iPhone
+            Build {BUILD} · New films: Welcome, Dining and Spa now play the supplied 1080×1920 films at full resolution, fast start
           </p>
         </footer>
       </main>

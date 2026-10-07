@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MOMENTS, MOMENTS_HEAD, WORKS, img, type Moment } from './data';
-import { CloseX, Option, PlayIcon, useOverlay } from './parts';
+import { CloseX, Option, PlayIcon, Sources, useOverlay } from './parts';
 
 /*
  * E · Bento Expand. One small element, so three options: the refined takeover,
@@ -52,7 +52,11 @@ function Film({ m, className = '' }: { m: Moment; className?: string }) {
     v.muted = true;
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) v.play().catch(() => {});
   }, [m.clip]);
-  return <video ref={ref} className={className} src={img(m.clip)} poster={img(m.poster)} muted loop playsInline preload="auto" />;
+  return (
+    <video key={m.clip} ref={ref} className={className} poster={img(m.poster)} muted loop playsInline preload="auto">
+      <Sources name={m.clip} />
+    </video>
+  );
 }
 
 /* ---- 1 · Full-screen takeover (refined) --------------------------------------------
@@ -423,13 +427,14 @@ function Takeover() {
                   tileFilms.current[n] = el;
                 }}
                 className="tk-tilefilm"
-                src={img(tall(mm).src)}
                 poster={img(tall(mm).poster)}
                 muted
                 playsInline
                 preload="metadata"
                 aria-hidden="true"
-              />
+              >
+                <Sources name={tall(mm).src} />
+              </video>
               <img src={img(mm.img)} alt="" />
               <span className="etile__fig">
                 {mm.fig}
@@ -489,13 +494,14 @@ function Takeover() {
               films.current[n] = el;
             }}
             className={`tk__film${i === n ? ' is-on' : ''}`}
-            src={img(mm.clip)}
             poster={img(mm.poster)}
             muted
             loop
             playsInline
             preload="metadata"
-          />
+          >
+            <Sources name={mm.clip} />
+          </video>
         ))}
         <div className="tk__shade" aria-hidden="true" />
         {/* The film starts muted so it can play at once; a tap on it turns the sound on. */}
@@ -639,12 +645,13 @@ function NativeTall() {
                   ref={(el) => {
                     films.current[n] = el;
                   }}
-                  src={img(t.src)}
                   poster={img(t.poster)}
                   muted
                   playsInline
                   preload="metadata"
-                />
+                >
+                  <Sources name={t.src} />
+                </video>
                 <span className="etile__fig">
                   {mm.fig}
                   <small>{mm.figSub}</small>
@@ -922,7 +929,9 @@ function Radio() {
         {m && (
           <div className="he3__card" role="region" aria-label={`Now playing: ${m.title}`} key={m.kick}>
             <button type="button" className="he3__vid" onClick={toggle} aria-label={paused ? 'Play' : 'Pause'}>
-              <video ref={vid} src={img(m.clip)} poster={img(m.poster)} muted loop playsInline preload="auto" />
+              <video ref={vid} poster={img(m.poster)} muted loop playsInline preload="auto">
+                <Sources name={m.clip} />
+              </video>
               <span className="he3__pp" aria-hidden="true">
                 {paused ? <PlayIcon size={26} /> : <span className="he3__pause" />}
               </span>

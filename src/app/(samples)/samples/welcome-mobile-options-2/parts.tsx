@@ -3,7 +3,24 @@
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
 import { useEffect, useRef } from 'react';
-import { HERO, PHONE, img, type Milestone } from './data';
+import { HERO, PHONE, hevc, img, type Milestone } from './data';
+
+/**
+ * A film's sources, best first: the untouched HEVC master where there is one
+ * (Safari/iPhone play it; browsers that can't skip it), then the full-resolution
+ * H.264 copy. Both are the same 1080 wide, so no browser falls back to less.
+ * <source> children don't reload when they change, so callers key the <video>
+ * on the film.
+ */
+export function Sources({ name }: { name: string }) {
+  const h = hevc(name);
+  return (
+    <>
+      {h && <source src={img(h)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />}
+      <source src={img(name)} type="video/mp4" />
+    </>
+  );
+}
 
 /** One labelled variation: "HERO — Option 3: Stories" plus a one-line note. */
 export function Option({
@@ -90,18 +107,12 @@ export function Clip({ src, poster, className = '' }: { src: string; poster?: st
     );
     io.observe(v);
     return () => io.disconnect();
-  }, []);
+    // The <video> is keyed on src, so a new film is a new element: watch that one.
+  }, [src]);
   return (
-    <video
-      ref={ref}
-      className={className}
-      src={img(src)}
-      poster={poster ? img(poster) : undefined}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-    />
+    <video key={src} ref={ref} className={className} poster={poster ? img(poster) : undefined} muted loop playsInline preload="metadata">
+      <Sources name={src} />
+    </video>
   );
 }
 
@@ -177,7 +188,9 @@ export function Player({ src, poster, title, onClose }: { src: string; poster: s
   }, []);
   return (
     <div className="player" role="dialog" aria-modal="true" aria-label={title}>
-      <video ref={ref} src={img(src)} poster={img(poster)} controls playsInline />
+      <video ref={ref} poster={img(poster)} controls playsInline>
+        <Sources name={src} />
+      </video>
       <CloseX onClick={onClose} light />
     </div>
   );
