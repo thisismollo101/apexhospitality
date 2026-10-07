@@ -170,6 +170,8 @@ function Takeover() {
   const native = useRef<number | null>(null);
   // Which route this phone actually took, shown under the grid so a test on a real phone reports itself.
   const [route, setRoute] = useState('');
+  // Which way the iPhone films are turned on their side (see sideways()); a tap under the grid flips it.
+  const [turn, setTurn] = useState<'l' | 'r'>('l');
   const films = useRef<(HTMLVideoElement | null)[]>([]);
   const busy = useRef(false);
   const cur = useRef<number | null>(null);
@@ -215,7 +217,7 @@ function Takeover() {
       const enter = () => {
         tv.webkitEnterFullscreen?.();
         native.current = n;
-        setRoute('iPhone full-screen player: no clock, no Safari bars');
+        setRoute(`iPhone player, landscape trick (turned ${turn === 'l' ? 'left' : 'right'})`);
       };
       try {
         enter();
@@ -402,7 +404,7 @@ function Takeover() {
   const m = i === null ? null : MOMENTS[i];
   const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n={1} name="Full-screen takeover (refined)" note="Our own overlay. Tap a tile: its vertical film fills everything the browser lets a page draw on, cropped rather than letterboxed, with the status-bar strip and Safari's bottom bar turned black around it. Only the timing and the touchpoint pill sit on the film. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
+    <Option block={B} n={1} name="Full-screen takeover (refined)" note="On iPhone, tap a tile and its film opens in the phone's own player, turned on its side so the phone takes it for landscape: full screen, no clock. Elsewhere, our own overlay: tap a tile and its vertical film fills everything the browser lets a page draw on, cropped rather than letterboxed, with the status-bar strip and Safari's bottom bar turned black around it. Only the timing and the touchpoint pill sit on the film. Scroll down and the film flicks back into its tile, with that touchpoint's points in a card underneath.">
       <div className="ebox" ref={box}>
         <Head />
         <div className="egrid">
@@ -422,8 +424,7 @@ function Takeover() {
                   tileFilms.current[n] = el;
                 }}
                 className="tk-tilefilm"
-                src={img(tall(mm).src)}
-                poster={img(tall(mm).poster)}
+                src={img(sideways(mm, turn))}
                 muted
                 playsInline
                 preload="metadata"
@@ -441,6 +442,11 @@ function Takeover() {
           ))}
         </div>
         {route && <p className="tk-route">Last tap on this device: {route}</p>}
+        {route.startsWith('iPhone player, landscape') && (
+          <button type="button" className="tk-turn" onClick={() => setTurn(turn === 'l' ? 'r' : 'l')}>
+            Film upside down? Tap here, then open it again.
+          </button>
+        )}
         {p && shown !== null && (
           <div className="tk-points" key={shown} aria-live="polite">
             <div className="tk-points__head">
@@ -551,6 +557,16 @@ type NativeVideo = HTMLVideoElement & {
   webkitEnterFullscreen?: () => void;
   webkitRequestFullscreen?: () => Promise<void> | void;
 };
+
+/*
+ * The landscape trick (E1 on iPhone). iOS only hides the clock for a film it plays
+ * as landscape. So each 9:19.5 film is also saved turned on its side, as a 1560×720
+ * landscape file (/media/welcome/*-side-l.mp4 and *-side-r.mp4): the player takes it
+ * for landscape and fills the screen with no clock, and the person holding the phone
+ * upright sees the film the right way up. Which way iOS turns its player is not
+ * ours to choose, so both turns exist and a tap under the grid swaps them.
+ */
+const sideways = (m: Moment, turn: 'l' | 'r') => m.clip.replace(/\.mp4$/, `-side-${turn}.mp4`);
 
 const tall = (m: Moment) => ({ src: m.clip.replace(/\.mp4$/, '-tall.mp4'), poster: m.poster.replace(/\.jpg$/, '-tall.jpg') });
 
