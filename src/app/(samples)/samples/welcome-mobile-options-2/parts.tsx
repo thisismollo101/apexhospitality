@@ -14,7 +14,8 @@ export function Option({
   children,
 }: {
   block: string;
-  n: number;
+  /** The option's number; a string for an inserted comparison option such as '1b'. */
+  n: number | string;
   name: string;
   note: string;
   children: React.ReactNode;

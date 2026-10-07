@@ -923,8 +923,9 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   background: #000; color: #fff; touch-action: none; overscroll-behavior: none;
   transition: clip-path .46s cubic-bezier(.22, .61, .36, 1);
 }
-/* Parked: mounted so a tap can hand it to fullscreen, but invisible and inert. */
-.wmo .tk--off { visibility: hidden; pointer-events: none; transition: none; }
+/* Parked: mounted so a tap can hand it to fullscreen, but display:none. A hidden-but-laid-out
+   fixed element still steers Safari 26's bar tint, and only a newly shown one makes it re-sample. */
+.wmo .tk--off { display: none; pointer-events: none; transition: none; }
 /* Real fullscreen: the element owns the whole screen, so no clip and no fallback sizing. */
 .wmo .tk:fullscreen, .wmo .tk--real { top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh; clip-path: none !important; transition: none; }
 .wmo .tk:-webkit-full-screen { width: 100vw; height: 100vh; clip-path: none !important; }
@@ -1153,3 +1154,14 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   transition: opacity .25s ease;
 }
 .wmo .tk--opening .tk__sound, .wmo .tk--closing .tk__sound { opacity: 0; }
+
+/* Safari 26 bar tint: opaque black fixed strips touching the top and bottom edges
+   while E1 is open. Safari samples a fixed element within a few px of an edge that
+   spans the width and has its own background-color; theme-color is ignored. They
+   sit one layer under the film, so they are never seen, only sampled. */
+.wmo .tk-tint { position: fixed; left: 0; right: 0; z-index: 2147482999; height: 16px; background-color: #000; pointer-events: none; }
+.wmo .tk-tint--top { top: 0; }
+.wmo .tk-tint--bottom { bottom: 0; }
+
+/* E1b tiles carry the pre-cropped film itself, so the tap can hand it to the native player. */
+.wmo .nt-tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
