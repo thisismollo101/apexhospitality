@@ -25,6 +25,12 @@
       "label": "Welcome Page Two",
       "summary": "Second pass at Welcome, carrying the real site chrome. Thirty sections: video hero, WebGL particle field, post marquee and expanding product cards, then twenty-two lifted from Welcome and Apex Sections and four from Sample Page One.",
       "status": "live"
+    },
+    {
+      "slug": "welcome-mobile-options",
+      "label": "Welcome · Mobile Options",
+      "summary": "Three blocks of the live Welcome page, five mobile layouts each: fifteen labelled variations with a sticky jump menu, for review on a phone.",
+      "status": "live"
     }
   ]
 }
