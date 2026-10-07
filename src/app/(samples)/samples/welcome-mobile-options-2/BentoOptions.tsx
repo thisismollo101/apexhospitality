@@ -165,6 +165,9 @@ function Takeover() {
   const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
+  // The 9:19.5 films, laid out in the tiles (under the stills) so iOS has their metadata ready.
+  const tileFilms = useRef<(HTMLVideoElement | null)[]>([]);
+  const native = useRef<number | null>(null);
   const films = useRef<(HTMLVideoElement | null)[]>([]);
   const busy = useRef(false);
   const cur = useRef<number | null>(null);
@@ -186,6 +189,35 @@ function Takeover() {
 
   const open = (n: number) => {
     if (busy.current) return;
+    // iPhone: a web page can never cover the status bar (clock) or Safari's toolbar. Only
+    // the phone's own video player can, so there the tile's film goes straight into it.
+    // The films are pre-cropped to the iPhone screen's 9:19.5, so the player fills the
+    // whole screen edge to edge with no bars. (Android/desktop keep the overlay below,
+    // with real element fullscreen, which hides their chrome anyway.)
+    // Element fullscreen counts only where the flag AND a real method exist; iPhone Safari has neither method.
+    const d = document as FsDocument & { webkitFullscreenEnabled?: boolean };
+    const layerEl = layer.current as FsElement | null;
+    const elementFs =
+      !!(d.fullscreenEnabled || d.webkitFullscreenEnabled) && !!(layerEl?.requestFullscreen || layerEl?.webkitRequestFullscreen);
+    const tv = tileFilms.current[n] as NativeVideo | null;
+    if (!elementFs && tv?.webkitEnterFullscreen) {
+      try {
+        tileFilms.current.forEach((f, k) => {
+          if (f && k !== n) f.pause();
+        });
+        tv.muted = false;
+        tv.currentTime = 0;
+        tv.play().catch(() => {
+          tv.muted = true;
+          tv.play().catch(() => {});
+        });
+        tv.webkitEnterFullscreen();
+        native.current = n;
+        return;
+      } catch {
+        /* the player refused: fall through to the overlay */
+      }
+    }
     busy.current = true;
     cur.current = n;
     const v = films.current[n];
@@ -272,16 +304,31 @@ function Takeover() {
   useOverlay(up, flickOff);
   useBlackChrome(up);
 
-  // Leaving real fullscreen by the system (back gesture, Esc) counts as leaving.
+  // Leaving real fullscreen by the system (back gesture, Esc) counts as leaving;
+  // so does Done in the iPhone player, which returns to the grid with the points.
   useEffect(() => {
     const onFs = () => {
       if (!fsElement() && cur.current !== null && !busy.current) flickOff();
     };
+    const onNativeDone = () => {
+      const n = native.current;
+      if (n === null) return;
+      native.current = null;
+      const f = tileFilms.current[n];
+      if (f) {
+        f.pause();
+        f.muted = true;
+      }
+      setShown(n);
+    };
+    const vids = tileFilms.current.filter(Boolean) as HTMLVideoElement[];
     document.addEventListener('fullscreenchange', onFs);
     document.addEventListener('webkitfullscreenchange', onFs);
+    vids.forEach((v) => v.addEventListener('webkitendfullscreen', onNativeDone));
     return () => {
       document.removeEventListener('fullscreenchange', onFs);
       document.removeEventListener('webkitfullscreenchange', onFs);
+      vids.forEach((v) => v.removeEventListener('webkitendfullscreen', onNativeDone));
     };
   });
 
@@ -339,6 +386,18 @@ function Takeover() {
               aria-label={`Play full screen: ${mm.fig}, ${mm.figSub}: ${mm.title}`}
               onClick={() => open(n)}
             >
+              <video
+                ref={(el) => {
+                  tileFilms.current[n] = el;
+                }}
+                className="tk-tilefilm"
+                src={img(tall(mm).src)}
+                poster={img(tall(mm).poster)}
+                muted
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+              />
               <img src={img(mm.img)} alt="" />
               <span className="etile__fig">
                 {mm.fig}
