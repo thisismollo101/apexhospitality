@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v7: Safari bar tint black via edge strips (theme-color ignored on iOS 26) · E1b: native player with 9:19.5 pre-cropped films
+            Build {BUILD} · E1 v8: iPhone opens the film in the phone&apos;s own full-screen player (no clock, no Safari bars), 9:19.5 films
           </p>
         </footer>
       </main>
