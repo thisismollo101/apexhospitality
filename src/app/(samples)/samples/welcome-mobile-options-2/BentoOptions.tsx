@@ -681,6 +681,144 @@ function NativeTall() {
   );
 }
 
+/* E1c · The landscape idea, built as asked so it can be tried on an iPhone:
+   each film saved as a landscape (1390×720) video with the upright film turned
+   on its side inside it (/media/welcome/*-side-{l,r}.mp4), played by the phone's
+   own player. Which way to turn it is a link under the tiles. */
+const sideways = (m: Moment, turn: 'l' | 'r') => m.clip.replace(/\.mp4$/, `-side-${turn}.mp4`);
+
+function NativeSideways() {
+  // Which way the film is turned inside the landscape file; the link under the grid flips it.
+  const [turn, setTurn] = useState<'l' | 'r'>('l');
+  const [shown, setShown] = useState<number | null>(null);
+  const films = useRef<(HTMLVideoElement | null)[]>([]);
+  const cur = useRef<number | null>(null);
+
+  const done = () => {
+    const n = cur.current;
+    if (n === null) return;
+    cur.current = null;
+    const v = films.current[n];
+    if (v) {
+      v.pause();
+      v.muted = true;
+    }
+    setShown(n);
+  };
+
+  const open = (n: number) => {
+    const v = films.current[n] as NativeVideo | null;
+    if (!v) return;
+    cur.current = n;
+    films.current.forEach((f, k) => {
+      if (f && k !== n) f.pause();
+    });
+    // A tap is a user gesture, so the film may start with sound.
+    v.muted = false;
+    v.currentTime = 0;
+    v.play().catch(() => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+    try {
+      if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+      else if (v.requestFullscreen) v.requestFullscreen().catch(() => {});
+      else v.webkitRequestFullscreen?.();
+    } catch {
+      /* the inline film stays playing in its tile */
+    }
+  };
+
+  useEffect(() => {
+    const onFs = () => {
+      if (!fsElement() && cur.current !== null) done();
+    };
+    // Esc leaves too: exit fullscreen ourselves (fullscreenchange then brings back the points).
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || cur.current === null) return;
+      if (fsElement()) exitFullscreen();
+      else done();
+    };
+    const vids = films.current.filter(Boolean) as HTMLVideoElement[];
+    document.addEventListener('fullscreenchange', onFs);
+    document.addEventListener('webkitfullscreenchange', onFs);
+    document.addEventListener('keydown', onKey);
+    vids.forEach((v) => v.addEventListener('webkitendfullscreen', done));
+    return () => {
+      document.removeEventListener('fullscreenchange', onFs);
+      document.removeEventListener('webkitfullscreenchange', onFs);
+      document.removeEventListener('keydown', onKey);
+      vids.forEach((v) => v.removeEventListener('webkitendfullscreen', done));
+    };
+  });
+
+  const p = shown === null ? null : MOMENTS[shown];
+  return (
+    <Option block={B} n="1c" name="Landscape file, film turned inside (comparison)" note="The landscape idea, to compare with E1 on an iPhone. Each film is saved as a landscape (wide) video with the vertical film turned on its side inside it, and the phone's own player plays it. The link under the tiles flips which way the film is turned.">
+      <div className="ebox">
+        <Head />
+        <div className="egrid">
+          {MOMENTS.map((mm, n) => {
+            const t = tall(mm);
+            return (
+              <button
+                key={mm.kick}
+                type="button"
+                className={`etile${shown === n ? ' is-open' : ''}`}
+                aria-label={`Play the landscape file: ${mm.fig}, ${mm.figSub}: ${mm.title}`}
+                onClick={() => open(n)}
+              >
+                <video
+                  ref={(el) => {
+                    films.current[n] = el;
+                  }}
+                  className="tk-tilefilm"
+                  src={img(sideways(mm, turn))}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                />
+                <img src={img(t.poster)} alt="" />
+                <span className="etile__fig">
+                  {mm.fig}
+                  <small>{mm.figSub}</small>
+                </span>
+                <span className="etile__ex" aria-hidden="true">
+                  ▶
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <button type="button" className="tk-turn" onClick={() => setTurn(turn === 'l' ? 'r' : 'l')}>
+          Film turned {turn === 'l' ? 'left' : 'right'}. Tap to turn it the other way, then open a tile again.
+        </button>
+        {p && shown !== null && (
+          <div className="tk-points" key={shown} aria-live="polite">
+            <div className="tk-points__head">
+              <span className="tk-points__pill">
+                {p.kick} · {p.title}
+              </span>
+              <span className="tk-points__when">
+                {p.fig} · {p.figSub}
+              </span>
+            </div>
+            <ul>
+              {points(p).map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+            <button type="button" className="tk-points__again" onClick={() => open(shown)}>
+              <PlayIcon size={22} /> Watch again
+            </button>
+          </div>
+        )}
+      </div>
+    </Option>
+  );
+}
+
 /* ---- 2 · Tall bottom sheet (refined) -------------------------------------------------
    The sheet now rises to almost the full page, with the film playing in its top
    and the touchpoint's copy beneath. Pull it down or tap the sliver above to close. */
@@ -812,6 +950,7 @@ export default function BentoOptions() {
     <>
       <Takeover />
       <NativeTall />
+      <NativeSideways />
       <TallSheet />
       <Radio />
     </>

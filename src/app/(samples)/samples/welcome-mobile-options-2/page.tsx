@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v12: films re-cut to the space the iPhone player gives them (720×1390), so they reach both sides, no clock
+            Build {BUILD} · E1 v12 · E1c added: the landscape file with the film turned inside, to compare on iPhone
           </p>
         </footer>
       </main>
