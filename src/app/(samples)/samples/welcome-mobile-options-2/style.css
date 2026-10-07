@@ -920,6 +920,16 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .wmo .tk:fullscreen, .wmo .tk--real { width: 100vw; height: 100vh; clip-path: none !important; transition: none; }
 .wmo .tk:-webkit-full-screen { width: 100vw; height: 100vh; clip-path: none !important; }
 .wmo .tk::backdrop { background: #000; }
+/* Edge to edge, all four sides, whatever the browser's own fullscreen stylesheet
+   says: no margin, padding, border, radius, outline or max size can inset the film. */
+.wmo .tk:fullscreen, .wmo .tk:-webkit-full-screen, .wmo .tk--real {
+  inset: 0 !important; width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important;
+  margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+  outline: 0 !important; box-shadow: none !important; transform: none !important;
+}
+.wmo .tk, .wmo .tk__film { border-radius: 0 !important; outline: 0; box-shadow: none; }
+.wmo .tk__film { min-width: 100%; min-height: 100%; max-width: none; }
 .wmo .tk__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; background: #000; opacity: 0; }
 .wmo .tk__film.is-on { opacity: 1; }
 /* The text layer is held to the visible viewport, so in the CSS fallback the pill
