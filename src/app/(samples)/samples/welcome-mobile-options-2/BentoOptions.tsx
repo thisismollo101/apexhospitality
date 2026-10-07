@@ -165,7 +165,7 @@ function Takeover() {
   const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
-  // The 9:19.5 films, laid out in the tiles (under the stills) so iOS has their metadata ready.
+  // The player-shaped films, laid out in the tiles (under the stills) so iOS has their metadata ready.
   const tileFilms = useRef<(HTMLVideoElement | null)[]>([]);
   const native = useRef<number | null>(null);
   // Which route this phone actually took, shown under the grid so a test on a real phone reports itself.
@@ -193,8 +193,9 @@ function Takeover() {
     if (busy.current) return;
     // iPhone: a web page can never cover the status bar (clock) or Safari's toolbar. Only
     // the phone's own video player can, so there the tile's film goes straight into it.
-    // The films are pre-cropped to the iPhone screen's 9:19.5, so the player fills the
-    // whole screen edge to edge with no bars. (Android/desktop keep the overlay below,
+    // In portrait the player fits the film inside the screen less a strip top and bottom
+    // (the island and home bar, ~46pt each), so the films are cut to that space, not the
+    // screen: full width, no clock, and only those two strips left black. (Android/desktop keep the overlay below,
     // with real element fullscreen, which hides their chrome anyway.)
     // Element fullscreen counts only where the flag AND a real method exist; iPhone Safari has neither method.
     const d = document as FsDocument & { webkitFullscreenEnabled?: boolean };
@@ -541,9 +542,10 @@ function Takeover() {
    video elsewhere). The native player hides the status bar and Safari's
    toolbars completely, but it fits the film to the screen (aspect-fit), which
    is what gave the thick black bars in v5. So these are separate versions of
-   the four films, centre-cropped with ffmpeg to the iPhone screen's own
-   9:19.5 shape (720×1560, /media/welcome/*-tall.mp4): fitting a film that is
-   already the screen's shape leaves no bars. No overlay text: the native
+   the four films, centre-cropped with ffmpeg to the space the iPhone player
+   fits a film into in portrait, the screen less ~46pt top and bottom (720×1390,
+   /media/welcome/*-tall.mp4). A film cut to the full 9:19.5 screen was too
+   tall for that space and came up framed on all four sides. No overlay text: the native
    player shows only the film and its controls. Done returns to the grid with
    the touchpoint's points underneath. */
 
@@ -619,7 +621,7 @@ function NativeTall() {
 
   const p = shown === null ? null : MOMENTS[shown];
   return (
-    <Option block={B} n="1b" name="Native player, pre-cropped (comparison)" note="For comparison with E1. Tap a tile and the phone's own fullscreen player takes over, hiding the status bar and Safari's bars entirely. The four films are pre-cropped to the iPhone's 9:19.5 screen shape, so the player fills the screen with no black bars. The player shows only the film; Done returns here with the points below.">
+    <Option block={B} n="1b" name="Native player, pre-cropped (comparison)" note="For comparison with E1. Tap a tile and the phone's own fullscreen player takes over, hiding the status bar and Safari's bars entirely. The four films are pre-cropped to the space the iPhone's player gives a film, so it fills the full width with no clock. The player shows only the film; Done returns here with the points below.">
       <div className="ebox">
         <Head />
         <div className="egrid">

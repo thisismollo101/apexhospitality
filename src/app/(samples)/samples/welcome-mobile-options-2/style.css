@@ -1166,7 +1166,7 @@ html:has(.wmo) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 /* E1b tiles carry the pre-cropped film itself, so the tap can hand it to the native player. */
 .wmo .nt-tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-/* E1: the 9:19.5 film sits in the tile under the still (so iOS has it loaded); the iPhone player takes it full screen. */
+/* E1: the player-shaped film sits in the tile under the still (so iOS has it loaded); the iPhone player takes it full screen. */
 .wmo .etile .tk-tilefilm { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .wmo .etile .tk-tilefilm + img { position: relative; }
 
