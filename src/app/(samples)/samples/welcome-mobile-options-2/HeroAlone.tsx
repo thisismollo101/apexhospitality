@@ -1,110 +1,74 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
-
-import { useEffect, useRef, useState } from 'react';
-import { HERO, VALUE_CARDS, img } from './data';
+import { useEffect, useState } from 'react';
+import { HERO } from './data';
 import { Ast, Clip, HeroLines, Option } from './parts';
 
 /*
- * A · The hero on its own: headline, three lines, three value cards. No VSL.
- * Each option's real difference is how the three cards are shown.
+ * A · The hero on its own. "The hero is the hero": exactly what the live
+ * Welcome hero carries, which is the headline, the three lines and the
+ * background film. Nothing else. The three stat cards belong to the VSL block
+ * (section B), as on the live page.
+ *
+ * Every option shows that same content; what changes is how it is staged.
  */
 
 const B = 'A · HERO';
 
-/** "85–90%" → ["85–90", "%"], so the number can be set big and the unit small. */
-const split = (fig: string) => {
-  const m = fig.match(/^(.*?)(%?)$/);
-  return [m?.[1] ?? fig, m?.[2] ?? ''];
-};
+/** One hero line, exactly as the live page sets it: bold figure, footnote star. */
+function Line({ n }: { n: number }) {
+  const l = HERO.lines[n];
+  return (
+    <>
+      {l.pre}
+      <b>{l.bold}</b>
+      {l.post}
+      {l.ast && <Ast />}
+    </>
+  );
+}
+
+const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---- 1 · Netflix banner --------------------------------------------------------
-   Dark banner, two-line headline, the three lines as the subline, one white pill,
-   and the hero film inside a glowing phone. The cards follow as glowing rows. */
+   A dark banner: the headline as two punchy lines, the three lines beneath, and
+   the hero film playing inside a glowing phone. No CTA; the film is the visual. */
 function Banner() {
-  const cards = useRef<HTMLDivElement>(null);
   return (
-    <Option block={B} n={1} name="Netflix banner" note="Dark banner with the headline, the three lines and one white pill; the hero film plays inside a glowing phone. The pill drops you onto the three numbers.">
-      <div className="ha1">
+    <Option block={B} n={1} name="Netflix banner" note="Dark banner: the headline, the three lines, and the hero film playing inside a glowing phone beneath them.">
+      <div className="hx1">
         <h2>{HERO.headline}</h2>
         <HeroLines className="hl hl--light" />
-        <button type="button" className="pill pill--white" onClick={() => cards.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
-          See the numbers ↓
-        </button>
-        <div className="ha1__phone">
-          <div className="ha1__glow" aria-hidden="true" />
-          <div className="ha1__screen">
+        <div className="hx1__phone">
+          <div className="hx1__glow" aria-hidden="true" />
+          <div className="hx1__screen">
             <Clip src={HERO.clip} />
           </div>
-        </div>
-        <div className="ha1__cards" ref={cards}>
-          {VALUE_CARDS.map((c) => (
-            <div key={c.title} className="ha1__card">
-              <span className="ha1__fig">{c.fig}</span>
-              <div>
-                <b>{c.title}</b>
-                <p>{c.text}</p>
-                <small>
-                  <Ast />
-                  {c.src}
-                </small>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </Option>
   );
 }
 
-/* ---- 2 · Captioned film + promo row (MasterClass) ------------------------------
-   The film carries the hero as big burned-in captions, one line at a time, and the
-   three cards sit directly under it as a swipe row of square promo cards. */
+/* ---- 2 · Captioned film + promo row (MasterClass) --------------------------------
+   The film full height with the headline burned in as a caption, and the three
+   lines directly under it as a swipe row of square promo cards, the bold figure
+   set large on each. */
 function Captioned() {
-  const lines = [HERO.headline, ...HERO.lines.map((l) => `${l.pre}${l.bold}${l.post}`)];
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const t = setInterval(() => setI((n) => (n + 1) % lines.length), 3200);
-    return () => clearInterval(t);
-  }, [lines.length]);
   return (
-    <Option block={B} n={2} name="Captioned film + promo row" note="MasterClass style: the hero film speaks the headline and lines as big burned-in captions, with the three cards as a square swipe row right under it.">
-      <div className="ha2">
-        <div className="ha2__film">
+    <Option block={B} n={2} name="Captioned film + promo row" note="MasterClass style: the hero film with the headline burned in as a big caption, and the three lines as a square swipe row right under it, each figure set large.">
+      <div className="hx2">
+        <div className="hx2__film">
           <Clip src={HERO.clip} />
-          <p className="ha2__cap" key={i} aria-live="polite">
-            {i === 0 ? (
-              lines[0]
-            ) : (
-              <>
-                {HERO.lines[i - 1].pre}
-                <mark>{HERO.lines[i - 1].bold}</mark>
-                {HERO.lines[i - 1].post}
-                {HERO.lines[i - 1].ast && <Ast />}
-              </>
-            )}
-          </p>
-          <div className="ha2__ticks" aria-hidden="true">
-            {lines.map((_, n) => (
-              <i key={n} className={n === i ? 'is-on' : ''} />
-            ))}
-          </div>
+          <p className="hx2__cap">{HERO.headline}</p>
         </div>
-        <ul className="rail ha2__row">
-          {VALUE_CARDS.map((c) => (
-            <li key={c.title} className="ha2__sq">
-              <img src={img(c.img)} alt="" />
-              <span className="ha2__fig">{c.fig}</span>
-              <div className="ha2__meta">
-                <b>{c.title}</b>
-                <p>{c.text}</p>
-                <small>
-                  <Ast />
-                  {c.src}
-                </small>
-              </div>
+        <ul className="rail hx2__row">
+          {HERO.lines.map((l, n) => (
+            <li key={l.bold} className="hx2__sq">
+              <span className="hx2__big">{l.bold}</span>
+              <p>
+                <Line n={n} />
+              </p>
             </li>
           ))}
         </ul>
@@ -113,37 +77,59 @@ function Captioned() {
   );
 }
 
-/* ---- 3 · Badge cards (YouTube) -------------------------------------------------
-   Light and calm. The cards are square image cards, the figure riding in a small
-   badge on the corner, with short meta lines under each — one feature card and
-   two halves. Tap a card to read its line. */
+/* ---- 3 · Badge cards (YouTube) ---------------------------------------------------
+   Light and calm. The film becomes one wide thumbnail with the headline under it
+   as the title; the three lines become badge chips across it, the way a video
+   card carries its count badges, and as meta lines beneath. */
 function Badges() {
-  const [open, setOpen] = useState<number | null>(null);
   return (
-    <Option block={B} n={3} name="Badge cards" note="YouTube style: square photo cards with the figure as a small corner badge and short meta lines under each. One feature card, two halves; tap any card to read its line.">
-      <div className="ha3">
+    <Option block={B} n={3} name="Badge cards" note="YouTube style: the film as one wide thumbnail with each line's figure as a small badge on it, the headline as its title, and the three lines as meta rows.">
+      <div className="hx3">
+        <div className="hx3__thumb">
+          <Clip src={HERO.clip} />
+          <span className="hx3__badges">
+            {HERO.lines.map((l) => (
+              <span key={l.bold}>{l.bold}</span>
+            ))}
+          </span>
+        </div>
         <h2>{HERO.headline}</h2>
-        <HeroLines className="hl hl--dark" />
-        <div className="ha3__grid">
-          {VALUE_CARDS.map((c, n) => (
-            <button
-              key={c.title}
-              type="button"
-              className={`ha3__card${n === 0 ? ' ha3__card--big' : ''}${open === n ? ' is-open' : ''}`}
-              aria-expanded={open === n}
-              onClick={() => setOpen(open === n ? null : n)}
-            >
-              <span className="ha3__img">
-                <img src={img(c.img)} alt="" />
-                <span className="ha3__badge">{c.fig}</span>
+        <ul className="hx3__meta">
+          {HERO.lines.map((l, n) => (
+            <li key={l.bold}>
+              <span className="hx3__dot" aria-hidden="true" />
+              <span>
+                <Line n={n} />
               </span>
-              <span className="ha3__title">{c.title}</span>
-              <span className="ha3__src">
-                <Ast />
-                {c.src}
-              </span>
-              <span className="ha3__text">{c.text}</span>
-            </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Option>
+  );
+}
+
+/* ---- 4 · Poster stack (Bahrain story) --------------------------------------------
+   Four full-screen posters over the one film, snapping one per swipe: the
+   headline first, then each line as its own poster with its figure as the giant
+   type. */
+function Posters() {
+  return (
+    <Option block={B} n={4} name="Poster stack" note="Instagram-story posters over the hero film, snapping one per swipe up: the headline first, then each line as its own poster with the figure as giant type.">
+      <div className="hx4">
+        <Clip src={HERO.clip} className="hx4__bg" />
+        <div className="hx4__stack">
+          <section className="hx4__p">
+            <h2>{HERO.headline}</h2>
+            <span className="hx4__hint">Swipe up ↑</span>
+          </section>
+          {HERO.lines.map((l, n) => (
+            <section key={l.bold} className="hx4__p">
+              <span className="hx4__big">{l.bold}</span>
+              <p>
+                <Line n={n} />
+              </p>
+            </section>
           ))}
         </div>
       </div>
@@ -151,88 +137,35 @@ function Badges() {
   );
 }
 
-/* ---- 4 · Poster stack (Bahrain story) ------------------------------------------
-   Four full-screen posters in a snap stack: the hero, then one per card with the
-   figure as the giant headline and the source as the single pill. */
-function Posters() {
-  return (
-    <Option block={B} n={4} name="Poster stack" note="Instagram-story posters, snapping one per swipe up: the hero first, then each card as its own poster with the figure as a giant headline and the source as the one pill.">
-      <div className="ha4">
-        <section className="ha4__p ha4__p--hero">
-          <Clip src={HERO.clip} className="ha4__bg" />
-          <div className="ha4__in">
-            <h2>{HERO.headline}</h2>
-            <HeroLines className="hl hl--light" />
-            <span className="ha4__hint">Swipe up ↑</span>
-          </div>
-        </section>
-        {VALUE_CARDS.map((c) => {
-          const [num, unit] = split(c.fig);
-          return (
-            <section key={c.title} className="ha4__p">
-              <img className="ha4__bg" src={img(c.img)} alt="" />
-              <div className="ha4__in">
-                <span className="ha4__big">
-                  {num}
-                  <small>{unit}</small>
-                </span>
-                <h3>{c.title}</h3>
-                <p>{c.text}</p>
-                <span className="pill pill--white">
-                  <Ast />
-                  {c.src}
-                </span>
-              </div>
-            </section>
-          );
-        })}
-      </div>
-    </Option>
-  );
-}
-
-/* ---- 5 · Schedule list (F1) ----------------------------------------------------
-   A photo header carrying the headline, then a clean light list: the figure as a
-   big date-style block on the left, the card name, its source as the status, and
-   a chevron that opens the row. */
+/* ---- 5 · Schedule list (F1) --------------------------------------------------------
+   The F1 app's schedule: the film as a full-bleed photo header carrying the
+   headline, then the three lines as a clean light list, each figure in a big
+   block on the left and the line beside it. The rows light up one after
+   another like a live timing board. */
 function Schedule() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [on, setOn] = useState(0);
+  useEffect(() => {
+    if (reduced()) return;
+    const t = setInterval(() => setOn((n) => (n + 1) % HERO.lines.length), 2600);
+    return () => clearInterval(t);
+  }, []);
   return (
-    <Option block={B} n={5} name="Schedule list" note="F1-app style: the headline over a full-bleed photo header, then a light list with each figure as a big date-style block, its source as the status, and a chevron that opens the row.">
-      <div className="ha5">
-        <div className="ha5__head">
+    <Option block={B} n={5} name="Schedule list" note="F1-app style: the film as a full-bleed header carrying the headline, then the three lines as a clean list with each figure in a big block, lighting up in turn like a timing board.">
+      <div className="hx5">
+        <div className="hx5__head">
           <Clip src={HERO.clip} />
-          <div className="ha5__in">
-            <h2>{HERO.headline}</h2>
-          </div>
+          <h2>{HERO.headline}</h2>
         </div>
-        <div className="ha5__body">
-          <HeroLines className="hl hl--dark" />
-          <ol className="ha5__list">
-            {VALUE_CARDS.map((c, n) => {
-              const [num, unit] = split(c.fig);
-              return (
-                <li key={c.title} className={open === n ? 'is-open' : ''}>
-                  <button type="button" aria-expanded={open === n} onClick={() => setOpen(open === n ? null : n)}>
-                    <span className="ha5__block">
-                      <b>{num}</b>
-                      <small>{unit}</small>
-                    </span>
-                    <span className="ha5__name">
-                      <b>{c.title}</b>
-                      <small>
-                        <Ast />
-                        {c.src}
-                      </small>
-                    </span>
-                    <span className="chev" aria-hidden="true" />
-                  </button>
-                  <p className="ha5__text">{c.text}</p>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
+        <ol className="hx5__list">
+          {HERO.lines.map((l, n) => (
+            <li key={l.bold} className={n === on ? 'is-on' : ''}>
+              <span className="hx5__block">{l.bold}</span>
+              <span className="hx5__line">
+                <Line n={n} />
+              </span>
+            </li>
+          ))}
+        </ol>
       </div>
     </Option>
   );
