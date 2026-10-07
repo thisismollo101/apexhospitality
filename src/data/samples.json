@@ -31,6 +31,12 @@
       "label": "Welcome · Mobile Options",
       "summary": "Three blocks of the live Welcome page, five mobile layouts each, plus five ways a Four Moments bento tile expands (Bento Expand): twenty labelled variations with a sticky jump menu, for review on a phone.",
       "status": "live"
+    },
+    {
+      "slug": "welcome-mobile-options-2",
+      "label": "Welcome · Mobile Options 2",
+      "summary": "Round 2 from the review: the hero and first VSL on their own (five each), What Works refined with a month calendar and an F1-style list, Four Moments with a highlight reel, and three Bento Expands including a true full-screen takeover.",
+      "status": "live"
     }
   ]
 }
