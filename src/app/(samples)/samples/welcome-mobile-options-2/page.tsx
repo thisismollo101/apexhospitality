@@ -36,6 +36,13 @@ const BLOCKS = [
 
 const SECTIONS = [HeroAlone, VslOptions, WorksOptions, MomentsOptions, BentoOptions];
 
+/**
+ * Which commit this page was built from. Vercel exposes the git SHA to the
+ * build; locally there is none. The page is static, so this is fixed at build
+ * time — exactly what is wanted: it shows which deployment is actually live.
+ */
+const BUILD = (process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? 'local').slice(0, 7);
+
 export default function WelcomeMobileOptions2() {
   return (
     <div className={`wmo ${display.variable} ${body.variable}`}>
@@ -76,6 +83,9 @@ export default function WelcomeMobileOptions2() {
 
         <footer className="outro">
           <a href="/samples">← All samples</a>
+          <p className="outro__build">
+            Build {BUILD} · E1 takeover: centred pill, centred arrow, points card on scroll
+          </p>
         </footer>
       </main>
     </div>
