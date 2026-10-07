@@ -84,7 +84,7 @@ export default function WelcomeMobileOptions2() {
         <footer className="outro">
           <a href="/samples">← All samples</a>
           <p className="outro__build">
-            Build {BUILD} · E1 v10: iPhone landscape trick, the film turned on its side so the phone plays it full screen with no clock
+            Build {BUILD} · E1 v11: iPhone plays the upright 9:19.5 film in the phone&apos;s own player, which hides the clock once its controls fade
           </p>
         </footer>
       </main>
