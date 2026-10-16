@@ -1,0 +1,4 @@
+node_modules/
+out/
+# symlink to ../public/media, recreated by `npm run link-media`
+public/media
