@@ -60,6 +60,13 @@ A page with a wireframe gets a real route file and is built to it. Everything
 else still renders through the shared `ProductDetail` template off
 `products.json`.
 
+Where a product has a real route file, its content belongs in that route's own
+directory and nowhere else. The Welcome spec was briefly written into
+`products.json` instead; because the catch-all excludes the overridden path,
+that copy rendered nowhere at all. It is kept as source material in
+`docs/pages/apex-welcome-final-boss-spec.md`, and the catalogue entry is back to
+the three-field shape its seventeen siblings use.
+
 One deliberate departure from the Welcome wireframe: it specifies a dark
 charcoal-and-gold design system with its own sticky header and Playfair Display
 headlines. That is not used. The page is reached from the Apex header and has to
@@ -69,6 +76,8 @@ seven-section order are the wireframe's.
 
 ## Status
 
-**Apex Welcome** has a full landing page and product copy written from source.
-The other seventeen routes still carry the short three-field placeholder copy
-(`concept` / `math` / `quote`) and have not been reconciled against Drive.
+**Apex Welcome** has a full landing page, built from the v4 wireframe, with its
+content in that route's own `data.ts`. All eighteen catalogue entries in
+`products.json` carry the short three-field copy (`concept` / `math` / `quote`);
+only Welcome's has been reconciled against Drive, and for Welcome that entry is
+unreachable anyway while the route file overrides it.
