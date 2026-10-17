@@ -78,23 +78,26 @@ export const VSL = {
   poster: 'hq/screen-tall.jpg',
 };
 
-export const CONTRAST = { label: 'Them vs Us' };
+export const CONTRAST = { label: 'Them vs Us', title: 'The Cold Receipt & Stolen Budget' };
 
 /**
- * One expandable row on a contrast card. Card B's left value is the send
- * timing; Card A's is "never sent" (`num` left out). The source line shows as
- * the row's grey subline, so every figure's tag is visible without opening it.
+ * One expandable row. Card B's left value is the send timing; Card A's is
+ * "never sent" (`num` left out). The source line shows only once the row is
+ * open.
  */
 export type Row = { num?: string; unit: string; title: string; text: string; src: string };
 
 export const OLD_WAY = {
-  kick: 'Card A',
   title: 'The Old Way',
-  /** The card's short headline: the live Welcome VSL headline, reused rather than written new. */
-  headline: 'Your Revenue Walks Out the Door Before Your Guest Walks In.',
-  subject: 'Thank you for your booking',
-  attachment: 'Invoice_Rules_Terms.pdf',
-  silence: '30 days of radio silence',
+  headline:
+    "While you send cold email receipts and 30 days of radio silence, off-site competitors are stealing your guest's dining and spa budget.",
+  /** The phone: a plain reminder text, as in Aidan's reference screenshot. */
+  sms: {
+    kind: 'Text Message',
+    when: 'Today 9:29AM',
+    body: 'Hi Alex, this is a reminder of your reservation at our hotel on March 15. Your check-in time is 3:00 PM. Please confirm your arrival by replying YES or call us at 123-456-7890 if you need to make any changes.',
+    input: 'Text message',
+  },
   rows: [
     {
       unit: 'Never sent',
@@ -124,11 +127,16 @@ export const OLD_WAY = {
 };
 
 export const APEX_WAY = {
-  kick: 'Card B',
   title: 'The APEX Way',
-  /** One placeholder film on a muted loop, from the Bento Expand set; to be swapped. */
+  headline: 'Apex Welcome captures their spend commitment while excitement is at its absolute peak, locking in 5x more pre-arrival cash.',
+  /**
+   * One placeholder film from the Bento Expand set, to be swapped; it has a
+   * sound track, for the unmute button. Safari takes the HEVC master; Chrome
+   * and Firefox the WebM (VP9 + Opus); anything else the H.264 copy.
+   */
   clip: 'hq/card-tall.mp4',
   clipHevc: 'hq/card-tall-hevc.mp4',
+  clipWebm: 'hq/card-tall.webm',
   poster: 'hq/card-tall.jpg',
   rows: [
     { num: '24', unit: 'Hours', title: '2% to 5% at the Front Desk', text: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.', src: UNVERIFIED },

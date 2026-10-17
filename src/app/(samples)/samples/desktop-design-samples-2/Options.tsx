@@ -1,7 +1,7 @@
 'use client';
 
-import { CONTRAST, DATA_POINTS, RIBBON, TOP } from './data';
-import { ApexCard, BgFilm, DataCard, OldCard, Option, Ribbon, Src, VslCard } from './parts';
+import { DATA_POINTS, RIBBON, TOP } from './data';
+import { BgFilm, DataCard, Option, Ribbon, Src, ThemUs, VslCard } from './parts';
 
 /*
  * Round 2: three treatments of the top (the film full bleed behind the
@@ -9,12 +9,6 @@ import { ApexCard, BgFilm, DataCard, OldCard, Option, Ribbon, Src, VslCard } fro
  * revised Them vs Us pair, the same structure each time, with the colour,
  * shading and surfaces varied).
  */
-
-const Vs = () => (
-  <span className="vs" aria-hidden="true">
-    vs
-  </span>
-);
 
 /* ---- Top ------------------------------------------------------------------- */
 
@@ -120,31 +114,19 @@ export function Top3() {
 
 /* ---- Bottom ------------------------------------------------------------------ */
 
-/**
- * The revised Them vs Us pair, the upright two-card block from round 1: Card A
- * left, Card B right, each a 9:16 phone over its rows, sharing one row grid so
- * the two mirror. The three options share this exactly and differ only in
- * their stylesheet theme.
- */
-function Pair() {
-  return (
-    <div className="wrap">
-      <span className="eye bot__eye">{CONTRAST.label}</span>
-      <div className="bot__pair">
-        <OldCard />
-        <Vs />
-        <ApexCard />
-      </div>
-    </div>
-  );
-}
+/** The three bottoms share the Them vs Us block exactly and differ only in their stylesheet theme. */
+const Pair = () => (
+  <div className="wrap wrap--wide">
+    <ThemUs />
+  </div>
+);
 
 export function Bottom1() {
   return (
     <Option
       id="bottom-1"
       label="Bottom 1 · Night"
-      note="The round 1 look carried over: near-black ground, cream card bodies, white rows. Card A's phone sits on a cold red-grey, Card B's on brand blue."
+      note="Near-black ground, the round 1 look: white rows on dark, the phones in the centre on a thin light ring, Card A's timing column in cold red and Card B's in brand blue."
     >
       <div className="bot b1">
         <Pair />
@@ -158,7 +140,7 @@ export function Bottom2() {
     <Option
       id="bottom-2"
       label="Bottom 2 · Paper"
-      note="Inverted to a light section: warm paper ground, white cards with a soft drop shadow, rows on cream. The phones keep their dark grounds, so they become the two darkest things on the page."
+      note="Inverted to a light section: warm paper ground and white rows with a soft shadow. The two black phones become the darkest things on the page, so the eye goes straight to the centre."
     >
       <div className="bot b2">
         <Pair />
@@ -172,7 +154,7 @@ export function Bottom3() {
     <Option
       id="bottom-3"
       label="Bottom 3 · Ink"
-      note="All dark: ink card surfaces with translucent rows and white type, each card tinted toward its side (Card A a cold red, Card B brand blue) over a ground that shades from black into deep blue. A large outline VS sits between them."
+      note="All dark and tinted toward each side: the ground shades from a cold red on the left to deep blue on the right, the rows are translucent with white type, and each phone carries a faint glow in its side's colour."
     >
       <div className="bot b3">
         <Pair />

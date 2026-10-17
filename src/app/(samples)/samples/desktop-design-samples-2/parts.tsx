@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, DATA_POINTS, OLD_WAY, RIBBON, TOP, VSL, img, type DataPoint, type Row } from './data';
+import { APEX_WAY, CONTRAST, DATA_POINTS, OLD_WAY, RIBBON, TOP, VSL, img, type DataPoint, type Row } from './data';
 
 /*
  * The pieces every layout is built from. Each option arranges these; none of
@@ -164,167 +164,156 @@ export function PlayerMedia({ t, playing, toggle }: PlayerState) {
   );
 }
 
-/** Card A's media: the phone, open on a cold plain-text confirmation email, then nothing. */
-export function OldMedia() {
+/* ---- Them vs Us -------------------------------------------------------------
+   One level row, left to right: Card A's rows, Card A's phone, a gap, Card B's
+   phone, Card B's rows. The phones sit in the centre and the two halves mirror
+   each other exactly. */
+
+/** Card A's phone: the plain reminder text from Aidan's reference, and nothing else. */
+export function SmsPhone() {
+  const s = OLD_WAY.sms;
   return (
-    <div className="ph ph--old">
-      <div className="ph__screen mail">
-        <span className="ph__notch" aria-hidden="true" />
-        <div className="mail__msg">
-          <div className="mail__from" aria-hidden="true">
-            <span className="mail__av" />
-            <span className="mail__lines">
-              <i style={{ width: '64%' }} />
-              <i style={{ width: '40%' }} />
-            </span>
-          </div>
-          <b className="mail__subj">{OLD_WAY.subject}</b>
-          <span className="mail__text" aria-hidden="true">
-            <i />
-            <i />
-            <i style={{ width: '72%' }} />
-          </span>
-          <span className="mail__pdf">
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13" />
-            </svg>
-            {OLD_WAY.attachment}
-          </span>
-          <span className="mail__text" aria-hidden="true">
-            <i />
-            <i style={{ width: '50%' }} />
-          </span>
-        </div>
-        <div className="mail__quiet">
-          <span className="mail__days" aria-hidden="true">
-            {Array.from({ length: 30 }, (_, i) => (
-              <i key={i} />
-            ))}
-          </span>
-          <span className="mail__silence">{OLD_WAY.silence}</span>
+    <div className="tphone">
+      <div className="tphone__screen sms">
+        <p className="sms__meta">
+          {s.kind}
+          <br />
+          {s.when}
+        </p>
+        <p className="sms__bubble">{s.body}</p>
+        <div className="sms__input" aria-hidden="true">
+          <span>{s.input}</span>
+          <svg viewBox="0 0 16 16">
+            <path d="M6 3.5l4.5 4.5L6 12.5" />
+          </svg>
         </div>
       </div>
     </div>
   );
 }
 
+const SoundIcon = ({ on }: { on: boolean }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path className="snd__cone" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
+    {on ? <path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" /> : <path d="M16 9.5l5 5M21 9.5l-5 5" />}
+  </svg>
+);
+
 /**
- * Card B's media: the phone, one film on a muted loop. Never autoplays by
- * attribute: an observer plays it on screen and pauses it off, muted is set as
- * a property, and reduced motion leaves the poster up.
+ * Card B's phone: one film on a continuous loop, and an unmute button. It
+ * starts muted (the only way a browser lets it start on its own), played by an
+ * observer while it is on screen and paused off it; muted is set as a property,
+ * since React does not reliably emit the attribute. Reduced motion leaves the
+ * poster up until someone presses play-with-sound.
  */
-export function ApexPhone() {
+export function LoopPhone() {
   const ref = useRef<HTMLVideoElement>(null);
+  const [sound, setSound] = useState(false);
+
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
     v.muted = true;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) v.play().catch(() => {});
-        else v.pause();
-      },
-      { threshold: 0.2 },
-    );
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.2 });
     io.observe(v);
     return () => io.disconnect();
   }, []);
+
+  const toggle = () => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setSound(!v.muted);
+    if (!v.muted && v.paused) v.play().catch(() => {});
+  };
+
   return (
-    <div className="ph">
-      <div className="ph__screen">
-        <video ref={ref} className="ph__film" poster={img(APEX_WAY.poster)} muted loop playsInline preload="metadata" aria-hidden="true">
+    <div className="tphone">
+      <div className="tphone__screen">
+        <video ref={ref} className="tphone__film" poster={img(APEX_WAY.poster)} muted loop playsInline preload="auto">
           <source src={img(APEX_WAY.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(APEX_WAY.clipWebm)} type="video/webm" />
           <source src={img(APEX_WAY.clip)} type="video/mp4" />
         </video>
-        <span className="ph__notch" aria-hidden="true" />
+        <button type="button" className="snd" onClick={toggle} aria-pressed={sound} aria-label={sound ? 'Mute' : 'Unmute'}>
+          <SoundIcon on={sound} />
+        </button>
       </div>
     </div>
   );
 }
 
 const NeverX = () => (
-  <svg className="tc__x" viewBox="0 0 24 24" aria-hidden="true">
+  <svg className="lg__x" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M5 5l14 14M19 5L5 19" />
   </svg>
 );
 
 /**
- * A contrast card's four rows, the What Works list's style: the left value,
- * divider, title and source line, chevron. Card B's left value is the send
- * timing; Card A's is a red X, never sent. One open at a time. The list is
- * fixed at its tallest state (every row closed but the tallest open), so
- * opening a row never moves the card or anything around it; it scrolls inside
- * itself only if it must.
+ * A side's four rows. Every row is the same fixed height with its title held
+ * to two lines, so all eight sit level across both sides. The list is exactly
+ * the phone's height with the rows spread across it, so the first row is level
+ * with the top of the phone and the last with the bottom; opening a row takes
+ * up the space between them, and the list scrolls inside itself only if it
+ * must. One open at a time; the source line shows only inside an open row.
  */
-export function Rows({ rows, old = false }: { rows: Row[]; old?: boolean }) {
-  const [open, setOpen] = useState<number | null>(0);
+export function Ledger({ side }: { side: 'a' | 'b' }) {
+  const rows: Row[] = side === 'a' ? OLD_WAY.rows : APEX_WAY.rows;
+  const [open, setOpen] = useState<number | null>(null);
   const ref = useRef<HTMLOListElement>(null);
   const id = useId();
 
+  // Mark the rows whose title the two-line clamp actually cuts, so only those
+  // repeat the full title when opened. Re-measured whenever the width changes.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    let width = -1;
-    const fit = () => {
-      if (el.clientWidth === width) return;
-      width = el.clientWidth;
-      const items = Array.from(el.children) as HTMLElement[];
-      const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
-      // Each row closed: its whole height, borders included, less its open panel.
-      const shut = items.reduce((h, li) => h + li.offsetHeight - (li.querySelector('.tc__more') as HTMLElement).offsetHeight, 0) + gap * (items.length - 1);
-      const most = Math.max(...items.map((li) => (li.querySelector('.tc__in') as HTMLElement).scrollHeight));
-      // +2 covers sub-pixel rounding in the rows' heights.
-      el.style.height = `${Math.ceil(shut + most) + 2}px`;
-    };
-    fit();
-    // Web fonts change the rows' heights without changing the width: measure again once they land.
-    document.fonts?.ready.then(() => {
-      width = -1;
-      fit();
-    });
-    const ro = new ResizeObserver(fit);
+    const mark = () =>
+      el.querySelectorAll<HTMLElement>('.lg__title').forEach((t) => {
+        t.closest('li')?.toggleAttribute('data-clamped', t.scrollHeight > t.clientHeight + 1);
+      });
+    mark();
+    document.fonts?.ready.then(mark);
+    const ro = new ResizeObserver(mark);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  // Belt and braces: if the list ever has to scroll, keep the opened row in view once it has grown.
+  // If the list ever has to scroll, keep the opened row in view once it has grown.
   useEffect(() => {
     const el = ref.current;
     if (!el || open === null) return;
     const t = window.setTimeout(() => {
       const li = el.children[open] as HTMLElement;
-      const top = li.offsetTop;
-      if (top < el.scrollTop) el.scrollTop = top;
-      else if (top + li.offsetHeight > el.scrollTop + el.clientHeight) el.scrollTop = top + li.offsetHeight - el.clientHeight;
+      if (li.offsetTop < el.scrollTop) el.scrollTop = li.offsetTop;
+      else if (li.offsetTop + li.offsetHeight > el.scrollTop + el.clientHeight) el.scrollTop = li.offsetTop + li.offsetHeight - el.clientHeight;
     }, 320);
     return () => window.clearTimeout(t);
   }, [open]);
 
   return (
-    <ol className={`tc${old ? ' tc--old' : ''}`} ref={ref}>
+    <ol className={`lg lg--${side}`} ref={ref}>
       {rows.map((r, n) => {
         const on = open === n;
         return (
           <li key={r.title} className={on ? 'is-open' : undefined}>
             <button type="button" aria-expanded={on} aria-controls={`${id}-${n}`} onClick={() => setOpen(on ? null : n)}>
-              <span className="tc__when">
+              <span className="lg__when">
                 {r.num ? <b>{r.num}</b> : <NeverX />}
                 <small>{r.unit}</small>
               </span>
-              <span className="tc__name">
-                <b>{r.title}</b>
-                <small className="src">
-                  <span className="ast">*</span>
-                  {r.src}
-                </small>
+              <span className="lg__title" title={r.title}>
+                {r.title}
               </span>
               <span className="chev" aria-hidden="true" />
             </button>
-            <div className="tc__more" id={`${id}-${n}`}>
-              <div className="tc__in">
-                <div className="tc__pad">
+            <div className="lg__more" id={`${id}-${n}`}>
+              <div className="lg__in">
+                <div className="lg__pad">
+                  <b className="lg__full">{r.title}</b>
                   <p>{r.text}</p>
+                  <Src>{r.src}</Src>
                 </div>
               </div>
             </div>
@@ -335,64 +324,37 @@ export function Rows({ rows, old = false }: { rows: Row[]; old?: boolean }) {
   );
 }
 
-/* The three stage cards. Each is media / head / body, the same three rows, so a
-   parent grid can line them up across a row with subgrid: that is what makes
-   the player and the Them-vs-Us cards mirror each other. */
-
-export function PlayerCard({ className = '' }: { className?: string }) {
-  const player = usePlayer();
+/** The whole block: title, the two headline sentences, then the level row. */
+export function ThemUs() {
   return (
-    <article className={`sc sc--player ${className}`}>
-      <div className="sc__media">
-        <PlayerMedia {...player} />
-      </div>
-      <header className="sc__head">
-        <span className="tag">Panel A</span>
-        <h3>{VSL.label}</h3>
+    <div className="tu">
+      <header className="tu__head">
+        <span className="eye">{CONTRAST.label}</span>
+        <h2>{CONTRAST.title}</h2>
       </header>
-      <div className="sc__body">
-        <button type="button" className="cta" onClick={player.toggle} aria-pressed={player.playing}>
-          <span className="play play--sm" aria-hidden="true">
-            <svg viewBox="0 0 24 24">{player.playing ? <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /> : <path d="M7 4.5l13 7.5-13 7.5z" />}</svg>
-          </span>
-          {player.playing ? 'Pause' : VSL.cta}
-        </button>
-        <Src>90-second VSL · Fladlien 13-slide objection script</Src>
+      <div className="tu__row">
+        <div className="tu__line tu__line--a">
+          <span className="tag tag--old">{OLD_WAY.title}</span>
+          <p>{OLD_WAY.headline}</p>
+        </div>
+        <div className="tu__line tu__line--b">
+          <span className="tag tag--apex">{APEX_WAY.title}</span>
+          <p>{APEX_WAY.headline}</p>
+        </div>
+        <div className="tu__info tu__info--a">
+          <Ledger side="a" />
+        </div>
+        <div className="tu__phone tu__phone--a">
+          <SmsPhone />
+        </div>
+        <div className="tu__phone tu__phone--b">
+          <LoopPhone />
+        </div>
+        <div className="tu__info tu__info--b">
+          <Ledger side="b" />
+        </div>
       </div>
-    </article>
-  );
-}
-
-export function OldCard({ className = '' }: { className?: string }) {
-  return (
-    <article className={`sc sc--old ${className}`}>
-      <div className="sc__media">
-        <OldMedia />
-      </div>
-      <header className="sc__head">
-        <span className="tag tag--old">{OLD_WAY.kick}</span>
-        <h3>{OLD_WAY.headline}</h3>
-      </header>
-      <div className="sc__body">
-        <Rows rows={OLD_WAY.rows} old />
-      </div>
-    </article>
-  );
-}
-
-export function ApexCard({ className = '' }: { className?: string }) {
-  return (
-    <article className={`sc sc--apex ${className}`}>
-      <div className="sc__media">
-        <ApexPhone />
-      </div>
-      {/* No heading for now, so the pill and the list share one cell spanning the
-          head and body rows: the list starts under the pill, not under Card A's headline. */}
-      <div className="sc__body sc__body--span">
-        <span className="tag tag--apex">{APEX_WAY.kick}</span>
-        <Rows rows={APEX_WAY.rows} />
-      </div>
-    </article>
+    </div>
   );
 }
 
