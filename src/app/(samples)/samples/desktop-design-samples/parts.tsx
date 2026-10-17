@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, DATA_POINTS, OLD_WAY, RIBBON, SPINE, VSL, img, type DataPoint, type Stat } from './data';
+import { APEX_WAY, DATA_POINTS, OLD_WAY, RIBBON, SPINE, VSL, img, type DataPoint, type Row } from './data';
 
 /*
  * The pieces every layout is built from. Each option arranges these; none of
@@ -247,13 +247,21 @@ export function ApexPhone() {
   );
 }
 
+const NeverX = () => (
+  <svg className="tc__x" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M5 5l14 14M19 5L5 19" />
+  </svg>
+);
+
 /**
- * Card B's four rows, the What Works list's style: timing, divider, title and
- * countdown, chevron. One open at a time. The list is fixed at its tallest
- * state (every row closed but the tallest open), so opening a row never moves
- * the card or anything around it; it scrolls inside itself only if it must.
+ * A contrast card's four rows, the What Works list's style: the left value,
+ * divider, title and source line, chevron. Card B's left value is the send
+ * timing; Card A's is a red X, never sent. One open at a time. The list is
+ * fixed at its tallest state (every row closed but the tallest open), so
+ * opening a row never moves the card or anything around it; it scrolls inside
+ * itself only if it must.
  */
-export function Touches() {
+export function Rows({ rows, old = false }: { rows: Row[]; old?: boolean }) {
   const [open, setOpen] = useState<number | null>(0);
   const ref = useRef<HTMLOListElement>(null);
   const id = useId();
@@ -265,10 +273,11 @@ export function Touches() {
     const fit = () => {
       if (el.clientWidth === width) return;
       width = el.clientWidth;
-      const rows = Array.from(el.children) as HTMLElement[];
+      const items = Array.from(el.children) as HTMLElement[];
       const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
-      const shut = rows.reduce((h, li) => h + (li.firstElementChild as HTMLElement).offsetHeight, 0) + gap * (rows.length - 1);
-      const most = Math.max(...rows.map((li) => (li.querySelector('.tc__in') as HTMLElement).scrollHeight));
+      // Each row closed: its whole height, borders included, less its open panel.
+      const shut = items.reduce((h, li) => h + li.offsetHeight - (li.querySelector('.tc__more') as HTMLElement).offsetHeight, 0) + gap * (items.length - 1);
+      const most = Math.max(...items.map((li) => (li.querySelector('.tc__in') as HTMLElement).scrollHeight));
       // +2 covers sub-pixel rounding in the rows' heights.
       el.style.height = `${Math.ceil(shut + most) + 2}px`;
     };
@@ -297,27 +306,29 @@ export function Touches() {
   }, [open]);
 
   return (
-    <ol className="tc" ref={ref}>
-      {APEX_WAY.touches.map((t, n) => {
+    <ol className={`tc${old ? ' tc--old' : ''}`} ref={ref}>
+      {rows.map((r, n) => {
         const on = open === n;
         return (
-          <li key={t.title} className={on ? 'is-open' : undefined}>
+          <li key={r.title} className={on ? 'is-open' : undefined}>
             <button type="button" aria-expanded={on} aria-controls={`${id}-${n}`} onClick={() => setOpen(on ? null : n)}>
               <span className="tc__when">
-                <b>{t.num}</b>
-                <small>{t.unit}</small>
+                {r.num ? <b>{r.num}</b> : <NeverX />}
+                <small>{r.unit}</small>
               </span>
               <span className="tc__name">
-                <b>{t.title}</b>
-                <small>{t.sub}</small>
+                <b>{r.title}</b>
+                <small className="src">
+                  <span className="ast">*</span>
+                  {r.src}
+                </small>
               </span>
               <span className="chev" aria-hidden="true" />
             </button>
             <div className="tc__more" id={`${id}-${n}`}>
               <div className="tc__in">
                 <div className="tc__pad">
-                  <p>{t.msg}</p>
-                  <span className="chip">{t.chip}</span>
+                  <p>{r.text}</p>
                 </div>
               </div>
             </div>
@@ -325,21 +336,6 @@ export function Touches() {
         );
       })}
     </ol>
-  );
-}
-
-/** A result badge: each figure, its label and its source line. */
-export function Result({ stats, className = '' }: { stats: Stat[]; className?: string }) {
-  return (
-    <ul className={`res ${className}`}>
-      {stats.map((s) => (
-        <li key={s.text}>
-          <b>{s.fig}</b>
-          <span className="res__t">{s.text}</span>
-          <Src>{s.src}</Src>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -382,7 +378,7 @@ export function OldCard({ className = '' }: { className?: string }) {
         <h3>{OLD_WAY.headline}</h3>
       </header>
       <div className="sc__body">
-        <Result stats={OLD_WAY.result} />
+        <Rows rows={OLD_WAY.rows} old />
       </div>
     </article>
   );
@@ -398,7 +394,7 @@ export function ApexCard({ className = '' }: { className?: string }) {
           head and body rows: the list starts under the pill, not under Card A's headline. */}
       <div className="sc__body sc__body--span">
         <span className="tag tag--apex">{APEX_WAY.kick}</span>
-        <Touches />
+        <Rows rows={APEX_WAY.rows} />
       </div>
     </article>
   );

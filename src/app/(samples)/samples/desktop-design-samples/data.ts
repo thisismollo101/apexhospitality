@@ -73,7 +73,12 @@ export const VSL = {
 
 export const CONTRAST = { label: 'Them vs Us' };
 
-export type Stat = { fig: string; text: string; src: string };
+/**
+ * One expandable row on a contrast card. Card B's left value is the send
+ * timing; Card A's is "never sent" (`num` left out). The source line shows as
+ * the row's grey subline, so every figure's tag is visible without opening it.
+ */
+export type Row = { num?: string; unit: string; title: string; text: string; src: string };
 
 export const OLD_WAY = {
   kick: 'Card A',
@@ -83,21 +88,33 @@ export const OLD_WAY = {
   subject: 'Thank you for your booking',
   attachment: 'Invoice_Rules_Terms.pdf',
   silence: '30 days of radio silence',
-  result: [
-    { fig: '2% to 5%', text: 'Check-In Conversion', src: UNVERIFIED },
-    { fig: '85%-90%', text: 'Guest Dining Revenue Leaks Off-Site', src: UNVERIFIED },
-  ] as Stat[],
+  rows: [
+    {
+      unit: 'Never sent',
+      title: '380% Conversion Lift on High-Priced Inventory',
+      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
+      src: 'Spiegel / Northwestern · unverified',
+    },
+    {
+      unit: 'Never sent',
+      title: '68% of Pre-Arrival Upsell Revenue Driven by Suites',
+      text: 'Industry upsell benchmarks show that premium room category upgrades represent the single largest ancillary revenue stream in hotel operations, accounting for over 68% of total pre-arrival upsell value.',
+      src: 'Oaky Data · unverified',
+    },
+    {
+      unit: 'Never sent',
+      title: '4x Higher Conversion via Digital Touchpoints',
+      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
+      src: 'Canary Technologies · unverified',
+    },
+    {
+      unit: 'Never sent',
+      title: '60%+ Pre-Arrival Dining Decision Window',
+      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
+      src: 'Cornell / OpenTable · unverified',
+    },
+  ] as Row[],
 };
-
-/**
- * Card B's four rows. Title, countdown, message and reply chip are the What
- * Works list's own (welcome-mobile-options-2/data.ts, MILESTONES), verbatim;
- * only the left-hand value is the send timing instead of a date. "days to
- * arrival" is 30 minus the send day, as there.
- */
-export type Touch = { num: string; unit: string; title: string; sub: string; msg: string; chip: string };
-
-const daysLeft = (day: number) => `${30 - day} days to arrival`;
 
 export const APEX_WAY = {
   kick: 'Card B',
@@ -106,10 +123,16 @@ export const APEX_WAY = {
   clip: 'hq/card-tall.mp4',
   clipHevc: 'hq/card-tall-hevc.mp4',
   poster: 'hq/card-tall.jpg',
-  touches: [
-    { num: '24', unit: 'Hours', title: 'Welcome by name', sub: daysLeft(1), msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd.", chip: 'See the Ocean Suite' },
-    { num: '48', unit: 'Hours', title: 'Dining, in close-up', sub: daysLeft(3), msg: 'Chef Aris is plating something new. Your terrace table is waiting.', chip: "Reserve the chef's table" },
-    { num: '7', unit: 'Days', title: 'Spa, matched to open hours', sub: daysLeft(23), msg: 'Three treatment hours are still open during your stay.', chip: 'Book a treatment' },
-    { num: '48', unit: 'Hours', title: 'Arrival and extensions', sub: daysLeft(28), msg: 'Your driver will meet you at arrivals. Want your room ready early?', chip: 'Add early check-in' },
-  ] as Touch[],
+  rows: [
+    { num: '24', unit: 'Hours', title: '2% to 5% at the Front Desk', text: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.', src: UNVERIFIED },
+    { num: '48', unit: 'Hours', title: '15% to 25% Pre-Arrival Conversion', text: 'Data Driven Mobile Cinema converts at 15% to 25% during pre-arrival intent.', src: UNVERIFIED },
+    { num: '7', unit: 'Days', title: '5x Pre-Arrival Revenue', text: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.', src: 'Unverified · internal target only' },
+    {
+      num: '48',
+      unit: 'Hours',
+      title: '50% Lower Cancellation Rate',
+      text: 'Direct guests engaged pre-arrival cancel at just 10.6%, compared to 21.8% for OTA bookers, stabilizing cash flow weeks in advance.',
+      src: '10.6% Direct vs. 21.8% OTA, Cloudbeds, unverified',
+    },
+  ] as Row[],
 };
