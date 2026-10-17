@@ -239,57 +239,63 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dds .pl__segs .is-on i { background: var(--accent-lit); }
 .dds .pl__time { display: block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .8); font-variant-numeric: tabular-nums; }
 
-/* Card A · the cold confirmation email, then radio silence */
-.dds .om {
-  position: absolute; inset: 0; display: flex; flex-direction: column; padding: 56px 16px 18px;
-  background: linear-gradient(170deg, color-mix(in srgb, var(--hot) 16%, #1b1c1f), #121315 70%);
-}
-.dds .om__mail { padding: 14px; border-radius: 10px; background: #dcdad6; color: var(--ink-soft); filter: saturate(.4); }
-.dds .om__row { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #c8c5bf; }
-.dds .om__av { width: 24px; height: 24px; flex: none; border-radius: 999px; background: #b9b5ae; }
-.dds .om__lines { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-.dds .om__lines i, .dds .om__text i { display: block; height: 6px; border-radius: 3px; background: #bfbbb4; }
-.dds .om__subj { display: block; width: 74%; height: 9px; margin: 12px 0 10px; border-radius: 3px; background: #a9a59d; }
-.dds .om__text { display: flex; flex-direction: column; gap: 6px; }
-.dds .om__pdf {
-  display: flex; align-items: center; gap: 7px; margin: 12px 0; padding: 8px 9px; border-radius: 6px;
-  border: 1px solid #bdb9b2; background: #ebe9e5; font-size: 11px; font-weight: 600; color: var(--ink-soft); overflow-wrap: anywhere;
-}
-.dds .om__pdf svg { width: 14px; height: 14px; flex: none; fill: none; stroke: color-mix(in srgb, var(--hot) 70%, var(--ink-soft)); stroke-width: 1.4; stroke-linejoin: round; }
-.dds .om__quiet { margin-top: auto; }
-.dds .om__days { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
-.dds .om__days i { aspect-ratio: 1; border-radius: 3px; border: 1px solid rgba(255, 255, 255, .13); }
-.dds .om__silence { display: block; margin-top: 10px; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .62); }
-
-/* Card B · the phone */
+/* The phone both contrast cards share: same frame, same size, so they mirror. */
 .dds .ph {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 48px 16px 16px;
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 40px 16px 16px;
   background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 70%);
 }
+.dds .ph--old { background: linear-gradient(170deg, color-mix(in srgb, var(--hot) 16%, #1b1c1f), #121315 70%); }
 .dds .ph__screen {
   position: relative; height: 100%; max-width: 100%; aspect-ratio: 9 / 16; overflow: hidden;
   border: 6px solid var(--ink); border-radius: 26px; background: var(--ink); box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
-  container: phone / inline-size;
 }
-.dds .ph__still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s; }
-.dds .ph__still.is-on { opacity: 1; }
-.dds .ph__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .4), transparent 20%, transparent 50%, rgba(0, 0, 0, .78)); }
-.dds .ph__notch { position: absolute; top: 6px; left: 50%; width: 30%; height: 7px; transform: translateX(-50%); border-radius: 999px; background: var(--ink); }
-.dds .ph__segs { position: absolute; top: 20px; left: 9px; right: 9px; display: flex; gap: 3px; }
-.dds .ph__segs span { flex: 1; height: 2.5px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .35); }
-.dds .ph__segs i { display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
-.dds .ph__segs .is-done i, .dds .ph__segs .is-on i { transform: scaleX(1); }
-.dds .ph__segs.is-auto .is-on i { animation: dds-seg 3.2s linear both; }
-@keyframes dds-seg { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.dds .ph__now {
-  /* sits just above the thumbnail strip: four 9:16 tiles across the screen's width */
-  position: absolute; left: 10px; right: 10px; bottom: calc(18px + (100cqw - 31px) / 4 * 16 / 9);
-  display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; line-height: 1.25; color: #fff;
+.dds .ph__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dds .ph__notch { position: absolute; top: 6px; left: 50%; z-index: 2; width: 30%; height: 7px; transform: translateX(-50%); border-radius: 999px; background: var(--ink); }
+
+/* Card A · the cold confirmation email, then radio silence */
+.dds .mail { display: flex; flex-direction: column; background: #d9d7d3; color: var(--ink-soft); filter: saturate(.4); }
+.dds .mail__msg { padding: 26px 12px 12px; background: #e6e4e0; }
+.dds .mail__from { display: flex; align-items: center; gap: 8px; padding-bottom: 9px; border-bottom: 1px solid #cbc8c2; }
+.dds .mail__av { width: 22px; height: 22px; flex: none; border-radius: 999px; background: #b9b5ae; }
+.dds .mail__lines { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.dds .mail__lines i, .dds .mail__text i { display: block; height: 5px; border-radius: 3px; background: #c3bfb8; }
+.dds .mail__subj { display: block; margin: 10px 0 8px; font-size: 12px; font-weight: 600; line-height: 1.3; color: #55595f; }
+.dds .mail__text { display: flex; flex-direction: column; gap: 5px; }
+.dds .mail__pdf {
+  display: flex; align-items: center; gap: 6px; margin: 10px 0; padding: 6px 7px; border-radius: 6px;
+  border: 1px solid #c3bfb8; background: #efede9; font-size: 10px; font-weight: 600; line-height: 1.25; color: var(--ink-soft); overflow-wrap: anywhere;
 }
-.dds .ph__thumbs { position: absolute; left: 8px; right: 8px; bottom: 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
-.dds .ph__thumbs button { display: block; width: 100%; aspect-ratio: 9 / 16; border-radius: 7px; overflow: hidden; border: 2px solid rgba(255, 255, 255, .25); }
-.dds .ph__thumbs button.is-on { border-color: #fff; }
-.dds .ph__thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.dds .mail__pdf svg { width: 12px; height: 12px; flex: none; fill: none; stroke: color-mix(in srgb, var(--hot) 70%, var(--ink-soft)); stroke-width: 1.4; stroke-linejoin: round; }
+.dds .mail__quiet { margin-top: auto; padding: 12px; }
+.dds .mail__days { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; }
+.dds .mail__days i { aspect-ratio: 1; border-radius: 2px; border: 1px solid #bdb9b2; }
+.dds .mail__silence { display: block; margin-top: 8px; font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #8a8780; }
+
+/* Card B · the four touches, the What Works list's rows */
+.dds .tc { position: relative; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.dds .tc li { flex: none; border-radius: 14px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .06); }
+.dds .tc li > button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 10px 12px 10px 10px; text-align: left; }
+.dds .tc__when { flex: none; width: 50px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.dds .tc__when b { font-family: var(--display); font-size: 24px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.dds .tc__when small { margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.dds .tc__name { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.dds .tc__name b { font-size: 14px; font-weight: 700; line-height: 1.25; color: var(--ink); }
+.dds .tc__name small { font-size: 11.5px; line-height: 1.3; color: var(--ink-mute); }
+.dds .chev { flex: none; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute); transform: rotate(45deg); transition: transform .25s; }
+.dds .tc li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
+.dds .tc__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
+.dds .tc li.is-open .tc__more { grid-template-rows: 1fr; }
+.dds .tc__in { min-height: 0; overflow: hidden; }
+.dds .tc__pad { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 12px 12px; }
+.dds .tc__in p { padding: 9px 11px; border-radius: 4px 12px 12px 12px; background: #ece6dc; font-size: 13px; line-height: 1.45; color: var(--ink); }
+.dds .chip { display: inline-flex; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--accent); font-size: 11.5px; font-weight: 600; color: var(--accent); }
+.dds .sc--h .tc__name b { font-size: 15px; }
+.dds .sc .sc__body--span { grid-row: 2 / span 2; padding-top: 18px; }
+.dds .sc--h .sc__body.sc__body--span { grid-row: 1 / span 2; padding-top: 26px; }
+@media (hover: hover) {
+  .dds .tc li > button:hover .tc__name b { color: var(--accent); }
+}
+
 /* ---- Option 1 · Classic Stack ----------------------------------------------- */
 
 .dds .o1 { --cw: 316px; }
