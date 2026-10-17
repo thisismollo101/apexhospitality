@@ -633,3 +633,381 @@
 
 /* ledger tag beside each calculator tab's headline figure */
 .w3page .wf__tag{font-family:var(--body);font-size:10px;font-weight:600;letter-spacing:.04em;opacity:.6;vertical-align:middle}
+
+
+/* =====================================================================================
+   THE TOP OF THE PAGE: the hero (Top 1 · Cinematic Scrim) and the Joined Cards
+   (Bottom 1 · Wrong Way vs APEX Way), from /samples/desktop-design-samples-2.
+   The sample's rules are copied verbatim with .dd2 rescoped to .w3page .wx (both
+   sections carry .wx), then the live sizes Aidan asked for are set below them.
+   TopSections.tsx holds the markup.
+   ===================================================================================== */
+.w3page .wx {
+  /* the sample's tokens that official.css doesn't already define (same values) */
+  --hot: #c2482f;
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --r: 18px;
+}
+.w3page .wx ul, .w3page .wx ol { list-style: none; }
+
+/* (the sample's * reset is left out: .w3page * already does it, and rescoped it would outrank .wrap's padding and centring) */
+.w3page .wx img { display: block; max-width: 100%; }
+.w3page .wx button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.w3page .wx ul { list-style: none; }
+.w3page .wx a:focus-visible, .w3page .wx button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+
+.w3page .wx .ast { color: var(--accent); margin-right: 3px; }
+
+/* dark pill tags */
+.w3page .wx .tag {
+  display: inline-flex; align-items: center; align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+  background: var(--ink); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; line-height: 1.2;
+}
+.w3page .wx .tag--photo { position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(0, 0, 0, .55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: rgba(255, 255, 255, .94); }
+.w3page .wx .tag--old { background: color-mix(in srgb, var(--hot) 55%, var(--ink)); }
+.w3page .wx .tag--apex { background: var(--accent); }
+
+/* the grey source line */
+.w3page .wx .src { display: block; font-size: 10.5px; line-height: 1.45; color: var(--ink-mute); }
+
+/* integration trust ribbon */
+.w3page .wx .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
+.w3page .wx .ribbon li {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
+  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
+}
+.w3page .wx .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.w3page .wx .ribbon--center { justify-content: center; margin-top: 36px; }
+.w3page .wx .ribbon--list { flex-direction: column; gap: 8px; }
+.w3page .wx .ribbon--list li { border-radius: 12px; }
+.w3page .wx .ribbon--quiet li { border-color: transparent; background: none; padding: 6px 12px; color: rgba(255, 255, 255, .72); }
+.w3page .wx .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
+.w3page .wx .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
+.w3page .wx .ribbon--strip li + li { border-left: 1px solid var(--rule); }
+
+/* play button */
+.w3page .wx .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s, width .25s, height .25s;
+}
+.w3page .wx .play svg { width: 38%; height: 38%; fill: var(--ink); }
+.w3page .wx .play.play--sm { width: 22px; height: 22px; box-shadow: none; }
+.w3page .wx .play--sm svg { margin-left: 2px; }
+
+/* Panel A · the executive VSL player */
+.w3page .wx .pl { position: absolute; inset: 0; color: #fff; }
+.w3page .wx .pl__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.w3page .wx .pl__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .05) 22%, rgba(0, 0, 0, .1) 50%, rgba(0, 0, 0, .78)); }
+.w3page .wx .pl__dur { position: absolute; top: 16px; right: 16px; z-index: 2; font-size: 11px; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.w3page .wx .pl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 0 16px 90px; text-align: center;
+}
+.w3page .wx .pl__cta {
+  display: inline-block; max-width: 100%; padding: 12px 18px; border-radius: 999px; background: var(--ink); color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; line-height: 1.3; box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+  transition: background .2s;
+}
+.w3page .wx .pl__play:hover .pl__cta, .w3page .wx .pl__play:active .pl__cta { background: var(--accent); }
+.w3page .wx .pl__play:hover .play { transform: scale(1.06); }
+.w3page .wx .pl.is-playing .pl__play { justify-content: flex-start; align-items: flex-end; padding: 52px 14px 0 0; }
+.w3page .wx .pl.is-playing .play { width: 48px; height: 48px; background: rgba(255, 255, 255, .85); }
+.w3page .wx .pl.is-playing .pl__cta { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); }
+.w3page .wx .pl__cap {
+  position: absolute; left: 12px; right: 12px; bottom: 50px; z-index: 2; pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px;
+  background: rgba(13, 14, 17, .74); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-left: 3px solid var(--accent);
+}
+.w3page .wx .pl__capk { font-size: 9.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-lit); }
+.w3page .wx .pl__capt { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.w3page .wx .pl__bar { position: absolute; left: 12px; right: 12px; bottom: 14px; z-index: 2; pointer-events: none; }
+.w3page .wx .pl__segs { display: flex; gap: 3px; }
+.w3page .wx .pl__segs span { flex: 1; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .28); }
+.w3page .wx .pl__segs i { display: block; height: 100%; background: #fff; transform-origin: left; }
+.w3page .wx .pl__segs .is-on i { background: var(--accent-lit); }
+.w3page .wx .pl__time { display: block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .8); font-variant-numeric: tabular-nums; }
+
+/* ---- Top · the film full bleed, the VSL as one 9:16 card on the left ---------- */
+
+.w3page .wx.top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--sales-h) - var(--nav-h)); background: var(--night); color: #fff;
+}
+.w3page .wx .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.w3page .wx .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.w3page .wx .top__in { flex: 1; width: 100%; display: grid; grid-template-columns: var(--vw) minmax(0, 1fr); gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px; }
+.w3page .wx .vcard { position: relative; aspect-ratio: 9 / 16; border-radius: var(--r); overflow: hidden; background: var(--accent-deep); box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+.w3page .wx .top__copy { min-width: 0; }
+.w3page .wx .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+.w3page .wx.top .src { color: rgba(255, 255, 255, .55); }
+.w3page .wx .tag--glass { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .18); }
+
+/* Top 1 · Cinematic Scrim */
+.w3page .wx.t1 .top__scrim { background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+.w3page .wx .t1__pts { display: flex; flex-direction: column; gap: 10px; margin-top: 34px; max-width: 640px; }
+.w3page .wx .t1__pts li {
+  display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-radius: 14px;
+  background: rgba(13, 14, 17, .42); border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.w3page .wx .t1__pts .tag { margin-top: 2px; }
+.w3page .wx .t1__txt { display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, .88); }
+.w3page .wx .t1__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--accent-lit); }
+.w3page .wx .t1__txt .src { margin-top: 3px; }
+.w3page .wx .t1__ribbon { background: rgba(13, 14, 17, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 0; border-top: 1px solid var(--rule); }
+
+.w3page .wx .wrap--wide { max-width: 1360px; }
+/* The block fills the screen under the jump bar and sits centred in it, with generous room above and below. */
+.w3page .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); display: flex; align-items: center; padding: 120px 0; }
+.w3page .wx.bot > .wrap { width: 100%; }
+
+/* the phones */
+.w3page .wx .tphone { flex: none; width: var(--pw); height: var(--ph); padding: var(--bz); border-radius: 26px; background: var(--ink); box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 24px 60px rgba(0, 0, 0, .4); }
+.w3page .wx .tphone__screen { position: relative; width: 100%; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 20px; background: var(--ink); }
+.w3page .wx .tphone__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Card A's screen: Aidan's reference, a plain reminder text. The pale
+   lavender-grey is the reference's own, kept so the screen reads as a stock
+   messaging app rather than ours. */
+.w3page .wx .sms { display: flex; flex-direction: column; padding: 0 10px 11px; background: #edf1fb; font-family: var(--body); }
+.w3page .wx .sms__meta { padding-top: 18px; font-size: 7.5px; line-height: 1.4; text-align: center; color: #9aa3b5; }
+.w3page .wx .sms__bubble { margin-top: 22px; padding: 9px 10px; border-radius: 11px; background: #fff; font-size: 9.6px; line-height: 1.38; color: #1d1f24; }
+.w3page .wx .sms__input {
+  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: 0 9px 0 12px; height: 26px;
+  border: 1px solid #b9c3da; border-radius: 999px; font-size: 9px; color: #a8b2c7;
+}
+.w3page .wx .sms__input svg { width: 10px; height: 10px; fill: none; stroke: #8f9ab3; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Card A · the empty month: the What Works calendar with every tile the same
+   size, lightly shaded red, and holding nothing but its date. */
+.w3page .wx .cal { height: 100%; display: flex; flex-direction: column; }
+.w3page .wx .cal__top {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 16px; border-radius: 12px;
+  background: var(--ink); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+}
+.w3page .wx .cal__top span, .w3page .wx .cal__top strong { white-space: nowrap; }
+.w3page .wx .cal__top span { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.w3page .wx .cal__top strong { font-family: var(--display); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.w3page .wx .cal__dow, .w3page .wx .cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.w3page .wx .cal__dow { margin: 12px 0 6px; }
+.w3page .wx .cal__dow span { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+.w3page .wx .cal__grid { flex: 1; min-height: 0; }
+.w3page .wx .cal__d {
+  display: flex; justify-content: center; padding-top: 7px; border-radius: 9px;
+  background: color-mix(in srgb, var(--hot) 13%, var(--paper)); border: 1px solid color-mix(in srgb, var(--hot) 22%, var(--paper));
+  font-size: 13px; font-weight: 600; color: color-mix(in srgb, var(--hot) 55%, var(--ink)); font-variant-numeric: tabular-nums;
+}
+
+.w3page .wx .chev { flex: none; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute); transform: rotate(45deg); transition: transform .25s; }
+
+/* Bottom 1 · Joined Cards: Aidan's approved spec.
+   Round 1's two big cards, each an info panel and a phone panel, side by side
+   on white so they read as one large card; mirrored so the phones meet in the
+   centre: [A info] [A phone] [B phone] [B info]. */
+.w3page .wx.bj { background: var(--night); color: var(--ink); }
+.w3page .wx .jc {
+  /* The phone panel keeps the size it had for a 255px phone (30% bigger than
+     Bottoms 2 and 3's 196px), so the cards stay the same size; the phone
+     itself is 10% smaller than that, for breathing room round it. */
+  --pbox: 255px;
+  --pw: calc(var(--pbox) * .9);
+  /* a slightly thinner bezel than Bottoms 2 and 3's */
+  --bz: 5px;
+  /* Both screens take the APEX film's own shape, 994 × 1920, so it shows whole
+     with nothing cropped and no bars; the Wrong Way phone matches it. */
+  --ar: 1920 / 994;
+  --phbox: calc((var(--pbox) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
+  --ph: calc((var(--pw) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
+  /* half the height the smaller phone gives back, above it and below it */
+  --slack: calc((var(--phbox) - var(--ph)) / 2);
+  /* The Wrong Way's red, asked for by Aidan for this card alone: almost a
+     warning red, but not quite, a vivid alert red a touch softened. Chosen so
+     the dates read at 4.5:1 on its 8% tint and white reads on it as a pill. */
+  --alert: #d2262e;
+  --pp: 24px;
+  /* the pill above each phone */
+  --pillh: 26px;
+  --pillgap: 14px;
+  --rh: 54px;
+  --rh-tight: 36px;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: stretch;
+}
+/* the VS circle, in the gap between the two cards */
+.w3page .wx .jc__vs {
+  position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 999px;
+  background: var(--night); border: 1.5px solid rgba(255, 255, 255, .38); color: #fff;
+  font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+.w3page .wx .jc__card {
+  display: grid; border-radius: 28px; overflow: hidden;
+  /* No background of its own: a cream card behind the panels showed through
+     their anti-aliased rounded corners as a thin light edge. Each panel paints
+     its own ground instead. */
+  background: transparent; box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+}
+.w3page .wx .jc__card--a { grid-template-columns: minmax(0, 1fr) auto; }
+.w3page .wx .jc__card--b { grid-template-columns: auto minmax(0, 1fr); }
+/* The phone panel sets the card's height itself: the phone sits exactly where
+   the right-hand frame expects it, and the pill floats in the band above it,
+   centred between the card's top edge and the phone's top edge. */
+.w3page .wx .jc__media {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  width: calc(var(--pbox) + 2 * var(--pp));
+  padding: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)) var(--pp) calc(var(--pp) + var(--slack));
+}
+.w3page .wx .jc__pill {
+  position: absolute; left: 50%; transform: translateX(-50%); height: var(--pillh); padding: 0 12px;
+  /* half of the band above the phone, less half the pill: equal space above and below it */
+  top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2);
+}
+.w3page .wx .jc__media--a { background: linear-gradient(180deg, color-mix(in srgb, var(--alert) 34%, #180c0e), color-mix(in srgb, var(--alert) 24%, #160b0d)); }
+.w3page .wx .jc .tag--old { background: var(--alert); }
+.w3page .wx .jc__media--b { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 44%, var(--accent-deep)), color-mix(in srgb, var(--accent) 30%, var(--accent-deep))); }
+.w3page .wx .jc .tphone { background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); border-radius: 30px; }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.w3page .wx .jc .tphone__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 1; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.w3page .wx .jc .tphone__screen { border-radius: 25px; aspect-ratio: 994 / 1920; }
+/* the screen is the film's shape, so contain fills it exactly and can never crop */
+.w3page .wx .jc .tphone__film { object-fit: contain; }
+/* The info panel's padding mirrors the phone panel's, pill and slack and all,
+   so its frame (.jc__fit) is exactly the phone's height and level with it. */
+.w3page .wx .jc__info {
+  min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 24px; background: var(--paper-warm);
+  padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
+}
+.w3page .wx .jc__fit { height: var(--ph); display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+/* Card A: only the bar and the calendar, centred both ways in the whole column */
+.w3page .wx .jc__info--a { align-items: center; justify-content: center; padding: 24px; }
+.w3page .wx .jc__quote { flex: none; font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -.015em; line-height: 1.32; color: var(--ink); text-wrap: pretty; }
+.w3page .wx .jc__card--a .jc__quote { color: var(--ink); }
+/* Card A's tiles: a light tint of the alert red, the date in black */
+.w3page .wx .jc .cal__d { background: color-mix(in srgb, var(--alert) 8%, var(--paper)); border-color: color-mix(in srgb, var(--alert) 22%, var(--paper)); color: var(--ink); }
+
+/* the SMS screen, scaled with the phone */
+.w3page .wx .jc .sms { padding: 0 12px 13px; }
+.w3page .wx .jc .sms__meta { padding-top: 22px; font-size: 8.6px; }
+.w3page .wx .jc .sms__bubble { margin-top: 27px; padding: 11px 12px; border-radius: 13px; font-size: 11.2px; }
+.w3page .wx .jc .sms__input { height: 31px; padding: 0 11px 0 14px; font-size: 10.4px; }
+.w3page .wx .jc .sms__input svg { width: 11px; height: 11px; }
+/* Bottom 1's unmute: a small white pill centred at the foot of the film,
+   speaker on the left, label centred; it fades back once the sound is on */
+.w3page .wx .snd-pill {
+  position: absolute; left: 50%; bottom: 14px; z-index: 2; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px 0 11px; border-radius: 999px;
+  background: #fff; color: var(--ink); box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  transition: opacity .2s;
+}
+/* a 44px tap area round the 32px pill */
+.w3page .wx .snd-pill::before { content: ''; position: absolute; inset: -6px -4px; }
+.w3page .wx .snd-pill svg { width: 15px; height: 15px; flex: none; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.w3page .wx .snd-pill .snd__cone { fill: var(--ink); }
+.w3page .wx .snd-pill span { flex: 1; text-align: center; }
+.w3page .wx .snd-pill[aria-pressed='true'] { opacity: .55; }
+
+/* Card A's month, as in Aidan's light reference, then 10% smaller: 76.5% of its
+   column's width and of the phone's height, centred both ways in the column. */
+.w3page .wx .cal--quiet { flex: none; width: calc(85% * .9); height: calc(var(--ph) * .85 * .9); min-height: 0; margin: 0; }
+.w3page .wx .cal__bar {
+  flex: none; padding: 11px 16px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .62);
+  font-size: 11px; font-weight: 600; text-transform: uppercase; white-space: nowrap;
+}
+/* the label's letters spread edge to edge across the bar */
+.w3page .wx .cal__spread { display: flex; justify-content: space-between; }
+.w3page .wx .cal__sp { width: .3em; }
+.w3page .wx .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.w3page .wx .cal--quiet .cal__dow { margin: 10px 0 5px; }
+.w3page .wx .cal--quiet .cal__grid { gap: 4px; }
+.w3page .wx .cal--quiet .cal__d { padding-top: 5px; font-size: 12px; border-radius: 7px; }
+
+/* Card B's rows: stacked close, everything left-aligned, chevron at the far right */
+/* the rows stacked one on another with small even gaps, the stack centred on the
+   phone, so an open row grows it evenly up and down; 'safe' pins it to the top
+   if it ever outgrows the frame, so the scroll fallback still reaches every row */
+.w3page .wx .cr { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.w3page .wx .cr li { flex: none; border-radius: 12px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .08); }
+.w3page .wx .cr li > button { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--rh); padding: 0 12px 0 8px; text-align: left; }
+/* While a row is open, the closed ones tighten to one line to give it room. */
+.w3page .wx .cr li > button { transition: height .3s cubic-bezier(.22, .61, .36, 1); }
+.w3page .wx .cr.has-open li:not(.is-open) > button { height: var(--rh-tight); }
+.w3page .wx .cr.has-open li:not(.is-open) .cr__title { -webkit-line-clamp: 1; line-clamp: 1; }
+.w3page .wx .cr.has-open li:not(.is-open) .cr__when small { display: none; }
+.w3page .wx .cr__when { flex: none; width: 50px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.w3page .wx .cr__when b { font-family: var(--display); font-size: 22px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.w3page .wx .cr__when small { margin-top: 2px; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.w3page .wx .cr__title {
+  flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.w3page .wx .cr .chev { margin-left: auto; }
+.w3page .wx .cr li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
+.w3page .wx .cr__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
+.w3page .wx .cr li.is-open .cr__more { grid-template-rows: 1fr; }
+.w3page .wx .cr__in { min-height: 0; overflow: hidden; }
+.w3page .wx .cr__pad { display: flex; flex-direction: column; gap: 4px; padding: 0 12px 10px; text-align: left; }
+.w3page .wx .cr__full { display: none; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.w3page .wx .cr li[data-clamped] .cr__full { display: block; }
+.w3page .wx .cr li[data-clamped].is-open .cr__title { color: var(--ink-mute); }
+.w3page .wx .cr__pad p { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+@media (hover: hover) {
+  .w3page .wx .cr li > button:hover .cr__title { color: var(--accent); }
+}
+
+/* ---- the live sizes (Aidan, 17 Oct) --------------------------------------------------------- */
+/* Both blocks fill the screen under the two fixed bars, as section-lock frames. */
+.w3page .wx.top, .w3page .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); }
+/* Hero: the 9:16 VSL card and the three data points 25% smaller; the headline keeps its size. */
+.w3page .wx .top__in { grid-template-columns: calc(var(--vw) * .75) minmax(0, 1fr); }
+.w3page .wx .top__vsl { width: var(--vw); zoom: .75; }
+.w3page .wx .t1__pts { zoom: .75; }
+/* Joined Cards: everything 15% smaller, phones, cards, text, VS circle and spacing alike. */
+.w3page .wx.bot { padding: 102px 0; }
+.w3page .wx .jc-scale { width: 85%; margin: 0 auto; }
+.w3page .wx .jc { zoom: .85; }
+
+/* ---- tablet, landscape (the sample's tier, checked at 1194) ---------------------------------- */
+@media (max-width: 1240px) {
+  .w3page .wx.top { --vw: 300px; }
+  .w3page .wx .top__in { gap: 48px; }
+  /* side by side, each info panel would drop under 300px, so the joined cards stack and keep their mirror */
+  .w3page .wx .jc { --pbox: 234px; grid-template-columns: minmax(0, 1fr); }
+  .w3page .wx .jc__info { padding-left: 32px; padding-right: 32px; }
+}
+/* ---- tablet, portrait (the sample's tier, checked at 834) ------------------------------------ */
+@media (max-width: 960px) {
+  .w3page .wx .play { width: 64px; height: 64px; }
+  .w3page .wx.top { --vw: 270px; min-height: 0; }
+  .w3page .wx .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .w3page .wx .top__h { font-size: 36px; }
+  .w3page .wx .t1__pts { margin-top: 24px; }
+  .w3page .wx .t1__pts li { padding: 12px 14px; }
+  .w3page .wx .t1__txt { font-size: 14px; }
+  .w3page .wx .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
+  .w3page .wx .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
+  .w3page .wx.bot { min-height: 0; padding: 75px 0; }
+  .w3page .wx .jc { --pbox: 229px; --pp: 24px; }
+  .w3page .wx .jc__info { padding-left: 24px; padding-right: 24px; }
+}
+/* ---- phones: the sample has no phone layout yet (Aidan is redoing mobile), so this only
+   stacks the two blocks so nothing runs off the screen ------------------------------------------ */
+@media (max-width: 600px) {
+  .w3page .wx .top__in { grid-template-columns: minmax(0, 1fr); justify-items: center; padding-top: 40px; padding-bottom: 40px; }
+  .w3page .wx .top__copy { width: 100%; }
+  .w3page .wx.bot { padding: 56px 0; }
+  .w3page .wx .jc-scale { width: 100%; }
+  .w3page .wx .jc__card--a, .w3page .wx .jc__card--b { grid-template-columns: minmax(0, 1fr); }
+  .w3page .wx .jc__media { width: auto; }
+  /* stacked, the two cards differ in height, so the VS circle sits in the flow between them */
+  .w3page .wx .jc__card--a { order: 0; }
+  .w3page .wx .jc__vs { position: relative; left: auto; top: auto; transform: none; justify-self: center; order: 1; }
+  .w3page .wx .jc__card--b { order: 2; }
+}

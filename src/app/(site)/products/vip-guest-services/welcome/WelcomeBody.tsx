@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Hanken_Grotesk, Inter } from 'next/font/google';
 import Behaviors from './Behaviors';
+import { HeroTop, JoinedSection } from './TopSections';
 import { GUESTS, MARQUEE_CLIPS, REEL, SOURCES, TOUCHPOINTS, WHEN, img } from './data';
 
 /*
@@ -16,7 +17,7 @@ import { GUESTS, MARQUEE_CLIPS, REEL, SOURCES, TOUCHPOINTS, WHEN, img } from './
  */
 const display = Hanken_Grotesk({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--w3-display',
 });
@@ -160,31 +161,11 @@ const SUBTRACTION = [
 export default function WelcomeBody() {
   return (
     <div className={`w3page ${display.variable} ${body.variable}`} id="w3">
-      {/* =================== SECTION 1 · PART 1 — HERO =================== */}
-      <section className="hero" id="s1">
-        <video className="hero__video" src={img('hero.mp4')} muted loop playsInline preload="auto" />
-        <div className="hero__scrim" aria-hidden="true" />
-        <span className="hero__mark">
-          Apex <em>Hospitality</em>
-        </span>
-        <div className="wrap hero__inner">
-          <h1 className="hero__title">
-            <span className="ln">This Is the Single Largest</span>
-            <br className="brk" /> <span className="ln">Commercial Leak on Your P&amp;L.</span>
-          </h1>
-          <ul className="hero__pts">
-            <li>
-              Front desk check-in upsells convert at <b>2% to 5%</b>.{A}
-            </li>
-            <li>
-              Data Driven Mobile Cinema converts at <b>15% to 25%</b>.{A}
-            </li>
-            <li>
-              <b>5x</b> your pre-arrival revenue, with zero staff labor.
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* =================== SECTION 1 · PART 1 — HERO (Top 1 · Cinematic Scrim) =================== */}
+      <HeroTop />
+
+      {/* =================== SECTION 1 · JOINED CARDS (Bottom 1 · Wrong Way vs APEX Way) =================== */}
+      <JoinedSection />
 
       {/* =================== SECTION 1 · PART 2 — FOUR CARDS =================== */}
       <section className="intro" id="s1b">
