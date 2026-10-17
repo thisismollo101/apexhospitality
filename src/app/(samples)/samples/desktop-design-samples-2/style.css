@@ -407,11 +407,75 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dd2 .lg li > button:hover .lg__title { color: var(--accent); }
 }
 
-/* Bottom 1 · Night */
-.dd2 .b1 { background: var(--night); color: #fff; }
-.dd2 .b1 .eye { color: var(--accent-lit); }
-.dd2 .b1 .tu__phone { box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 30px 70px rgba(0, 0, 0, .55); }
-.dd2 .b1 .cal__dow span { color: rgba(255, 255, 255, .5); }
+/* Bottom 1 · Joined Cards: Aidan's approved spec.
+   Round 1's two big cards, each an info panel and a phone panel, side by side
+   on white so they read as one large card; mirrored so the phones meet in the
+   centre: [A info] [A phone] [B phone] [B info]. */
+.dd2 .bj { background: var(--paper); color: var(--ink); border-top: 1px solid var(--line); }
+.dd2 .jc {
+  /* 30% bigger than the phones in Bottoms 2 and 3 (196px at this width). */
+  --pw: 255px;
+  --bz: 7px;
+  --ph: calc((var(--pw) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
+  --pp: 24px;
+  --rh: 58px;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: stretch;
+}
+.dd2 .jc__card {
+  display: grid; border-radius: 28px; overflow: hidden; background: var(--paper-warm);
+  border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(13, 14, 17, .1);
+}
+.dd2 .jc__card--a { grid-template-columns: minmax(0, 1fr) auto; }
+.dd2 .jc__card--b { grid-template-columns: auto minmax(0, 1fr); }
+.dd2 .jc__media { display: flex; align-items: center; justify-content: center; padding: var(--pp); }
+.dd2 .jc__media--a { background: linear-gradient(170deg, color-mix(in srgb, var(--hot) 16%, #1b1c1f), #121315 70%); }
+.dd2 .jc__media--b { background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 72%); }
+.dd2 .jc .tphone { box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 24px 50px rgba(0, 0, 0, .45); border-radius: 32px; }
+.dd2 .jc .tphone__screen { border-radius: 25px; }
+.dd2 .jc__info { display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: 30px 24px; }
+.dd2 .jc__quote { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -.015em; line-height: 1.32; color: var(--ink); text-wrap: pretty; }
+.dd2 .jc__card--a .jc__quote { color: color-mix(in srgb, var(--hot) 50%, var(--ink)); }
+
+/* the SMS screen, scaled up with the phone */
+.dd2 .jc .sms { padding: 0 13px 14px; }
+.dd2 .jc .sms__meta { padding-top: 24px; font-size: 9.5px; }
+.dd2 .jc .sms__bubble { margin-top: 30px; padding: 12px 13px; border-radius: 14px; font-size: 12.4px; }
+.dd2 .jc .sms__input { height: 34px; padding: 0 12px 0 15px; font-size: 11.5px; }
+.dd2 .jc .sms__input svg { width: 12px; height: 12px; }
+.dd2 .jc .snd { right: 12px; bottom: 12px; }
+
+/* Card A's month, as in Aidan's light reference: the bar holds only "Booking to check-in", centred across its full width */
+.dd2 .cal--quiet { flex: 1; min-height: 0; height: auto; }
+.dd2 .cal__bar {
+  padding: 12px 16px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .62);
+  font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; text-align: center;
+}
+.dd2 .cal--quiet .cal__grid { min-height: 230px; }
+
+/* Card B's rows: stacked close, everything left-aligned, chevron at the far right */
+.dd2 .cr { position: relative; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.dd2 .cr li { flex: none; border-radius: 12px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .08); }
+.dd2 .cr li > button { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--rh); padding: 0 12px 0 8px; text-align: left; }
+.dd2 .cr__when { flex: none; width: 50px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.dd2 .cr__when b { font-family: var(--display); font-size: 22px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.dd2 .cr__when small { margin-top: 2px; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.dd2 .cr__title {
+  flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.dd2 .cr .chev { margin-left: auto; }
+.dd2 .cr li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
+.dd2 .cr__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
+.dd2 .cr li.is-open .cr__more { grid-template-rows: 1fr; }
+.dd2 .cr__in { min-height: 0; overflow: hidden; }
+.dd2 .cr__pad { display: flex; flex-direction: column; gap: 6px; padding: 0 14px 14px; text-align: left; }
+.dd2 .cr__full { display: none; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.dd2 .cr li[data-clamped] .cr__full { display: block; }
+.dd2 .cr li[data-clamped].is-open .cr__title { color: var(--ink-mute); }
+.dd2 .cr__pad p { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+@media (hover: hover) {
+  .dd2 .cr li > button:hover .cr__title { color: var(--accent); }
+}
 
 /* Bottom 2 · Paper */
 .dd2 .b2 { background: var(--paper-warm); border-top: 1px solid var(--line); color: var(--ink); }
@@ -449,6 +513,11 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dd2 .t3 { --vw: 270px; }
   .dd2 .t2__panel { padding: 32px; }
   .dd2 .tu { --pw: 180px; --pp: 24px; --rh: 56px; }
+  /* Bottom 1: side by side, each info panel would drop under 300px, too narrow
+     for the rows, so the joined cards stack and keep their mirror: A's phone
+     on the right of the top card, B's on the left of the bottom one. */
+  .dd2 .jc { --pw: 234px; grid-template-columns: minmax(0, 1fr); }
+  .dd2 .jc__info { padding: 30px 32px; }
   .dd2 .cal__top { gap: 8px; padding: 10px 11px; }
   .dd2 .cal__top span { font-size: 9px; letter-spacing: .06em; }
   .dd2 .cal__top strong { font-size: 14px; }
@@ -500,6 +569,9 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
      still mirror: Card A rows then phone, Card B phone then rows. */
   .dd2 .bot { min-height: 0; padding: 88px 0; }
   .dd2 .tu { --pw: 176px; --pp: 24px; --rh: 60px; }
+  .dd2 .jc { --pw: 229px; --pp: 24px; }
+  .dd2 .jc__info { padding: 26px 24px; }
+  .dd2 .jc__quote { font-size: 18px; }
   .dd2 .tu__row {
     margin-top: 36px; column-gap: 20px; row-gap: 20px;
     grid-template-columns: var(--pnw) minmax(0, 1fr) var(--pnw);
