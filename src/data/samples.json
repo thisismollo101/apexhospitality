@@ -43,6 +43,12 @@
       "label": "Desktop Design Samples",
       "summary": "Five desktop layouts, each with its tablet version, for the spine header and the hero stage: the 9:16 executive VSL against Them vs Us. Classic Stack, Sticky Split, Bento, Triptych and Flip Toggle, with a sticky jump menu.",
       "status": "live"
+    },
+    {
+      "slug": "desktop-design-samples-2",
+      "label": "Desktop Design Samples 2",
+      "summary": "Round 2: three tops with the film full bleed behind the headline and the VSL as one 9:16 card, and three bottoms with the revised Them vs Us pair (four NEVER SENT rows against four timed rows). Each with its tablet version.",
+      "status": "live"
     }
   ]
 }

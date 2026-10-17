@@ -185,15 +185,6 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dds .cta:hover, .dds .cta:active { background: var(--accent); }
 
 /* result badge */
-.dds .res { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; padding: 14px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); }
-.dds .res li { display: flex; flex-direction: column; min-width: 0; }
-.dds .res b { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.025em; line-height: 1.1; color: color-mix(in srgb, var(--hot) 70%, var(--ink)); }
-.dds .res--apex b { color: var(--accent); }
-.dds .res__t { margin-top: 3px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--ink); }
-.dds .res .src { margin-top: 4px; font-size: 10px; }
-@container body (max-width: 250px) {
-  .dds .res { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
-}
 
 /* play button */
 .dds .play {
@@ -272,10 +263,10 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dds .mail__silence { display: block; margin-top: 8px; font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #8a8780; }
 
 /* Card B · the four touches, the What Works list's rows */
-.dds .tc { position: relative; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.dds .tc { position: relative; align-self: stretch; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .dds .tc li { flex: none; border-radius: 14px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .06); }
 .dds .tc li > button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 10px 12px 10px 10px; text-align: left; }
-.dds .tc__when { flex: none; width: 50px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.dds .tc__when { flex: none; width: 54px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
 .dds .tc__when b { font-family: var(--display); font-size: 24px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
 .dds .tc__when small { margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
 .dds .tc__name { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -287,8 +278,10 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dds .tc li.is-open .tc__more { grid-template-rows: 1fr; }
 .dds .tc__in { min-height: 0; overflow: hidden; }
 .dds .tc__pad { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 12px 12px; }
-.dds .tc__in p { padding: 9px 11px; border-radius: 4px 12px 12px 12px; background: #ece6dc; font-size: 13px; line-height: 1.45; color: var(--ink); }
-.dds .chip { display: inline-flex; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--accent); font-size: 11.5px; font-weight: 600; color: var(--accent); }
+.dds .tc__in p { padding: 10px 12px; border-radius: 10px; background: var(--paper-warm); font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.dds .tc__name .src { font-size: 10.5px; }
+.dds .tc__x { width: 26px; height: 26px; fill: none; stroke: var(--hot); stroke-width: 3; stroke-linecap: round; }
+.dds .tc--old .tc__when small { color: color-mix(in srgb, var(--hot) 70%, var(--ink)); text-align: center; line-height: 1.15; }
 .dds .sc--h .tc__name b { font-size: 15px; }
 .dds .sc .sc__body--span { grid-row: 2 / span 2; padding-top: 18px; }
 .dds .sc--h .sc__body.sc__body--span { grid-row: 1 / span 2; padding-top: 26px; }
@@ -334,7 +327,6 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dds .sc--h-rev .sc__media { grid-column: 2; }
 .dds .sc--h-rev .sc__head, .dds .sc--h-rev .sc__body { grid-column: 1; }
 .dds .sc--h .sc__head h3 { font-size: 24px; }
-.dds .sc--h .res b { font-size: 26px; }
 
 /* ---- Option 3 · Bento --------------------------------------------------------- */
 
@@ -378,7 +370,10 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 /* the left card is the right card's mirror image */
 .dds .sc--mirror .sc__head { align-items: flex-end; text-align: right; }
 .dds .sc--mirror .tag { align-self: flex-end; }
-.dds .sc--mirror .sc__body, .dds .sc--mirror .res li { align-items: flex-end; text-align: right; }
+.dds .sc--mirror .sc__body { align-items: flex-end; text-align: right; }
+.dds .sc--mirror .tc li > button { flex-direction: row-reverse; text-align: right; }
+.dds .sc--mirror .tc__in p { text-align: left; }
+.dds .sc--mirror .tc__when { padding: 0 0 0 10px; border-right: 0; border-left: 1px solid var(--line); }
 
 /* ---- Option 5 · Flip Toggle --------------------------------------------------- */
 
@@ -470,7 +465,6 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dds .o2 .sc--h .sc__head { padding: 16px 16px 0; }
   .dds .o2 .sc--h .sc__body { padding: 10px 16px 16px; }
   .dds .o2 .sc--h .sc__head h3 { font-size: 18px; }
-  .dds .o2 .sc--h .res b { font-size: 22px; }
   .dds .o2__a .sc { margin-left: auto; }
 
   /* 3 · two columns: player beside the three data cards stacked as rows */
@@ -494,7 +488,6 @@ html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dds .o3 .sc--h .sc__head { padding: 16px 16px 0; }
   .dds .o3 .sc--h .sc__body { padding: 10px 16px 16px; }
   .dds .o3 .sc--h .sc__head h3 { font-size: 18px; }
-  .dds .o3 .sc--h .res b { font-size: 22px; }
 
   /* 4 · the triptych holds; the columns narrow and the flank offset shrinks */
   .dds .o4 { --cols: minmax(0, 1fr) minmax(0, 1.16fr) minmax(0, 1fr); }
