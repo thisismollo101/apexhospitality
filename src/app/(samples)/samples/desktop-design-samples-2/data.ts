@@ -88,11 +88,13 @@ export type Row = { num: string; unit: string; title: string; text: string; src:
 
 export const OLD_WAY = {
   kick: 'Card A',
+  /** Bottom 1's pill, above the phone. */
+  pill: 'The Wrong Way',
   title: 'The Old Way',
   headline:
     "While you send cold email receipts and 30 days of radio silence, off-site competitors are stealing your guest's dining and spa budget.",
-  /** Bottom 1's approved quote: the same line without the radio silence. */
-  quote: "While you send cold email receipts, off-site competitors are stealing your guest's dining and spa budget.",
+  /** Bottom 1's heading. */
+  quote: "Thirty days of radio silence surrenders your guest's dining and spa budget off-site.",
   /** The phone: a plain reminder text, as in Aidan's reference screenshot. */
   sms: {
     kind: 'Text Message',
@@ -111,8 +113,12 @@ export const OLD_WAY = {
 
 export const APEX_WAY = {
   kick: 'Card B',
+  /** Bottom 1's pill, above the phone. */
+  pill: 'The APEX Way',
   title: 'The APEX Way',
   headline: 'Apex Welcome captures their spend commitment while excitement is at its absolute peak, locking in 5x more pre-arrival cash.',
+  /** Bottom 1's heading (Bottoms 2 and 3 keep the headline above). */
+  quote: 'Apex Welcome strikes at peak excitement, locking in 5x more pre-arrival spend before check-in.',
   /**
    * One placeholder film from the Bento Expand set, to be swapped; it has a
    * sound track, for the unmute button. Safari takes the HEVC master; Chrome
