@@ -5,6 +5,11 @@ but **not used as utility classes** — styling is hand-written CSS on v34 desig
 
 Deployed on Vercel from the repo's default branch. `@/*` maps to `./src/*`.
 
+**This repo is for desktop design testing only** — layouts, sections, visual treatments.
+Design and check at desktop widths. Don't add mobile breakpoints or spend effort on
+phone/tablet layouts unless asked. The `max-width` media queries already in the CSS
+can stay as they are.
+
 ---
 
 ## The things that will bite you
