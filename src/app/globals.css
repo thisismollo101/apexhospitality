@@ -434,6 +434,13 @@ html.snap-on{scroll-snap-type:y mandatory}
    ============================================================ */
 :root{--brandblue:#2A7BFF}
 
+/* The white nav bar, desktop (Aidan, 17 Oct): its vertical padding trimmed by 10%
+   top and bottom. The bar's tallest content (the Sign up button) is 42.5px with
+   14.75px above and below it in v34's 72px; 10% off each side makes 69px. Set as
+   --nav-h, after the v34 import like --brandblue above, so everything that clears
+   the two fixed bars follows. Phones keep v34's 72px. */
+@media (min-width:768px){:root{--nav-h:69px}}
+
 /* ============================================================
    The lockup — mark plus wordmark — in the nav and the footer.
 
