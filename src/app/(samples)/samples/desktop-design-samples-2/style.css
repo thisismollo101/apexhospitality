@@ -306,7 +306,7 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   --pnh: calc(var(--ph) + 2 * var(--pp));
   /* the empty column between the panels; with the two column gaps either side, the panels sit 64px apart */
   --mid: 8px;
-  --rh: 64px;
+  --rh: 62px;
 }
 .dd2 .tu__head { text-align: center; }
 .dd2 .tu__head h2 { margin-top: 10px; font-family: var(--display); font-size: clamp(32px, 3.2vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; }
@@ -364,6 +364,7 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 16px; border-radius: 12px;
   background: var(--ink); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
 }
+.dd2 .cal__top span, .dd2 .cal__top strong { white-space: nowrap; }
 .dd2 .cal__top span { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
 .dd2 .cal__top strong { font-family: var(--display); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .dd2 .cal__dow, .dd2 .cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
@@ -424,7 +425,8 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   background: linear-gradient(90deg, color-mix(in srgb, var(--hot) 14%, var(--night)) 0%, var(--night) 50%, color-mix(in srgb, var(--accent-deep) 85%, var(--night)) 100%);
 }
 .dd2 .b3 .eye { color: var(--accent-lit); }
-.dd2 .b3 .lg li { background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); box-shadow: none; color: #fff; }
+/* an inset ring rather than a border, so the rows keep exactly the height the other themes measure */
+.dd2 .b3 .lg li { background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); color: #fff; }
 .dd2 .b3 .lg__when b, .dd2 .b3 .lg__full { color: #fff; }
 .dd2 .b3 .lg__when { border-color: rgba(255, 255, 255, .14); }
 .dd2 .b3 .lg--b .lg__when small { color: var(--accent-lit); }
@@ -446,7 +448,10 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dd2 .top__in { gap: 48px; }
   .dd2 .t3 { --vw: 270px; }
   .dd2 .t2__panel { padding: 32px; }
-  .dd2 .tu { --pw: 180px; --pp: 24px; --rh: 58px; }
+  .dd2 .tu { --pw: 180px; --pp: 24px; --rh: 56px; }
+  .dd2 .cal__top { gap: 8px; padding: 10px 11px; }
+  .dd2 .cal__top span { font-size: 9px; letter-spacing: .06em; }
+  .dd2 .cal__top strong { font-size: 14px; }
   .dd2 .tu__row { column-gap: 22px; }
   .dd2 .tu__line p { font-size: 19px; }
   .dd2 .lg__title { font-size: 13px; }

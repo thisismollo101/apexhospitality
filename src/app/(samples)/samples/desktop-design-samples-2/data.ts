@@ -119,15 +119,33 @@ export const APEX_WAY = {
   clipWebm: 'hq/card-tall.webm',
   poster: 'hq/card-tall.jpg',
   rows: [
-    { num: '24', unit: 'Hours', title: '2% to 5% at the Front Desk', text: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.', src: UNVERIFIED },
-    { num: '48', unit: 'Hours', title: '15% to 25% Pre-Arrival Conversion', text: 'Data Driven Mobile Cinema converts at 15% to 25% during pre-arrival intent.', src: UNVERIFIED },
-    { num: '7', unit: 'Days', title: '5x Pre-Arrival Revenue', text: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.', src: 'Unverified · internal target only' },
+    {
+      num: '24',
+      unit: 'Hours',
+      title: '380% Conversion Lift on High-Priced Inventory',
+      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
+      src: 'Spiegel / Northwestern, unverified',
+    },
+    {
+      num: '48',
+      unit: 'Hours',
+      title: '4x Higher Conversion via Digital Touchpoints',
+      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
+      src: 'Canary Technologies, unverified',
+    },
+    {
+      num: '7',
+      unit: 'Days',
+      title: '60%+ Pre-Arrival Dining Decision Window',
+      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
+      src: 'Cornell / OpenTable, unverified',
+    },
     {
       num: '48',
       unit: 'Hours',
       title: '50% Lower Cancellation Rate',
       text: 'Direct guests engaged pre-arrival cancel at just 10.6%, compared to 21.8% for OTA bookers, stabilizing cash flow weeks in advance.',
-      src: '10.6% Direct vs. 21.8% OTA, Cloudbeds, unverified',
+      src: 'Cloudbeds, unverified',
     },
   ] as Row[],
 };
