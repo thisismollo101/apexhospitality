@@ -128,6 +128,11 @@ export const APEX_WAY = {
   clipHevc: 'hq/card-tall-hevc.mp4',
   clipWebm: 'hq/card-tall.webm',
   poster: 'hq/card-tall.jpg',
+  /**
+   * Bottom 1's film, approved by Aidan: 994 × 1920 with its sound track, shown
+   * whole on a screen of the same shape. The same three encodes and a poster.
+   */
+  joined: { clip: 'hq/apex-way.mp4', clipHevc: 'hq/apex-way-hevc.mp4', clipWebm: 'hq/apex-way.webm', poster: 'hq/apex-way.jpg' },
   rows: [
     {
       num: '24',

@@ -420,8 +420,11 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   --pw: calc(var(--pbox) * .9);
   /* a slightly thinner bezel than Bottoms 2 and 3's */
   --bz: 5px;
-  --phbox: calc((var(--pbox) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
-  --ph: calc((var(--pw) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
+  /* Both screens take the APEX film's own shape, 994 × 1920, so it shows whole
+     with nothing cropped and no bars; the Wrong Way phone matches it. */
+  --ar: 1920 / 994;
+  --phbox: calc((var(--pbox) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
+  --ph: calc((var(--pw) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
   /* half the height the smaller phone gives back, above it and below it */
   --slack: calc((var(--phbox) - var(--ph)) / 2);
   /* The Wrong Way's red, asked for by Aidan for this card alone: almost a
@@ -474,7 +477,9 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   content: ''; position: absolute; top: 8px; left: 50%; z-index: 1; width: 30%; height: 6px; border-radius: 999px;
   background: #050506; transform: translateX(-50%); pointer-events: none;
 }
-.dd2 .jc .tphone__screen { border-radius: 25px; }
+.dd2 .jc .tphone__screen { border-radius: 25px; aspect-ratio: 994 / 1920; }
+/* the screen is the film's shape, so contain fills it exactly and can never crop */
+.dd2 .jc .tphone__film { object-fit: contain; }
 /* The info panel's padding mirrors the phone panel's, pill and slack and all,
    so its frame (.jc__fit) is exactly the phone's height and level with it. */
 .dd2 .jc__info {

@@ -204,11 +204,12 @@ const SoundIcon = ({ on }: { on: boolean }) => (
  * starts muted (the only way a browser lets it start on its own), played by an
  * observer while it is on screen and paused off it; muted is set as a property,
  * since React does not reliably emit the attribute. Reduced motion leaves the
- * poster up until someone presses play-with-sound. `pill` swaps the round
- * button for Bottom 1's labelled white pill.
+ * poster up until someone presses play-with-sound. `pill` is Bottom 1's
+ * version: its own film, and the labelled white pill for the round button.
  */
 export function LoopPhone({ pill = false }: { pill?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const film = pill ? APEX_WAY.joined : APEX_WAY;
   const [sound, setSound] = useState(false);
 
   useEffect(() => {
@@ -232,10 +233,10 @@ export function LoopPhone({ pill = false }: { pill?: boolean }) {
   return (
     <div className="tphone">
       <div className="tphone__screen">
-        <video ref={ref} className="tphone__film" poster={img(APEX_WAY.poster)} muted loop playsInline preload="auto">
-          <source src={img(APEX_WAY.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(APEX_WAY.clipWebm)} type="video/webm" />
-          <source src={img(APEX_WAY.clip)} type="video/mp4" />
+        <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
+          <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(film.clipWebm)} type="video/webm" />
+          <source src={img(film.clip)} type="video/mp4" />
         </video>
         {pill ? (
           // Bottom 1's version: a white pill, speaker on the left, the label centred
