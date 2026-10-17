@@ -511,9 +511,9 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dd2 .snd-pill span { flex: 1; text-align: center; }
 .dd2 .snd-pill[aria-pressed='true'] { opacity: .55; }
 
-/* Card A's month, as in Aidan's light reference: 85% of its column's width and
-   of the phone's height, centred both ways in the column. */
-.dd2 .cal--quiet { flex: none; width: 85%; height: calc(var(--ph) * .85); min-height: 0; margin: 0; }
+/* Card A's month, as in Aidan's light reference, then 10% smaller: 76.5% of its
+   column's width and of the phone's height, centred both ways in the column. */
+.dd2 .cal--quiet { flex: none; width: calc(85% * .9); height: calc(var(--ph) * .85 * .9); min-height: 0; margin: 0; }
 .dd2 .cal__bar {
   flex: none; padding: 11px 16px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .62);
   font-size: 11px; font-weight: 600; text-transform: uppercase; white-space: nowrap;
@@ -527,8 +527,10 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dd2 .cal--quiet .cal__d { padding-top: 5px; font-size: 12px; border-radius: 7px; }
 
 /* Card B's rows: stacked close, everything left-aligned, chevron at the far right */
-/* the rows stacked one on another with small even gaps; an open row takes up the space below */
-.dd2 .cr { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+/* the rows stacked one on another with small even gaps, the stack centred on the
+   phone, so an open row grows it evenly up and down; 'safe' pins it to the top
+   if it ever outgrows the frame, so the scroll fallback still reaches every row */
+.dd2 .cr { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .dd2 .cr li { flex: none; border-radius: 12px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .08); }
 .dd2 .cr li > button { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--rh); padding: 0 12px 0 8px; text-align: left; }
 /* While a row is open, the closed ones tighten to one line to give it room. */
