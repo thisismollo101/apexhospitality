@@ -444,7 +444,7 @@ export function BgFilm({ className = '' }: { className?: string }) {
  * Card B's rows for the joined cards: everything in a row left-aligned
  * (timing, then title, chevron at the far right), every row the same height
  * when closed, stacked one on another with small even gaps. A row opens into
- * the space below them, and while one is open the others tighten to a single
+ * the space round them, the stack staying centred on the phone, and while one is open the others tighten to a single
  * line to make room, so nothing passes the phone's edges (the list scrolls
  * inside itself only as a last resort). The source line shows only once a
  * row is open.
