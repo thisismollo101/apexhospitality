@@ -78,6 +78,9 @@ export type Stat = { fig: string; text: string; src: string };
 export const OLD_WAY = {
   kick: 'Card A',
   title: 'The Old Way',
+  /** The card's short headline: the live Welcome VSL headline, reused rather than written new. */
+  headline: 'Your Revenue Walks Out the Door Before Your Guest Walks In.',
+  subject: 'Thank you for your booking',
   attachment: 'Invoice_Rules_Terms.pdf',
   silence: '30 days of radio silence',
   result: [
@@ -86,22 +89,27 @@ export const OLD_WAY = {
   ] as Stat[],
 };
 
-export type Stream = { title: string; img: string };
+/**
+ * Card B's four rows. Title, countdown, message and reply chip are the What
+ * Works list's own (welcome-mobile-options-2/data.ts, MILESTONES), verbatim;
+ * only the left-hand value is the send timing instead of a date. "days to
+ * arrival" is 30 minus the send day, as there.
+ */
+export type Touch = { num: string; unit: string; title: string; sub: string; msg: string; chip: string };
+
+const daysLeft = (day: number) => `${30 - day} days to arrival`;
 
 export const APEX_WAY = {
   kick: 'Card B',
   title: 'The APEX Way',
-  sub: '4K Mobile Cinema',
-  streams: [
-    { title: 'Voice greeting by name', img: 'hq/card-tall.jpg' },
-    { title: "Chef's Tasting ASMR", img: 'm7-tall.jpg' },
-    { title: 'Spa Yield', img: 'p2.jpg' },
-    { title: 'Penthouse Upgrades', img: 'm6.jpg' },
-  ] as Stream[],
-  result: [
-    { fig: '15% to 25%', text: 'Pre-Arrival Conversion', src: UNVERIFIED },
-    { fig: '5x', text: 'Revenue Multiplier', src: 'Unverified · internal target only' },
-    { fig: '95%', text: 'Open Rate', src: 'Unverified · source pending' },
-    { fig: '0', text: 'Staff Drag', src: UNVERIFIED },
-  ] as Stat[],
+  /** One placeholder film on a muted loop, from the Bento Expand set; to be swapped. */
+  clip: 'hq/card-tall.mp4',
+  clipHevc: 'hq/card-tall-hevc.mp4',
+  poster: 'hq/card-tall.jpg',
+  touches: [
+    { num: '24', unit: 'Hours', title: 'Welcome by name', sub: daysLeft(1), msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd.", chip: 'See the Ocean Suite' },
+    { num: '48', unit: 'Hours', title: 'Dining, in close-up', sub: daysLeft(3), msg: 'Chef Aris is plating something new. Your terrace table is waiting.', chip: "Reserve the chef's table" },
+    { num: '7', unit: 'Days', title: 'Spa, matched to open hours', sub: daysLeft(23), msg: 'Three treatment hours are still open during your stay.', chip: 'Book a treatment' },
+    { num: '48', unit: 'Hours', title: 'Arrival and extensions', sub: daysLeft(28), msg: 'Your driver will meet you at arrivals. Want your room ready early?', chip: 'Add early check-in' },
+  ] as Touch[],
 };

@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { APEX_WAY, DATA_POINTS, OLD_WAY, RIBBON, SPINE, VSL, img, type DataPoint, type Stat } from './data';
 
 /*
@@ -168,118 +168,163 @@ export function PlayerMedia({ t, playing, toggle }: PlayerState) {
   );
 }
 
-/** Card A's media: the cold plain-text confirmation email, then nothing. */
+/** Card A's media: the phone, open on a cold plain-text confirmation email, then nothing. */
 export function OldMedia() {
   return (
-    <div className="om">
-      <div className="om__mail">
-        <div className="om__row">
-          <span className="om__av" aria-hidden="true" />
-          <span className="om__lines">
-            <i style={{ width: '62%' }} />
-            <i style={{ width: '38%' }} />
+    <div className="ph ph--old">
+      <div className="ph__screen mail">
+        <span className="ph__notch" aria-hidden="true" />
+        <div className="mail__msg">
+          <div className="mail__from" aria-hidden="true">
+            <span className="mail__av" />
+            <span className="mail__lines">
+              <i style={{ width: '64%' }} />
+              <i style={{ width: '40%' }} />
+            </span>
+          </div>
+          <b className="mail__subj">{OLD_WAY.subject}</b>
+          <span className="mail__text" aria-hidden="true">
+            <i />
+            <i />
+            <i style={{ width: '72%' }} />
+          </span>
+          <span className="mail__pdf">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13" />
+            </svg>
+            {OLD_WAY.attachment}
+          </span>
+          <span className="mail__text" aria-hidden="true">
+            <i />
+            <i style={{ width: '50%' }} />
           </span>
         </div>
-        <span className="om__subj" aria-hidden="true" />
-        <span className="om__text" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i style={{ width: '70%' }} />
-        </span>
-        <span className="om__pdf">
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13" />
-          </svg>
-          {OLD_WAY.attachment}
-        </span>
-        <span className="om__text" aria-hidden="true">
-          <i />
-          <i style={{ width: '55%' }} />
-        </span>
-      </div>
-      <div className="om__quiet">
-        <span className="om__days" aria-hidden="true">
-          {Array.from({ length: 30 }, (_, i) => (
-            <i key={i} />
-          ))}
-        </span>
-        <span className="om__silence">{OLD_WAY.silence}</span>
+        <div className="mail__quiet">
+          <span className="mail__days" aria-hidden="true">
+            {Array.from({ length: 30 }, (_, i) => (
+              <i key={i} />
+            ))}
+          </span>
+          <span className="mail__silence">{OLD_WAY.silence}</span>
+        </div>
       </div>
     </div>
   );
 }
 
 /**
- * Card B's media: the phone, playing the four personalised streams in turn
- * while it is on screen. Tapping a thumbnail picks one. Reduced motion stays on
- * the first and never advances.
+ * Card B's media: the phone, one film on a muted loop. Never autoplays by
+ * attribute: an observer plays it on screen and pauses it off, muted is set as
+ * a property, and reduced motion leaves the poster up.
  */
 export function ApexPhone() {
-  const [on, setOn] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const ref = useRef<HTMLDivElement>(null);
-  const n = APEX_WAY.streams.length;
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className="ph">
+      <div className="ph__screen">
+        <video ref={ref} className="ph__film" poster={img(APEX_WAY.poster)} muted loop playsInline preload="metadata" aria-hidden="true">
+          <source src={img(APEX_WAY.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(APEX_WAY.clip)} type="video/mp4" />
+        </video>
+        <span className="ph__notch" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Card B's four rows, the What Works list's style: timing, divider, title and
+ * countdown, chevron. One open at a time. The list is fixed at its tallest
+ * state (every row closed but the tallest open), so opening a row never moves
+ * the card or anything around it; it scrolls inside itself only if it must.
+ */
+export function Touches() {
+  const [open, setOpen] = useState<number | null>(0);
+  const ref = useRef<HTMLOListElement>(null);
+  const id = useId();
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !auto || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let id = 0;
-    const io = new IntersectionObserver(([e]) => {
-      window.clearInterval(id);
-      if (e.isIntersecting) id = window.setInterval(() => setOn((x) => (x + 1) % n), 3200);
-    });
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      window.clearInterval(id);
+    if (!el) return;
+    let width = -1;
+    const fit = () => {
+      if (el.clientWidth === width) return;
+      width = el.clientWidth;
+      const rows = Array.from(el.children) as HTMLElement[];
+      const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
+      const shut = rows.reduce((h, li) => h + (li.firstElementChild as HTMLElement).offsetHeight, 0) + gap * (rows.length - 1);
+      const most = Math.max(...rows.map((li) => (li.querySelector('.tc__in') as HTMLElement).scrollHeight));
+      // +2 covers sub-pixel rounding in the rows' heights.
+      el.style.height = `${Math.ceil(shut + most) + 2}px`;
     };
-  }, [auto, n]);
+    fit();
+    // Web fonts change the rows' heights without changing the width: measure again once they land.
+    document.fonts?.ready.then(() => {
+      width = -1;
+      fit();
+    });
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
-  const s = APEX_WAY.streams[on];
+  // Belt and braces: if the list ever has to scroll, keep the opened row in view once it has grown.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || open === null) return;
+    const t = window.setTimeout(() => {
+      const li = el.children[open] as HTMLElement;
+      const top = li.offsetTop;
+      if (top < el.scrollTop) el.scrollTop = top;
+      else if (top + li.offsetHeight > el.scrollTop + el.clientHeight) el.scrollTop = top + li.offsetHeight - el.clientHeight;
+    }, 320);
+    return () => window.clearTimeout(t);
+  }, [open]);
+
   return (
-    <div className="ph" ref={ref}>
-      <div className="ph__screen">
-        {APEX_WAY.streams.map((x, i) => (
-          <img key={x.img} className={`ph__still${i === on ? ' is-on' : ''}`} src={img(x.img)} alt="" />
-        ))}
-        <span className="ph__scrim" aria-hidden="true" />
-        <span className="ph__notch" aria-hidden="true" />
-        <span className={`ph__segs${auto ? ' is-auto' : ''}`} aria-hidden="true">
-          {APEX_WAY.streams.map((x, i) => (
-            <span key={x.img} className={i < on ? 'is-done' : i === on ? 'is-on' : undefined}>
-              <i key={i === on ? `on-${on}` : 'off'} />
-            </span>
-          ))}
-        </span>
-        <span className="ph__now" aria-live="polite">
-          <span className="play play--sm" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M7 4.5l13 7.5-13 7.5z" />
-            </svg>
-          </span>
-          {s.title}
-        </span>
-        <ul className="ph__thumbs">
-          {APEX_WAY.streams.map((x, i) => (
-            <li key={x.img}>
-              <button
-                type="button"
-                className={i === on ? 'is-on' : undefined}
-                aria-pressed={i === on}
-                aria-label={x.title}
-                onClick={() => {
-                  setAuto(false);
-                  setOn(i);
-                }}
-              >
-                <img src={img(x.img)} alt="" />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <ol className="tc" ref={ref}>
+      {APEX_WAY.touches.map((t, n) => {
+        const on = open === n;
+        return (
+          <li key={t.title} className={on ? 'is-open' : undefined}>
+            <button type="button" aria-expanded={on} aria-controls={`${id}-${n}`} onClick={() => setOpen(on ? null : n)}>
+              <span className="tc__when">
+                <b>{t.num}</b>
+                <small>{t.unit}</small>
+              </span>
+              <span className="tc__name">
+                <b>{t.title}</b>
+                <small>{t.sub}</small>
+              </span>
+              <span className="chev" aria-hidden="true" />
+            </button>
+            <div className="tc__more" id={`${id}-${n}`}>
+              <div className="tc__in">
+                <div className="tc__pad">
+                  <p>{t.msg}</p>
+                  <span className="chip">{t.chip}</span>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -334,7 +379,7 @@ export function OldCard({ className = '' }: { className?: string }) {
       </div>
       <header className="sc__head">
         <span className="tag tag--old">{OLD_WAY.kick}</span>
-        <h3>{OLD_WAY.title}</h3>
+        <h3>{OLD_WAY.headline}</h3>
       </header>
       <div className="sc__body">
         <Result stats={OLD_WAY.result} />
@@ -349,14 +394,11 @@ export function ApexCard({ className = '' }: { className?: string }) {
       <div className="sc__media">
         <ApexPhone />
       </div>
-      <header className="sc__head">
+      {/* No heading for now, so the pill and the list share one cell spanning the
+          head and body rows: the list starts under the pill, not under Card A's headline. */}
+      <div className="sc__body sc__body--span">
         <span className="tag tag--apex">{APEX_WAY.kick}</span>
-        <h3>
-          {APEX_WAY.title}, <span>{APEX_WAY.sub}</span>
-        </h3>
-      </header>
-      <div className="sc__body">
-        <Result stats={APEX_WAY.result} className="res--apex" />
+        <Touches />
       </div>
     </article>
   );
