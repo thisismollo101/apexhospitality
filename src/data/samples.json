@@ -37,6 +37,12 @@
       "label": "Welcome · Mobile Options 2",
       "summary": "Round 2 from the review: the hero and first VSL on their own (five each), What Works refined with a month calendar and an F1-style list, Four Moments with a highlight reel, and three Bento Expands including a true full-screen takeover.",
       "status": "live"
+    },
+    {
+      "slug": "desktop-design-samples",
+      "label": "Desktop Design Samples",
+      "summary": "Five desktop layouts, each with its tablet version, for the spine header and the hero stage: the 9:16 executive VSL against Them vs Us. Classic Stack, Sticky Split, Bento, Triptych and Flip Toggle, with a sticky jump menu.",
+      "status": "live"
     }
   ]
 }
