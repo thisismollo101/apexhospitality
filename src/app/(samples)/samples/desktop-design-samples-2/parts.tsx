@@ -244,22 +244,56 @@ export function LoopPhone() {
   );
 }
 
-const NeverX = () => (
-  <svg className="lg__x" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M5 5l14 14M19 5L5 19" />
-  </svg>
-);
+const DAY = 86400000;
 
 /**
- * A side's four rows. Every row is the same fixed height with its title held
- * to two lines, so all eight sit level across both sides. The list is exactly
- * the phone's height with the rows spread across it, so the first row is level
- * with the top of the phone and the last with the bottom; opening a row takes
- * up the space between them, and the list scrolls inside itself only if it
- * must. One open at a time; the source line shows only inside an open row.
+ * Card A: the What Works month from booking to check-in, with every one of its
+ * 30 days the same size, lightly shaded red and empty but for the date:
+ * nothing is sent. Monday-first, so the days fall on the right weekdays.
  */
-export function Ledger({ side }: { side: 'a' | 'b' }) {
-  const rows: Row[] = side === 'a' ? OLD_WAY.rows : APEX_WAY.rows;
+export function EmptyMonth() {
+  const c = OLD_WAY.calendar;
+  const lead = (new Date(c.start).getUTCDay() + 6) % 7; // blank tiles before the first day, Monday-first
+  const days = Array.from({ length: c.days }, (_, n) => new Date(c.start + n * DAY).getUTCDate());
+  return (
+    <div className="cal">
+      <div className="cal__top">
+        <span>{c.kick}</span>
+        <strong>{c.left}</strong>
+      </div>
+      <div className="cal__dow" aria-hidden="true">
+        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
+          <span key={d}>{d}</span>
+        ))}
+      </div>
+      <ol
+        className="cal__grid"
+        aria-label={`${c.kick}: ${c.days} days, nothing sent`}
+        style={{ gridTemplateRows: `repeat(${Math.ceil((lead + c.days) / 7)}, minmax(0, 1fr))` }}
+      >
+        {Array.from({ length: lead }, (_, i) => (
+          <li key={`pad-${i}`} className="cal__pad" aria-hidden="true" />
+        ))}
+        {days.map((dom, n) => (
+          <li key={n} className="cal__d">
+            {dom}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/**
+ * Card B's four rows. Every row is the same fixed height with its title held
+ * to two lines. The list is exactly the phone panel's height with the rows
+ * spread across it, so the first row is level with the top of the panel and
+ * the last with the bottom; opening a row takes up the space between them,
+ * and the list scrolls inside itself only if it must. One open at a time; the
+ * source line shows only inside an open row.
+ */
+export function Ledger() {
+  const rows: Row[] = APEX_WAY.rows;
   const [open, setOpen] = useState<number | null>(null);
   const ref = useRef<HTMLOListElement>(null);
   const id = useId();
@@ -293,14 +327,14 @@ export function Ledger({ side }: { side: 'a' | 'b' }) {
   }, [open]);
 
   return (
-    <ol className={`lg lg--${side}`} ref={ref}>
+    <ol className="lg lg--b" ref={ref}>
       {rows.map((r, n) => {
         const on = open === n;
         return (
           <li key={r.title} className={on ? 'is-open' : undefined}>
             <button type="button" aria-expanded={on} aria-controls={`${id}-${n}`} onClick={() => setOpen(on ? null : n)}>
               <span className="lg__when">
-                {r.num ? <b>{r.num}</b> : <NeverX />}
+                <b>{r.num}</b>
                 <small>{r.unit}</small>
               </span>
               <span className="lg__title" title={r.title}>
@@ -342,7 +376,7 @@ export function ThemUs() {
           <p>{APEX_WAY.headline}</p>
         </div>
         <div className="tu__info tu__info--a">
-          <Ledger side="a" />
+          <EmptyMonth />
         </div>
         <div className="tu__phone tu__phone--a">
           <SmsPhone />
@@ -351,7 +385,7 @@ export function ThemUs() {
           <LoopPhone />
         </div>
         <div className="tu__info tu__info--b">
-          <Ledger side="b" />
+          <Ledger />
         </div>
       </div>
     </div>

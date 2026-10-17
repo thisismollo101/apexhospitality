@@ -81,11 +81,10 @@ export const VSL = {
 export const CONTRAST = { label: 'Them vs Us', title: 'The Cold Receipt & Stolen Budget' };
 
 /**
- * One expandable row. Card B's left value is the send timing; Card A's is
- * "never sent" (`num` left out). The source line shows only once the row is
- * open.
+ * One of Card B's expandable rows: the send timing on the outer edge, the
+ * title, and the source line, which shows only once the row is open.
  */
-export type Row = { num?: string; unit: string; title: string; text: string; src: string };
+export type Row = { num: string; unit: string; title: string; text: string; src: string };
 
 export const OLD_WAY = {
   title: 'The Old Way',
@@ -98,32 +97,13 @@ export const OLD_WAY = {
     body: 'Hi Alex, this is a reminder of your reservation at our hotel on March 15. Your check-in time is 3:00 PM. Please confirm your arrival by replying YES or call us at 123-456-7890 if you need to make any changes.',
     input: 'Text message',
   },
-  rows: [
-    {
-      unit: 'Never sent',
-      title: '380% Conversion Lift on High-Priced Inventory',
-      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
-      src: 'Spiegel / Northwestern · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '68% of Pre-Arrival Upsell Revenue Driven by Suites',
-      text: 'Industry upsell benchmarks show that premium room category upgrades represent the single largest ancillary revenue stream in hotel operations, accounting for over 68% of total pre-arrival upsell value.',
-      src: 'Oaky Data · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '4x Higher Conversion via Digital Touchpoints',
-      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
-      src: 'Canary Technologies · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '60%+ Pre-Arrival Dining Decision Window',
-      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
-      src: 'Cornell / OpenTable · unverified',
-    },
-  ] as Row[],
+  /**
+   * The month from booking to check-in, the What Works calendar's own
+   * (welcome-mobile-options-2): Monday-first, booked Mon 3 Nov, arrival Tue
+   * 2 Dec, "days to arrival" counted from Day 1. On the Old Way every one of
+   * the 30 days is empty: nothing is sent.
+   */
+  calendar: { kick: 'Booking to check-in', left: '29 days to arrival', start: Date.UTC(2025, 10, 3), days: 30 },
 };
 
 export const APEX_WAY = {
