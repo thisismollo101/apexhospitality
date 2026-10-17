@@ -160,7 +160,7 @@ export const GUESTS: Guest[] = [
 /* ---- sources footer ------------------------------------------------------- */
 
 export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
-  { claim: 'Front-desk upsells 2–5%; pre-arrival offers 15–25%.', src: 'BookingWhizz / Akia [P15-1]', vendor: true },
+  { claim: 'Front-desk upsells 2–5%; pre-arrival offers 15–25%.', src: 'BookingWhizz [P15-1]', vendor: true },
   { claim: '52% booking abandonment.', src: 'SiteMinder Changing Traveller Report 2025' },
   { claim: '85–90% of guests eat elsewhere; dinner capture 10–15%.', src: 'CBRE Americas / Regulr [P05-2]' },
   { claim: 'OTA commission 15–30% vs 4–5% direct.', src: 'Cloudbeds / Lighthouse [G-09]' },
@@ -172,4 +172,7 @@ export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
   { claim: 'Wellness travellers spend more per trip.', src: 'Global Wellness Institute [P08-5]' },
   { claim: 'Ideal therapist utilisation 50–75%.', src: 'Cornell / Horwath [P08-4]' },
   { claim: '88% trust recommendations from people they know.', src: 'Nielsen 2021 [G-02]' },
+  { claim: '74% of affluent travellers book after watching activity video.', src: 'Travel Iowa video-marketing presentation' },
+  { claim: "Hotel listings with property video get 99% more clicks to the hotel's website.", src: 'TripAdvisor Business Advantage' },
+  { claim: '65% of US hotels report staffing shortages.', src: 'AHLA, Feb 2025' },
 ];
