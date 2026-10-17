@@ -432,47 +432,48 @@ export function BgFilm({ className = '' }: { className?: string }) {
    Bottoms 2 and 3 keep ThemUs above. */
 
 /**
- * Card B's rows for the joined cards: stacked close together, everything in a
- * row left-aligned (timing, then title, chevron at the far right), every row
- * the same height when closed. The list is fixed at its tallest state, so a
- * row opens inside the card without moving anything; the source line shows
- * only once a row is open.
+ * Card B's rows for the joined cards: everything in a row left-aligned
+ * (timing, then title, chevron at the far right), every row the same height
+ * when closed. The list fills the panel down to the phone's bottom edge with
+ * the rows spread evenly across it. A row opens into the space between them,
+ * and while one is open the others tighten to a single line to make room, so
+ * nothing passes the phone's edges (the list scrolls inside itself only as a
+ * last resort). The source line shows only once a row is open.
  */
 export function CompactRows() {
   const [open, setOpen] = useState<number | null>(null);
   const ref = useRef<HTMLOListElement>(null);
   const id = useId();
 
+  // Mark the rows whose title the two-line clamp actually cuts, so only those repeat it in full when open.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    let width = -1;
-    const fit = () => {
-      if (el.clientWidth === width) return;
-      width = el.clientWidth;
-      const items = Array.from(el.children) as HTMLElement[];
-      const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
-      // Each row closed: its whole height less its open panel; then room for the tallest panel.
-      const shut = items.reduce((h, li) => h + li.offsetHeight - (li.querySelector('.cr__more') as HTMLElement).offsetHeight, 0) + gap * (items.length - 1);
-      const most = Math.max(...items.map((li) => (li.querySelector('.cr__in') as HTMLElement).scrollHeight));
-      // +2 covers sub-pixel rounding in the rows' heights.
-      el.style.height = `${Math.ceil(shut + most) + 2}px`;
+    const mark = () =>
       el.querySelectorAll<HTMLElement>('.cr__title').forEach((t) => {
         t.closest('li')?.toggleAttribute('data-clamped', t.scrollHeight > t.clientHeight + 1);
       });
-    };
-    fit();
-    document.fonts?.ready.then(() => {
-      width = -1;
-      fit();
-    });
-    const ro = new ResizeObserver(fit);
+    mark();
+    document.fonts?.ready.then(mark);
+    const ro = new ResizeObserver(mark);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
+  // If the list has to scroll, keep the opened row in view once it has grown.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || open === null) return;
+    const t = window.setTimeout(() => {
+      const li = el.children[open] as HTMLElement;
+      if (li.offsetTop < el.scrollTop) el.scrollTop = li.offsetTop;
+      else if (li.offsetTop + li.offsetHeight > el.scrollTop + el.clientHeight) el.scrollTop = li.offsetTop + li.offsetHeight - el.clientHeight;
+    }, 320);
+    return () => window.clearTimeout(t);
+  }, [open]);
+
   return (
-    <ol className="cr" ref={ref}>
+    <ol className={`cr${open !== null ? ' has-open' : ''}`} ref={ref}>
       {APEX_WAY.rows.map((r, n) => {
         const on = open === n;
         return (
@@ -538,23 +539,29 @@ export function JoinedCards() {
   return (
     <div className="jc">
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
+        {/* Each info panel's content sits in a frame exactly the phone's height,
+            level with it top and bottom. */}
         <div className="jc__info">
-          <span className="tag tag--old">{OLD_WAY.kick}</span>
-          <p className="jc__quote">{OLD_WAY.quote}</p>
-          <QuietMonth />
+          <div className="jc__fit">
+            <p className="jc__quote">{OLD_WAY.quote}</p>
+            <QuietMonth />
+          </div>
         </div>
         <div className="jc__media jc__media--a">
+          <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
           <SmsPhone />
         </div>
       </article>
       <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
         <div className="jc__media jc__media--b">
+          <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
           <LoopPhone />
         </div>
         <div className="jc__info">
-          <span className="tag tag--apex">{APEX_WAY.kick}</span>
-          <p className="jc__quote">{APEX_WAY.headline}</p>
-          <CompactRows />
+          <div className="jc__fit">
+            <p className="jc__quote">{APEX_WAY.quote}</p>
+            <CompactRows />
+          </div>
         </div>
       </article>
     </div>
