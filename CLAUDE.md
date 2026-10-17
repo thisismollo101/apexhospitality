@@ -5,10 +5,13 @@ but **not used as utility classes** — styling is hand-written CSS on v34 desig
 
 Deployed on Vercel from the repo's default branch. `@/*` maps to `./src/*`.
 
-**This repo is for desktop design testing only** — layouts, sections, visual treatments.
-Design and check at desktop widths. Don't add mobile breakpoints or spend effort on
-phone/tablet layouts unless asked. The `max-width` media queries already in the CSS
-can stay as they are.
+**This repo is for desktop and tablet design testing** — layouts, sections, visual
+treatments. Every desktop design gets a tablet version automatically, without being
+asked: not just the desktop layout squeezed down, but the best layout for a tablet,
+covering portrait (~768–834px) and landscape (~1024–1194px) and treating touch as the
+input (no hover-only reveals; tap targets at least 44px). Check both at those widths.
+Phone layouts are out of scope unless asked. The `max-width` media queries already in
+the CSS can stay as they are.
 
 ---
 
