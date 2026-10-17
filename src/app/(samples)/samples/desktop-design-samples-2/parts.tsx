@@ -424,3 +424,139 @@ export function BgFilm({ className = '' }: { className?: string }) {
     </video>
   );
 }
+
+/* ---- Bottom 1 · the joined cards -----------------------------------------------
+   Aidan's approved spec. Round 1's two big cards, each an info panel and a
+   phone panel, set side by side so they read as one large card, and mirrored
+   so the two phones meet in the centre: [A info] [A phone] [B phone] [B info].
+   Bottoms 2 and 3 keep ThemUs above. */
+
+/**
+ * Card B's rows for the joined cards: stacked close together, everything in a
+ * row left-aligned (timing, then title, chevron at the far right), every row
+ * the same height when closed. The list is fixed at its tallest state, so a
+ * row opens inside the card without moving anything; the source line shows
+ * only once a row is open.
+ */
+export function CompactRows() {
+  const [open, setOpen] = useState<number | null>(null);
+  const ref = useRef<HTMLOListElement>(null);
+  const id = useId();
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let width = -1;
+    const fit = () => {
+      if (el.clientWidth === width) return;
+      width = el.clientWidth;
+      const items = Array.from(el.children) as HTMLElement[];
+      const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
+      // Each row closed: its whole height less its open panel; then room for the tallest panel.
+      const shut = items.reduce((h, li) => h + li.offsetHeight - (li.querySelector('.cr__more') as HTMLElement).offsetHeight, 0) + gap * (items.length - 1);
+      const most = Math.max(...items.map((li) => (li.querySelector('.cr__in') as HTMLElement).scrollHeight));
+      // +2 covers sub-pixel rounding in the rows' heights.
+      el.style.height = `${Math.ceil(shut + most) + 2}px`;
+      el.querySelectorAll<HTMLElement>('.cr__title').forEach((t) => {
+        t.closest('li')?.toggleAttribute('data-clamped', t.scrollHeight > t.clientHeight + 1);
+      });
+    };
+    fit();
+    document.fonts?.ready.then(() => {
+      width = -1;
+      fit();
+    });
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <ol className="cr" ref={ref}>
+      {APEX_WAY.rows.map((r, n) => {
+        const on = open === n;
+        return (
+          <li key={r.title} className={on ? 'is-open' : undefined}>
+            <button type="button" aria-expanded={on} aria-controls={`${id}-${n}`} onClick={() => setOpen(on ? null : n)}>
+              <span className="cr__when">
+                <b>{r.num}</b>
+                <small>{r.unit}</small>
+              </span>
+              <span className="cr__title" title={r.title}>
+                {r.title}
+              </span>
+              <span className="chev" aria-hidden="true" />
+            </button>
+            <div className="cr__more" id={`${id}-${n}`}>
+              <div className="cr__in">
+                <div className="cr__pad">
+                  <b className="cr__full">{r.title}</b>
+                  <p>{r.text}</p>
+                  <Src>{r.src}</Src>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/** Card A's calendar for the joined cards: the bar holds only "Booking to check-in", centred across its full width. */
+export function QuietMonth() {
+  const c = OLD_WAY.calendar;
+  const lead = (new Date(c.start).getUTCDay() + 6) % 7;
+  const days = Array.from({ length: c.days }, (_, n) => new Date(c.start + n * DAY).getUTCDate());
+  return (
+    <div className="cal cal--quiet">
+      <div className="cal__bar">{c.kick}</div>
+      <div className="cal__dow" aria-hidden="true">
+        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
+          <span key={d}>{d}</span>
+        ))}
+      </div>
+      <ol
+        className="cal__grid"
+        aria-label={`${c.kick}: ${c.days} days, nothing sent`}
+        style={{ gridTemplateRows: `repeat(${Math.ceil((lead + c.days) / 7)}, minmax(0, 1fr))` }}
+      >
+        {Array.from({ length: lead }, (_, i) => (
+          <li key={`pad-${i}`} className="cal__pad" aria-hidden="true" />
+        ))}
+        {days.map((dom, n) => (
+          <li key={n} className="cal__d">
+            {dom}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+export function JoinedCards() {
+  return (
+    <div className="jc">
+      <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
+        <div className="jc__info">
+          <span className="tag tag--old">{OLD_WAY.kick}</span>
+          <p className="jc__quote">{OLD_WAY.quote}</p>
+          <QuietMonth />
+        </div>
+        <div className="jc__media jc__media--a">
+          <SmsPhone />
+        </div>
+      </article>
+      <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
+        <div className="jc__media jc__media--b">
+          <LoopPhone />
+        </div>
+        <div className="jc__info">
+          <span className="tag tag--apex">{APEX_WAY.kick}</span>
+          <p className="jc__quote">{APEX_WAY.headline}</p>
+          <CompactRows />
+        </div>
+      </article>
+    </div>
+  );
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { DATA_POINTS, RIBBON, TOP } from './data';
-import { BgFilm, DataCard, Option, Ribbon, Src, ThemUs, VslCard } from './parts';
+import { BgFilm, DataCard, JoinedCards, Option, Ribbon, Src, ThemUs, VslCard } from './parts';
 
 /*
  * Round 2: three treatments of the top (the film full bleed behind the
@@ -114,7 +114,7 @@ export function Top3() {
 
 /* ---- Bottom ------------------------------------------------------------------ */
 
-/** The three bottoms share the Them vs Us block exactly and differ only in their stylesheet theme. */
+/** Bottoms 2 and 3 share the Them vs Us block exactly and differ only in their stylesheet theme. */
 const Pair = () => (
   <div className="wrap wrap--wide">
     <ThemUs />
@@ -125,11 +125,13 @@ export function Bottom1() {
   return (
     <Option
       id="bottom-1"
-      label="Bottom 1 · Night"
-      note="Near-black ground, the round 1 look: white rows on dark, the phones in the centre on a thin light ring, Card A's timing column in cold red and Card B's in brand blue."
+      label="Bottom 1 · Joined Cards"
+      note="Aidan's approved spec: round 1's two big cards, each an info panel and a phone panel, joined side by side on white so they read as one card, and mirrored so the phones meet in the centre. Card A's quote over its empty month; Card B's heading over its four rows, stacked and left-aligned."
     >
-      <div className="bot b1">
-        <Pair />
+      <div className="bot bj">
+        <div className="wrap wrap--wide">
+          <JoinedCards />
+        </div>
       </div>
     </Option>
   );

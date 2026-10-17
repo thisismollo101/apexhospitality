@@ -18,7 +18,7 @@ export const OPTIONS = [
   { id: 'top-1', group: 'Top', n: 1, name: 'Cinematic Scrim' },
   { id: 'top-2', group: 'Top', n: 2, name: 'Glass Panel' },
   { id: 'top-3', group: 'Top', n: 3, name: 'Editorial' },
-  { id: 'bottom-1', group: 'Bottom', n: 1, name: 'Night' },
+  { id: 'bottom-1', group: 'Bottom', n: 1, name: 'Joined Cards' },
   { id: 'bottom-2', group: 'Bottom', n: 2, name: 'Paper' },
   { id: 'bottom-3', group: 'Bottom', n: 3, name: 'Ink' },
 ];
@@ -87,9 +87,12 @@ export const CONTRAST = { label: 'Them vs Us', title: 'The Cold Receipt & Stolen
 export type Row = { num: string; unit: string; title: string; text: string; src: string };
 
 export const OLD_WAY = {
+  kick: 'Card A',
   title: 'The Old Way',
   headline:
     "While you send cold email receipts and 30 days of radio silence, off-site competitors are stealing your guest's dining and spa budget.",
+  /** Bottom 1's approved quote: the same line without the radio silence. */
+  quote: "While you send cold email receipts, off-site competitors are stealing your guest's dining and spa budget.",
   /** The phone: a plain reminder text, as in Aidan's reference screenshot. */
   sms: {
     kind: 'Text Message',
@@ -107,6 +110,7 @@ export const OLD_WAY = {
 };
 
 export const APEX_WAY = {
+  kick: 'Card B',
   title: 'The APEX Way',
   headline: 'Apex Welcome captures their spend commitment while excitement is at its absolute peak, locking in 5x more pre-arrival cash.',
   /**
