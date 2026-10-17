@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- placeholders sized by CSS, as on the other samples */
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, CONTRAST, DATA_POINTS, OLD_WAY, RIBBON, TOP, VSL, img, type DataPoint, type Row } from './data';
+import { APEX_WAY, CONTRAST, DATA_POINTS, JOINED_ROWS, OLD_WAY, RIBBON, TOP, VSL, img, type DataPoint, type Row } from './data';
 
 /*
  * The pieces every layout is built from. Each option arranges these; none of
@@ -434,11 +434,11 @@ export function BgFilm({ className = '' }: { className?: string }) {
 /**
  * Card B's rows for the joined cards: everything in a row left-aligned
  * (timing, then title, chevron at the far right), every row the same height
- * when closed. The list fills the panel down to the phone's bottom edge with
- * the rows spread evenly across it. A row opens into the space between them,
- * and while one is open the others tighten to a single line to make room, so
- * nothing passes the phone's edges (the list scrolls inside itself only as a
- * last resort). The source line shows only once a row is open.
+ * when closed, stacked one on another with small even gaps. A row opens into
+ * the space below them, and while one is open the others tighten to a single
+ * line to make room, so nothing passes the phone's edges (the list scrolls
+ * inside itself only as a last resort). The source line shows only once a
+ * row is open.
  */
 export function CompactRows() {
   const [open, setOpen] = useState<number | null>(null);
@@ -474,7 +474,7 @@ export function CompactRows() {
 
   return (
     <ol className={`cr${open !== null ? ' has-open' : ''}`} ref={ref}>
-      {APEX_WAY.rows.map((r, n) => {
+      {JOINED_ROWS.map((r, n) => {
         const on = open === n;
         return (
           <li key={r.title} className={on ? 'is-open' : undefined}>
@@ -504,14 +504,23 @@ export function CompactRows() {
   );
 }
 
-/** Card A's calendar for the joined cards: the bar holds only "Booking to check-in", centred across its full width. */
+/** Card A's calendar for the joined cards: the bar holds only "Booking to check-in", its letters spread edge to edge. */
 export function QuietMonth() {
   const c = OLD_WAY.calendar;
   const lead = (new Date(c.start).getUTCDay() + 6) % 7;
   const days = Array.from({ length: c.days }, (_, n) => new Date(c.start + n * DAY).getUTCDate());
   return (
     <div className="cal cal--quiet">
-      <div className="cal__bar">{c.kick}</div>
+      <div className="cal__bar">
+        <span className="sr-only">{c.kick}</span>
+        <span className="cal__spread" aria-hidden="true">
+          {Array.from(c.kick.toUpperCase()).map((ch, i) => (
+            <span key={i} className={ch === ' ' ? 'cal__sp' : undefined}>
+              {ch === ' ' ? '' : ch}
+            </span>
+          ))}
+        </span>
+      </div>
       <div className="cal__dow" aria-hidden="true">
         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
           <span key={d}>{d}</span>
@@ -538,6 +547,9 @@ export function QuietMonth() {
 export function JoinedCards() {
   return (
     <div className="jc">
+      <span className="jc__vs" aria-hidden="true">
+        vs
+      </span>
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
         {/* Each info panel's content sits in a frame exactly the phone's height,
             level with it top and bottom. */}

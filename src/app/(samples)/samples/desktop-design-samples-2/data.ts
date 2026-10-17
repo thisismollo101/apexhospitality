@@ -159,3 +159,15 @@ export const APEX_WAY = {
     },
   ] as Row[],
 };
+
+/**
+ * Bottom 1's order for Card B's rows (Bottoms 2 and 3 keep the order above):
+ * the 4x row goes first at 24 hours and the 380% row second at 48 hours; each
+ * takes its title, text and source with it.
+ */
+export const JOINED_ROWS: Row[] = [
+  { ...APEX_WAY.rows[1], num: '24', unit: 'Hours' },
+  { ...APEX_WAY.rows[0], num: '48', unit: 'Hours' },
+  APEX_WAY.rows[2],
+  APEX_WAY.rows[3],
+];
