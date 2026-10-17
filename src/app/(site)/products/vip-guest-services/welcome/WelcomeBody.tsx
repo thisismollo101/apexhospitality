@@ -60,16 +60,16 @@ function Vsl({ poster, tag, className = 'vsl', preload = 'metadata', children }:
   );
 }
 
-function Split({ image, fig, title, text, src }: { image: string; fig: string; title: string; text: string; src: string }) {
+function Split({ image, fig, label, text, src }: { image: string; fig: string; label: string; text: string; src: string }) {
   return (
     <li className="split">
       <div className="split__art">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={img(image)} alt="" />
+        <span className="kick">{label}</span>
         <span className="split__fig">{fig}</span>
       </div>
       <div className="split__body">
-        <h3>{title}</h3>
         <p>{text}</p>
         <p className="split__src">
           {A}
@@ -185,39 +185,46 @@ export default function WelcomeBody() {
         </div>
       </section>
 
-      {/* =================== SECTION 1 · PART 2 — VSL + THREE CARDS =================== */}
+      {/* =================== SECTION 1 · PART 2 — FOUR STAT CARDS, THEN THE VSL =================== */}
       <section className="intro" id="s1b">
         <div className="wrap snap">
           <span className="eye">Why it works</span>
           <h2 className="intro__h">
-            Your Revenue Walks Out the Door
-            <br className="brk" /> Before Your Guest Walks In.
+            Your revenue walks out the door
+            <br className="brk" /> before your guests walk in.
           </h2>
           <ul className="quad">
-            <li>
-              <Vsl poster="vsl-poster.jpg" tag="Watch · 1:30" />
-            </li>
             <Split
               image="f7.jpg"
-              fig="52%"
-              title="Booking Abandonment"
-              text="Over half of travelers abandoned a direct booking last year because the digital experience felt cold, flat or sterile."
-              src="SiteMinder Changing Traveller Report 2025"
+              label="Dream"
+              fig="20–30%"
+              text="20–30% more ancillary revenue per guest from automated pre-arrival offers than from front-desk upselling"
+              src="BookingWhizz & Akia, 2025–26."
             />
             <Split
               image="f6.jpg"
-              fig="85–90%"
-              title="Off-Site Dining Leakage"
-              text="Seven of eight guests walk past your restaurants and spend their dinner money somewhere else."
-              src="CBRE Americas / Regulr"
+              label="Likelihood"
+              fig="74%"
+              text="74% of affluent travellers book after watching travel video"
+              src="Google research."
             />
             <Split
               image="f5.jpg"
-              fig="15–30%"
-              title="OTA Commission Tax"
-              text="Paid to third parties on every OTA booking, against 4–5% to win the same guest direct."
-              src="Cloudbeds / Lighthouse"
+              label="Time"
+              fig="99%"
+              text="Hotel listings with property video get 99% more clicks to the hotel's website"
+              src="TripAdvisor Business Advantage."
             />
+            <Split
+              image="f4.jpg"
+              label="Effort"
+              fig="95%"
+              text="95% open rate (Apex's own figure), converts at up to 25%, zero staff labour, while 65% of US hotels report staffing shortages"
+              src="Apex first-party; BookingWhizz/Akia; AHLA, Feb 2025."
+            />
+            <li>
+              <Vsl poster="vsl-poster.jpg" tag="Watch · 1:30" />
+            </li>
           </ul>
         </div>
       </section>

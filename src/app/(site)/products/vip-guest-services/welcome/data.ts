@@ -172,4 +172,7 @@ export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
   { claim: 'Wellness travellers spend more per trip.', src: 'Global Wellness Institute [P08-5]' },
   { claim: 'Ideal therapist utilisation 50–75%.', src: 'Cornell / Horwath [P08-4]' },
   { claim: '88% trust recommendations from people they know.', src: 'Nielsen 2021 [G-02]' },
+  { claim: '74% of affluent travellers book after watching travel video.', src: 'Google research' },
+  { claim: '99% more clicks with property video.', src: 'TripAdvisor Business Advantage' },
+  { claim: '65% of US hotels report staffing shortages.', src: 'AHLA, Feb 2025' },
 ];
