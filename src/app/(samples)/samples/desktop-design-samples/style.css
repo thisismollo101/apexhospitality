@@ -1,0 +1,505 @@
+/*
+ * Desktop Design Samples — the route's one stylesheet.
+ *
+ * Built on the live Welcome page's own tokens (official.css: its palette and its
+ * Hanken Grotesk / Inter pairing), copied rather than imported per CLAUDE.md,
+ * exactly as the mobile samples do. --hot is v34's, for the Old Way's cold red.
+ * Everything is scoped under .dds.
+ *
+ * Desktop first: the base rules are the 1280px+ layouts, checked at 1440.
+ * Two tablet tiers follow at the bottom: landscape (<=1240, checked at 1194)
+ * and portrait (<=960, checked at 834). Nothing is revealed by hover alone, and
+ * every control is at least 44px to tap.
+ */
+
+.dds {
+  --display: 'Aeonik Pro', var(--dds-display), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: var(--dds-body), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ink: #0d0e11;
+  --ink-soft: #4a5058;
+  --ink-mute: #818892;
+  --paper: #ffffff;
+  --paper-warm: #f6f5f2;
+  --line: #e4e3df;
+  --accent: #2b59e0;
+  --accent-deep: #0a1a44;
+  --night: #0b0c0e;
+  --hot: #c2482f;
+  /* The accent lifted for type on night, where the base blue is too dim to read. */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --maxw: 1240px;
+  --gutter: 32px;
+  --jump-h: 64px;
+  --r: 18px;
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.dds * { margin: 0; padding: 0; box-sizing: border-box; }
+.dds img { display: block; max-width: 100%; }
+.dds button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.dds ul { list-style: none; }
+.dds a:focus-visible, .dds button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+html:has(.dds) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.dds) { scroll-behavior: auto; }
+  .dds *, .dds *::before, .dds *::after { transition: none !important; animation: none !important; }
+}
+
+.dds .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.dds .ast { color: var(--accent); margin-right: 3px; }
+.dds .eye { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.dds .night .eye { color: var(--accent-lit); }
+
+/* ---- page frame ------------------------------------------------------------ */
+
+.dds .jump {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 16px;
+  height: var(--jump-h); padding: 0 var(--gutter);
+  background: rgba(13, 14, 17, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.dds .jump a { color: #fff; text-decoration: none; }
+.dds .jump__home {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px;
+  font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7) !important; white-space: nowrap;
+}
+.dds .jump__opts { flex: 1; display: flex; justify-content: center; gap: 6px; }
+.dds .jump__opts a {
+  display: flex; flex-direction: column; justify-content: center; min-height: 48px; min-width: 120px;
+  padding: 4px 16px; border-radius: 12px; background: rgba(255, 255, 255, .07);
+  font-size: 13.5px; font-weight: 600; line-height: 1.2; white-space: nowrap; transition: background .2s;
+}
+.dds .jump__opts a span { font-size: 9.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-lit); }
+.dds .jump__opts a:hover, .dds .jump__opts a:active { background: var(--accent); }
+.dds .jump__opts a:hover span, .dds .jump__opts a:active span { color: rgba(255, 255, 255, .8); }
+
+.dds .intro { padding: 64px 0 56px; background: var(--paper); }
+.dds .intro__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.dds .intro h1 { margin-top: 12px; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
+.dds .intro p { margin-top: 16px; max-width: 68ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+.dds .intro .intro__flag { margin-top: 12px; font-size: 14px; color: var(--ink-mute); }
+
+.dds .outro { padding: 40px 0 64px; background: var(--paper); }
+.dds .outro a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-soft); }
+.dds .outro p { font-size: 12px; color: var(--ink-mute); }
+
+.dds .opt { scroll-margin-top: var(--jump-h); }
+.dds .opt__head { padding: 26px 0 22px; background: var(--paper-warm); border-top: 1px solid var(--line); }
+.dds .opt__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.dds .opt__label { display: block; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.dds .opt__note { margin-top: 6px; max-width: 92ch; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+.dds .night { background: var(--night); color: #fff; padding: 96px 0 112px; }
+
+/* ---- shared pieces ---------------------------------------------------------- */
+
+.dds .spine {
+  font-family: var(--display); font-size: clamp(34px, 3.5vw, 52px); font-weight: 700;
+  letter-spacing: -.032em; line-height: 1.06; color: #fff; text-wrap: balance;
+}
+.dds .spine--center { max-width: 1000px; margin: 0 auto; text-align: center; }
+
+/* dark pill tags */
+.dds .tag {
+  display: inline-flex; align-items: center; align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+  background: var(--ink); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; line-height: 1.2;
+}
+.dds .tag--photo { position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(0, 0, 0, .55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: rgba(255, 255, 255, .94); }
+.dds .tag--old { background: color-mix(in srgb, var(--hot) 55%, var(--ink)); }
+.dds .tag--apex { background: var(--accent); }
+
+/* the grey source line */
+.dds .src { display: block; font-size: 10.5px; line-height: 1.45; color: var(--ink-mute); }
+
+/* data card: photo top, cream body */
+.dds .dcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.dds .dc { display: flex; flex-direction: column; min-width: 0; border-radius: var(--r); overflow: hidden; background: var(--paper-warm); color: var(--ink); transition: transform .3s cubic-bezier(.22, .61, .36, 1), box-shadow .3s; }
+.dds .dc__art { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--accent-deep); }
+.dds .dc__art img { width: 100%; height: 100%; object-fit: cover; }
+.dds .dc__art::after { content: ''; position: absolute; inset: 50% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, .35)); pointer-events: none; }
+.dds .dc__body { flex: 1; display: flex; flex-direction: column; padding: 18px 20px 18px; }
+.dds .dc__body h3 { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .01em; line-height: 1.3; color: var(--accent); }
+.dds .dc__body p { margin-top: 8px; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+.dds .dc__body .src { margin-top: auto; padding-top: 14px; }
+.dds .dc--row { display: grid; grid-template-columns: 136px minmax(0, 1fr); }
+.dds .dc--row .dc__art { aspect-ratio: auto; min-height: 100%; }
+.dds .dc--row .dc__art img, .dds .o3__dc .dc__art img { position: absolute; inset: 0; }
+.dds .dc--row .dc__body p { font-size: 14px; }
+.dds .dc--short .dc__art { aspect-ratio: 16 / 9; }
+.dds .dc.is-lit { box-shadow: 0 0 0 2px var(--accent-lit), 0 18px 40px rgba(0, 0, 0, .45); transform: translateY(-4px); }
+@media (hover: hover) {
+  .dds .dc:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }
+}
+
+/* integration trust ribbon */
+.dds .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
+.dds .ribbon li {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
+  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
+}
+.dds .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.dds .ribbon--center { justify-content: center; margin-top: 36px; }
+.dds .ribbon--list { flex-direction: column; gap: 8px; }
+.dds .ribbon--list li { border-radius: 12px; }
+.dds .ribbon--quiet li { border-color: transparent; background: none; padding: 6px 12px; color: rgba(255, 255, 255, .72); }
+.dds .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
+.dds .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
+.dds .ribbon--strip li + li { border-left: 1px solid var(--rule); }
+
+.dds .vs {
+  display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px;
+  background: var(--ink); border: 1px solid rgba(255, 255, 255, .22); color: #fff;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* ---- stage cards: media / head / body ---------------------------------------- */
+
+.dds .sc {
+  display: grid; grid-template-rows: auto auto 1fr; min-width: 0;
+  border-radius: var(--r); overflow: hidden; background: var(--paper-warm); color: var(--ink);
+}
+.dds .sc__media { position: relative; aspect-ratio: 9 / 16; overflow: hidden; background: var(--accent-deep); }
+.dds .sc__head { display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 0; }
+.dds .sc__head h3 { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; }
+.dds .sc__head h3 span { color: var(--accent); }
+.dds .sc--old .sc__head h3 { color: color-mix(in srgb, var(--hot) 45%, var(--ink)); }
+.dds .sc__body { container: body / inline-size; display: flex; flex-direction: column; gap: 10px; padding: 12px 20px 20px; }
+.dds .sc__body .src { margin-top: auto; }
+/* black pill CTA */
+.dds .cta {
+  display: inline-flex; align-items: center; align-self: flex-start; gap: 10px; min-height: 44px; max-width: 100%; padding: 8px 18px 8px 10px;
+  border-radius: 999px; background: var(--ink); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; line-height: 1.3;
+  text-align: left; transition: background .2s;
+}
+.dds .cta .play.play--sm { width: 28px; height: 28px; }
+.dds .cta:hover, .dds .cta:active { background: var(--accent); }
+
+/* result badge */
+.dds .res { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; padding: 14px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); }
+.dds .res li { display: flex; flex-direction: column; min-width: 0; }
+.dds .res b { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.025em; line-height: 1.1; color: color-mix(in srgb, var(--hot) 70%, var(--ink)); }
+.dds .res--apex b { color: var(--accent); }
+.dds .res__t { margin-top: 3px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--ink); }
+.dds .res .src { margin-top: 4px; font-size: 10px; }
+@container body (max-width: 250px) {
+  .dds .res { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
+}
+
+/* play button */
+.dds .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s, width .25s, height .25s;
+}
+.dds .play svg { width: 38%; height: 38%; fill: var(--ink); }
+.dds .play.play--sm { width: 22px; height: 22px; box-shadow: none; }
+.dds .play--sm svg { margin-left: 2px; }
+
+/* Panel A · the executive VSL player */
+.dds .pl { position: absolute; inset: 0; color: #fff; }
+.dds .pl__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dds .pl__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .05) 22%, rgba(0, 0, 0, .1) 50%, rgba(0, 0, 0, .78)); }
+.dds .pl__dur { position: absolute; top: 16px; right: 16px; z-index: 2; font-size: 11px; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.dds .pl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 0 16px 90px; text-align: center;
+}
+.dds .pl__cta {
+  display: inline-block; max-width: 100%; padding: 12px 18px; border-radius: 999px; background: var(--ink); color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; line-height: 1.3; box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+  transition: background .2s;
+}
+.dds .pl__play:hover .pl__cta, .dds .pl__play:active .pl__cta { background: var(--accent); }
+.dds .pl__play:hover .play { transform: scale(1.06); }
+.dds .pl.is-playing .pl__play { justify-content: flex-start; align-items: flex-end; padding: 52px 14px 0 0; }
+.dds .pl.is-playing .play { width: 48px; height: 48px; background: rgba(255, 255, 255, .85); }
+.dds .pl.is-playing .pl__cta { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); }
+.dds .pl__cap {
+  position: absolute; left: 12px; right: 12px; bottom: 50px; z-index: 2; pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px;
+  background: rgba(13, 14, 17, .74); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-left: 3px solid var(--accent);
+}
+.dds .pl__capk { font-size: 9.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-lit); }
+.dds .pl__capt { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.dds .pl__bar { position: absolute; left: 12px; right: 12px; bottom: 14px; z-index: 2; pointer-events: none; }
+.dds .pl__segs { display: flex; gap: 3px; }
+.dds .pl__segs span { flex: 1; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .28); }
+.dds .pl__segs i { display: block; height: 100%; background: #fff; transform-origin: left; }
+.dds .pl__segs .is-on i { background: var(--accent-lit); }
+.dds .pl__time { display: block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .8); font-variant-numeric: tabular-nums; }
+
+/* Card A · the cold confirmation email, then radio silence */
+.dds .om {
+  position: absolute; inset: 0; display: flex; flex-direction: column; padding: 56px 16px 18px;
+  background: linear-gradient(170deg, color-mix(in srgb, var(--hot) 16%, #1b1c1f), #121315 70%);
+}
+.dds .om__mail { padding: 14px; border-radius: 10px; background: #dcdad6; color: var(--ink-soft); filter: saturate(.4); }
+.dds .om__row { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #c8c5bf; }
+.dds .om__av { width: 24px; height: 24px; flex: none; border-radius: 999px; background: #b9b5ae; }
+.dds .om__lines { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.dds .om__lines i, .dds .om__text i { display: block; height: 6px; border-radius: 3px; background: #bfbbb4; }
+.dds .om__subj { display: block; width: 74%; height: 9px; margin: 12px 0 10px; border-radius: 3px; background: #a9a59d; }
+.dds .om__text { display: flex; flex-direction: column; gap: 6px; }
+.dds .om__pdf {
+  display: flex; align-items: center; gap: 7px; margin: 12px 0; padding: 8px 9px; border-radius: 6px;
+  border: 1px solid #bdb9b2; background: #ebe9e5; font-size: 11px; font-weight: 600; color: var(--ink-soft); overflow-wrap: anywhere;
+}
+.dds .om__pdf svg { width: 14px; height: 14px; flex: none; fill: none; stroke: color-mix(in srgb, var(--hot) 70%, var(--ink-soft)); stroke-width: 1.4; stroke-linejoin: round; }
+.dds .om__quiet { margin-top: auto; }
+.dds .om__days { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.dds .om__days i { aspect-ratio: 1; border-radius: 3px; border: 1px solid rgba(255, 255, 255, .13); }
+.dds .om__silence { display: block; margin-top: 10px; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .62); }
+
+/* Card B · the phone */
+.dds .ph {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 48px 16px 16px;
+  background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 70%);
+}
+.dds .ph__screen {
+  position: relative; height: 100%; max-width: 100%; aspect-ratio: 9 / 16; overflow: hidden;
+  border: 6px solid var(--ink); border-radius: 26px; background: var(--ink); box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
+  container: phone / inline-size;
+}
+.dds .ph__still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s; }
+.dds .ph__still.is-on { opacity: 1; }
+.dds .ph__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .4), transparent 20%, transparent 50%, rgba(0, 0, 0, .78)); }
+.dds .ph__notch { position: absolute; top: 6px; left: 50%; width: 30%; height: 7px; transform: translateX(-50%); border-radius: 999px; background: var(--ink); }
+.dds .ph__segs { position: absolute; top: 20px; left: 9px; right: 9px; display: flex; gap: 3px; }
+.dds .ph__segs span { flex: 1; height: 2.5px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .35); }
+.dds .ph__segs i { display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+.dds .ph__segs .is-done i, .dds .ph__segs .is-on i { transform: scaleX(1); }
+.dds .ph__segs.is-auto .is-on i { animation: dds-seg 3.2s linear both; }
+@keyframes dds-seg { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.dds .ph__now {
+  /* sits just above the thumbnail strip: four 9:16 tiles across the screen's width */
+  position: absolute; left: 10px; right: 10px; bottom: calc(18px + (100cqw - 31px) / 4 * 16 / 9);
+  display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; line-height: 1.25; color: #fff;
+}
+.dds .ph__thumbs { position: absolute; left: 8px; right: 8px; bottom: 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.dds .ph__thumbs button { display: block; width: 100%; aspect-ratio: 9 / 16; border-radius: 7px; overflow: hidden; border: 2px solid rgba(255, 255, 255, .25); }
+.dds .ph__thumbs button.is-on { border-color: #fff; }
+.dds .ph__thumbs img { width: 100%; height: 100%; object-fit: cover; }
+/* ---- Option 1 · Classic Stack ----------------------------------------------- */
+
+.dds .o1 { --cw: 316px; }
+.dds .o1__cards { margin-top: 56px; }
+.dds .o1__stage {
+  display: grid; justify-content: center; margin-top: 96px;
+  grid-template-columns: var(--cw) 1px var(--cw) var(--cw);
+  grid-template-rows: auto auto auto 1fr; column-gap: 32px;
+}
+.dds .o1__stage::before { content: ''; grid-column: 2; grid-row: 1 / -1; background: var(--rule); }
+.dds .o1__a, .dds .o1__b { display: contents; }
+.dds .o1 .sc { grid-row: 2 / span 3; grid-template-rows: subgrid; }
+.dds .o1 .sc--player { grid-column: 1; }
+.dds .o1 .sc--old { grid-column: 3; }
+.dds .o1 .sc--apex { grid-column: 4; }
+.dds .o1__eye { grid-column: 3 / 5; grid-row: 1; margin-bottom: 18px; text-align: center; }
+.dds .o1 .vs { grid-column: 3 / 5; grid-row: 2; justify-self: center; align-self: center; z-index: 3; }
+
+/* ---- Option 2 · Sticky Split ------------------------------------------------- */
+
+.dds .o2 { --hw: 260px; }
+.dds .o2__top { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px 72px; align-items: end; }
+.dds .o2__spine { max-width: 20ch; font-size: clamp(36px, 3.7vw, 56px); }
+.dds .o2__cards { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.dds .o2__stage { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; margin-top: 96px; }
+.dds .o2__a { position: sticky; top: calc(var(--jump-h) + 32px); }
+.dds .o2__b { display: flex; flex-direction: column; gap: 24px; }
+.dds .o2__b .eye { margin-bottom: -6px; }
+
+/* horizontal stage card: the media on one side, head and body on the other */
+.dds .sc--h { grid-template-columns: var(--hw) minmax(0, 1fr); grid-template-rows: auto 1fr; }
+.dds .sc--h .sc__media { grid-column: 1; grid-row: 1 / 3; }
+.dds .sc--h .sc__head { grid-column: 2; grid-row: 1; padding: 26px 26px 0; }
+.dds .sc--h .sc__body { grid-column: 2; grid-row: 2; padding: 14px 26px 26px; }
+.dds .sc--h-rev { grid-template-columns: minmax(0, 1fr) var(--hw); }
+.dds .sc--h-rev .sc__media { grid-column: 2; }
+.dds .sc--h-rev .sc__head, .dds .sc--h-rev .sc__body { grid-column: 1; }
+.dds .sc--h .sc__head h3 { font-size: 24px; }
+.dds .sc--h .res b { font-size: 26px; }
+
+/* ---- Option 3 · Bento --------------------------------------------------------- */
+
+.dds .o3 { --hw: 250px; }
+.dds .o3__grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    'spine spine spine player'
+    'dc1 dc2 dc3 player'
+    'rib rib rib player'
+    'eye eye eye eye'
+    'old old apex apex';
+}
+.dds .tile { border-radius: var(--r); background: var(--tile); border: 1px solid rgba(255, 255, 255, .07); }
+.dds .o3__spine { grid-area: spine; display: flex; align-items: flex-end; padding: 36px 36px 34px; }
+.dds .o3__spine .spine { font-size: clamp(28px, 2.7vw, 40px); }
+.dds .o3__player { grid-area: player; display: flex; }
+.dds .o3__player .sc { flex: 1; }
+.dds .o3__dc--1 { grid-area: dc1; }
+.dds .o3__dc--2 { grid-area: dc2; }
+.dds .o3__dc--3 { grid-area: dc3; }
+.dds .o3__ribbon { grid-area: rib; display: flex; align-items: center; padding: 16px 18px; }
+.dds .o3__eye { grid-area: eye; margin-top: 28px; text-align: center; }
+.dds .o3__old { grid-area: old; }
+.dds .o3__apex { grid-area: apex; }
+
+/* ---- Option 4 · Triptych ----------------------------------------------------- */
+
+.dds .o4 { --cw: 296px; --cols: var(--cw) calc(var(--cw) * 1.16) var(--cw); }
+.dds .o4__spine { font-size: clamp(36px, 3.8vw, 56px); }
+.dds .o4 .ribbon--center { margin-top: 24px; }
+.dds .o4__cards { grid-template-columns: var(--cols); justify-content: center; gap: 28px; margin-top: 56px; }
+.dds .o4__stage {
+  display: grid; justify-content: center; margin-top: 88px; column-gap: 28px;
+  grid-template-columns: var(--cols); grid-template-rows: auto auto;
+}
+.dds .o4 .sc { grid-row: 2; align-self: center; }
+.dds .o4__eye { grid-column: 1 / -1; grid-row: 1; margin-bottom: 22px; text-align: center; }
+.dds .o4__player { box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 30px 80px color-mix(in srgb, var(--accent) 35%, transparent); }
+/* the left card is the right card's mirror image */
+.dds .sc--mirror .sc__head { align-items: flex-end; text-align: right; }
+.dds .sc--mirror .tag { align-self: flex-end; }
+.dds .sc--mirror .sc__body, .dds .sc--mirror .res li { align-items: flex-end; text-align: right; }
+
+/* ---- Option 5 · Flip Toggle --------------------------------------------------- */
+
+.dds .o5 { --cw: 330px; padding-top: 0; }
+.dds .o5__spine { max-width: 22ch; margin-top: 88px; font-size: clamp(36px, 3.7vw, 56px); }
+.dds .o5__cards { margin-top: 48px; }
+.dds .o5__stage {
+  display: grid; justify-content: center; margin-top: 96px; column-gap: 40px;
+  grid-template-columns: var(--cw) var(--cw); grid-template-rows: auto auto auto 1fr;
+}
+.dds .o5__a, .dds .o5__b, .dds .o5__card { display: contents; }
+.dds .o5 .sc { grid-row: 2 / span 3; grid-template-rows: subgrid; }
+.dds .o5 .sc--player { grid-column: 1; }
+.dds .o5__card > .sc { grid-column: 2; }
+.dds .o5 .seg { grid-column: 1 / -1; grid-row: 1; justify-self: center; margin-bottom: 22px; }
+.dds .seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .08); border: 1px solid var(--rule); }
+.dds .seg button {
+  min-height: 44px; padding: 0 22px; border-radius: 999px; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .72);
+  transition: background .2s, color .2s;
+}
+.dds .seg button.is-on { background: #fff; color: var(--ink); }
+.dds .seg button.is-on.is-old { background: color-mix(in srgb, var(--hot) 55%, var(--ink)); color: #fff; }
+.dds .sc.is-in { animation: dds-in .4s cubic-bezier(.22, .61, .36, 1) both; }
+@keyframes dds-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (hover: hover) {
+  .dds .seg button:not(.is-on):hover { color: #fff; background: rgba(255, 255, 255, .08); }
+}
+
+/* ====================================================================================
+   TABLET · landscape (checked at 1194)
+   The desktop layouts hold; the rail tightens and the bigger type steps down.
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .dds { --gutter: 32px; }
+  .dds .night { padding: 80px 0 96px; }
+  .dds .jump__opts a { min-width: 0; padding: 4px 14px; }
+  .dds .o1 { --cw: 300px; }
+  .dds .o2 { --hw: 240px; }
+  .dds .o2__top { grid-template-columns: minmax(0, 1fr) 300px; gap: 40px 48px; }
+  .dds .o3 { --hw: 230px; }
+  .dds .o3__spine { padding: 30px; }
+  .dds .o4 { --cw: 284px; }
+  .dds .sc--h .sc__head { padding: 22px 22px 0; }
+  .dds .sc--h .sc__body { padding: 12px 22px 22px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834)
+   Each layout is re-thought for a narrow touch screen rather than squeezed.
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .dds { --gutter: 28px; --jump-h: 64px; }
+  .dds .night { padding: 64px 0 80px; }
+  .dds .intro { padding: 48px 0 40px; }
+  .dds .intro h1 { font-size: 38px; }
+  .dds .jump { gap: 8px; padding: 0 12px; }
+  .dds .jump__home { font-size: 12px; }
+  .dds .jump__opts { gap: 4px; }
+  .dds .jump__opts a { flex: 1; padding: 4px 10px; font-size: 12.5px; }
+  .dds .spine { font-size: 36px; }
+  .dds .dcs { gap: 14px; }
+  .dds .dc__body { padding: 14px 16px 16px; }
+  .dds .dc__body h3 { font-size: 14px; }
+  .dds .dc__body p { font-size: 14px; }
+  .dds .sc__head { padding: 16px 16px 0; }
+  .dds .sc__body { padding: 10px 16px 16px; }
+  .dds .sc__head h3 { font-size: 17px; }
+  .dds .play { width: 64px; height: 64px; }
+
+  /* 1 · three across still fits; the panel divider goes and the gaps close up */
+  .dds .o1 { --cw: minmax(0, 1fr); }
+  .dds .o1__stage { grid-template-columns: 1fr 0 1fr 1fr; column-gap: 12px; margin-top: 72px; }
+  .dds .o1__stage::before { display: none; }
+  .dds .o1__a .sc { margin-right: 8px; }
+
+  /* 2 · cards turn upright; player pinned left, contrast scrolling right, both
+         pushed toward the centre line so they still mirror */
+  .dds .o2__top { grid-template-columns: 1fr; gap: 28px; }
+  .dds .o2__spine { max-width: none; font-size: 36px; }
+  .dds .o2__ribbon { flex-direction: row; flex-wrap: wrap; }
+  .dds .o2__cards { grid-template-columns: 1fr; gap: 12px; }
+  .dds .dc--row { grid-template-columns: 180px minmax(0, 1fr); }
+  .dds .o2__stage { gap: 24px; margin-top: 64px; }
+  .dds .o2 .sc--h { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; max-width: 330px; width: 100%; }
+  .dds .o2 .sc--h .sc__media, .dds .o2 .sc--h .sc__head, .dds .o2 .sc--h .sc__body { grid-column: 1; grid-row: auto; }
+  .dds .o2 .sc--h .sc__head { padding: 16px 16px 0; }
+  .dds .o2 .sc--h .sc__body { padding: 10px 16px 16px; }
+  .dds .o2 .sc--h .sc__head h3 { font-size: 18px; }
+  .dds .o2 .sc--h .res b { font-size: 22px; }
+  .dds .o2__a .sc { margin-left: auto; }
+
+  /* 3 · two columns: player beside the three data cards stacked as rows */
+  .dds .o3__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'spine spine'
+      'player dc1'
+      'player dc2'
+      'player dc3'
+      'rib rib'
+      'eye eye'
+      'old apex';
+  }
+  .dds .o3__spine .spine { font-size: 32px; }
+  .dds .o3__dc { display: grid; grid-template-columns: 132px minmax(0, 1fr); }
+  .dds .o3__dc .dc__art { aspect-ratio: auto; min-height: 100%; }
+  .dds .o3__dc .dc__body p { font-size: 13.5px; }
+  .dds .o3 .sc--h { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+  .dds .o3 .sc--h .sc__media, .dds .o3 .sc--h .sc__head, .dds .o3 .sc--h .sc__body { grid-column: 1; grid-row: auto; }
+  .dds .o3 .sc--h .sc__head { padding: 16px 16px 0; }
+  .dds .o3 .sc--h .sc__body { padding: 10px 16px 16px; }
+  .dds .o3 .sc--h .sc__head h3 { font-size: 18px; }
+  .dds .o3 .sc--h .res b { font-size: 22px; }
+
+  /* 4 · the triptych holds; the columns narrow and the flank offset shrinks */
+  .dds .o4 { --cols: minmax(0, 1fr) minmax(0, 1.16fr) minmax(0, 1fr); }
+  .dds .o4__cards, .dds .o4__stage { column-gap: 14px; }
+  .dds .o4 .ribbon--quiet li { padding: 6px 8px; }
+
+  /* 5 · two cards still fit side by side */
+  .dds .o5 { --cw: minmax(0, 330px); }
+  .dds .o5__stage { column-gap: 20px; margin-top: 64px; }
+  .dds .o5__spine { margin-top: 64px; font-size: 36px; }
+  .dds .o5__cards .dc__body p { font-size: 13.5px; }
+  .dds .ribbon--strip { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
+  .dds .ribbon--strip li { padding: 6px 14px; font-size: 12.5px; }
+}
