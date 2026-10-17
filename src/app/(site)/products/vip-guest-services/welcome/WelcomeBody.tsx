@@ -186,7 +186,7 @@ export default function WelcomeBody() {
         </div>
       </section>
 
-      {/* =================== SECTION 1 · PART 2 — FOUR CARDS + VSL =================== */}
+      {/* =================== SECTION 1 · PART 2 — FOUR CARDS =================== */}
       <section className="intro" id="s1b">
         <div className="wrap snap">
           <span className="eye">Why it works</span>
@@ -224,10 +224,6 @@ export default function WelcomeBody() {
               src="Apex first-party; BookingWhizz; AHLA, Feb 2025"
             />
           </ul>
-        </div>
-        {/* The section's film, below the cards: its own frame, so the section lock centres each in turn. */}
-        <div className="wrap snap intro__film">
-          <Vsl poster="vsl-poster.jpg" tag="Watch · 1:30" />
         </div>
       </section>
 
