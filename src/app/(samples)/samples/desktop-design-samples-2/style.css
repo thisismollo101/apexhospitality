@@ -418,7 +418,8 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
      itself is 10% smaller than that, for breathing room round it. */
   --pbox: 255px;
   --pw: calc(var(--pbox) * .9);
-  --bz: 7px;
+  /* a slightly thinner bezel than Bottoms 2 and 3's */
+  --bz: 5px;
   --phbox: calc((var(--pbox) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
   --ph: calc((var(--pw) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
   /* half the height the smaller phone gives back, above it and below it */
@@ -433,7 +434,7 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   --pillgap: 14px;
   --rh: 54px;
   --rh-tight: 36px;
-  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: stretch;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: stretch;
 }
 /* the VS circle, in the gap between the two cards */
 .dd2 .jc__vs {
@@ -443,25 +444,46 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
 }
 .dd2 .jc__card {
-  display: grid; border-radius: 28px; overflow: hidden; background: var(--paper-warm);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+  display: grid; border-radius: 28px; overflow: hidden;
+  /* No background of its own: a cream card behind the panels showed through
+     their anti-aliased rounded corners as a thin light edge. Each panel paints
+     its own ground instead. */
+  background: transparent; box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
 }
 .dd2 .jc__card--a { grid-template-columns: minmax(0, 1fr) auto; }
 .dd2 .jc__card--b { grid-template-columns: auto minmax(0, 1fr); }
-.dd2 .jc__media { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--pillgap); width: calc(var(--pbox) + 2 * var(--pp)); padding: var(--pp); }
-.dd2 .jc__pill { align-self: center; height: var(--pillh); padding: 0 12px; }
-.dd2 .jc__media--a { background: linear-gradient(170deg, color-mix(in srgb, var(--alert) 30%, #170c0d), #120a0b 72%); }
+/* The phone panel sets the card's height itself: the phone sits exactly where
+   the right-hand frame expects it, and the pill floats in the band above it,
+   centred between the card's top edge and the phone's top edge. */
+.dd2 .jc__media {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  width: calc(var(--pbox) + 2 * var(--pp));
+  padding: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)) var(--pp) calc(var(--pp) + var(--slack));
+}
+.dd2 .jc__pill {
+  position: absolute; left: 50%; transform: translateX(-50%); height: var(--pillh); padding: 0 12px;
+  /* half of the band above the phone, less half the pill: equal space above and below it */
+  top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2);
+}
+.dd2 .jc__media--a { background: linear-gradient(180deg, color-mix(in srgb, var(--alert) 34%, #180c0e), color-mix(in srgb, var(--alert) 24%, #160b0d)); }
 .dd2 .jc .tag--old { background: var(--alert); }
-.dd2 .jc__media--b { background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 72%); }
-.dd2 .jc .tphone { box-shadow: 0 24px 50px rgba(0, 0, 0, .45); border-radius: 30px; }
+.dd2 .jc__media--b { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 44%, var(--accent-deep)), color-mix(in srgb, var(--accent) 30%, var(--accent-deep))); }
+.dd2 .jc .tphone { background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); border-radius: 30px; }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.dd2 .jc .tphone__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 1; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
 .dd2 .jc .tphone__screen { border-radius: 25px; }
 /* The info panel's padding mirrors the phone panel's, pill and slack and all,
    so its frame (.jc__fit) is exactly the phone's height and level with it. */
 .dd2 .jc__info {
-  min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 24px;
+  min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 24px; background: var(--paper-warm);
   padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
 }
 .dd2 .jc__fit { height: var(--ph); display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+/* Card A: only the bar and the calendar, centred both ways in the whole column */
+.dd2 .jc__info--a { align-items: center; justify-content: center; padding: 24px; }
 .dd2 .jc__quote { flex: none; font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -.015em; line-height: 1.32; color: var(--ink); text-wrap: pretty; }
 .dd2 .jc__card--a .jc__quote { color: var(--ink); }
 /* Card A's tiles: a light tint of the alert red, the date in black */
@@ -473,12 +495,25 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dd2 .jc .sms__bubble { margin-top: 27px; padding: 11px 12px; border-radius: 13px; font-size: 11.2px; }
 .dd2 .jc .sms__input { height: 31px; padding: 0 11px 0 14px; font-size: 10.4px; }
 .dd2 .jc .sms__input svg { width: 11px; height: 11px; }
-.dd2 .jc .snd { right: 12px; bottom: 12px; }
+/* Bottom 1's unmute: a small white pill centred at the foot of the film,
+   speaker on the left, label centred; it fades back once the sound is on */
+.dd2 .snd-pill {
+  position: absolute; left: 50%; bottom: 14px; z-index: 2; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px 0 11px; border-radius: 999px;
+  background: #fff; color: var(--ink); box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  transition: opacity .2s;
+}
+/* a 44px tap area round the 32px pill */
+.dd2 .snd-pill::before { content: ''; position: absolute; inset: -6px -4px; }
+.dd2 .snd-pill svg { width: 15px; height: 15px; flex: none; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dd2 .snd-pill .snd__cone { fill: var(--ink); }
+.dd2 .snd-pill span { flex: 1; text-align: center; }
+.dd2 .snd-pill[aria-pressed='true'] { opacity: .55; }
 
-/* Card A's month, as in Aidan's light reference, at 85% of the room under the
-   heading, both ways: flex-grow below 1 takes only that share of the free
-   height, and the auto margin pushes it down to the phone's bottom edge. */
-.dd2 .cal--quiet { flex: .85 1 0px; width: 85%; min-height: 0; height: auto; margin-top: auto; }
+/* Card A's month, as in Aidan's light reference: 85% of its column's width and
+   of the phone's height, centred both ways in the column. */
+.dd2 .cal--quiet { flex: none; width: 85%; height: calc(var(--ph) * .85); min-height: 0; margin: 0; }
 .dd2 .cal__bar {
   flex: none; padding: 11px 16px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .62);
   font-size: 11px; font-weight: 600; text-transform: uppercase; white-space: nowrap;

@@ -204,9 +204,10 @@ const SoundIcon = ({ on }: { on: boolean }) => (
  * starts muted (the only way a browser lets it start on its own), played by an
  * observer while it is on screen and paused off it; muted is set as a property,
  * since React does not reliably emit the attribute. Reduced motion leaves the
- * poster up until someone presses play-with-sound.
+ * poster up until someone presses play-with-sound. `pill` swaps the round
+ * button for Bottom 1's labelled white pill.
  */
-export function LoopPhone() {
+export function LoopPhone({ pill = false }: { pill?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [sound, setSound] = useState(false);
 
@@ -236,9 +237,17 @@ export function LoopPhone() {
           <source src={img(APEX_WAY.clipWebm)} type="video/webm" />
           <source src={img(APEX_WAY.clip)} type="video/mp4" />
         </video>
-        <button type="button" className="snd" onClick={toggle} aria-pressed={sound} aria-label={sound ? 'Mute' : 'Unmute'}>
-          <SoundIcon on={sound} />
-        </button>
+        {pill ? (
+          // Bottom 1's version: a white pill, speaker on the left, the label centred
+          <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
+            <SoundIcon on={sound} />
+            <span>{sound ? 'Mute' : 'Unmute'}</span>
+          </button>
+        ) : (
+          <button type="button" className="snd" onClick={toggle} aria-pressed={sound} aria-label={sound ? 'Mute' : 'Unmute'}>
+            <SoundIcon on={sound} />
+          </button>
+        )}
       </div>
     </div>
   );
@@ -551,13 +560,9 @@ export function JoinedCards() {
         vs
       </span>
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
-        {/* Each info panel's content sits in a frame exactly the phone's height,
-            level with it top and bottom. */}
-        <div className="jc__info">
-          <div className="jc__fit">
-            <p className="jc__quote">{OLD_WAY.quote}</p>
-            <QuietMonth />
-          </div>
+        {/* The calendar group alone, centred both ways in its column. */}
+        <div className="jc__info jc__info--a">
+          <QuietMonth />
         </div>
         <div className="jc__media jc__media--a">
           <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
@@ -567,11 +572,11 @@ export function JoinedCards() {
       <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
         <div className="jc__media jc__media--b">
           <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
-          <LoopPhone />
+          <LoopPhone pill />
         </div>
+        {/* The four rows alone, in a frame exactly the phone's height, level with it. */}
         <div className="jc__info">
           <div className="jc__fit">
-            <p className="jc__quote">{APEX_WAY.quote}</p>
             <CompactRows />
           </div>
         </div>
