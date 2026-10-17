@@ -165,19 +165,6 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
 }
 
-/* ---- stage cards: media / head / body ---------------------------------------- */
-
-.dd2 .sc {
-  display: grid; grid-template-rows: auto auto 1fr; min-width: 0;
-  border-radius: var(--r); overflow: hidden; background: var(--paper-warm); color: var(--ink);
-}
-.dd2 .sc__media { position: relative; aspect-ratio: 9 / 16; overflow: hidden; background: var(--accent-deep); }
-.dd2 .sc__head { display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 0; }
-.dd2 .sc__head h3 { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; }
-.dd2 .sc__head h3 span { color: var(--accent); }
-.dd2 .sc--old .sc__head h3 { color: color-mix(in srgb, var(--hot) 45%, var(--ink)); }
-.dd2 .sc__body { container: body / inline-size; display: flex; flex-direction: column; gap: 10px; padding: 12px 20px 20px; }
-.dd2 .sc__body .src { margin-top: auto; }
 /* black pill CTA */
 .dd2 .cta {
   display: inline-flex; align-items: center; align-self: flex-start; gap: 10px; min-height: 44px; max-width: 100%; padding: 8px 18px 8px 10px;
@@ -232,76 +219,6 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dd2 .pl__segs i { display: block; height: 100%; background: #fff; transform-origin: left; }
 .dd2 .pl__segs .is-on i { background: var(--accent-lit); }
 .dd2 .pl__time { display: block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .8); font-variant-numeric: tabular-nums; }
-
-/* The phone both contrast cards share: same frame, same size, so they mirror. */
-.dd2 .ph {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 40px 16px 16px;
-  background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 70%);
-}
-.dd2 .ph--old { background: linear-gradient(170deg, color-mix(in srgb, var(--hot) 16%, #1b1c1f), #121315 70%); }
-.dd2 .ph__screen {
-  position: relative; height: 100%; max-width: 100%; aspect-ratio: 9 / 16; overflow: hidden;
-  border: 6px solid var(--ink); border-radius: 26px; background: var(--ink); box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
-}
-.dd2 .ph__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.dd2 .ph__notch { position: absolute; top: 6px; left: 50%; z-index: 2; width: 30%; height: 7px; transform: translateX(-50%); border-radius: 999px; background: var(--ink); }
-
-/* Card A · the cold confirmation email, then radio silence */
-.dd2 .mail { display: flex; flex-direction: column; background: #d9d7d3; color: var(--ink-soft); filter: saturate(.4); }
-.dd2 .mail__msg { padding: 26px 12px 12px; background: #e6e4e0; }
-.dd2 .mail__from { display: flex; align-items: center; gap: 8px; padding-bottom: 9px; border-bottom: 1px solid #cbc8c2; }
-.dd2 .mail__av { width: 22px; height: 22px; flex: none; border-radius: 999px; background: #b9b5ae; }
-.dd2 .mail__lines { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-.dd2 .mail__lines i, .dd2 .mail__text i { display: block; height: 5px; border-radius: 3px; background: #c3bfb8; }
-.dd2 .mail__subj { display: block; margin: 10px 0 8px; font-size: 12px; font-weight: 600; line-height: 1.3; color: #55595f; }
-.dd2 .mail__text { display: flex; flex-direction: column; gap: 5px; }
-.dd2 .mail__pdf {
-  display: flex; align-items: center; gap: 6px; margin: 10px 0; padding: 6px 7px; border-radius: 6px;
-  border: 1px solid #c3bfb8; background: #efede9; font-size: 10px; font-weight: 600; line-height: 1.25; color: var(--ink-soft); overflow-wrap: anywhere;
-}
-.dd2 .mail__pdf svg { width: 12px; height: 12px; flex: none; fill: none; stroke: color-mix(in srgb, var(--hot) 70%, var(--ink-soft)); stroke-width: 1.4; stroke-linejoin: round; }
-.dd2 .mail__quiet { margin-top: auto; padding: 12px; }
-.dd2 .mail__days { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; }
-.dd2 .mail__days i { aspect-ratio: 1; border-radius: 2px; border: 1px solid #bdb9b2; }
-.dd2 .mail__silence { display: block; margin-top: 8px; font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #8a8780; }
-
-/* Card B · the four touches, the What Works list's rows */
-.dd2 .tc { position: relative; align-self: stretch; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
-.dd2 .tc li { flex: none; border-radius: 14px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .06); }
-.dd2 .tc li > button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 10px 12px 10px 10px; text-align: left; }
-.dd2 .tc__when { flex: none; width: 54px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
-.dd2 .tc__when b { font-family: var(--display); font-size: 24px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
-.dd2 .tc__when small { margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-.dd2 .tc__name { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.dd2 .tc__name b { font-size: 14px; font-weight: 700; line-height: 1.25; color: var(--ink); }
-.dd2 .tc__name small { font-size: 11.5px; line-height: 1.3; color: var(--ink-mute); }
-.dd2 .chev { flex: none; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute); transform: rotate(45deg); transition: transform .25s; }
-.dd2 .tc li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
-.dd2 .tc__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
-.dd2 .tc li.is-open .tc__more { grid-template-rows: 1fr; }
-.dd2 .tc__in { min-height: 0; overflow: hidden; }
-.dd2 .tc__pad { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 12px 12px; }
-.dd2 .tc__in p { padding: 10px 12px; border-radius: 10px; background: var(--paper-warm); font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
-.dd2 .tc__name .src { font-size: 10.5px; }
-.dd2 .tc__x { width: 26px; height: 26px; fill: none; stroke: var(--hot); stroke-width: 3; stroke-linecap: round; }
-.dd2 .tc--old .tc__when small { color: color-mix(in srgb, var(--hot) 70%, var(--ink)); text-align: center; line-height: 1.15; }
-.dd2 .sc--h .tc__name b { font-size: 15px; }
-.dd2 .sc .sc__body--span { grid-row: 2 / span 2; padding-top: 18px; }
-.dd2 .sc--h .sc__body.sc__body--span { grid-row: 1 / span 2; padding-top: 26px; }
-@media (hover: hover) {
-  .dd2 .tc li > button:hover .tc__name b { color: var(--accent); }
-}
-
-/* horizontal stage card: the media on one side, head and body on the other */
-.dd2 .sc--h { grid-template-columns: var(--hw) minmax(0, 1fr); grid-template-rows: auto 1fr; }
-.dd2 .sc--h .sc__media { grid-column: 1; grid-row: 1 / 3; }
-.dd2 .sc--h .sc__head { grid-column: 2; grid-row: 1; padding: 26px 26px 0; }
-.dd2 .sc--h .sc__body { grid-column: 2; grid-row: 2; padding: 14px 26px 26px; }
-.dd2 .sc--h-rev { grid-template-columns: minmax(0, 1fr) var(--hw); }
-.dd2 .sc--h-rev .sc__media { grid-column: 2; }
-.dd2 .sc--h-rev .sc__head, .dd2 .sc--h-rev .sc__body { grid-column: 1; }
-.dd2 .sc--h .sc__head h3 { font-size: 24px; }
-
 
 /* ---- Top · the film full bleed, the VSL as one 9:16 card on the left ---------- */
 
@@ -368,47 +285,159 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
 .dd2 .t3__cols p { font-size: 14px; line-height: 1.55; color: rgba(255, 255, 255, .8); }
 .dd2 .t3__cols .src { margin-top: auto; padding-top: 6px; }
 
-/* ---- Bottom · the Them vs Us pair, mirrored about the centre ------------------ */
+/* ---- Bottom · Them vs Us: [calendar A] [phone A] gap [phone B] [rows B] --------
+   One level row. The phones sit in the centre, each inset in a blue panel so
+   the panel shows round it on every side; Card A's month and Card B's rows
+   sit on the outer sides, each exactly the panel's height, so the two halves
+   mirror and stay level. */
 
-.dd2 .bot { --cw: 370px; padding: 96px 0 112px; }
-.dd2 .bot__eye { margin-bottom: 22px; text-align: center; }
-.dd2 .bot__pair {
-  display: grid; justify-content: center; column-gap: 28px;
-  grid-template-columns: var(--cw) auto var(--cw); grid-template-rows: auto auto 1fr;
+.dd2 .wrap--wide { max-width: 1360px; }
+/* The block fills the screen under the jump bar and sits centred in it, with generous room above and below. */
+.dd2 .bot { min-height: calc(100svh - var(--jump-h)); display: flex; align-items: center; padding: 120px 0; }
+.dd2 .bot > .wrap { width: 100%; }
+.dd2 .tu {
+  /* The phones' screens are exactly 9:16; the frame adds the bezel. 196px is 70% of the previous 280. */
+  --pw: 196px;
+  --bz: 6px;
+  --ph: calc((var(--pw) - 2 * var(--bz)) * 16 / 9 + 2 * var(--bz));
+  /* the blue margin round each phone, inside its panel */
+  --pp: 28px;
+  --pnw: calc(var(--pw) + 2 * var(--pp));
+  --pnh: calc(var(--ph) + 2 * var(--pp));
+  /* the empty column between the panels; with the two column gaps either side, the panels sit 64px apart */
+  --mid: 8px;
+  --rh: 62px;
 }
-.dd2 .bot__pair .sc { grid-row: 1 / span 3; grid-template-rows: subgrid; }
-.dd2 .bot__pair .vs { grid-column: 2; grid-row: 1; align-self: center; }
+.dd2 .tu__head { text-align: center; }
+.dd2 .tu__head h2 { margin-top: 10px; font-family: var(--display); font-size: clamp(32px, 3.2vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; }
+.dd2 .tu__row {
+  display: grid; margin-top: 48px; column-gap: 28px; row-gap: 32px;
+  grid-template-columns: minmax(0, 1fr) var(--pnw) var(--mid) var(--pnw) minmax(0, 1fr);
+  grid-template-areas:
+    'la la . lb lb'
+    'ia pa . pb ib';
+}
+.dd2 .tu__line { display: flex; flex-direction: column; gap: 12px; }
+.dd2 .tu__line p { font-family: var(--display); font-size: 21px; font-weight: 600; letter-spacing: -.015em; line-height: 1.35; text-wrap: pretty; }
+.dd2 .tu__line--a { grid-area: la; align-items: flex-start; }
+.dd2 .tu__line--b { grid-area: lb; align-items: flex-end; text-align: right; }
+.dd2 .tu__info--a { grid-area: ia; }
+.dd2 .tu__info--b { grid-area: ib; }
+.dd2 .tu__phone--a { grid-area: pa; }
+.dd2 .tu__phone--b { grid-area: pb; }
+.dd2 .tu__info { height: var(--pnh); min-width: 0; }
+.dd2 .tu__phone {
+  display: flex; align-items: center; justify-content: center; width: var(--pnw); height: var(--pnh); padding: var(--pp); border-radius: 24px;
+  background: radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--accent) 45%, var(--accent-deep)), var(--accent-deep) 72%);
+}
 
-/* Bottom 1 · Night: the round 1 look */
-.dd2 .b1 { background: var(--night); }
+/* the phones */
+.dd2 .tphone { flex: none; width: var(--pw); height: var(--ph); padding: var(--bz); border-radius: 26px; background: var(--ink); box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 24px 60px rgba(0, 0, 0, .4); }
+.dd2 .tphone__screen { position: relative; width: 100%; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 20px; background: var(--ink); }
+.dd2 .tphone__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dd2 .snd {
+  position: absolute; right: 8px; bottom: 8px; z-index: 2; width: 44px; height: 44px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(13, 14, 17, .55); border: 1px solid rgba(255, 255, 255, .28); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: background .2s;
+}
+.dd2 .snd svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dd2 .snd .snd__cone { fill: #fff; }
+.dd2 .snd:hover, .dd2 .snd:active, .dd2 .snd[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); }
+
+/* Card A's screen: Aidan's reference, a plain reminder text. The pale
+   lavender-grey is the reference's own, kept so the screen reads as a stock
+   messaging app rather than ours. */
+.dd2 .sms { display: flex; flex-direction: column; padding: 0 10px 11px; background: #edf1fb; font-family: var(--body); }
+.dd2 .sms__meta { padding-top: 18px; font-size: 7.5px; line-height: 1.4; text-align: center; color: #9aa3b5; }
+.dd2 .sms__bubble { margin-top: 22px; padding: 9px 10px; border-radius: 11px; background: #fff; font-size: 9.6px; line-height: 1.38; color: #1d1f24; }
+.dd2 .sms__input {
+  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: 0 9px 0 12px; height: 26px;
+  border: 1px solid #b9c3da; border-radius: 999px; font-size: 9px; color: #a8b2c7;
+}
+.dd2 .sms__input svg { width: 10px; height: 10px; fill: none; stroke: #8f9ab3; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Card A · the empty month: the What Works calendar with every tile the same
+   size, lightly shaded red, and holding nothing but its date. */
+.dd2 .cal { height: 100%; display: flex; flex-direction: column; }
+.dd2 .cal__top {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 16px; border-radius: 12px;
+  background: var(--ink); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+}
+.dd2 .cal__top span, .dd2 .cal__top strong { white-space: nowrap; }
+.dd2 .cal__top span { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.dd2 .cal__top strong { font-family: var(--display); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dd2 .cal__dow, .dd2 .cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.dd2 .cal__dow { margin: 12px 0 6px; }
+.dd2 .cal__dow span { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+.dd2 .cal__grid { flex: 1; min-height: 0; }
+.dd2 .cal__d {
+  display: flex; justify-content: center; padding-top: 7px; border-radius: 9px;
+  background: color-mix(in srgb, var(--hot) 13%, var(--paper)); border: 1px solid color-mix(in srgb, var(--hot) 22%, var(--paper));
+  font-size: 13px; font-weight: 600; color: color-mix(in srgb, var(--hot) 55%, var(--ink)); font-variant-numeric: tabular-nums;
+}
+
+/* the rows */
+.dd2 .lg { height: 100%; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.dd2 .lg li { position: relative; flex: none; border-radius: 14px; background: var(--paper); color: var(--ink); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .08); }
+.dd2 .lg li > button { display: flex; align-items: center; gap: 12px; width: 100%; height: var(--rh); padding: 0 14px 0 10px; text-align: left; }
+.dd2 .lg__when { flex: none; width: 56px; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.dd2 .lg__when b { font-family: var(--display); font-size: 24px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.dd2 .lg__when small { margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; line-height: 1.1; text-transform: uppercase; text-align: center; color: var(--accent); }
+.dd2 .lg__title {
+  flex: 1; min-width: 0; font-size: 14px; font-weight: 700; line-height: 1.3;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.dd2 .chev { flex: none; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute); transform: rotate(45deg); transition: transform .25s; }
+.dd2 .lg li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
+.dd2 .lg__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
+.dd2 .lg li.is-open .lg__more { grid-template-rows: 1fr; }
+.dd2 .lg__in { min-height: 0; overflow: hidden; }
+.dd2 .lg__pad { display: flex; flex-direction: column; gap: 6px; padding: 0 14px 14px; }
+.dd2 .lg__full { display: none; font-size: 13px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+.dd2 .lg li[data-clamped] .lg__full { display: block; }
+.dd2 .lg__pad p { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+/* When the clamp cut a title, the open panel repeats it in full, so the clamped one steps back. */
+.dd2 .lg li[data-clamped].is-open .lg__title { color: var(--ink-mute); }
+/* Card B is Card A's mirror image: timing on the outer edge, chevron inside. */
+.dd2 .lg--b li > button { flex-direction: row-reverse; text-align: right; padding: 0 10px 0 14px; }
+.dd2 .lg--b .lg__when { padding: 0 0 0 10px; border-right: 0; border-left: 1px solid var(--line); }
+.dd2 .lg--b .lg__pad { align-items: flex-end; text-align: right; }
+@media (hover: hover) {
+  .dd2 .lg li > button:hover .lg__title { color: var(--accent); }
+}
+
+/* Bottom 1 · Night */
+.dd2 .b1 { background: var(--night); color: #fff; }
 .dd2 .b1 .eye { color: var(--accent-lit); }
+.dd2 .b1 .tu__phone { box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 30px 70px rgba(0, 0, 0, .55); }
+.dd2 .b1 .cal__dow span { color: rgba(255, 255, 255, .5); }
 
-/* Bottom 2 · Paper: a light section, white cards, cream rows */
-.dd2 .b2 { background: var(--paper-warm); border-top: 1px solid var(--line); }
-.dd2 .b2 .sc { background: var(--paper); border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(13, 14, 17, .12); }
-.dd2 .b2 .tc li { background: var(--paper-warm); box-shadow: none; }
-.dd2 .b2 .tc__in p { background: var(--paper); }
+/* Bottom 2 · Paper */
+.dd2 .b2 { background: var(--paper-warm); border-top: 1px solid var(--line); color: var(--ink); }
+.dd2 .b2 .tu__line--a p { color: color-mix(in srgb, var(--hot) 45%, var(--ink)); }
+.dd2 .b2 .lg li { box-shadow: 0 1px 2px rgba(13, 14, 17, .06), 0 10px 24px rgba(13, 14, 17, .07); }
+.dd2 .b2 .tu__phone { box-shadow: 0 30px 70px rgba(13, 14, 17, .22); }
 
-/* Bottom 3 · Ink: dark surfaces tinted toward each side */
-.dd2 .b3 { background: linear-gradient(180deg, var(--night), color-mix(in srgb, var(--accent-deep) 70%, var(--night))); color: #fff; }
-.dd2 .b3 .eye { color: var(--accent-lit); }
-.dd2 .b3 .sc { color: #fff; border: 1px solid rgba(255, 255, 255, .1); }
-.dd2 .b3 .sc--old { background: color-mix(in srgb, var(--hot) 10%, var(--tile)); }
-.dd2 .b3 .sc--apex { background: color-mix(in srgb, var(--accent) 14%, var(--tile)); }
-.dd2 .b3 .sc--old .sc__head h3 { color: #fff; }
-.dd2 .b3 .tc li { background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .08); box-shadow: none; }
-.dd2 .b3 .tc__name b, .dd2 .b3 .tc__when b { color: #fff; }
-.dd2 .b3 .tc__name .src { color: rgba(255, 255, 255, .55); }
-.dd2 .b3 .tc__when { border-right-color: rgba(255, 255, 255, .14); }
-.dd2 .b3 .tc__when small { color: var(--accent-lit); }
-.dd2 .b3 .tc--old .tc__when small { color: color-mix(in srgb, var(--hot) 60%, #fff); }
-.dd2 .b3 .tc__x { stroke: color-mix(in srgb, var(--hot) 75%, #fff); }
-.dd2 .b3 .chev { border-color: rgba(255, 255, 255, .6); }
-.dd2 .b3 .tc__in p { background: rgba(255, 255, 255, .06); color: rgba(255, 255, 255, .82); }
-.dd2 .b3 .vs {
-  width: 72px; height: 72px; background: none; border: 2px solid rgba(255, 255, 255, .35);
-  font-size: 22px; letter-spacing: .02em; color: #fff;
+/* Bottom 3 · Ink, each half tinted toward its side */
+.dd2 .b3 {
+  color: #fff;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--hot) 14%, var(--night)) 0%, var(--night) 50%, color-mix(in srgb, var(--accent-deep) 85%, var(--night)) 100%);
 }
+.dd2 .b3 .eye { color: var(--accent-lit); }
+/* an inset ring rather than a border, so the rows keep exactly the height the other themes measure */
+.dd2 .b3 .lg li { background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); color: #fff; }
+.dd2 .b3 .lg__when b, .dd2 .b3 .lg__full { color: #fff; }
+.dd2 .b3 .lg__when { border-color: rgba(255, 255, 255, .14); }
+.dd2 .b3 .lg--b .lg__when small { color: var(--accent-lit); }
+.dd2 .b3 .chev { border-color: rgba(255, 255, 255, .6); }
+.dd2 .b3 .lg__pad p { color: rgba(255, 255, 255, .78); }
+.dd2 .b3 .lg li[data-clamped].is-open .lg__title { color: rgba(255, 255, 255, .5); }
+.dd2 .b3 .src { color: rgba(255, 255, 255, .5); }
+.dd2 .b3 .tu__phone--a { box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 0 70px color-mix(in srgb, var(--hot) 35%, transparent); }
+.dd2 .b3 .cal__dow span { color: rgba(255, 255, 255, .5); }
+.dd2 .b3 .cal__d { background: color-mix(in srgb, var(--hot) 18%, transparent); border-color: color-mix(in srgb, var(--hot) 32%, transparent); color: color-mix(in srgb, var(--hot) 45%, #fff); }
+.dd2 .b3 .tu__phone--b { box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 0 70px color-mix(in srgb, var(--accent) 45%, transparent); }
 
 /* ====================================================================================
    TABLET · landscape (checked at 1194)
@@ -419,7 +448,15 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dd2 .top__in { gap: 48px; }
   .dd2 .t3 { --vw: 270px; }
   .dd2 .t2__panel { padding: 32px; }
-  .dd2 .bot { --cw: 350px; }
+  .dd2 .tu { --pw: 180px; --pp: 24px; --rh: 56px; }
+  .dd2 .cal__top { gap: 8px; padding: 10px 11px; }
+  .dd2 .cal__top span { font-size: 9px; letter-spacing: .06em; }
+  .dd2 .cal__top strong { font-size: 14px; }
+  .dd2 .tu__row { column-gap: 22px; }
+  .dd2 .tu__line p { font-size: 19px; }
+  .dd2 .lg__title { font-size: 13px; }
+  .dd2 .lg__pad { gap: 4px; padding: 0 12px 12px; }
+  .dd2 .lg__full, .dd2 .lg__pad p { font-size: 12.5px; line-height: 1.45; }
   .dd2 .jump__opts a { min-width: 0; padding: 4px 14px; }
 }
 
@@ -459,7 +496,19 @@ html:has(.dd2) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .dd2 .t3__cols li, .dd2 .t3__cols li + li { padding: 14px 0; border-left: 0; }
   .dd2 .t3__cols li + li { border-top: 1px solid rgba(255, 255, 255, .16); }
 
-  /* bottom: the two cards still fit side by side; the gap closes up */
-  .dd2 .bot { --cw: minmax(0, 340px); padding: 64px 0 80px; }
-  .dd2 .bot__pair { column-gap: 14px; }
+  /* bottom: five columns won't fit a portrait tablet, so the halves stack and
+     still mirror: Card A rows then phone, Card B phone then rows. */
+  .dd2 .bot { min-height: 0; padding: 88px 0; }
+  .dd2 .tu { --pw: 176px; --pp: 24px; --rh: 60px; }
+  .dd2 .tu__row {
+    margin-top: 36px; column-gap: 20px; row-gap: 20px;
+    grid-template-columns: var(--pnw) minmax(0, 1fr) var(--pnw);
+    grid-template-areas:
+      'la la la'
+      'ia ia pa'
+      'lb lb lb'
+      'pb ib ib';
+  }
+  .dd2 .tu__line--b { margin-top: 28px; }
+  .dd2 .tu__line p { font-size: 18px; }
 }

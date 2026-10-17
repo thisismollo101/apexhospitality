@@ -57,7 +57,7 @@ export default function DesktopDesignSamples2() {
           </p>
           <p className="intro__flag">
             Figures are not yet cleared by the fact checker. Every one carries a grey <span className="ast">*</span>
-            unverified line so it is easy to find and swap.
+            unverified line so it is easy to find and swap; in the Them vs Us rows it shows once a row is opened.
           </p>
         </div>
       </header>

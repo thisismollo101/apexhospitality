@@ -78,68 +78,74 @@ export const VSL = {
   poster: 'hq/screen-tall.jpg',
 };
 
-export const CONTRAST = { label: 'Them vs Us' };
+export const CONTRAST = { label: 'Them vs Us', title: 'The Cold Receipt & Stolen Budget' };
 
 /**
- * One expandable row on a contrast card. Card B's left value is the send
- * timing; Card A's is "never sent" (`num` left out). The source line shows as
- * the row's grey subline, so every figure's tag is visible without opening it.
+ * One of Card B's expandable rows: the send timing on the outer edge, the
+ * title, and the source line, which shows only once the row is open.
  */
-export type Row = { num?: string; unit: string; title: string; text: string; src: string };
+export type Row = { num: string; unit: string; title: string; text: string; src: string };
 
 export const OLD_WAY = {
-  kick: 'Card A',
   title: 'The Old Way',
-  /** The card's short headline: the live Welcome VSL headline, reused rather than written new. */
-  headline: 'Your Revenue Walks Out the Door Before Your Guest Walks In.',
-  subject: 'Thank you for your booking',
-  attachment: 'Invoice_Rules_Terms.pdf',
-  silence: '30 days of radio silence',
-  rows: [
-    {
-      unit: 'Never sent',
-      title: '380% Conversion Lift on High-Priced Inventory',
-      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
-      src: 'Spiegel / Northwestern · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '68% of Pre-Arrival Upsell Revenue Driven by Suites',
-      text: 'Industry upsell benchmarks show that premium room category upgrades represent the single largest ancillary revenue stream in hotel operations, accounting for over 68% of total pre-arrival upsell value.',
-      src: 'Oaky Data · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '4x Higher Conversion via Digital Touchpoints',
-      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
-      src: 'Canary Technologies · unverified',
-    },
-    {
-      unit: 'Never sent',
-      title: '60%+ Pre-Arrival Dining Decision Window',
-      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
-      src: 'Cornell / OpenTable · unverified',
-    },
-  ] as Row[],
+  headline:
+    "While you send cold email receipts and 30 days of radio silence, off-site competitors are stealing your guest's dining and spa budget.",
+  /** The phone: a plain reminder text, as in Aidan's reference screenshot. */
+  sms: {
+    kind: 'Text Message',
+    when: 'Today 9:29AM',
+    body: 'Hi Alex, this is a reminder of your reservation at our hotel on March 15. Your check-in time is 3:00 PM. Please confirm your arrival by replying YES or call us at 123-456-7890 if you need to make any changes.',
+    input: 'Text message',
+  },
+  /**
+   * The month from booking to check-in, the What Works calendar's own
+   * (welcome-mobile-options-2): Monday-first, booked Mon 3 Nov, arrival Tue
+   * 2 Dec, "days to arrival" counted from Day 1. On the Old Way every one of
+   * the 30 days is empty: nothing is sent.
+   */
+  calendar: { kick: 'Booking to check-in', left: '29 days to arrival', start: Date.UTC(2025, 10, 3), days: 30 },
 };
 
 export const APEX_WAY = {
-  kick: 'Card B',
   title: 'The APEX Way',
-  /** One placeholder film on a muted loop, from the Bento Expand set; to be swapped. */
+  headline: 'Apex Welcome captures their spend commitment while excitement is at its absolute peak, locking in 5x more pre-arrival cash.',
+  /**
+   * One placeholder film from the Bento Expand set, to be swapped; it has a
+   * sound track, for the unmute button. Safari takes the HEVC master; Chrome
+   * and Firefox the WebM (VP9 + Opus); anything else the H.264 copy.
+   */
   clip: 'hq/card-tall.mp4',
   clipHevc: 'hq/card-tall-hevc.mp4',
+  clipWebm: 'hq/card-tall.webm',
   poster: 'hq/card-tall.jpg',
   rows: [
-    { num: '24', unit: 'Hours', title: '2% to 5% at the Front Desk', text: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.', src: UNVERIFIED },
-    { num: '48', unit: 'Hours', title: '15% to 25% Pre-Arrival Conversion', text: 'Data Driven Mobile Cinema converts at 15% to 25% during pre-arrival intent.', src: UNVERIFIED },
-    { num: '7', unit: 'Days', title: '5x Pre-Arrival Revenue', text: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.', src: 'Unverified · internal target only' },
+    {
+      num: '24',
+      unit: 'Hours',
+      title: '380% Conversion Lift on High-Priced Inventory',
+      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
+      src: 'Spiegel / Northwestern, unverified',
+    },
+    {
+      num: '48',
+      unit: 'Hours',
+      title: '4x Higher Conversion via Digital Touchpoints',
+      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
+      src: 'Canary Technologies, unverified',
+    },
+    {
+      num: '7',
+      unit: 'Days',
+      title: '60%+ Pre-Arrival Dining Decision Window',
+      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
+      src: 'Cornell / OpenTable, unverified',
+    },
     {
       num: '48',
       unit: 'Hours',
       title: '50% Lower Cancellation Rate',
       text: 'Direct guests engaged pre-arrival cancel at just 10.6%, compared to 21.8% for OTA bookers, stabilizing cash flow weeks in advance.',
-      src: '10.6% Direct vs. 21.8% OTA, Cloudbeds, unverified',
+      src: 'Cloudbeds, unverified',
     },
   ] as Row[],
 };
