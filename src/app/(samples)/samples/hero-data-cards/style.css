@@ -242,3 +242,19 @@ html:has(.hdc) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
   .hdc .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
   .hdc .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
 }
+
+/* ====================================================================================
+   Gradient 1 · Cobalt Sweep, reworked (Aidan, 18 Oct): the whole group 15% smaller
+   (phone, headline, card boxes, padding, gaps), the text inside the cards kept at its
+   size, and each card's line set on its two given lines.
+   ==================================================================================== */
+.hdc .hero--g1 .top__in { zoom: .85; }
+.hdc .hero--g1 .hc__when b, .hdc .hero--g1 .hc__txt { zoom: 1.17647; }
+.hdc .hero--g1 .hc__line span { display: block; white-space: nowrap; }
+/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
+.hdc .hero--g1 .hc { width: 640px; max-width: 100%; }
+@media (max-width: 960px) {
+  /* Here the current cards are as wide as the copy column (the page less its gutters, the
+     phone column and the gap), not their 640px; these are 15% narrower than that. */
+  .hdc .hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+}
