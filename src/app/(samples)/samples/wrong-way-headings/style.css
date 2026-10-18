@@ -368,3 +368,32 @@ html:has(.wwh) { scroll-behavior: smooth; }
 .wwh .wx .snd-pill { gap: 4.9px; height: 22.4px; padding: 0 9.8px 0 7.7px; font-size: 7.7px; }
 .wwh .wx .snd-pill svg { width: 10.5px; height: 10.5px; }
 .wwh .wx .snd-pill::before { inset: -10.8px -6px; }
+
+/* ====================================================================================
+   ADDED (round 4): bigger side headings and calendar, pills nudged down
+   ==================================================================================== */
+
+/* Both labels 20% bigger; the Standard headline 20% bigger and the Exceptional one 10%,
+   each still two set lines and still measured from its column's width. */
+.wwh .wx .jc {
+  --h-a: min(28.8px, 8.88cqi);
+  --h-b: min(26.4px, 8.14cqi);
+  /* the closed rows' stack, which the calendar used to match exactly */
+  --rows-h: calc(4 * var(--rh) + 3 * 8px);
+}
+.wwh .wx .jc__head .eye { font-size: 13.2px; }
+.wwh .wx .jc__fit--a .jc__h { font-size: var(--h-a); }
+.wwh .wx .jc__info:not(.jc__info--a) .jc__h { font-size: var(--h-b); }
+/* The calendar 10% bigger, both ways. */
+.wwh .wx .jc__fit--a .cal--quiet { width: 77cqi; height: calc(var(--rows-h) * 1.1); }
+/* The two groups stay the same height, so with both centred on their phones the labels
+   and headlines still stand level: the APEX heading takes, as extra space under it,
+   exactly what the bigger calendar and the bigger Standard headline add on the left. */
+.wwh .wx .jc__info:not(.jc__info--a) .jc__head { margin-bottom: calc(var(--rows-h) * .1 + 2 * 1.08 * (var(--h-a) - var(--h-b))); }
+
+/* The pills: the gap above each (card top to pill) and below it (pill to phone top) were
+   already equal, so each moves down by 10% of that gap. */
+.wwh .wx .jc__pill { top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2 * 1.1); }
+/* That extra space is only there to keep the closed groups level; while a row is open the
+   heading gives it back, so the opened row has the room it had before. */
+.wwh .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__head { margin-bottom: 0; }
