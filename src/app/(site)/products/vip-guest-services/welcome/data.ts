@@ -177,62 +177,68 @@ export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
   { claim: '65% of US hotels report staffing shortages.', src: 'AHLA, Feb 2025' },
 ];
 
-/* ---- the top of the page: hero and Joined Cards --------------------------------
-   Copied verbatim from /samples/desktop-design-samples-2 (Top 1 · Cinematic Scrim
-   and Bottom 1 · Joined Cards), not imported, per CLAUDE.md. */
+/* ---- the top of the page: the hero and the Wrong Way vs APEX Way section ---------
+   Copied verbatim from two samples, not imported, per CLAUDE.md: the hero from
+   /samples/hero-data-cards (Gradient 1 · Cobalt Sweep only; its own headline
+   lines and cards are HERO_G1 here), and the section from
+   /samples/wrong-way-headings. */
 
-/** The source line every uncleared figure carries. */
-export const UNVERIFIED = 'Unverified · source pending';
+/* the hero (hero-data-cards) */
 
-/** The top's headline, and the film that loops full bleed behind it (the live Welcome hero's placeholder). */
 export const TOP = {
   headline: 'This Is the Single Largest Commercial Leak on Your P&L.',
+  /** The same headline in the two lines it already breaks into on the live page. */
+  lines: ['This Is the Single Largest', 'Commercial Leak on Your P&L.'],
   film: 'hero.mp4',
-  /** A frame of the film, for while it loads and under reduced motion. */
   poster: 'hero.jpg',
 };
 
-export type DataPoint = { n: string; title: string; text: string; img: string; src: string };
-
-export const DATA_POINTS: DataPoint[] = [
-  {
-    n: '01',
-    title: 'The Status Quo Leak',
-    text: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.',
-    img: 'm9-tall.jpg',
-    src: UNVERIFIED,
-  },
-  {
-    n: '02',
-    title: 'The APEX Conversion Lift',
-    text: 'Data Driven Mobile Cinema converts at 15% to 25% during pre-arrival intent.',
-    img: 'm4-tall.jpg',
-    src: UNVERIFIED,
-  },
-  {
-    n: '03',
-    title: 'Operational Freedom',
-    text: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.',
-    img: 'p27.jpg',
-    src: 'Unverified · 5x is an internal target',
-  },
-];
-
 export const RIBBON = ['Oracle OPERA Cloud (OHIP REST API)', 'SynXis Middleware', 'Agilysys PMS', '0 Staff Drag Guarantee'];
 
+/**
+ * The VSL: the live page's executive film, now shown on its own with no card
+ * round it, muted on a loop. 994 × 1920; Safari takes the HEVC, Chrome and
+ * Firefox the WebM, anything else the H.264.
+ */
 export const VSL = {
-  /** Panel A's label. */
-  label: 'Executive VSL',
-  cta: 'WATCH 90-SEC EXECUTIVE BRIEFING',
-  /** The VSL runs 90 seconds across the 13-slide objection script. */
-  seconds: 90,
-  slides: 13,
-  /** The slide the caption box is showing. */
-  activeSlide: 9,
-  focusKick: 'Active objection focus',
-  focus: 'Dismantling Staff & IT Fears',
+  cta: 'Watch 90-second executive briefing',
+  clip: 'hq/screen-tall.mp4',
+  clipHevc: 'hq/screen-tall-hevc.mp4',
+  clipWebm: 'hq/screen-tall.webm',
   poster: 'hq/screen-tall.jpg',
 };
+
+/**
+ * One hero card: the figure in the time-label spot, then the title and the
+ * line after it. The figure is split at its range so the dash can be drawn
+ * short with a little room either side; `to` is how it reads aloud.
+ */
+export type HeroCard = { fig: [string] | [string, string]; title: string; text: string | [string, string] };
+
+/** Gradient 1's headline lines and three cards (Aidan, 18 Oct), each card's line word for word on its two given lines. */
+export const HERO_G1: { lines: string[]; cards: HeroCard[] } = {
+  lines: ['This Is the Single', 'Largest Commercial', 'Leak on Your P&L.'],
+  cards: [
+    { fig: ['5%'], title: 'Status Quo', text: ['Front desk check-in upsells convert at just', '2% to 5% when guests arrive tired.'] },
+    { fig: ['25%'], title: 'APEX Conversion', text: ['Data Driven Mobile Cinema converts at', '15% to 25% during pre-arrival intent.'] },
+    { fig: ['5X'], title: 'Operational Freedom', text: ['Multiplies pre-arrival revenue by 5x', 'with ZERO staff labor or IT drag.'] },
+  ],
+};
+
+/* the Wrong Way vs APEX Way section (wrong-way-headings) */
+
+/**
+ * added: the section heading over the whole block (set like the live "Why it
+ * works" heading, its two lines broken from tablet up) and the two mini
+ * headings, Aidan's copy word for word, each mini headline on two lines.
+ */
+export const SECTION = { label: 'The potential', lines: ['Boring Administrative Confirmations vs', 'Apex Data Driven Revenue Engine.'] };
+
+export const HEADINGS = {
+  wrong: { label: 'Standard', lines: ['Stop Reminding Guests.', 'Start Exciting Them.'] },
+  apex: { label: 'Exceptional', lines: ['Same Guest. Same Booking.', 'Two Very Different Stays.'] },
+};
+
 
 /**
  * One of Card B's expandable rows: the send timing on the outer edge, the
