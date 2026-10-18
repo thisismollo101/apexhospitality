@@ -193,8 +193,6 @@ export const TOP = {
   poster: 'hero.jpg',
 };
 
-export const RIBBON = ['Oracle OPERA Cloud (OHIP REST API)', 'SynXis Middleware', 'Agilysys PMS', '0 Staff Drag Guarantee'];
-
 /**
  * The VSL: the live page's executive film, now shown on its own with no card
  * round it, muted on a loop. 994 × 1920; Safari takes the HEVC, Chrome and
