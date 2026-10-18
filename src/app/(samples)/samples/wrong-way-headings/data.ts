@@ -6,10 +6,16 @@
 
 export const img = (name: string) => `/media/welcome/${name}`;
 
-/** added: the two mini headings, Aidan's copy word for word, each headline set on two lines. */
+/**
+ * added: the section heading over the whole block (set like the live "Why it
+ * works" heading, its two lines broken from tablet up) and the two mini
+ * headings, Aidan's copy word for word, each mini headline on two lines.
+ */
+export const SECTION = { label: 'The potential', lines: ['Boring Administrative Confirmations vs', 'Apex Data Driven Revenue Engine.'] };
+
 export const HEADINGS = {
-  wrong: { label: 'Wrong way, APEX way', lines: ['Stop Reminding Guests.', 'Start Exciting Them.'] },
-  apex: { label: 'The difference', lines: ['Same Guest. Same Booking.', 'Two Very Different Stays.'] },
+  wrong: { label: 'Standard', lines: ['Stop Reminding Guests.', 'Start Exciting Them.'] },
+  apex: { label: 'Exceptional', lines: ['Same Guest. Same Booking.', 'Two Very Different Stays.'] },
 };
 
 
