@@ -114,21 +114,29 @@ export default function Hero({ v }: { v: Option }) {
       <div className="wrap top__in">
         <Vsl />
         <div className="top__copy">
-          {/* the headline's own two lines, set as blocks so the copy column is only as wide as what it holds */}
+          {/* the headline's own lines, set as blocks so the copy column is only as wide as what it holds */}
           <h2 className="top__h">
-            {TOP.lines.map((l) => (
+            {(v.lines ?? TOP.lines).map((l) => (
               <span key={l}>{l} </span>
             ))}
           </h2>
           <ul className="hc">
-            {CARDS.map((c) => (
+            {(v.cards ?? CARDS).map((c) => (
               <li key={c.title}>
                 <span className="hc__when">
                   <Fig fig={c.fig} />
                 </span>
                 <span className="hc__txt">
                   <b>{c.title}</b>
-                  {c.text}
+                  {typeof c.text === 'string' ? (
+                    c.text
+                  ) : (
+                    // the line set on its two given lines
+                    <span className="hc__line">
+                      <span>{c.text[0]} </span>
+                      <span>{c.text[1]}</span>
+                    </span>
+                  )}
                 </span>
               </li>
             ))}

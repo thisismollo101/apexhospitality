@@ -37,7 +37,7 @@ export const VSL = {
  * line after it. The figure is split at its range so the dash can be drawn
  * short with a little room either side; `to` is how it reads aloud.
  */
-export type Card = { fig: [string] | [string, string]; title: string; text: string };
+export type Card = { fig: [string] | [string, string]; title: string; text: string | [string, string] };
 
 /** The three cards, the same in every option: the live page's lines, with no asterisks, sources or tags. */
 export const CARDS: Card[] = [
@@ -46,15 +46,26 @@ export const CARDS: Card[] = [
   { fig: ['5X'], title: 'Operational Freedom', text: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.' },
 ];
 
-/** The three options: Version 3 (Blue Gradient Edge) each time, differing only in the cards' gradient. */
-export type Option = { id: string; n: number; name: string; note: string };
+/**
+ * The three options: Version 3 (Blue Gradient Edge) each time, differing in the
+ * cards' gradient. An option can also set its own headline lines and cards:
+ * Gradient 1 does (Aidan, 18 Oct), with each card's line, word for word, set
+ * on two lines broken where the top runs a little longer than the bottom.
+ */
+export type Option = { id: string; n: number; name: string; note: string; lines?: string[]; cards?: Card[] };
 
 export const OPTIONS: Option[] = [
   {
     id: 'g1',
     n: 1,
     name: 'Cobalt Sweep',
-    note: 'Site blue from the accent edge, held to the middle of the card before it deepens into the Welcome navy on the right.',
+    note: 'Site blue from the accent edge, held to the middle of the card before it deepens into the Welcome navy on the right. The headline on three lines, one figure per card, each line on two, and the group 15% smaller with the card text kept at its size.',
+    lines: ['This Is the Single', 'Largest Commercial', 'Leak on Your P&L.'],
+    cards: [
+      { fig: ['5%'], title: 'Status Quo', text: ['Front desk check-in upsells convert at just', '2% to 5% when guests arrive tired.'] },
+      { fig: ['25%'], title: 'APEX Conversion', text: ['Data Driven Mobile Cinema converts at', '15% to 25% during pre-arrival intent.'] },
+      { fig: ['5X'], title: 'Operational Freedom', text: ['Multiplies pre-arrival revenue by 5x', 'with ZERO staff labor or IT drag.'] },
+    ],
   },
   {
     id: 'g2',
