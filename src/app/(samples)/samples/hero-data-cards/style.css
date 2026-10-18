@@ -1,0 +1,224 @@
+/*
+ * Hero Data Cards. Everything is scoped under .hdc.
+ *
+ * The hero rules are the live Welcome page's (welcome/official.css, the Top 1
+ * block and its live sizes), copied with .w3page .wx rescoped to .hdc, so the
+ * headline, the VSL's column and the layout match it exactly. Two things
+ * differ, on this page only: the VSL is the bare film, and the data cards
+ * (.hc) are the APEX Way timeline rows, the figure in the time-label column.
+ */
+
+.hdc {
+  --display: 'Aeonik Pro', var(--hdc-display), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: var(--hdc-body), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ink: #0d0e11;
+  --ink-soft: #4a5058;
+  --ink-mute: #818892;
+  --paper: #ffffff;
+  --paper-warm: #f6f5f2;
+  --line: #e4e3df;
+  --accent: #2b59e0;
+  --accent-deep: #0a1a44;
+  --night: #0b0c0e;
+  /* The accent lifted for type on night, where the base blue is too dim to read. */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --maxw: 1240px;
+  --gutter: 32px;
+  --jump-h: 64px;
+  /* The live page's two fixed bars (54px sales bar, 69px nav on desktop), which the hero fills the screen under. */
+  --chrome-h: 123px;
+  /* The live cards are drawn at 75%; these are 15% larger than that. */
+  --cz: calc(.75 * 1.15);
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.hdc * { margin: 0; padding: 0; box-sizing: border-box; }
+.hdc button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.hdc ul { list-style: none; }
+.hdc a:focus-visible, .hdc button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+html:has(.hdc) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.hdc) { scroll-behavior: auto; }
+  .hdc *, .hdc *::before, .hdc *::after { transition: none !important; animation: none !important; }
+}
+
+.hdc .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hdc .eye { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+
+/* ---- page frame ------------------------------------------------------------ */
+
+.hdc .jump {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 16px;
+  height: var(--jump-h); padding: 0 var(--gutter);
+  background: rgba(13, 14, 17, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.hdc .jump a { color: #fff; text-decoration: none; }
+.hdc .jump__home {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px;
+  font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7) !important; white-space: nowrap;
+}
+.hdc .jump__opts { flex: 1; display: flex; justify-content: center; gap: 6px; }
+.hdc .jump__opts a {
+  display: flex; flex-direction: column; justify-content: center; min-height: 48px; min-width: 150px;
+  padding: 4px 16px; border-radius: 12px; background: rgba(255, 255, 255, .07);
+  font-size: 13.5px; font-weight: 600; line-height: 1.2; white-space: nowrap; transition: background .2s;
+}
+.hdc .jump__opts a span { font-size: 9.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-lit); }
+.hdc .jump__opts a:hover, .hdc .jump__opts a:active { background: var(--accent); }
+.hdc .jump__opts a:hover span, .hdc .jump__opts a:active span { color: rgba(255, 255, 255, .8); }
+
+.hdc .intro { padding: 64px 0 56px; background: var(--paper); }
+.hdc .intro__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hdc .intro h1 { margin-top: 12px; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
+.hdc .intro p { margin-top: 16px; max-width: 68ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+.hdc .outro { padding: 40px 0 64px; background: var(--paper); }
+.hdc .outro a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-soft); }
+.hdc .outro p { font-size: 12px; color: var(--ink-mute); }
+
+.hdc .opt { scroll-margin-top: var(--jump-h); }
+.hdc .opt__head { padding: 26px 0 22px; background: var(--paper-warm); border-top: 1px solid var(--line); }
+.hdc .opt__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hdc .opt__label { display: block; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.hdc .opt__note { margin-top: 6px; max-width: 92ch; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+/* ---- the hero, as live -------------------------------------------------------------------- */
+
+/* integration trust ribbon */
+.hdc .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
+.hdc .ribbon li {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
+  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
+}
+.hdc .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.hdc .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
+.hdc .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
+.hdc .ribbon--strip li + li { border-left: 1px solid var(--rule); }
+
+/* play button */
+.hdc .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.hdc .play svg { width: 38%; height: 38%; fill: var(--ink); }
+
+.hdc .top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--chrome-h)); background: var(--night); color: #fff;
+}
+.hdc .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.hdc .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+/* the live column: the VSL at 75% of --vw, then the copy */
+.hdc .top__in { flex: 1; width: 100%; display: grid; grid-template-columns: calc(var(--vw) * .75) minmax(0, 1fr); gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px; }
+.hdc .top__copy { min-width: 0; }
+.hdc .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+.hdc .t1__ribbon { background: rgba(13, 14, 17, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 0; border-top: 1px solid var(--rule); }
+
+/* ---- the VSL, bare: no card, no tag, no caption, no progress; the film whole (994 × 1920, its own
+   shape, so nothing is cropped), a play button centred on it and the label under the button ------- */
+.hdc .vsl { position: relative; width: 100%; aspect-ratio: 994 / 1920; }
+.hdc .vsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hdc .vsl__play {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 0 14px; text-align: center;
+}
+/* the live play button is 76px drawn at 75% */
+.hdc .vsl__play .play { width: 57px; height: 57px; }
+.hdc .vsl__play:hover .play { transform: scale(1.06); }
+.hdc .vsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.hdc .vsl__play[aria-pressed='true'] .vsl__cta { opacity: .8; }
+
+/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
+   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
+   figures, padding and boxes all grow together. The index (01 / 02 / 03) alone keeps its live
+   size: the live tag's 10px at 75%, divided back out of --cz. */
+.hdc .hc { display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz)); }
+.hdc .hc li { display: flex; align-items: center; padding: 16px 22px 16px 0; border-radius: 14px; }
+/* the time-label column: the figure large, the index small under it, a rule on its right */
+.hdc .hc__when {
+  flex: none; width: 132px; align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin-right: 20px; border-right: 1px solid var(--hc-rule);
+}
+.hdc .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+.hdc .hc__when small { margin-top: 6px; font-size: calc(10px * .75 / var(--cz)); font-weight: 600; letter-spacing: .14em; line-height: 1.2; color: var(--hc-idx); }
+.hdc .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
+.hdc .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
+
+/* Version 1 · Navy Glass: three separate rows of frosted dark navy glass */
+.hdc .hero--v1 .hc {
+  --hc-fig: #fff; --hc-idx: var(--accent-lit); --hc-title: var(--accent-lit); --hc-text: rgba(255, 255, 255, .9); --hc-rule: rgba(255, 255, 255, .16);
+}
+.hdc .hero--v1 .hc li {
+  background: color-mix(in srgb, var(--accent-deep) 58%, transparent); border: 1px solid color-mix(in srgb, var(--accent-lit) 22%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 12px 32px rgba(0, 0, 0, .25);
+}
+
+/* Version 2 · Light Frost Ledger: one light frosted panel, the rows ruled off inside it */
+.hdc .hero--v2 .hc {
+  --hc-fig: var(--accent); --hc-idx: var(--ink-mute); --hc-title: var(--ink); --hc-text: var(--ink-soft); --hc-rule: var(--line);
+  gap: 0; padding: 4px 0; border-radius: 18px;
+  background: color-mix(in srgb, var(--paper-warm) 84%, transparent); border: 1px solid rgba(255, 255, 255, .6);
+  backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); box-shadow: 0 18px 50px rgba(0, 0, 0, .3);
+}
+.hdc .hero--v2 .hc li { border-radius: 0; }
+.hdc .hero--v2 .hc li + li { box-shadow: inset 0 1px 0 var(--line); }
+
+/* Version 3 · Blue Gradient Edge: site blue into the Welcome navy, a thin light-blue edge on the left */
+.hdc .hero--v3 .hc {
+  --hc-fig: #fff; --hc-idx: rgba(255, 255, 255, .72); --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
+}
+.hdc .hero--v3 .hc li {
+  border-radius: 6px 14px 14px 6px;
+  background: linear-gradient(100deg, color-mix(in srgb, var(--accent) 74%, transparent), color-mix(in srgb, var(--accent-deep) 80%, transparent));
+  border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+
+/* ====================================================================================
+   TABLET · landscape (checked at 1194): the live tier
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .hdc .top { --vw: 300px; }
+  .hdc .top__in { gap: 48px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834): the live tier
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .hdc .intro { padding: 48px 0 40px; }
+  .hdc .intro h1 { font-size: 38px; }
+  .hdc .jump { gap: 8px; padding: 0 12px; }
+  .hdc .jump__home { font-size: 12px; }
+  .hdc .jump__opts { gap: 4px; }
+  .hdc .jump__opts a { flex: 1; min-width: 0; padding: 4px 8px; font-size: 12px; white-space: normal; }
+  .hdc .play { width: 64px; height: 64px; }
+  .hdc .vsl__play .play { width: 48px; height: 48px; }
+  .hdc .vsl__cta { font-size: 12px; }
+  .hdc .top { --vw: 270px; min-height: 0; }
+  .hdc .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .hdc .top__h { font-size: 36px; }
+  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
+  .hdc .hc { margin-top: calc(24px * .75 / var(--cz)); }
+  .hdc .hc li { padding: 12px 14px 12px 0; }
+  .hdc .hc__when { width: 112px; margin-right: 14px; }
+  .hdc .hc__when b { font-size: 29px; }
+  .hdc .hc__txt { font-size: 14px; }
+  .hdc .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
+  .hdc .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
+}

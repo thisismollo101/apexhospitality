@@ -49,6 +49,12 @@
       "label": "Desktop Design Samples 2",
       "summary": "Round 2: three tops with the film full bleed behind the headline and the VSL as one 9:16 card, and three bottoms with the revised Them vs Us pair (four NEVER SENT rows against four timed rows). Each with its tablet version.",
       "status": "live"
+    },
+    {
+      "slug": "hero-data-cards",
+      "label": "Hero Data Cards",
+      "summary": "The live Welcome hero three times, with only its three data cards redesigned on the APEX Way timeline rows (the figure in the time-label spot), each version in its own translucent treatment; the VSL shown as the bare film.",
+      "status": "live"
     }
   ]
 }
