@@ -339,3 +339,8 @@ html:has(.wwh) { scroll-behavior: smooth; }
 /* a wider step down to the calendar here, which also keeps the calendar under its live size */
 .wwh .wx .jc__fit--a .jc__head { margin-bottom: 22px; }
 .wwh .wx .jc__fit--a .cal--quiet { flex: 1 1 0; width: 70cqi; height: auto; }
+
+/* The APEX Way: the four rows sit directly under the heading (the frame's 14px gap),
+   rather than centred in the space below it; an opened row grows down towards the
+   phone's bottom. The rows themselves are as live. */
+.wwh .wx .jc__fit .cr { justify-content: flex-start; }
