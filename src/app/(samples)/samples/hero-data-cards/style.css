@@ -258,3 +258,7 @@ html:has(.hdc) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
      phone column and the gap), not their 640px; these are 15% narrower than that. */
   .hdc .hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
 }
+/* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
+   grid centres it on the copy column, which runs from the headline's first line to the foot
+   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+.hdc .hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
