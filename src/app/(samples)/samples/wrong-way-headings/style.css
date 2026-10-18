@@ -325,22 +325,46 @@ html:has(.wwh) { scroll-behavior: smooth; }
    opened row still has the room it had before, inside the phone. */
 .wwh .wx .jc__head { flex: none; }
 .wwh .wx .jc__head .eye { margin-bottom: 8px; }
+/* Both sides now stack the same way: the heading, the frame's 14px gap, then the
+   content, the whole group centred on the phone (safe: an opened row that would
+   outgrow the phone pins it to the top and the rows scroll, as live). The calendar
+   is exactly the closed rows' height, so the two groups match and the labels and
+   headlines on the two cards stand level. */
+.wwh .wx .jc__fit { justify-content: safe center; }
+.wwh .wx .jc__fit .cr { flex: 0 1 auto; }
 .wwh .wx .jc__h { font-family: var(--display); font-size: min(24px, 7.4cqi); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; color: var(--ink); }
 .wwh .wx .jc__h span { display: block; white-space: nowrap; }
 
 /* The Wrong Way: the column now mirrors the phone panel's padding, as the APEX side's
-   does, so its frame is the phone's height and level with it; the heading sits at the
-   phone's top and the calendar, smaller, takes the rest down to the phone's bottom. */
+   does, so its frame is the phone's height and level with it. */
 .wwh .wx .jc__info--a {
   align-items: stretch; justify-content: center;
   padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
 }
 .wwh .wx .jc__fit--a { width: fit-content; max-width: 100%; margin-inline: auto; }
-/* a wider step down to the calendar here, which also keeps the calendar under its live size */
-.wwh .wx .jc__fit--a .jc__head { margin-bottom: 22px; }
-.wwh .wx .jc__fit--a .cal--quiet { flex: 1 1 0; width: 70cqi; height: auto; }
-
-/* The APEX Way: the four rows sit directly under the heading (the frame's 14px gap),
-   rather than centred in the space below it; an opened row grows down towards the
-   phone's bottom. The rows themselves are as live. */
+/* The calendar, shorter: the four closed rows' height (54px each, 8px apart), its day
+   tiles sharing what is left under the bar and the weekday line. */
+.wwh .wx .jc__fit--a .cal--quiet { flex: none; width: 70cqi; height: calc(4 * var(--rh) + 3 * 8px); }
+/* The rows sit directly under their heading rather than centred under it; the rows
+   themselves are as live. */
 .wwh .wx .jc__fit .cr { justify-content: flex-start; }
+
+/* ====================================================================================
+   ADDED: the section heading over the block, the live "Why it works" heading's style
+   (.intro .eye and .intro__h in official.css), aligned with the cards' left edge
+   ==================================================================================== */
+.wwh .brk { display: none; }
+@media (min-width: 768px) { .wwh .brk { display: inline; } }
+.wwh .wx .sec-head .eye { margin-bottom: 14px; }
+.wwh .wx .sec-head__h {
+  font-family: var(--display); font-size: clamp(30px, 3.5vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.08;
+  color: #fff; margin-bottom: clamp(36px, 4vw, 48px);
+}
+
+/* ====================================================================================
+   ADDED: the APEX phone's unmute pill 30% smaller (height, padding, gap, icon, type),
+   still centred at the foot of the film; its tap area kept at 44px
+   ==================================================================================== */
+.wwh .wx .snd-pill { gap: 4.9px; height: 22.4px; padding: 0 9.8px 0 7.7px; font-size: 7.7px; }
+.wwh .wx .snd-pill svg { width: 10.5px; height: 10.5px; }
+.wwh .wx .snd-pill::before { inset: -10.8px -6px; }

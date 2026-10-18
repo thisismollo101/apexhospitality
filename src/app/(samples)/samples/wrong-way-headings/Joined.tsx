@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, HEADINGS, JOINED_ROWS, OLD_WAY, img } from './data';
+import { APEX_WAY, HEADINGS, JOINED_ROWS, OLD_WAY, SECTION, img } from './data';
 
 /*
  * The live Welcome page's Wrong Way vs APEX Way section (#s1j), copied from
@@ -273,6 +273,14 @@ export function JoinedSection() {
     <section className="wx bot bj snap" id="s1j" aria-label={`${OLD_WAY.pill} vs ${APEX_WAY.pill}`}>
       <div className="wrap wrap--wide">
         <div className="jc-scale">
+          {/* added: the section heading, in the live "Why it works" heading's style */}
+          <header className="sec-head">
+            <span className="eye">{SECTION.label}</span>
+            <h2 className="sec-head__h">
+              {SECTION.lines[0]}
+              <br className="brk" /> {SECTION.lines[1]}
+            </h2>
+          </header>
           <JoinedCards />
         </div>
       </div>
