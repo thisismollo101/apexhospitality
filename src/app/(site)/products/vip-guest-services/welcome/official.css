@@ -1001,18 +1001,6 @@
 
 /* ---- the hero, as live -------------------------------------------------------------------- */
 
-/* integration trust ribbon */
-.w3page .hd .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
-.w3page .hd .ribbon li {
-  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
-  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
-}
-.w3page .hd .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.w3page .hd .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
-.w3page .hd .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
-.w3page .hd .ribbon--strip li + li { border-left: 1px solid var(--rule); }
-
 /* play button */
 .w3page .hd .play {
   display: flex; align-items: center; justify-content: center; flex: none;
@@ -1039,7 +1027,6 @@
 .w3page .hd .top__copy { min-width: 0; }
 .w3page .hd .top__h span { display: block; }
 .w3page .hd .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
-.w3page .hd .t1__ribbon { background: rgba(13, 14, 17, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 0; border-top: 1px solid var(--rule); }
 
 /* ---- the VSL as a phone, as the Wrong Way vs APEX Way phones: a thin light bezel, the notch,
    the film whole on a screen of its own shape (994 × 1920), a play button centred on it and the
@@ -1122,8 +1109,6 @@
   .w3page .hd .hc__when { width: 128px; margin-right: 14px; }
   .w3page .hd .hc__when b { font-size: 29px; }
   .w3page .hd .hc__txt { font-size: 14px; }
-  .w3page .hd .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
-  .w3page .hd .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
 }
 
 /* ====================================================================================
@@ -1244,3 +1229,318 @@
 /* and its headline drops back to its own leading, the matched line height being needed only
    to keep the closed groups level */
 .w3page .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__h { line-height: 1.08; }
+
+
+/* ====================================================================================
+ * "Works alongside" bar, Option B (number-led), at the foot of the hero in place of the
+ * old integrations strip. Scoped to .w3page .wabb. Full-bleed,
+ * no radius. Desktop/tablet: one 108px bar (78px systems row + 30px footer
+ * line). Under 720px it stacks into rows with the line underneath.
+ */
+
+.w3page .wabb {
+  --wabb-blue: var(--brandblue, #2a7bff);
+  --wabb-orange: #ff6b1a;
+  --wabb-ink: #0b1220;
+  --wabb-muted: #5b6474;
+  --wabb-hair: #e6e9ef;
+  --wabb-ghost: #ecf0f6;
+  --wabb-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0; /* a banner, side to side: never a card */
+  background: #fff;
+  color: var(--wabb-ink);
+  font-family: inherit;
+}
+
+/* ---- the three systems --------------------------------------------------- */
+.w3page .wabb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 78px;
+  display: flex;
+}
+.w3page .wabb-sys {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 48px;
+}
+.w3page .wabb-sys + .wabb-sys {
+  border-left: 1px solid var(--wabb-hair);
+}
+
+/* faded figure rising behind each third, forever */
+.w3page .wabb-rise {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  width: 640px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.w3page .wabb-sys:nth-child(2) .wabb-rise,
+.w3page .wabb-sys:nth-child(3) .wabb-rise {
+  left: 250px;
+}
+.w3page .wabb-rise-run {
+  display: block;
+  animation: wabb-rise calc(3.7s + var(--g) * 0.6s) linear infinite;
+}
+.w3page .wabb-rise-run span {
+  display: block;
+  height: 73.5px; /* one step of the loop */
+  font-weight: 900;
+  font-size: 70px;
+  line-height: 73.5px;
+  letter-spacing: -0.045em;
+  color: var(--wabb-ghost);
+  white-space: nowrap;
+}
+@keyframes wabb-rise {
+  to {
+    transform: translateY(-73.5px);
+  }
+}
+
+.w3page .wabb-num,
+.w3page .wabb-id {
+  position: relative; /* above the rising figure */
+}
+.w3page .wabb-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--g) * 0.15s);
+}
+.w3page .wabb-logo {
+  display: block;
+  /* the drawn height; globals' img { height: auto } would otherwise draw the file's own size */
+  height: var(--lh);
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.w3page .wabb-cap {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--wabb-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ------------------------------------------------------- */
+.w3page .wabb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.w3page .wabb-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.w3page .wabb-plus {
+  color: var(--wabb-blue);
+}
+.w3page .wabb-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.w3page .wabb-strip {
+  display: block;
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wabb-spin var(--wabb-cycle) infinite;
+  animation-delay: calc(0.4s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.w3page .wabb-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then an
+   invisible snap back — always rests on the real value */
+@keyframes wabb-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+/* ---- the footer line ------------------------------------------------------ */
+.w3page .wabb-line {
+  margin: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  border-top: 1px solid var(--wabb-hair);
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.w3page .wabb-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.w3page .wabb-caps {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wabb-blue);
+  white-space: nowrap;
+}
+.w3page .wabb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wabb-orange);
+  flex: none;
+}
+.w3page .wabb-sentence {
+  font-weight: 500;
+  font-size: 12px;
+  color: #2b3340;
+}
+
+@keyframes wabb-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---- tablet landscape / portrait: same 108px bar, tighter -------------------- */
+@media (max-width: 1280px) {
+  .w3page .wabb-sys {
+    padding-left: 28px;
+    gap: 14px;
+  }
+  .w3page .wabb-fig {
+    font-size: 34px;
+  }
+  .w3page .wabb-cap {
+    white-space: normal;
+    max-width: 130px;
+  }
+  .w3page .wabb-rise {
+    left: 200px;
+  }
+  .w3page .wabb-sys:nth-child(2) .wabb-rise,
+  .w3page .wabb-sys:nth-child(3) .wabb-rise {
+    left: 170px;
+  }
+}
+@media (max-width: 1000px) {
+  .w3page .wabb-sys {
+    padding-left: 18px;
+    gap: 10px;
+  }
+  .w3page .wabb-fig {
+    font-size: 27px;
+  }
+  .w3page .wabb-logo {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .w3page .wabb-cap {
+    font-size: 11px;
+    max-width: 104px;
+  }
+  .w3page .wabb-sentence {
+    font-size: 11px;
+  }
+  .w3page .wabb-caps {
+    font-size: 9.5px;
+  }
+  .w3page .wabb-line {
+    gap: 4px 10px;
+  }
+  .w3page .wabb-rise {
+    left: 140px;
+  }
+  .w3page .wabb-sys:nth-child(2) .wabb-rise,
+  .w3page .wabb-sys:nth-child(3) .wabb-rise {
+    left: 120px;
+  }
+}
+
+/* ---- mobile: three rows, line underneath ------------------------------------ */
+@media (max-width: 720px) {
+  .w3page .wabb-row {
+    height: auto;
+    flex-direction: column;
+  }
+  .w3page .wabb-sys {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 14px;
+    height: 66px;
+    padding: 0 20px;
+  }
+  .w3page .wabb-sys + .wabb-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wabb-hair);
+  }
+  .w3page .wabb-fig {
+    font-size: 30px;
+  }
+  .w3page .wabb-logo {
+    transform: none;
+    max-height: 22px;
+    height: auto;
+  }
+  .w3page .wabb-cap {
+    max-width: none;
+  }
+  .w3page .wabb-rise,
+  .w3page .wabb-sys:nth-child(2) .wabb-rise,
+  .w3page .wabb-sys:nth-child(3) .wabb-rise {
+    left: 220px;
+  }
+  .w3page .wabb-rise-run span {
+    font-size: 54px;
+  }
+  .w3page .wabb-line {
+    height: auto;
+    padding: 12px 18px 14px;
+    text-align: center;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .w3page .wabb-rise-run,
+  .w3page .wabb-strip,
+  .w3page .wabb-id,
+  .w3page .wabb-line {
+    animation: none;
+  }
+}

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, RIBBON, SECTION, TOP, VSL, img } from './data';
+import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, SECTION, TOP, VSL, img } from './data';
+import WorksAlongside from './WorksAlongside';
 
 /*
  * The top of the page, both blocks copied verbatim from their samples rather
@@ -14,12 +15,6 @@ import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, RIBBON, SECTION, TOP
  */
 
 /* ==== the hero (hero-data-cards/Hero.tsx) ============================================ */
-
-const Tick = () => (
-  <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M3.5 8.5l3 3 6-7" />
-  </svg>
-);
 
 /**
  * Plays a muted loop while it is on screen and pauses it off; muted is set as
@@ -153,14 +148,7 @@ export function HeroTop() {
           </ul>
         </div>
       </div>
-      <ul className="ribbon ribbon--strip t1__ribbon" aria-label="Integrations">
-        {RIBBON.map((r) => (
-          <li key={r}>
-            <Tick />
-            {r}
-          </li>
-        ))}
-      </ul>
+      <WorksAlongside />
     </section>
   );
 }
