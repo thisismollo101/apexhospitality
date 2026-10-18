@@ -55,6 +55,12 @@
       "label": "Hero Data Cards",
       "summary": "The live Welcome hero three times, with only its three data cards redesigned on the APEX Way timeline rows (the figure in the time-label spot), each version in its own translucent treatment; the VSL shown as the bare film.",
       "status": "live"
+    },
+    {
+      "slug": "wrong-way-headings",
+      "label": "Wrong Way Headings",
+      "summary": "The live Welcome page's Wrong Way vs APEX Way section with a mini heading on each side: over a smaller calendar on the Wrong Way, over the four rows on the APEX Way, each side's heading and content held to the phone's height.",
+      "status": "live"
     }
   ]
 }
