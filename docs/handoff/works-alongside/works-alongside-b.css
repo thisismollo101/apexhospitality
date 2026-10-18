@@ -1,0 +1,307 @@
+/*
+ * "Works alongside" bar, Option B (number-led) — scoped to .wabb. Full-bleed,
+ * no radius. Desktop/tablet: one 108px bar (78px systems row + 30px footer
+ * line). Under 720px it stacks into rows with the line underneath.
+ */
+
+.wabb {
+  --wabb-blue: var(--brandblue, #2a7bff);
+  --wabb-orange: #ff6b1a;
+  --wabb-ink: #0b1220;
+  --wabb-muted: #5b6474;
+  --wabb-hair: #e6e9ef;
+  --wabb-ghost: #ecf0f6;
+  --wabb-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  color: var(--wabb-ink);
+  font-family: inherit;
+}
+
+/* ---- the three systems --------------------------------------------------- */
+.wabb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 78px;
+  display: flex;
+}
+.wabb-sys {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 48px;
+}
+.wabb-sys + .wabb-sys {
+  border-left: 1px solid var(--wabb-hair);
+}
+
+/* faded figure rising behind each third, forever */
+.wabb-rise {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  width: 640px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.wabb-sys:nth-child(2) .wabb-rise,
+.wabb-sys:nth-child(3) .wabb-rise {
+  left: 250px;
+}
+.wabb-rise-run {
+  display: block;
+  animation: wabb-rise calc(3.7s + var(--g) * 0.6s) linear infinite;
+}
+.wabb-rise-run span {
+  display: block;
+  height: 73.5px; /* one step of the loop */
+  font-weight: 900;
+  font-size: 70px;
+  line-height: 73.5px;
+  letter-spacing: -0.045em;
+  color: var(--wabb-ghost);
+  white-space: nowrap;
+}
+@keyframes wabb-rise {
+  to {
+    transform: translateY(-73.5px);
+  }
+}
+
+.wabb-num,
+.wabb-id {
+  position: relative; /* above the rising figure */
+}
+.wabb-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--g) * 0.15s);
+}
+.wabb-logo {
+  display: block;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.wabb-cap {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--wabb-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ------------------------------------------------------- */
+.wabb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.wabb-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.wabb-plus {
+  color: var(--wabb-blue);
+}
+.wabb-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.wabb-strip {
+  display: block;
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wabb-spin var(--wabb-cycle) infinite;
+  animation-delay: calc(0.4s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.wabb-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then an
+   invisible snap back — always rests on the real value */
+@keyframes wabb-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+/* ---- the footer line ------------------------------------------------------ */
+.wabb-line {
+  margin: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  border-top: 1px solid var(--wabb-hair);
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.wabb-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.wabb-caps {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wabb-blue);
+  white-space: nowrap;
+}
+.wabb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wabb-orange);
+  flex: none;
+}
+.wabb-sentence {
+  font-weight: 500;
+  font-size: 12px;
+  color: #2b3340;
+}
+
+@keyframes wabb-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---- tablet landscape / portrait: same 108px bar, tighter -------------------- */
+@media (max-width: 1280px) {
+  .wabb-sys {
+    padding-left: 28px;
+    gap: 14px;
+  }
+  .wabb-fig {
+    font-size: 34px;
+  }
+  .wabb-cap {
+    white-space: normal;
+    max-width: 130px;
+  }
+  .wabb-rise {
+    left: 200px;
+  }
+  .wabb-sys:nth-child(2) .wabb-rise,
+  .wabb-sys:nth-child(3) .wabb-rise {
+    left: 170px;
+  }
+}
+@media (max-width: 1000px) {
+  .wabb-sys {
+    padding-left: 18px;
+    gap: 10px;
+  }
+  .wabb-fig {
+    font-size: 27px;
+  }
+  .wabb-logo {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .wabb-cap {
+    font-size: 11px;
+    max-width: 104px;
+  }
+  .wabb-sentence {
+    font-size: 11px;
+  }
+  .wabb-caps {
+    font-size: 9.5px;
+  }
+  .wabb-line {
+    gap: 4px 10px;
+  }
+  .wabb-rise {
+    left: 140px;
+  }
+  .wabb-sys:nth-child(2) .wabb-rise,
+  .wabb-sys:nth-child(3) .wabb-rise {
+    left: 120px;
+  }
+}
+
+/* ---- mobile: three rows, line underneath ------------------------------------ */
+@media (max-width: 720px) {
+  .wabb-row {
+    height: auto;
+    flex-direction: column;
+  }
+  .wabb-sys {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 14px;
+    height: 66px;
+    padding: 0 20px;
+  }
+  .wabb-sys + .wabb-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wabb-hair);
+  }
+  .wabb-fig {
+    font-size: 30px;
+  }
+  .wabb-logo {
+    transform: none;
+    max-height: 22px;
+    height: auto;
+  }
+  .wabb-cap {
+    max-width: none;
+  }
+  .wabb-rise,
+  .wabb-sys:nth-child(2) .wabb-rise,
+  .wabb-sys:nth-child(3) .wabb-rise {
+    left: 220px;
+  }
+  .wabb-rise-run span {
+    font-size: 54px;
+  }
+  .wabb-line {
+    height: auto;
+    padding: 12px 18px 14px;
+    text-align: center;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .wabb-rise-run,
+  .wabb-strip,
+  .wabb-id,
+  .wabb-line {
+    animation: none;
+  }
+}
