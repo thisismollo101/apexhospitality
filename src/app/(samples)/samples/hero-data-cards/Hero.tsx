@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { RIBBON, TOP, VSL, img, type Version } from './data';
+import { CARDS, RIBBON, TOP, VSL, img, type Option } from './data';
 
 /*
  * The live Welcome hero (Top 1 · Cinematic Scrim), copied from
  * welcome/TopSections.tsx rather than imported, with two changes asked for on
- * this page alone: the VSL is the bare film with no card round it, and the
- * three data cards follow the APEX Way timeline rows, the figure where the
- * rows put the time.
+ * this page alone: the VSL is a phone mockup like the Wrong Way vs APEX Way
+ * phones, and the three data cards follow the APEX Way timeline rows, the
+ * figure where the rows put the time.
  */
 
 const Tick = () => (
@@ -46,10 +46,10 @@ function BgFilm() {
 }
 
 /**
- * The VSL with no card: the film alone on a muted loop, a play button centred
- * on it and the label under the button. There is no cut of the briefing yet,
- * so play starts this film from the top with its sound, and pressing again
- * returns it to the silent loop.
+ * The VSL as a phone (thin bezel, notch), the film on a muted loop on its
+ * screen, a play button centred on it and the label under the button. There
+ * is no cut of the briefing yet, so play starts this film from the top with
+ * its sound, and pressing again returns it to the silent loop.
  */
 function Vsl() {
   const ref = useLoop(0.2);
@@ -68,31 +68,45 @@ function Vsl() {
 
   return (
     <div className="vsl top__vsl">
-      <video ref={ref} className="vsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
-        <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-        <source src={img(VSL.clipWebm)} type="video/webm" />
-        <source src={img(VSL.clip)} type="video/mp4" />
-      </video>
-      <button type="button" className="vsl__play" onClick={toggle} aria-pressed={sound}>
-        <span className="play" aria-hidden="true">
-          {sound ? (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 4.5l13 7.5-13 7.5z" />
-            </svg>
-          )}
-        </span>
-        <span className="vsl__cta">{VSL.cta}</span>
-      </button>
+      <div className="vsl__screen">
+        <video ref={ref} className="vsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
+          <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(VSL.clipWebm)} type="video/webm" />
+          <source src={img(VSL.clip)} type="video/mp4" />
+        </video>
+        <button type="button" className="vsl__play" onClick={toggle} aria-pressed={sound}>
+          <span className="play" aria-hidden="true">
+            {sound ? (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 4.5l13 7.5-13 7.5z" />
+              </svg>
+            )}
+          </span>
+          <span className="vsl__cta">{VSL.cta}</span>
+        </button>
+      </div>
     </div>
   );
 }
 
-/** One version of the hero; the version's id picks its card treatment in style.css. */
-export default function Hero({ v }: { v: Version }) {
+/** A figure, its range dash drawn short with room either side (the dash stays in the text, for copying and reading aloud). */
+const Fig = ({ fig }: { fig: [string] | [string, string] }) =>
+  fig.length === 1 ? (
+    <b>{fig[0]}</b>
+  ) : (
+    <b>
+      {fig[0]}
+      <span className="hc__dash">–</span>
+      {fig[1]}
+    </b>
+  );
+
+/** One option of the hero; the option's id picks its cards' gradient in style.css. */
+export default function Hero({ v }: { v: Option }) {
   return (
     <div className={`top hero hero--${v.id}`}>
       <BgFilm />
@@ -100,13 +114,17 @@ export default function Hero({ v }: { v: Version }) {
       <div className="wrap top__in">
         <Vsl />
         <div className="top__copy">
-          <h2 className="top__h">{TOP.headline}</h2>
+          {/* the headline's own two lines, set as blocks so the copy column is only as wide as what it holds */}
+          <h2 className="top__h">
+            {TOP.lines.map((l) => (
+              <span key={l}>{l} </span>
+            ))}
+          </h2>
           <ul className="hc">
-            {v.cards.map((c) => (
-              <li key={c.n}>
+            {CARDS.map((c) => (
+              <li key={c.title}>
                 <span className="hc__when">
-                  <b>{c.fig}</b>
-                  <small>{c.n}</small>
+                  <Fig fig={c.fig} />
                 </span>
                 <span className="hc__txt">
                   <b>{c.title}</b>
