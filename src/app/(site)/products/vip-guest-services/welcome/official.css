@@ -672,94 +672,62 @@
 /* the grey source line */
 .w3page .wx .src { display: block; font-size: 10.5px; line-height: 1.45; color: var(--ink-mute); }
 
-/* integration trust ribbon */
-.w3page .wx .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
-.w3page .wx .ribbon li {
-  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
-  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
-}
-.w3page .wx .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.w3page .wx .ribbon--center { justify-content: center; margin-top: 36px; }
-.w3page .wx .ribbon--list { flex-direction: column; gap: 8px; }
-.w3page .wx .ribbon--list li { border-radius: 12px; }
-.w3page .wx .ribbon--quiet li { border-color: transparent; background: none; padding: 6px 12px; color: rgba(255, 255, 255, .72); }
-.w3page .wx .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
-.w3page .wx .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
-.w3page .wx .ribbon--strip li + li { border-left: 1px solid var(--rule); }
 
-/* play button */
-.w3page .wx .play {
-  display: flex; align-items: center; justify-content: center; flex: none;
-  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s, width .25s, height .25s;
-}
-.w3page .wx .play svg { width: 38%; height: 38%; fill: var(--ink); }
-.w3page .wx .play.play--sm { width: 22px; height: 22px; box-shadow: none; }
-.w3page .wx .play--sm svg { margin-left: 2px; }
 
-/* Panel A · the executive VSL player */
-.w3page .wx .pl { position: absolute; inset: 0; color: #fff; }
-.w3page .wx .pl__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.w3page .wx .pl__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .05) 22%, rgba(0, 0, 0, .1) 50%, rgba(0, 0, 0, .78)); }
-.w3page .wx .pl__dur { position: absolute; top: 16px; right: 16px; z-index: 2; font-size: 11px; font-weight: 600; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
-.w3page .wx .pl__play {
-  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-  padding: 0 16px 90px; text-align: center;
-}
-.w3page .wx .pl__cta {
-  display: inline-block; max-width: 100%; padding: 12px 18px; border-radius: 999px; background: var(--ink); color: #fff;
-  font-size: 11px; font-weight: 700; letter-spacing: .07em; line-height: 1.3; box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
-  transition: background .2s;
-}
-.w3page .wx .pl__play:hover .pl__cta, .w3page .wx .pl__play:active .pl__cta { background: var(--accent); }
-.w3page .wx .pl__play:hover .play { transform: scale(1.06); }
-.w3page .wx .pl.is-playing .pl__play { justify-content: flex-start; align-items: flex-end; padding: 52px 14px 0 0; }
-.w3page .wx .pl.is-playing .play { width: 48px; height: 48px; background: rgba(255, 255, 255, .85); }
-.w3page .wx .pl.is-playing .pl__cta { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); }
-.w3page .wx .pl__cap {
-  position: absolute; left: 12px; right: 12px; bottom: 50px; z-index: 2; pointer-events: none;
-  display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px;
-  background: rgba(13, 14, 17, .74); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-left: 3px solid var(--accent);
-}
-.w3page .wx .pl__capk { font-size: 9.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-lit); }
-.w3page .wx .pl__capt { font-size: 14px; font-weight: 600; line-height: 1.3; }
-.w3page .wx .pl__bar { position: absolute; left: 12px; right: 12px; bottom: 14px; z-index: 2; pointer-events: none; }
-.w3page .wx .pl__segs { display: flex; gap: 3px; }
-.w3page .wx .pl__segs span { flex: 1; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .28); }
-.w3page .wx .pl__segs i { display: block; height: 100%; background: #fff; transform-origin: left; }
-.w3page .wx .pl__segs .is-on i { background: var(--accent-lit); }
-.w3page .wx .pl__time { display: block; margin-top: 7px; font-size: 10.5px; font-weight: 600; color: rgba(255, 255, 255, .8); font-variant-numeric: tabular-nums; }
 
-/* ---- Top · the film full bleed, the VSL as one 9:16 card on the left ---------- */
 
-.w3page .wx.top {
-  --vw: 340px;
-  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  min-height: calc(100svh - var(--sales-h) - var(--nav-h)); background: var(--night); color: #fff;
-}
-.w3page .wx .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-.w3page .wx .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.w3page .wx .top__in { flex: 1; width: 100%; display: grid; grid-template-columns: var(--vw) minmax(0, 1fr); gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px; }
-.w3page .wx .vcard { position: relative; aspect-ratio: 9 / 16; border-radius: var(--r); overflow: hidden; background: var(--accent-deep); box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
-.w3page .wx .top__copy { min-width: 0; }
-.w3page .wx .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
-.w3page .wx.top .src { color: rgba(255, 255, 255, .55); }
-.w3page .wx .tag--glass { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .18); }
 
-/* Top 1 · Cinematic Scrim */
-.w3page .wx.t1 .top__scrim { background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
-.w3page .wx .t1__pts { display: flex; flex-direction: column; gap: 10px; margin-top: 34px; max-width: 640px; }
-.w3page .wx .t1__pts li {
-  display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; border-radius: 14px;
-  background: rgba(13, 14, 17, .42); border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-}
-.w3page .wx .t1__pts .tag { margin-top: 2px; }
-.w3page .wx .t1__txt { display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, .88); }
-.w3page .wx .t1__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--accent-lit); }
-.w3page .wx .t1__txt .src { margin-top: 3px; }
-.w3page .wx .t1__ribbon { background: rgba(13, 14, 17, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 0; border-top: 1px solid var(--rule); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .w3page .wx .wrap--wide { max-width: 1360px; }
 /* The block fills the screen under the jump bar and sits centred in it, with generous room above and below. */
@@ -964,11 +932,10 @@
 
 /* ---- the live sizes (Aidan, 17 Oct) --------------------------------------------------------- */
 /* Both blocks fill the screen under the two fixed bars, as section-lock frames. */
-.w3page .wx.top, .w3page .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); }
-/* Hero: the 9:16 VSL card and the three data points 25% smaller; the headline keeps its size. */
-.w3page .wx .top__in { grid-template-columns: calc(var(--vw) * .75) minmax(0, 1fr); }
-.w3page .wx .top__vsl { width: var(--vw); zoom: .75; }
-.w3page .wx .t1__pts { zoom: .75; }
+.w3page .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); }
+
+
+
 /* Joined Cards: everything 15% smaller, phones, cards, text, VS circle and spacing alike. */
 .w3page .wx.bot { padding: 102px 0; }
 .w3page .wx .jc-scale { width: 85%; margin: 0 auto; }
@@ -976,23 +943,23 @@
 
 /* ---- tablet, landscape (the sample's tier, checked at 1194) ---------------------------------- */
 @media (max-width: 1240px) {
-  .w3page .wx.top { --vw: 300px; }
-  .w3page .wx .top__in { gap: 48px; }
+  
+  
   /* side by side, each info panel would drop under 300px, so the joined cards stack and keep their mirror */
   .w3page .wx .jc { --pbox: 234px; grid-template-columns: minmax(0, 1fr); }
   .w3page .wx .jc__info { padding-left: 32px; padding-right: 32px; }
 }
 /* ---- tablet, portrait (the sample's tier, checked at 834) ------------------------------------ */
 @media (max-width: 960px) {
-  .w3page .wx .play { width: 64px; height: 64px; }
-  .w3page .wx.top { --vw: 270px; min-height: 0; }
-  .w3page .wx .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
-  .w3page .wx .top__h { font-size: 36px; }
-  .w3page .wx .t1__pts { margin-top: 24px; }
-  .w3page .wx .t1__pts li { padding: 12px 14px; }
-  .w3page .wx .t1__txt { font-size: 14px; }
-  .w3page .wx .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
-  .w3page .wx .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .w3page .wx.bot { min-height: 0; padding: 75px 0; }
   .w3page .wx .jc { --pbox: 229px; --pp: 24px; }
   .w3page .wx .jc__info { padding-left: 24px; padding-right: 24px; }
@@ -1000,8 +967,8 @@
 /* ---- phones: the sample has no phone layout yet (Aidan is redoing mobile), so this only
    stacks the two blocks so nothing runs off the screen ------------------------------------------ */
 @media (max-width: 600px) {
-  .w3page .wx .top__in { grid-template-columns: minmax(0, 1fr); justify-items: center; padding-top: 40px; padding-bottom: 40px; }
-  .w3page .wx .top__copy { width: 100%; }
+  
+  
   .w3page .wx.bot { padding: 56px 0; }
   .w3page .wx .jc-scale { width: 100%; }
   .w3page .wx .jc__card--a, .w3page .wx .jc__card--b { grid-template-columns: minmax(0, 1fr); }
@@ -1011,3 +978,269 @@
   .w3page .wx .jc__vs { position: relative; left: auto; top: auto; transform: none; justify-self: center; order: 1; }
   .w3page .wx .jc__card--b { order: 2; }
 }
+
+
+/* =====================================================================================
+   THE HERO: Gradient 1 · Cobalt Sweep, from /samples/hero-data-cards (Aidan, 18 Oct),
+   as it is on the sample. Its rules copied verbatim with .hdc rescoped to .w3page .hd
+   (the section carries .hd, .top and .hero--g1) and the phone's .vsl* renamed .hvsl*,
+   clear of the page's own .vsl rules; Gradients 2 and 3 and the sample's page
+   frame left out. The sample's chrome height (123px) is the live bars, sales + nav.
+   ===================================================================================== */
+.w3page .hd {
+  /* the sample's tokens that official.css doesn't already define (same values) */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  /* The live cards are drawn at 75%; these are 15% larger than that. */
+  --cz: calc(.75 * 1.15);
+}
+.w3page .hd button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.w3page .hd ul { list-style: none; }
+.w3page .hd a:focus-visible, .w3page .hd button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+
+/* ---- the hero, as live -------------------------------------------------------------------- */
+
+/* integration trust ribbon */
+.w3page .hd .ribbon { display: flex; flex-wrap: wrap; gap: 10px; }
+.w3page .hd .ribbon li {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .04);
+  font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(255, 255, 255, .9);
+}
+.w3page .hd .ribbon svg { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--accent-lit); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.w3page .hd .ribbon--strip { justify-content: center; gap: 0; padding: 14px var(--gutter); border-bottom: 1px solid var(--rule); background: var(--tile); }
+.w3page .hd .ribbon--strip li { border: 0; border-radius: 0; background: none; padding: 6px 22px; }
+.w3page .hd .ribbon--strip li + li { border-left: 1px solid var(--rule); }
+
+/* play button */
+.w3page .hd .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.w3page .hd .play svg { width: 38%; height: 38%; fill: var(--ink); }
+
+.w3page .hd.top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--sales-h) - var(--nav-h)); background: var(--night); color: #fff;
+}
+.w3page .hd .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.w3page .hd .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+/* the live column: the VSL at 75% of --vw, then the copy */
+/* The live column for the VSL, then the copy column only as wide as what it holds (the
+   headline's longer line or the cards, whichever is wider), the pair centred in the page
+   so the space either side of the group is equal. */
+.w3page .hd .top__in {
+  flex: 1; width: 100%; display: grid; grid-template-columns: calc(var(--vw) * .75) minmax(0, max-content); justify-content: center;
+  gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px;
+}
+.w3page .hd .top__copy { min-width: 0; }
+.w3page .hd .top__h span { display: block; }
+.w3page .hd .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+.w3page .hd .t1__ribbon { background: rgba(13, 14, 17, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 0; border-top: 1px solid var(--rule); }
+
+/* ---- the VSL as a phone, as the Wrong Way vs APEX Way phones: a thin light bezel, the notch,
+   the film whole on a screen of its own shape (994 × 1920), a play button centred on it and the
+   label under the button. The phone fills the live VSL column. --------------------------------- */
+.w3page .hd .hvsl { position: relative; width: 100%; padding: 5px; border-radius: 30px; background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); }
+.w3page .hd .hvsl__screen { position: relative; width: 100%; aspect-ratio: 994 / 1920; overflow: hidden; border-radius: 25px; background: var(--ink); }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.w3page .hd .hvsl__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 2; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.w3page .hd .hvsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.w3page .hd .hvsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 0 14px; text-align: center;
+}
+/* the live play button is 76px drawn at 75% */
+.w3page .hd .hvsl__play .play { width: 57px; height: 57px; }
+.w3page .hd .hvsl__play:hover .play { transform: scale(1.06); }
+.w3page .hd .hvsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.w3page .hd .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
+
+/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
+   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
+   figures, padding and boxes all grow together, exactly as Version 3 had them. */
+.w3page .hd .hc {
+  --hc-fig: #fff; --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
+  display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz));
+}
+.w3page .hd .hc li {
+  display: flex; align-items: center; padding: 16px 22px 16px 0;
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+/* the time-label column: the figure large, a rule on its right */
+.w3page .hd .hc__when {
+  flex: none; width: 150px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+  margin-right: 20px; border-right: 1px solid var(--hc-rule);
+}
+.w3page .hd .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+/* the range dash: shorter than the font's en dash, with a little room either side so it
+   touches neither figure */
+.w3page .hd .hc__dash { display: inline-block; width: .34em; height: .085em; margin: 0 .09em; vertical-align: .3em; overflow: hidden; color: transparent; background: var(--hc-fig); }
+.w3page .hd .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
+.w3page .hd .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
+
+/* The three gradients: site blue and the Welcome navy, slightly translucent, each carried
+   across to the middle of the card rather than fading out at the accent edge. */
+
+/* Gradient 1 · Cobalt Sweep: site blue held from the edge to the middle, then into navy */
+.w3page .hd.hero--g1 .hc li {
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
+    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
+}
+/* ====================================================================================
+   TABLET · landscape (checked at 1194): the live tier
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .w3page .hd.top { --vw: 300px; }
+  .w3page .hd .top__in { gap: 48px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834): the live tier
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .w3page .hd .play { width: 64px; height: 64px; }
+  .w3page .hd .hvsl__play .play { width: 48px; height: 48px; }
+  .w3page .hd .hvsl__cta { font-size: 12px; }
+  .w3page .hd.top { --vw: 270px; min-height: 0; }
+  .w3page .hd .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .w3page .hd .top__h { font-size: 36px; }
+  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
+  .w3page .hd .hc { margin-top: calc(24px * .75 / var(--cz)); }
+  .w3page .hd .hc li { padding: 12px 14px 12px 0; }
+  .w3page .hd .hc__when { width: 128px; margin-right: 14px; }
+  .w3page .hd .hc__when b { font-size: 29px; }
+  .w3page .hd .hc__txt { font-size: 14px; }
+  .w3page .hd .t1__ribbon { flex-wrap: wrap; row-gap: 4px; padding: 10px 12px; }
+  .w3page .hd .t1__ribbon li { padding: 6px 14px; font-size: 12.5px; }
+}
+
+/* ====================================================================================
+   Gradient 1 · Cobalt Sweep, reworked (Aidan, 18 Oct): the whole group 15% smaller
+   (phone, headline, card boxes, padding, gaps), the text inside the cards kept at its
+   size, and each card's line set on its two given lines.
+   ==================================================================================== */
+.w3page .hd.hero--g1 .top__in { zoom: .85; }
+.w3page .hd.hero--g1 .hc__when b, .w3page .hd.hero--g1 .hc__txt { zoom: 1.17647; }
+.w3page .hd.hero--g1 .hc__line span { display: block; white-space: nowrap; }
+/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
+.w3page .hd.hero--g1 .hc { width: 640px; max-width: 100%; }
+@media (max-width: 960px) {
+  /* Here the current cards are as wide as the copy column (the page less its gutters, the
+     phone column and the gap), not their 640px; these are 15% narrower than that. */
+  .w3page .hd.hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+}
+/* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
+   grid centres it on the copy column, which runs from the headline's first line to the foot
+   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+.w3page .hd.hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
+
+
+/* =====================================================================================
+   THE WRONG WAY vs APEX WAY SECTION, as on /samples/wrong-way-headings (Aidan, 18 Oct):
+   the section above is that sample's base; these are its additions, copied verbatim
+   with .wwh rescoped to .w3page: the section heading, the two side headings, the
+   smaller unmute pill, the bigger side headings and calendar, the pills nudged down.
+   ===================================================================================== */
+/* ====================================================================================
+   ADDED: the two mini headings
+   ==================================================================================== */
+
+/* Both info columns measure their headline from their own width, so the two match. */
+.w3page .wx .jc__info { container-type: inline-size; }
+/* The section-heading style: the eyebrow, then the display headline in two set lines. */
+/* On the APEX side the frame's own 14px gap is all that sits under the heading, so an
+   opened row still has the room it had before, inside the phone. */
+.w3page .wx .jc__head { flex: none; }
+.w3page .wx .jc__head .eye { margin-bottom: 8px; }
+/* Both sides now stack the same way: the heading, the frame's 14px gap, then the
+   content, the whole group centred on the phone (safe: an opened row that would
+   outgrow the phone pins it to the top and the rows scroll, as live). The calendar
+   is exactly the closed rows' height, so the two groups match and the labels and
+   headlines on the two cards stand level. */
+.w3page .wx .jc__fit { justify-content: safe center; }
+.w3page .wx .jc__fit .cr { flex: 0 1 auto; }
+.w3page .wx .jc__h { font-family: var(--display); font-size: min(24px, 7.4cqi); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; color: var(--ink); }
+.w3page .wx .jc__h span { display: block; white-space: nowrap; }
+
+/* The Wrong Way: the column now mirrors the phone panel's padding, as the APEX side's
+   does, so its frame is the phone's height and level with it. */
+.w3page .wx .jc__info--a {
+  align-items: stretch; justify-content: center;
+  padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
+}
+.w3page .wx .jc__fit--a { width: fit-content; max-width: 100%; margin-inline: auto; }
+/* The calendar, shorter: the four closed rows' height (54px each, 8px apart), its day
+   tiles sharing what is left under the bar and the weekday line. */
+.w3page .wx .jc__fit--a .cal--quiet { flex: none; width: 70cqi; height: calc(4 * var(--rh) + 3 * 8px); }
+/* The rows sit directly under their heading rather than centred under it; the rows
+   themselves are as live. */
+.w3page .wx .jc__fit .cr { justify-content: flex-start; }
+
+/* ====================================================================================
+   ADDED: the section heading over the block, the live "Why it works" heading's style
+   (.intro .eye and .intro__h in official.css), aligned with the cards' left edge
+   ==================================================================================== */
+.w3page .wx .sec-head .eye { margin-bottom: 14px; }
+.w3page .wx .sec-head__h {
+  font-family: var(--display); font-size: clamp(30px, 3.5vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.08;
+  color: #fff; margin-bottom: clamp(36px, 4vw, 48px);
+}
+
+/* ====================================================================================
+   ADDED: the APEX phone's unmute pill 30% smaller (height, padding, gap, icon, type),
+   still centred at the foot of the film; its tap area kept at 44px
+   ==================================================================================== */
+.w3page .wx .snd-pill { gap: 4.9px; height: 22.4px; padding: 0 9.8px 0 7.7px; font-size: 7.7px; }
+.w3page .wx .snd-pill svg { width: 10.5px; height: 10.5px; }
+.w3page .wx .snd-pill::before { inset: -10.8px -6px; }
+
+/* ====================================================================================
+   ADDED (round 4): bigger side headings and calendar, pills nudged down
+   ==================================================================================== */
+
+/* Both labels 20% bigger; the Standard headline 20% bigger and the Exceptional one 10%,
+   each still two set lines and still measured from its column's width. */
+.w3page .wx .jc {
+  --h-a: min(28.8px, 8.88cqi);
+  --h-b: min(26.4px, 8.14cqi);
+  /* the closed rows' stack, which the calendar used to match exactly */
+  --rows-h: calc(4 * var(--rh) + 3 * 8px);
+}
+.w3page .wx .jc__head .eye { font-size: 13.2px; }
+.w3page .wx .jc__fit--a .jc__h { font-size: var(--h-a); }
+.w3page .wx .jc__info:not(.jc__info--a) .jc__h { font-size: var(--h-b); }
+/* The calendar 10% bigger, both ways. */
+.w3page .wx .jc__fit--a .cal--quiet { width: 77cqi; height: calc(var(--rows-h) * 1.1); }
+/* Both groups hang from one shared top line, the one that centres the taller Standard
+   group on its phone; the APEX group starts from the same line. The Exceptional headline
+   takes the Standard headline's line height, so the two two-line boxes are the same
+   height, and with the frame's 14px under each, the labels, the headlines, the bar and
+   the first row all stand level across the cards. */
+.w3page .wx .jc__head .eye { line-height: 1.5; }
+.w3page .wx .jc__info:not(.jc__info--a) .jc__h { line-height: calc(1.08 * var(--h-a)); }
+.w3page .wx .jc__fit {
+  justify-content: flex-start;
+  padding-top: calc((var(--ph) - (13.2px * 1.5 + 8px + 2 * 1.08 * var(--h-a) + 14px + var(--rows-h) * 1.1)) / 2);
+}
+
+/* The pills: the gap above each (card top to pill) and below it (pill to phone top) were
+   already equal, so each moves down by 10% of that gap. */
+.w3page .wx .jc__pill { top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2 * 1.1); }
+/* While a row is open, the APEX group lets go of the shared top line and centres on its
+   phone again, so the opened row can grow up as well as down and stay inside the phone, */
+.w3page .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; padding-top: 0; }
+/* and its headline drops back to its own leading, the matched line height being needed only
+   to keep the closed groups level */
+.w3page .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__h { line-height: 1.08; }

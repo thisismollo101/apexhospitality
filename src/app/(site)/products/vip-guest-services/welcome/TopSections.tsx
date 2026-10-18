@@ -1,18 +1,171 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element -- the VSL poster is sized by CSS, as in the sample */
-
 import { useEffect, useId, useRef, useState } from 'react';
-import { APEX_WAY, DATA_POINTS, JOINED_ROWS, OLD_WAY, RIBBON, TOP, VSL, img } from './data';
+import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, RIBBON, SECTION, TOP, VSL, img } from './data';
 
 /*
- * The top of the page: the hero ("Top 1 · Cinematic Scrim") and the Joined
- * Cards ("Bottom 1 · Joined Cards"), both from /samples/desktop-design-samples-2.
- * Copied rather than imported, per CLAUDE.md, so tuning the sample cannot move
- * the live page. The markup is the sample's; official.css scopes its styles
- * under .wx and sets the live sizes (the VSL card and data points at 75%, the
- * joined cards at 85%).
+ * The top of the page, both blocks copied verbatim from their samples rather
+ * than imported, per CLAUDE.md, so tuning a sample cannot move the live page:
+ *
+ * - the hero: Gradient 1 · Cobalt Sweep, from /samples/hero-data-cards
+ *   (hero-data-cards/Hero.tsx), scoped .hd in official.css;
+ * - the Wrong Way vs APEX Way section, from /samples/wrong-way-headings
+ *   (wrong-way-headings/Joined.tsx), scoped .wx.
  */
+
+/* ==== the hero (hero-data-cards/Hero.tsx) ============================================ */
+
+const Tick = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M3.5 8.5l3 3 6-7" />
+  </svg>
+);
+
+/**
+ * Plays a muted loop while it is on screen and pauses it off; muted is set as
+ * a property, since React does not reliably emit the attribute, and reduced
+ * motion leaves the poster up.
+ */
+function useLoop(threshold: number) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold });
+    io.observe(v);
+    return () => io.disconnect();
+  }, [threshold]);
+  return ref;
+}
+
+function BgFilm() {
+  const ref = useLoop(0.1);
+  return (
+    <video ref={ref} className="bgfilm" poster={img(TOP.poster)} muted loop playsInline preload="metadata" aria-hidden="true">
+      <source src={img(TOP.film)} type="video/mp4" />
+    </video>
+  );
+}
+
+/**
+ * The VSL as a phone (thin bezel, notch), its classes hvsl* here rather than the
+ * sample's vsl* so the page's own .vsl rules (its tap-to-play films) cannot reach it: the film on a muted loop on its
+ * screen, a play button centred on it and the label under the button. There
+ * is no cut of the briefing yet, so play starts this film from the top with
+ * its sound, and pressing again returns it to the silent loop.
+ */
+function Vsl() {
+  const ref = useLoop(0.2);
+  const [sound, setSound] = useState(false);
+
+  const toggle = () => {
+    const v = ref.current;
+    if (!v) return;
+    if (v.muted) {
+      v.currentTime = 0;
+      v.muted = false;
+    } else v.muted = true;
+    setSound(!v.muted);
+    if (v.paused) v.play().catch(() => {});
+  };
+
+  return (
+    <div className="hvsl top__vsl">
+      <div className="hvsl__screen">
+        <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
+          <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(VSL.clipWebm)} type="video/webm" />
+          <source src={img(VSL.clip)} type="video/mp4" />
+        </video>
+        <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
+          <span className="play" aria-hidden="true">
+            {sound ? (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 4.5l13 7.5-13 7.5z" />
+              </svg>
+            )}
+          </span>
+          <span className="hvsl__cta">{VSL.cta}</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** A figure, its range dash drawn short with room either side (the dash stays in the text, for copying and reading aloud). */
+const Fig = ({ fig }: { fig: [string] | [string, string] }) =>
+  fig.length === 1 ? (
+    <b>{fig[0]}</b>
+  ) : (
+    <b>
+      {fig[0]}
+      <span className="hc__dash">–</span>
+      {fig[1]}
+    </b>
+  );
+
+/**
+ * The hero: Gradient 1 · Cobalt Sweep from /samples/hero-data-cards. The root is
+ * this page's section-lock frame (#s1, .snap) and carries .hd for its scoped
+ * styles; the sample's `hero` class is left off, since .w3page .hero still styles
+ * the old hero here.
+ */
+export function HeroTop() {
+  return (
+    <section className="hd top hero--g1 snap" id="s1">
+      <BgFilm />
+      <span className="top__scrim" aria-hidden="true" />
+      <div className="wrap top__in">
+        <Vsl />
+        <div className="top__copy">
+          {/* the headline's own lines, set as blocks so the copy column is only as wide as what it holds */}
+          <h1 className="top__h">
+            {HERO_G1.lines.map((l) => (
+              <span key={l}>{l} </span>
+            ))}
+          </h1>
+          <ul className="hc">
+            {HERO_G1.cards.map((c) => (
+              <li key={c.title}>
+                <span className="hc__when">
+                  <Fig fig={c.fig} />
+                </span>
+                <span className="hc__txt">
+                  <b>{c.title}</b>
+                  {typeof c.text === 'string' ? (
+                    c.text
+                  ) : (
+                    // the line set on its two given lines
+                    <span className="hc__line">
+                      <span>{c.text[0]} </span>
+                      <span>{c.text[1]}</span>
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <ul className="ribbon ribbon--strip t1__ribbon" aria-label="Integrations">
+        {RIBBON.map((r) => (
+          <li key={r}>
+            <Tick />
+            {r}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/* ==== the Wrong Way vs APEX Way section (wrong-way-headings/Joined.tsx) =============== */
 
 /** The grey source line. Every uncleared figure carries one. */
 const Src = ({ children }: { children: React.ReactNode }) => (
@@ -22,169 +175,17 @@ const Src = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Tick = () => (
-  <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M3.5 8.5l3 3 6-7" />
-  </svg>
-);
-
-/** The integration trust ribbon. */
-const Ribbon = ({ className = '' }: { className?: string }) => (
-  <ul className={`ribbon ${className}`} aria-label="Integrations">
-    {RIBBON.map((r) => (
-      <li key={r}>
-        <Tick />
-        {r}
-      </li>
-    ))}
-  </ul>
-);
-
-/* ---- the VSL card -------------------------------------------------------------- */
-
-const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
-
-/**
- * Panel A's film: a 9:16 card with the play button, the 13-slide progress bar
- * and the caption box. There is no VSL yet, so play runs the progress bar over
- * the poster; it opens paused on the caption's slide so the bar reads.
- */
-const PER = VSL.seconds / VSL.slides;
-
-function usePlayer() {
-  const [t, setT] = useState((VSL.activeSlide - 0.5) * PER);
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    if (!playing) return;
-    const id = window.setInterval(() => {
-      setT((x) => {
-        if (x + 0.25 >= VSL.seconds) {
-          setPlaying(false);
-          return 0;
-        }
-        return x + 0.25;
-      });
-    }, 250);
-    return () => window.clearInterval(id);
-  }, [playing]);
-
-  return { t, playing, toggle: () => setPlaying((p) => !p) };
-}
-
-type PlayerState = ReturnType<typeof usePlayer>;
-
-function PlayerMedia({ t, playing, toggle }: PlayerState) {
-  const per = PER;
-  const slide = Math.min(VSL.slides, Math.floor(t / per) + 1);
-
+/** added: a side's mini heading, the section-heading style (eyebrow, then a two-line display headline). */
+function Heading({ h }: { h: { label: string; lines: string[] } }) {
   return (
-    <div className={`pl${playing ? ' is-playing' : ''}`}>
-      <img className="pl__poster" src={img(VSL.poster)} alt="" />
-      <span className="pl__scrim" aria-hidden="true" />
-      <span className="tag tag--photo pl__k">{VSL.label}</span>
-      <span className="pl__dur">{fmt(VSL.seconds)}</span>
-
-      <button type="button" className="pl__play" onClick={toggle} aria-pressed={playing}>
-        <span className="play" aria-hidden="true">
-          {playing ? (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 4.5l13 7.5-13 7.5z" />
-            </svg>
-          )}
-        </span>
-        <span className="pl__cta">{playing ? 'Pause' : VSL.cta}</span>
-      </button>
-
-      <div className="pl__cap" aria-live="polite">
-        <span className="pl__capk">{VSL.focusKick}</span>
-        <span className="pl__capt">{VSL.focus}</span>
-      </div>
-
-      <div className="pl__bar">
-        <div className="pl__segs" role="progressbar" aria-label="Briefing progress" aria-valuemin={0} aria-valuemax={VSL.seconds} aria-valuenow={Math.round(t)}>
-          {Array.from({ length: VSL.slides }, (_, i) => {
-            const fill = Math.max(0, Math.min(1, (t - i * per) / per));
-            return (
-              <span key={i} className={i + 1 === slide ? 'is-on' : undefined}>
-                <i style={{ transform: `scaleX(${fill})` }} />
-              </span>
-            );
-          })}
-        </div>
-        <span className="pl__time">
-          {String(slide).padStart(2, '0')}/{VSL.slides} · {fmt(t)} / {fmt(VSL.seconds)}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/** The top's VSL: Panel A's player on its own, as one 9:16 card. */
-function VslCard({ className = '' }: { className?: string }) {
-  const player = usePlayer();
-  return (
-    <div className={`vcard ${className}`}>
-      <PlayerMedia {...player} />
-    </div>
-  );
-}
-
-/**
- * The top's background film, full bleed on a muted loop. Never autoplays by
- * attribute: an observer plays it on screen and pauses it off, muted is set as
- * a property, and reduced motion leaves the poster up.
- */
-function BgFilm({ className = '' }: { className?: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    v.muted = true;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.1 });
-    io.observe(v);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <video ref={ref} className={`bgfilm ${className}`} poster={img(TOP.poster)} muted loop playsInline preload="metadata" aria-hidden="true">
-      <source src={img(TOP.film)} type="video/mp4" />
-    </video>
-  );
-}
-
-/* ---- the hero: Top 1 · Cinematic Scrim ------------------------------------------ */
-
-/** A left-weighted scrim like the old hero; data points as glass rows, ribbon as a strip along the foot. */
-export function HeroTop() {
-  return (
-    <section className="wx top t1 snap" id="s1">
-      <BgFilm />
-      <span className="top__scrim" aria-hidden="true" />
-      <div className="wrap top__in">
-        <VslCard className="top__vsl" />
-        <div className="top__copy">
-          <h1 className="top__h">{TOP.headline}</h1>
-          <ul className="t1__pts">
-            {DATA_POINTS.map((d) => (
-              <li key={d.n}>
-                <span className="tag tag--glass">{d.n}</span>
-                <span className="t1__txt">
-                  <b>{d.title}</b>
-                  {d.text}
-                  <Src>{d.src}</Src>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <Ribbon className="ribbon--strip t1__ribbon" />
-    </section>
+    <header className="jc__head">
+      <span className="eye">{h.label}</span>
+      <h3 className="jc__h">
+        {h.lines.map((l, i) => (
+          <span key={i}>{l} </span>
+        ))}
+      </h3>
+    </header>
   );
 }
 
@@ -392,9 +393,12 @@ function JoinedCards() {
         vs
       </span>
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
-        {/* The calendar group alone, centred both ways in its column. */}
+        {/* added: the heading over the calendar, the two together exactly the phone's height, level with it */}
         <div className="jc__info jc__info--a">
-          <QuietMonth />
+          <div className="jc__fit jc__fit--a">
+            <Heading h={HEADINGS.wrong} />
+            <QuietMonth />
+          </div>
         </div>
         <div className="jc__media jc__media--a">
           <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
@@ -406,9 +410,10 @@ function JoinedCards() {
           <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
           <LoopPhone />
         </div>
-        {/* The four rows alone, in a frame exactly the phone's height, level with it. */}
+        {/* added: the heading over the four rows, both inside a frame exactly the phone's height, level with it */}
         <div className="jc__info">
           <div className="jc__fit">
+            <Heading h={HEADINGS.apex} />
             <CompactRows />
           </div>
         </div>
@@ -423,6 +428,14 @@ export function JoinedSection() {
     <section className="wx bot bj snap" id="s1j" aria-label={`${OLD_WAY.pill} vs ${APEX_WAY.pill}`}>
       <div className="wrap wrap--wide">
         <div className="jc-scale">
+          {/* added: the section heading, in the live "Why it works" heading's style */}
+          <header className="sec-head">
+            <span className="eye">{SECTION.label}</span>
+            <h2 className="sec-head__h">
+              {SECTION.lines[0]}
+              <br className="brk" /> {SECTION.lines[1]}
+            </h2>
+          </header>
           <JoinedCards />
         </div>
       </div>
