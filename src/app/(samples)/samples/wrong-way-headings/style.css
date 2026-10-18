@@ -386,14 +386,24 @@ html:has(.wwh) { scroll-behavior: smooth; }
 .wwh .wx .jc__info:not(.jc__info--a) .jc__h { font-size: var(--h-b); }
 /* The calendar 10% bigger, both ways. */
 .wwh .wx .jc__fit--a .cal--quiet { width: 77cqi; height: calc(var(--rows-h) * 1.1); }
-/* The two groups stay the same height, so with both centred on their phones the labels
-   and headlines still stand level: the APEX heading takes, as extra space under it,
-   exactly what the bigger calendar and the bigger Standard headline add on the left. */
-.wwh .wx .jc__info:not(.jc__info--a) .jc__head { margin-bottom: calc(var(--rows-h) * .1 + 2 * 1.08 * (var(--h-a) - var(--h-b))); }
+/* Both groups hang from one shared top line, the one that centres the taller Standard
+   group on its phone; the APEX group starts from the same line. The Exceptional headline
+   takes the Standard headline's line height, so the two two-line boxes are the same
+   height, and with the frame's 14px under each, the labels, the headlines, the bar and
+   the first row all stand level across the cards. */
+.wwh .wx .jc__head .eye { line-height: 1.5; }
+.wwh .wx .jc__info:not(.jc__info--a) .jc__h { line-height: calc(1.08 * var(--h-a)); }
+.wwh .wx .jc__fit {
+  justify-content: flex-start;
+  padding-top: calc((var(--ph) - (13.2px * 1.5 + 8px + 2 * 1.08 * var(--h-a) + 14px + var(--rows-h) * 1.1)) / 2);
+}
 
 /* The pills: the gap above each (card top to pill) and below it (pill to phone top) were
    already equal, so each moves down by 10% of that gap. */
 .wwh .wx .jc__pill { top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2 * 1.1); }
-/* That extra space is only there to keep the closed groups level; while a row is open the
-   heading gives it back, so the opened row has the room it had before. */
-.wwh .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__head { margin-bottom: 0; }
+/* While a row is open, the APEX group lets go of the shared top line and centres on its
+   phone again, so the opened row can grow up as well as down and stay inside the phone, */
+.wwh .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; padding-top: 0; }
+/* and its headline drops back to its own leading, the matched line height being needed only
+   to keep the closed groups level */
+.wwh .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__h { line-height: 1.08; }
