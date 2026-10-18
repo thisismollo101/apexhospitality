@@ -1,0 +1,254 @@
+/*
+ * "Works alongside" bar — scoped to .wab. White ground, Apex blue caps, the
+ * same orange point either side of the sentence. Desktop is one 108px bar
+ * (34px line row + 74px systems row); under 720px it stacks into rows.
+ */
+
+.wab {
+  --wab-blue: var(--brandblue, #2a7bff);
+  --wab-orange: #ff6b1a;
+  --wab-ink: #0b1220;
+  --wab-muted: #5b6474;
+  --wab-hair: #e6e9ef;
+  --wab-ghost: #ecf0f6;
+  --wab-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  color: var(--wab-ink);
+  font-family: inherit;
+}
+
+/* ---- the faded ticker behind -------------------------------------------- */
+.wab-ticker {
+  position: absolute;
+  inset: 30px 0 0;
+  pointer-events: none;
+}
+.wab-ticker-run {
+  display: flex;
+  width: max-content;
+  animation: wab-ticker 48s linear infinite;
+}
+.wab-ticker-run span {
+  flex: none;
+  width: 400px;
+  font-weight: 900;
+  font-size: 86px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--wab-ghost);
+  white-space: nowrap;
+}
+@keyframes wab-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- the line ------------------------------------------------------------- */
+.wab-line {
+  position: relative;
+  margin: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  border-bottom: 1px solid var(--wab-hair);
+  background: rgba(255, 255, 255, 0.85);
+  animation: wab-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.wab-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.wab-caps {
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wab-blue);
+  white-space: nowrap;
+}
+.wab-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wab-orange);
+  flex: none;
+}
+.wab-sentence {
+  font-weight: 500;
+  font-size: 12.5px;
+  color: #2b3340;
+}
+
+/* ---- the three systems ------------------------------------------------------ */
+.wab-row {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 40px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+}
+.wab-sys {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  animation: wab-slide 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.45s + var(--g) * 0.15s);
+}
+.wab-sys + .wab-sys {
+  border-left: 1px solid var(--wab-hair);
+}
+.wab-logo {
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+.wab-rule {
+  width: 1px;
+  height: 26px;
+  background: var(--wab-hair);
+}
+.wab-cap {
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.25;
+  color: var(--wab-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ----------------------------------------------------------- */
+.wab-num {
+  position: relative;
+}
+.wab-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.wab-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 29px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.wab-plus {
+  color: var(--wab-blue);
+}
+.wab-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.wab-strip {
+  display: block;
+  /* rests on the middle copy of its own digit */
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wab-spin var(--wab-cycle) infinite;
+  animation-delay: calc(0.55s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.wab-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then a
+   no-visible-change snap back — the figure always lands on its real value */
+@keyframes wab-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+@keyframes wab-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+@keyframes wab-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+
+/* ---- mobile: line on top, three rows ----------------------------------------- */
+@media (max-width: 720px) {
+  .wab-line {
+    height: auto;
+    padding: 14px 18px 12px;
+    text-align: center;
+  }
+  .wab-sentence {
+    font-size: 12px;
+  }
+  .wab-row {
+    height: auto;
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* fixed columns so logos of different widths still line the dividers up */
+  .wab-sys {
+    display: grid;
+    grid-template-columns: 104px 1px auto 1fr;
+    align-items: center;
+    gap: 14px;
+    height: 60px;
+    padding: 0 20px;
+  }
+  .wab-sys + .wab-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wab-hair);
+  }
+  .wab-logo {
+    max-width: 100px;
+    max-height: 26px;
+    height: auto;
+  }
+  .wab-fig {
+    font-size: 23px;
+  }
+  .wab-cap {
+    font-size: 11px;
+    white-space: normal;
+  }
+  .wab-ticker {
+    inset: 96px 0 0;
+  }
+  .wab-ticker-run span {
+    font-size: 56px;
+    width: 260px;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .wab-ticker-run,
+  .wab-line,
+  .wab-sys,
+  .wab-strip {
+    animation: none;
+  }
+}
