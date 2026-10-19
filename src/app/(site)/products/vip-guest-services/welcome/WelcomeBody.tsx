@@ -336,6 +336,11 @@ export default function WelcomeBody() {
         <ApexSectionBackground clickToShift />
         <div className="axbg-content">
           <ApexLockup />
+          {/* in the page's large section-heading style ("Four Moments" / the Wrong Way heading), white and centred */}
+          <h2 className="axbg-h">
+            <span>Don&apos;t wait on the universe to deliver.</span>
+            <span>We make the stars align.</span>
+          </h2>
         </div>
       </section>
 
