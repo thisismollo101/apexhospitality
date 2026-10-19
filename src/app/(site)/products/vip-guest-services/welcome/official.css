@@ -1586,6 +1586,21 @@
   text-align: center;
   padding-bottom: 20svh;
 }
+/* the headline under the lockup: the page's large section heading (.s2-bento h2, .wx .sec-head__h),
+   white and centred, one line then the other */
+.w3page .axbg-h {
+  margin-top: clamp(28px, 3vw, 40px);
+  font-family: var(--display);
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #fff;
+  text-align: center;
+}
+.w3page .axbg-h span {
+  display: block;
+}
 .w3page .axlock {
   display: flex;
   align-items: center;
