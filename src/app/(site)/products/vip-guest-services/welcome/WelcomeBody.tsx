@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Hanken_Grotesk, Inter } from 'next/font/google';
+import ApexLockup from '@/components/ApexLockup';
+import ApexSectionBackground from './ApexSectionBackground';
 import Behaviors from './Behaviors';
 import { HeroTop, JoinedSection } from './TopSections';
 import { GUESTS, MARQUEE_CLIPS, REEL, SOURCES, TOUCHPOINTS, WHEN, img } from './data';
@@ -325,6 +327,15 @@ export default function WelcomeBody() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* =================== AFTER THE FOUR FILMS · PARTICLE FIELD (from Welcome Page Two, section 2) =================== */}
+      <section className="axbg-host snap" id="s2f">
+        {/* clickToShift cycles Cobalt -> Nebula -> Ember -> Aurora on click, as on Welcome Page Two */}
+        <ApexSectionBackground clickToShift />
+        <div className="axbg-content">
+          <ApexLockup />
         </div>
       </section>
 

@@ -1544,3 +1544,102 @@
     animation: none;
   }
 }
+
+/* ====================================================================================
+ * Section 2 · the particle field, lifted from Welcome Page Two's section 2 (welcome-two/
+ * style.css), rescoped from .w2page to .w3page. The class names are hardcoded in
+ * ApexSectionBackground and ApexLockup, so they keep their names.
+ * One change for this page: the frame is the space under the fixed bars rather than
+ * 100svh, so the section lock lands it whole.
+ * ==================================================================================== */
+.w3page .axbg-host {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - var(--sales-h) - var(--nav-h));
+  display: flex;
+  /* The lockup sits along the bottom, so the mark keeps the whole frame. */
+  align-items: end;
+  background: #000;
+  padding: 0;
+}
+.w3page .axbg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  /* Never intercept clicks meant for the content on top; the component reads the
+     pointer from the window. Also the fallback panel if WebGL is unavailable. */
+  pointer-events: none;
+  background: #000;
+}
+.w3page .axbg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.w3page .axbg-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 20svh;
+}
+.w3page .axlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+.w3page .axlock-mark {
+  width: clamp(48px, 6.2vw, 74px);
+  height: clamp(48px, 6.2vw, 74px);
+  flex: none;
+  color: var(--brandblue);
+}
+.w3page .axlock-words {
+  font-size: clamp(24px, 3.4vw, 37px);
+  font-weight: 800;
+  letter-spacing: -0.018em;
+  white-space: nowrap;
+  color: #fff;
+  /* widens the clip box so the wipe does not slice the Y of HOSPITALITY */
+  padding-right: 0.1em;
+  /* closed until the section is reached; the animation below opens it */
+  clip-path: inset(0 100% 0 0);
+}
+.w3page .axlock-words em {
+  font-style: normal;
+  text-transform: uppercase;
+  /* .54/.73, Inter's x-height over its cap height */
+  font-size: 0.74em;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  color: var(--brandblue);
+  margin-inline-start: 0.033em;
+}
+.w3page .axlock.is-in .axlock-words {
+  animation: axwipe 0.8s cubic-bezier(0.16, 0.84, 0.24, 1) 1.2s both;
+}
+@keyframes axwipe {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@media (max-width: 640px) {
+  .w3page .axlock {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .w3page .axlock-words {
+    font-size: clamp(20px, 5.4vw, 30px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .w3page .axlock-words,
+  .w3page .axlock.is-in .axlock-words {
+    clip-path: none;
+    animation: none;
+  }
+}
