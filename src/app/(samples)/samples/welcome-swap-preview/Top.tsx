@@ -6,10 +6,11 @@ import WorksAlongside from './WorksAlongside';
 
 /*
  * Welcome Swap Preview: the live Welcome page's top (welcome/TopSections.tsx)
- * copied verbatim, not imported, then swapped (Aidan, 21 Oct): the two phones
- * trade screens (the briefing VSL goes to the Wrong Way phone, the reminder
- * text up into the hero phone), the APEX Way card moves left, and the Wrong
- * Way card moves right with its phone and calendar mirrored. Marked "swap".
+ * copied verbatim, not imported, then swapped (Aidan, 21 Oct): the APEX Way
+ * card moves left and the Wrong Way card right, its phone and calendar
+ * mirrored. Both phones keep their live screens (Aidan's correction, 21 Oct):
+ * the briefing VSL in the hero, the reminder text in the Wrong Way phone.
+ * Marked "swap".
  *
  * As on the live page:
  *
@@ -50,13 +51,13 @@ function BgFilm() {
 }
 
 /**
- * The briefing VSL's screen (swap: now inside the Wrong Way phone): the film on
- * a muted loop, a play button centred on it and the label under the button.
- * Its classes stay hvsl*, as live. There is no cut of the briefing yet, so play
- * starts this film from the top with its sound, and pressing again returns it
- * to the silent loop.
+ * The VSL as a phone (thin bezel, notch), its classes hvsl* here rather than the
+ * sample's vsl* so the page's own .vsl rules (its tap-to-play films) cannot reach it: the film on a muted loop on its
+ * screen, a play button centred on it and the label under the button. There
+ * is no cut of the briefing yet, so play starts this film from the top with
+ * its sound, and pressing again returns it to the silent loop.
  */
-function VslScreen() {
+function Vsl() {
   const ref = useLoop(0.2);
   const [sound, setSound] = useState(false);
 
@@ -72,27 +73,29 @@ function VslScreen() {
   };
 
   return (
-    <>
-      <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
-        <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-        <source src={img(VSL.clipWebm)} type="video/webm" />
-        <source src={img(VSL.clip)} type="video/mp4" />
-      </video>
-      <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
-        <span className="play" aria-hidden="true">
-          {sound ? (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24">
-              <path d="M7 4.5l13 7.5-13 7.5z" />
-            </svg>
-          )}
-        </span>
-        <span className="hvsl__cta">{VSL.cta}</span>
-      </button>
-    </>
+    <div className="hvsl top__vsl">
+      <div className="hvsl__screen">
+        <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
+          <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+          <source src={img(VSL.clipWebm)} type="video/webm" />
+          <source src={img(VSL.clip)} type="video/mp4" />
+        </video>
+        <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
+          <span className="play" aria-hidden="true">
+            {sound ? (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24">
+                <path d="M7 4.5l13 7.5-13 7.5z" />
+              </svg>
+            )}
+          </span>
+          <span className="hvsl__cta">{VSL.cta}</span>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -120,12 +123,7 @@ export function HeroTop() {
       <BgFilm />
       <span className="top__scrim" aria-hidden="true" />
       <div className="wrap top__in">
-        {/* swap: the Wrong Way phone's reminder text, up in the hero phone */}
-        <div className="hvsl top__vsl">
-          <div className="hvsl__screen">
-            <SmsScreen />
-          </div>
-        </div>
+        <Vsl />
         <div className="top__copy">
           {/* the headline's own lines, set as blocks so the copy column is only as wide as what it holds */}
           <h1 className="top__h">
@@ -187,11 +185,12 @@ function Heading({ h }: { h: { label: string; lines: string[] } }) {
 
 /* ---- Joined Cards: the two phones -------------------------------------------------- */
 
-/** The plain reminder text from Aidan's reference, and nothing else (swap: now the hero phone's screen). */
-function SmsScreen() {
+/** Card A's phone: the plain reminder text from Aidan's reference, and nothing else. */
+function SmsPhone() {
   const s = OLD_WAY.sms;
   return (
-    <div className="sms">
+    <div className="tphone">
+      <div className="tphone__screen sms">
         <p className="sms__meta">
           {s.kind}
           <br />
@@ -204,16 +203,6 @@ function SmsScreen() {
             <path d="M6 3.5l4.5 4.5L6 12.5" />
           </svg>
         </div>
-    </div>
-  );
-}
-
-/** swap: the Wrong Way phone now carries the hero's briefing VSL, the same film, play button and label. */
-function VslPhone() {
-  return (
-    <div className="tphone">
-      <div className="tphone__screen">
-        <VslScreen />
       </div>
     </div>
   );
@@ -412,10 +401,10 @@ function JoinedCards() {
         </div>
       </article>
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
-        {/* swap: mirrored, the phone (now carrying the briefing VSL) first and the calendar after it */}
+        {/* swap: mirrored, the phone first and the calendar after it */}
         <div className="jc__media jc__media--a">
           <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
-          <VslPhone />
+          <SmsPhone />
         </div>
         <div className="jc__info jc__info--a">
           <div className="jc__fit jc__fit--a">

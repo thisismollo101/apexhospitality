@@ -4,7 +4,7 @@
  * The live Welcome page's hero (.hd), its Works alongside bar (.wabb) and its
  * Wrong Way vs APEX Way section (.wx): their rules copied from
  * welcome/official.css with .wsp rescoped to .wsp, base tokens included.
- * The swaps (Aidan, 21 Oct) are at the foot of this file.
+ * The swap (Aidan, 21 Oct) is at the foot of this file.
  */
 
 .wsp {
@@ -968,45 +968,8 @@ html:has(.wsp) { scroll-behavior: smooth; }
 
 
 /* ====================================================================================
-   THE SWAPS (Aidan, 21 Oct)
+   THE SWAP (Aidan, 21 Oct)
    ==================================================================================== */
 
 /* 1 · The Wrong Way card on the right, mirrored: its phone first, the calendar after it. */
 .wsp .wx .jc__card--a { grid-template-columns: auto minmax(0, 1fr); }
-
-/* 2 · The reminder text up in the hero phone: the Wrong Way phone's screen rules, as live,
-   drawn at the hero phone's size (its screen is 283.25px wide where the Wrong Way phone's is
-   219.5px, both under the same .85 zoom), so it reads exactly as it did, only larger. */
-.wsp .hd .sms { display: flex; flex-direction: column; padding: 0 10px 11px; background: #edf1fb; font-family: var(--body); }
-.wsp .hd .sms__meta { padding-top: 18px; font-size: 7.5px; line-height: 1.4; text-align: center; color: #9aa3b5; }
-.wsp .hd .sms__bubble { margin-top: 22px; padding: 9px 10px; border-radius: 11px; background: #fff; font-size: 9.6px; line-height: 1.38; color: #1d1f24; }
-.wsp .hd .sms__input {
-  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: 0 9px 0 12px; height: 26px;
-  border: 1px solid #b9c3da; border-radius: 999px; font-size: 9px; color: #a8b2c7;
-}
-.wsp .hd .sms__input svg { width: 10px; height: 10px; fill: none; stroke: #8f9ab3; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.wsp .hd .sms { padding: 0 12px 13px; }
-.wsp .hd .sms__meta { padding-top: 22px; font-size: 8.6px; }
-.wsp .hd .sms__bubble { margin-top: 27px; padding: 11px 12px; border-radius: 13px; font-size: 11.2px; }
-.wsp .hd .sms__input { height: 31px; padding: 0 11px 0 14px; font-size: 10.4px; }
-.wsp .hd .sms__input svg { width: 11px; height: 11px; }
-.wsp .hd .hvsl__screen .sms { position: absolute; inset: 0; zoom: 1.2904; }
-@media (max-width: 1240px) { .wsp .hd .hvsl__screen .sms { zoom: 1.2401; } }
-@media (max-width: 960px) { .wsp .hd .hvsl__screen .sms { zoom: 1.1367; } }
-
-/* 3 · The briefing VSL down in the Wrong Way phone: the hero phone's screen rules, as live,
-   drawn at the Wrong Way phone's size (the play button and label scaled by the same ratio). */
-.wsp .wx .play {
-  display: flex; align-items: center; justify-content: center; flex: none;
-  width: 44px; height: 44px; border-radius: 999px; background: rgba(255, 255, 255, .95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
-}
-.wsp .wx .play svg { width: 38%; height: 38%; fill: var(--ink); }
-.wsp .wx .hvsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-.wsp .wx .hvsl__play {
-  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px;
-  padding: 0 11px; text-align: center;
-}
-.wsp .wx .hvsl__play:hover .play { transform: scale(1.06); }
-.wsp .wx .hvsl__cta { max-width: 100%; font-size: 11px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
-.wsp .wx .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
