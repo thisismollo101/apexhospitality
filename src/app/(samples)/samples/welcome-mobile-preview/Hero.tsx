@@ -18,7 +18,7 @@ export default function Hero() {
   return (
     <section className="hero" aria-label="Hero">
       <p className="strip">
-        {HERO.strip.text}
+        <span className="strip__ph">{HERO.strip.placeholder}</span>
         {HERO.strip.pending && <Pending />}
       </p>
 
