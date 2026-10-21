@@ -1,5 +1,5 @@
 import { HERO } from './data';
-import { BgFilm, Pending, Ticker } from './parts';
+import { BgFilm, Ticker } from './parts';
 
 /** The Apex lockup, drawn the site's way: the mark in its three tones, then the wordmark. */
 const ApexLogo = () => (
@@ -18,8 +18,7 @@ export default function Hero() {
   return (
     <section className="hero" aria-label="Hero">
       <p className="strip">
-        <span className="strip__ph">{HERO.strip.placeholder}</span>
-        {HERO.strip.pending && <Pending />}
+        {HERO.strip.text}
       </p>
 
       <div className="hero__stage">

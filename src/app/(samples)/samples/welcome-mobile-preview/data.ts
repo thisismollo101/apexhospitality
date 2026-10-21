@@ -18,7 +18,7 @@ export type Film = { title: string; len?: string; clip: string; hevc?: string; w
 /* ---- Hero ------------------------------------------------------------------ */
 
 export const HERO = {
-  strip: { placeholder: 'PENDING-73: approved Expedia 73% line to come', pending: true },
+  strip: { text: '73% say creator or influencer recommendations have influenced their booking decisions. Expedia Group, 2025 Traveler Value Index' },
   headline: 'Single Largest Commercial Leak',
   film: 'hero.mp4',
   poster: 'hero.jpg',
