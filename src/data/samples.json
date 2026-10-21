@@ -73,6 +73,12 @@
       "label": "Welcome Swap Preview",
       "summary": "The live Welcome hero and the Wrong Way vs APEX Way section with the cards swapped: APEX Way on the left, Wrong Way on the right with its phone and calendar mirrored. Both phones keep their live screens.",
       "status": "live"
+    },
+    {
+      "slug": "hero-ticker-options",
+      "label": "Hero Ticker Options",
+      "summary": "The live Welcome hero three times with Motion's three ticker designs for the card box, working: three tapes, one rail with LED strips, and big numbers with pill tracks. Lines run right to left, pause on hover and stand still under reduced motion.",
+      "status": "live"
     }
   ]
 }
