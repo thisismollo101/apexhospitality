@@ -1,0 +1,606 @@
+/*
+ * Hero Cards Legibility. Everything is scoped under .hcl.
+ *
+ * The live Welcome hero (Gradient 1 · Cobalt Sweep, as live): its rules are
+ * /samples/hero-data-cards' (the source the live hero was copied from) with
+ * Gradients 2 and 3 left out, rescoped .hdc -> .hcl, and the live "Works
+ * alongside" bar's rules copied from welcome/official.css, rescoped
+ * .w3page .wabb -> .hcl .wabb. Only the card box changes, per option, at the
+ * foot of this file; the cards' colours are Cobalt Sweep's, unchanged.
+ */
+
+.hcl {
+  --display: 'Aeonik Pro', var(--hcl-display), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: var(--hcl-body), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ink: #0d0e11;
+  --ink-soft: #4a5058;
+  --ink-mute: #818892;
+  --paper: #ffffff;
+  --paper-warm: #f6f5f2;
+  --line: #e4e3df;
+  --accent: #2b59e0;
+  --accent-deep: #0a1a44;
+  --night: #0b0c0e;
+  /* The accent lifted for type on night, where the base blue is too dim to read. */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --maxw: 1240px;
+  --gutter: 32px;
+  --jump-h: 64px;
+  /* The live page's two fixed bars (54px sales bar, 69px nav on desktop), which the hero fills the screen under. */
+  --chrome-h: 123px;
+  /* The live cards are drawn at 75%; these are 15% larger than that. */
+  --cz: calc(.75 * 1.15);
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.hcl * { margin: 0; padding: 0; box-sizing: border-box; }
+.hcl button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.hcl ul { list-style: none; }
+.hcl a:focus-visible, .hcl button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+html:has(.hcl) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.hcl) { scroll-behavior: auto; }
+  .hcl *, .hcl *::before, .hcl *::after { transition: none !important; animation: none !important; }
+}
+
+.hcl .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hcl .eye { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+
+/* ---- page frame ------------------------------------------------------------ */
+
+.hcl .jump {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 16px;
+  height: var(--jump-h); padding: 0 var(--gutter);
+  background: rgba(13, 14, 17, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.hcl .jump a { color: #fff; text-decoration: none; }
+.hcl .jump__home {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px;
+  font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7) !important; white-space: nowrap;
+}
+.hcl .jump__opts { flex: 1; display: flex; justify-content: center; gap: 6px; }
+.hcl .jump__opts a {
+  display: flex; flex-direction: column; justify-content: center; min-height: 48px; min-width: 150px;
+  padding: 4px 16px; border-radius: 12px; background: rgba(255, 255, 255, .07);
+  font-size: 13.5px; font-weight: 600; line-height: 1.2; white-space: nowrap; transition: background .2s;
+}
+.hcl .jump__opts a span { font-size: 9.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-lit); }
+.hcl .jump__opts a:hover, .hcl .jump__opts a:active { background: var(--accent); }
+.hcl .jump__opts a:hover span, .hcl .jump__opts a:active span { color: rgba(255, 255, 255, .8); }
+
+.hcl .intro { padding: 64px 0 56px; background: var(--paper); }
+.hcl .intro__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hcl .intro h1 { margin-top: 12px; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
+.hcl .intro p { margin-top: 16px; max-width: 68ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+.hcl .outro { padding: 40px 0 64px; background: var(--paper); }
+.hcl .outro a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-soft); }
+.hcl .outro p { font-size: 12px; color: var(--ink-mute); }
+
+.hcl .opt { scroll-margin-top: var(--jump-h); }
+.hcl .opt__head { padding: 26px 0 22px; background: var(--paper-warm); border-top: 1px solid var(--line); }
+.hcl .opt__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hcl .opt__label { display: block; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.hcl .opt__note { margin-top: 6px; max-width: 92ch; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+/* ---- the hero, as live -------------------------------------------------------------------- */
+
+/* play button */
+.hcl .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.hcl .play svg { width: 38%; height: 38%; fill: var(--ink); }
+
+.hcl .top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--chrome-h)); background: var(--night); color: #fff;
+}
+.hcl .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.hcl .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+/* the live column: the VSL at 75% of --vw, then the copy */
+/* The live column for the VSL, then the copy column only as wide as what it holds (the
+   headline's longer line or the cards, whichever is wider), the pair centred in the page
+   so the space either side of the group is equal. */
+.hcl .top__in {
+  flex: 1; width: 100%; display: grid; grid-template-columns: calc(var(--vw) * .75) minmax(0, max-content); justify-content: center;
+  gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px;
+}
+.hcl .top__copy { min-width: 0; }
+.hcl .top__h span { display: block; }
+.hcl .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+
+/* ---- the VSL as a phone, as the Wrong Way vs APEX Way phones: a thin light bezel, the notch,
+   the film whole on a screen of its own shape (994 × 1920), a play button centred on it and the
+   label under the button. The phone fills the live VSL column. --------------------------------- */
+.hcl .vsl { position: relative; width: 100%; padding: 5px; border-radius: 30px; background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); }
+.hcl .vsl__screen { position: relative; width: 100%; aspect-ratio: 994 / 1920; overflow: hidden; border-radius: 25px; background: var(--ink); }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.hcl .vsl__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 2; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.hcl .vsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hcl .vsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 0 14px; text-align: center;
+}
+/* the live play button is 76px drawn at 75% */
+.hcl .vsl__play .play { width: 57px; height: 57px; }
+.hcl .vsl__play:hover .play { transform: scale(1.06); }
+.hcl .vsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.hcl .vsl__play[aria-pressed='true'] .vsl__cta { opacity: .8; }
+
+/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
+   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
+   figures, padding and boxes all grow together, exactly as Version 3 had them. */
+.hcl .hc {
+  --hc-fig: #fff; --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
+  display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz));
+}
+.hcl .hc li {
+  display: flex; align-items: center; padding: 16px 22px 16px 0;
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+/* the time-label column: the figure large, a rule on its right */
+.hcl .hc__when {
+  flex: none; width: 150px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+  margin-right: 20px; border-right: 1px solid var(--hc-rule);
+}
+.hcl .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+/* the range dash: shorter than the font's en dash, with a little room either side so it
+   touches neither figure */
+.hcl .hc__dash { display: inline-block; width: .34em; height: .085em; margin: 0 .09em; vertical-align: .3em; overflow: hidden; color: transparent; background: var(--hc-fig); }
+.hcl .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
+.hcl .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
+
+/* The three gradients: site blue and the Welcome navy, slightly translucent, each carried
+   across to the middle of the card rather than fading out at the accent edge. */
+
+/* Gradient 1 · Cobalt Sweep: site blue held from the edge to the middle, then into navy */
+.hcl .hero--g1 .hc li {
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
+    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
+}
+/* ====================================================================================
+   TABLET · landscape (checked at 1194): the live tier
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .hcl .top { --vw: 300px; }
+  .hcl .top__in { gap: 48px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834): the live tier
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .hcl .intro { padding: 48px 0 40px; }
+  .hcl .intro h1 { font-size: 38px; }
+  .hcl .jump { gap: 8px; padding: 0 12px; }
+  .hcl .jump__home { font-size: 12px; }
+  .hcl .jump__opts { gap: 4px; }
+  .hcl .jump__opts a { flex: 1; min-width: 0; padding: 4px 8px; font-size: 12px; white-space: normal; }
+  .hcl .play { width: 64px; height: 64px; }
+  .hcl .vsl__play .play { width: 48px; height: 48px; }
+  .hcl .vsl__cta { font-size: 12px; }
+  .hcl .top { --vw: 270px; min-height: 0; }
+  .hcl .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .hcl .top__h { font-size: 36px; }
+  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
+  .hcl .hc { margin-top: calc(24px * .75 / var(--cz)); }
+  .hcl .hc li { padding: 12px 14px 12px 0; }
+  .hcl .hc__when { width: 128px; margin-right: 14px; }
+  .hcl .hc__when b { font-size: 29px; }
+  .hcl .hc__txt { font-size: 14px; }
+  }
+
+/* ====================================================================================
+   Gradient 1 · Cobalt Sweep, reworked (Aidan, 18 Oct): the whole group 15% smaller
+   (phone, headline, card boxes, padding, gaps), the text inside the cards kept at its
+   size, and each card's line set on its two given lines.
+   ==================================================================================== */
+.hcl .hero--g1 .top__in { zoom: .85; }
+.hcl .hero--g1 .hc__when b, .hcl .hero--g1 .hc__txt { zoom: 1.17647; }
+.hcl .hero--g1 .hc__line span { display: block; white-space: nowrap; }
+/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
+.hcl .hero--g1 .hc { width: 640px; max-width: 100%; }
+@media (max-width: 960px) {
+  /* Here the current cards are as wide as the copy column (the page less its gutters, the
+     phone column and the gap), not their 640px; these are 15% narrower than that. */
+  .hcl .hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+}
+/* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
+   grid centres it on the copy column, which runs from the headline's first line to the foot
+   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+.hcl .hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
+
+
+
+/* ====================================================================================
+ * "Works alongside" bar, Option B (number-led), at the foot of the hero in place of the
+ * old integrations strip. Scoped to .hcl .wabb. Full-bleed,
+ * no radius. Desktop/tablet: one 108px bar (78px systems row + 30px footer
+ * line). Under 720px it stacks into rows with the line underneath.
+ */
+
+.hcl .wabb {
+  --wabb-blue: var(--brandblue, #2a7bff);
+  --wabb-orange: #ff6b1a;
+  --wabb-ink: #0b1220;
+  --wabb-muted: #5b6474;
+  --wabb-hair: #e6e9ef;
+  --wabb-ghost: #ecf0f6;
+  --wabb-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0; /* a banner, side to side: never a card */
+  background: #fff;
+  color: var(--wabb-ink);
+  font-family: inherit;
+}
+
+/* ---- the three systems --------------------------------------------------- */
+.hcl .wabb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 78px;
+  display: flex;
+}
+.hcl .wabb-sys {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 48px;
+}
+.hcl .wabb-sys + .wabb-sys {
+  border-left: 1px solid var(--wabb-hair);
+}
+
+/* faded figure rising behind each third, forever */
+.hcl .wabb-rise {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  width: 640px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.hcl .wabb-sys:nth-child(2) .wabb-rise,
+.hcl .wabb-sys:nth-child(3) .wabb-rise {
+  left: 250px;
+}
+.hcl .wabb-rise-run {
+  display: block;
+  animation: wabb-rise calc(3.7s + var(--g) * 0.6s) linear infinite;
+}
+.hcl .wabb-rise-run span {
+  display: block;
+  height: 73.5px; /* one step of the loop */
+  font-weight: 900;
+  font-size: 70px;
+  line-height: 73.5px;
+  letter-spacing: -0.045em;
+  color: var(--wabb-ghost);
+  white-space: nowrap;
+}
+@keyframes wabb-rise {
+  to {
+    transform: translateY(-73.5px);
+  }
+}
+
+.hcl .wabb-num,
+.hcl .wabb-id {
+  position: relative; /* above the rising figure */
+}
+.hcl .wabb-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--g) * 0.15s);
+}
+.hcl .wabb-logo {
+  display: block;
+  /* the drawn height; globals' img { height: auto } would otherwise draw the file's own size */
+  height: var(--lh);
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.hcl .wabb-cap {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--wabb-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ------------------------------------------------------- */
+.hcl .wabb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.hcl .wabb-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.hcl .wabb-plus {
+  color: var(--wabb-blue);
+}
+.hcl .wabb-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.hcl .wabb-strip {
+  display: block;
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wabb-spin var(--wabb-cycle) infinite;
+  animation-delay: calc(0.4s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.hcl .wabb-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then an
+   invisible snap back — always rests on the real value */
+@keyframes wabb-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+/* ---- the footer line ------------------------------------------------------ */
+.hcl .wabb-line {
+  margin: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  border-top: 1px solid var(--wabb-hair);
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hcl .wabb-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.hcl .wabb-caps {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wabb-blue);
+  white-space: nowrap;
+}
+.hcl .wabb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wabb-orange);
+  flex: none;
+}
+.hcl .wabb-sentence {
+  font-weight: 500;
+  font-size: 12px;
+  color: #2b3340;
+}
+
+@keyframes wabb-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---- tablet landscape / portrait: same 108px bar, tighter -------------------- */
+@media (max-width: 1280px) {
+  .hcl .wabb-sys {
+    padding-left: 28px;
+    gap: 14px;
+  }
+  .hcl .wabb-fig {
+    font-size: 34px;
+  }
+  .hcl .wabb-cap {
+    white-space: normal;
+    max-width: 130px;
+  }
+  .hcl .wabb-rise {
+    left: 200px;
+  }
+  .hcl .wabb-sys:nth-child(2) .wabb-rise,
+  .hcl .wabb-sys:nth-child(3) .wabb-rise {
+    left: 170px;
+  }
+}
+@media (max-width: 1000px) {
+  .hcl .wabb-sys {
+    padding-left: 18px;
+    gap: 10px;
+  }
+  .hcl .wabb-fig {
+    font-size: 27px;
+  }
+  .hcl .wabb-logo {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .hcl .wabb-cap {
+    font-size: 11px;
+    max-width: 104px;
+  }
+  .hcl .wabb-sentence {
+    font-size: 11px;
+  }
+  .hcl .wabb-caps {
+    font-size: 9.5px;
+  }
+  .hcl .wabb-line {
+    gap: 4px 10px;
+  }
+  .hcl .wabb-rise {
+    left: 140px;
+  }
+  .hcl .wabb-sys:nth-child(2) .wabb-rise,
+  .hcl .wabb-sys:nth-child(3) .wabb-rise {
+    left: 120px;
+  }
+}
+
+/* ---- mobile: three rows, line underneath ------------------------------------ */
+@media (max-width: 720px) {
+  .hcl .wabb-row {
+    height: auto;
+    flex-direction: column;
+  }
+  .hcl .wabb-sys {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 14px;
+    height: 66px;
+    padding: 0 20px;
+  }
+  .hcl .wabb-sys + .wabb-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wabb-hair);
+  }
+  .hcl .wabb-fig {
+    font-size: 30px;
+  }
+  .hcl .wabb-logo {
+    transform: none;
+    max-height: 22px;
+    height: auto;
+  }
+  .hcl .wabb-cap {
+    max-width: none;
+  }
+  .hcl .wabb-rise,
+  .hcl .wabb-sys:nth-child(2) .wabb-rise,
+  .hcl .wabb-sys:nth-child(3) .wabb-rise {
+    left: 220px;
+  }
+  .hcl .wabb-rise-run span {
+    font-size: 54px;
+  }
+  .hcl .wabb-line {
+    height: auto;
+    padding: 12px 18px 14px;
+    text-align: center;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .hcl .wabb-rise-run,
+  .hcl .wabb-strip,
+  .hcl .wabb-id,
+  .hcl .wabb-line {
+    animation: none;
+  }
+}
+
+/* ====================================================================================
+ * Section 2 · the particle field, lifted from Welcome Page Two's section 2 (welcome-two/
+
+/* ====================================================================================
+   THE OPTIONS: only the card box changes. Each card keeps the live box (Cobalt Sweep's
+   gradient, the light accent edge, the border, blur and shadow, the box width) and its
+   colours: figure and title white, the line at .86 white. Its content (.cl) is drawn at
+   1 / (.85 × --cz), undoing the group's and the list's zoom, so the sizes below are the
+   sizes on screen. The live card text is about 29px (figure) and 13px (title, line).
+   ==================================================================================== */
+.hcl .hero--g1 .hc li { display: block; padding: 0; }
+.hcl .cl { zoom: 1.36395; color: var(--hc-text); }
+.hcl .cl__fig { font-family: var(--display); font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+.hcl .cl__title { display: block; font-family: var(--display); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; color: var(--hc-title); }
+.hcl .cl strong { font-weight: 700; color: #fff; }
+.hcl .cl .nb { white-space: nowrap; }
+
+/* Option 1 · Ticker: the figure anchored left behind its rule, the title static in caps,
+   the line running right to left from the rule to the card's edge, fading in and out. */
+.hcl .tk { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: stretch; }
+.hcl .tk .cl__fig { display: flex; align-items: center; justify-content: center; font-size: 44px; border-right: 1px solid var(--hc-rule); }
+.hcl .tk__body { min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 16px 0 16px 18px; }
+.hcl .tk .cl__title { font-size: 14px; }
+.hcl .tk__run {
+  display: block; overflow: hidden; white-space: nowrap; font-size: 21px; font-weight: 500; line-height: 1.3; color: #fff;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 36px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 36px), transparent);
+}
+.hcl .tk__track { display: inline-flex; animation: hcl-tick var(--tick, 20s) linear infinite; }
+.hcl .tk__copy { padding-right: 64px; }
+.hcl .hc li:nth-child(2) .tk__track { --tick: 19s; }
+.hcl .hc li:nth-child(3) .tk__track { --tick: 18s; }
+.hcl .hc li:hover .tk__track { animation-play-state: paused; }
+@keyframes hcl-tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* reduced motion: the line stands still and simply wraps */
+@media (prefers-reduced-motion: reduce) {
+  .hcl .tk__run { white-space: normal; -webkit-mask-image: none; mask-image: none; }
+  .hcl .tk__track { display: inline; animation: none; transform: none; }
+  .hcl .tk__copy { padding-right: 0; }
+  .hcl .tk__dup { display: none; }
+}
+
+/* Option 2 · Statement: a big figure left, the line beside it as a large statement of two to
+   three lines, its key phrase in bold white, the rest a step lighter. */
+.hcl .st { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: stretch; }
+.hcl .st .cl__fig { display: flex; align-items: center; justify-content: center; font-size: 46px; border-right: 1px solid var(--hc-rule); }
+.hcl .st__body { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 15px 20px 15px 18px; }
+.hcl .st .cl__title { font-size: 13px; }
+.hcl .st__line { font-size: 19px; font-weight: 500; line-height: 1.3; letter-spacing: -.005em; text-wrap: balance; }
+
+/* Option 3 · Poster: stacked, a very large figure with the title in caps beside it on its
+   baseline, then the line set large across the whole card. */
+.hcl .ps { display: flex; flex-direction: column; gap: 8px; padding: 16px 22px 18px 20px; }
+.hcl .ps__top { display: flex; align-items: baseline; gap: 14px; }
+.hcl .ps .cl__fig { font-size: 56px; letter-spacing: -.04em; }
+.hcl .ps .cl__title { font-size: 15px; }
+.hcl .ps__line { font-size: 18px; font-weight: 500; line-height: 1.35; color: #fff; text-wrap: pretty; }
