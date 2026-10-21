@@ -6,10 +6,12 @@ import WorksAlongside from './WorksAlongside';
 
 /*
  * Welcome Swap Preview: the live Welcome page's top (welcome/TopSections.tsx)
- * copied verbatim, not imported, then swapped (Aidan, 21 Oct): the two phones
- * trade screens (the briefing VSL goes to the Wrong Way phone, the reminder
- * text up into the hero phone), the APEX Way card moves left, and the Wrong
- * Way card moves right with its phone and calendar mirrored. Marked "swap".
+ * copied verbatim, not imported, then swapped (Aidan, 21 Oct): the APEX Way
+ * card moves left and the Wrong Way card right, its phone and calendar
+ * mirrored, and (Aidan's combined final, 21 Oct) two phones trade films: the
+ * APEX Way film plays in the hero phone and the briefing VSL in the APEX Way
+ * card's phone. The Wrong Way phone keeps its reminder text, as live. Marked
+ * "swap".
  *
  * As on the live page:
  *
@@ -50,11 +52,11 @@ function BgFilm() {
 }
 
 /**
- * The briefing VSL's screen (swap: now inside the Wrong Way phone): the film on
- * a muted loop, a play button centred on it and the label under the button.
- * Its classes stay hvsl*, as live. There is no cut of the briefing yet, so play
- * starts this film from the top with its sound, and pressing again returns it
- * to the silent loop.
+ * The VSL as a phone (thin bezel, notch), its classes hvsl* here rather than the
+ * sample's vsl* so the page's own .vsl rules (its tap-to-play films) cannot reach it: the film on a muted loop on its
+ * screen, a play button centred on it and the label under the button. There
+ * is no cut of the briefing yet, so play starts this film from the top with
+ * its sound, and pressing again returns it to the silent loop.
  */
 function VslScreen() {
   const ref = useLoop(0.2);
@@ -120,10 +122,10 @@ export function HeroTop() {
       <BgFilm />
       <span className="top__scrim" aria-hidden="true" />
       <div className="wrap top__in">
-        {/* swap: the Wrong Way phone's reminder text, up in the hero phone */}
+        {/* swap: the APEX Way film, with its unmute pill, in the hero phone */}
         <div className="hvsl top__vsl">
           <div className="hvsl__screen">
-            <SmsScreen />
+            <LoopScreen />
           </div>
         </div>
         <div className="top__copy">
@@ -187,11 +189,12 @@ function Heading({ h }: { h: { label: string; lines: string[] } }) {
 
 /* ---- Joined Cards: the two phones -------------------------------------------------- */
 
-/** The plain reminder text from Aidan's reference, and nothing else (swap: now the hero phone's screen). */
-function SmsScreen() {
+/** Card A's phone: the plain reminder text from Aidan's reference, and nothing else. */
+function SmsPhone() {
   const s = OLD_WAY.sms;
   return (
-    <div className="sms">
+    <div className="tphone">
+      <div className="tphone__screen sms">
         <p className="sms__meta">
           {s.kind}
           <br />
@@ -204,16 +207,6 @@ function SmsScreen() {
             <path d="M6 3.5l4.5 4.5L6 12.5" />
           </svg>
         </div>
-    </div>
-  );
-}
-
-/** swap: the Wrong Way phone now carries the hero's briefing VSL, the same film, play button and label. */
-function VslPhone() {
-  return (
-    <div className="tphone">
-      <div className="tphone__screen">
-        <VslScreen />
       </div>
     </div>
   );
@@ -233,7 +226,7 @@ const SoundIcon = ({ on }: { on: boolean }) => (
  * off it; muted is set as a property, since React does not reliably emit the
  * attribute. Reduced motion leaves the poster up until someone presses unmute.
  */
-function LoopPhone() {
+function LoopScreen() {
   const ref = useRef<HTMLVideoElement>(null);
   const film = APEX_WAY.joined;
   const [sound, setSound] = useState(false);
@@ -257,19 +250,17 @@ function LoopPhone() {
   };
 
   return (
-    <div className="tphone">
-      <div className="tphone__screen">
-        <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
-          <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(film.clipWebm)} type="video/webm" />
-          <source src={img(film.clip)} type="video/mp4" />
-        </video>
-        <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
-          <SoundIcon on={sound} />
-          <span>{sound ? 'Mute' : 'Unmute'}</span>
-        </button>
-      </div>
-    </div>
+    <>
+      <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
+        <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+        <source src={img(film.clipWebm)} type="video/webm" />
+        <source src={img(film.clip)} type="video/mp4" />
+      </video>
+      <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
+        <SoundIcon on={sound} />
+        <span>{sound ? 'Mute' : 'Unmute'}</span>
+      </button>
+    </>
   );
 }
 
@@ -401,7 +392,12 @@ function JoinedCards() {
       <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
         <div className="jc__media jc__media--b">
           <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
-          <LoopPhone />
+          {/* swap: the briefing VSL, from the hero, in the APEX Way phone */}
+          <div className="tphone">
+            <div className="tphone__screen">
+              <VslScreen />
+            </div>
+          </div>
         </div>
         {/* added: the heading over the four rows, both inside a frame exactly the phone's height, level with it */}
         <div className="jc__info">
@@ -412,10 +408,10 @@ function JoinedCards() {
         </div>
       </article>
       <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
-        {/* swap: mirrored, the phone (now carrying the briefing VSL) first and the calendar after it */}
+        {/* swap: mirrored, the phone first and the calendar after it */}
         <div className="jc__media jc__media--a">
           <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
-          <VslPhone />
+          <SmsPhone />
         </div>
         <div className="jc__info jc__info--a">
           <div className="jc__fit jc__fit--a">

@@ -8,8 +8,8 @@ import './style.css';
 /*
  * Welcome Swap Preview (Aidan, 21 Oct): the live Welcome page's hero and its
  * Wrong Way vs APEX Way section, copied rather than imported per CLAUDE.md,
- * with the two cards swapped round and the two phones trading screens. A
- * preview only, for desktop. The fonts are the live page's pairing under its
+ * with the two cards swapped round and the Wrong Way card mirrored. A preview
+ * only, for desktop. The fonts are the live page's pairing under its
  * own variable names, so the copied rules resolve as they do there.
  */
 const display = Hanken_Grotesk({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap', variable: '--w3-display' });
@@ -29,9 +29,9 @@ export default function WelcomeSwapPreview() {
           <span className="eye">Preview · Desktop</span>
           <h1>Welcome Swap Preview</h1>
           <p>
-            The live Welcome hero and the Wrong Way vs APEX Way section, swapped: the APEX Way card on the left, the
-            Wrong Way card on the right with its phone and calendar mirrored, and the two phones trading screens, the
-            briefing VSL down in the Wrong Way phone and the reminder text up in the hero.
+            The live Welcome hero and the Wrong Way vs APEX Way section, swapped: the APEX Way card on the left and the
+            Wrong Way card on the right with its phone and calendar mirrored. The hero phone keeps the briefing VSL and
+            the Wrong Way phone the reminder text, as live.
           </p>
         </div>
       </header>
