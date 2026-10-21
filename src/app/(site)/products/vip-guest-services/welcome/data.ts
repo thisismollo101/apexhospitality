@@ -175,6 +175,10 @@ export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
   { claim: '74% of affluent travellers book after watching activity video.', src: 'Travel Iowa video-marketing presentation' },
   { claim: "Hotel listings with property video get 99% more clicks to the hotel's website.", src: 'TripAdvisor Business Advantage' },
   { claim: '65% of US hotels report staffing shortages.', src: 'AHLA, Feb 2025' },
+  {
+    claim: '73% say creator or influencer recommendations have influenced their booking decisions.',
+    src: 'Expedia Group, 2025 Traveler Value Index (May 2025), https://secure.businesswire.com/news/home/20250520512943/en/ [G-05]',
+  },
 ];
 
 /* ---- the top of the page: the hero and the Wrong Way vs APEX Way section ---------
