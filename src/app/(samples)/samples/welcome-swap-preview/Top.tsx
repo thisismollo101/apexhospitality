@@ -8,9 +8,10 @@ import WorksAlongside from './WorksAlongside';
  * Welcome Swap Preview: the live Welcome page's top (welcome/TopSections.tsx)
  * copied verbatim, not imported, then swapped (Aidan, 21 Oct): the APEX Way
  * card moves left and the Wrong Way card right, its phone and calendar
- * mirrored. Both phones keep their live screens (Aidan's correction, 21 Oct):
- * the briefing VSL in the hero, the reminder text in the Wrong Way phone.
- * Marked "swap".
+ * mirrored, and (Aidan's combined final, 21 Oct) two phones trade films: the
+ * APEX Way film plays in the hero phone and the briefing VSL in the APEX Way
+ * card's phone. The Wrong Way phone keeps its reminder text, as live. Marked
+ * "swap".
  *
  * As on the live page:
  *
@@ -57,7 +58,7 @@ function BgFilm() {
  * is no cut of the briefing yet, so play starts this film from the top with
  * its sound, and pressing again returns it to the silent loop.
  */
-function Vsl() {
+function VslScreen() {
   const ref = useLoop(0.2);
   const [sound, setSound] = useState(false);
 
@@ -73,29 +74,27 @@ function Vsl() {
   };
 
   return (
-    <div className="hvsl top__vsl">
-      <div className="hvsl__screen">
-        <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
-          <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(VSL.clipWebm)} type="video/webm" />
-          <source src={img(VSL.clip)} type="video/mp4" />
-        </video>
-        <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
-          <span className="play" aria-hidden="true">
-            {sound ? (
-              <svg viewBox="0 0 24 24">
-                <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24">
-                <path d="M7 4.5l13 7.5-13 7.5z" />
-              </svg>
-            )}
-          </span>
-          <span className="hvsl__cta">{VSL.cta}</span>
-        </button>
-      </div>
-    </div>
+    <>
+      <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
+        <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+        <source src={img(VSL.clipWebm)} type="video/webm" />
+        <source src={img(VSL.clip)} type="video/mp4" />
+      </video>
+      <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
+        <span className="play" aria-hidden="true">
+          {sound ? (
+            <svg viewBox="0 0 24 24">
+              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24">
+              <path d="M7 4.5l13 7.5-13 7.5z" />
+            </svg>
+          )}
+        </span>
+        <span className="hvsl__cta">{VSL.cta}</span>
+      </button>
+    </>
   );
 }
 
@@ -123,7 +122,12 @@ export function HeroTop() {
       <BgFilm />
       <span className="top__scrim" aria-hidden="true" />
       <div className="wrap top__in">
-        <Vsl />
+        {/* swap: the APEX Way film, with its unmute pill, in the hero phone */}
+        <div className="hvsl top__vsl">
+          <div className="hvsl__screen">
+            <LoopScreen />
+          </div>
+        </div>
         <div className="top__copy">
           {/* the headline's own lines, set as blocks so the copy column is only as wide as what it holds */}
           <h1 className="top__h">
@@ -222,7 +226,7 @@ const SoundIcon = ({ on }: { on: boolean }) => (
  * off it; muted is set as a property, since React does not reliably emit the
  * attribute. Reduced motion leaves the poster up until someone presses unmute.
  */
-function LoopPhone() {
+function LoopScreen() {
   const ref = useRef<HTMLVideoElement>(null);
   const film = APEX_WAY.joined;
   const [sound, setSound] = useState(false);
@@ -246,19 +250,17 @@ function LoopPhone() {
   };
 
   return (
-    <div className="tphone">
-      <div className="tphone__screen">
-        <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
-          <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(film.clipWebm)} type="video/webm" />
-          <source src={img(film.clip)} type="video/mp4" />
-        </video>
-        <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
-          <SoundIcon on={sound} />
-          <span>{sound ? 'Mute' : 'Unmute'}</span>
-        </button>
-      </div>
-    </div>
+    <>
+      <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
+        <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+        <source src={img(film.clipWebm)} type="video/webm" />
+        <source src={img(film.clip)} type="video/mp4" />
+      </video>
+      <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
+        <SoundIcon on={sound} />
+        <span>{sound ? 'Mute' : 'Unmute'}</span>
+      </button>
+    </>
   );
 }
 
@@ -390,7 +392,12 @@ function JoinedCards() {
       <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
         <div className="jc__media jc__media--b">
           <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
-          <LoopPhone />
+          {/* swap: the briefing VSL, from the hero, in the APEX Way phone */}
+          <div className="tphone">
+            <div className="tphone__screen">
+              <VslScreen />
+            </div>
+          </div>
         </div>
         {/* added: the heading over the four rows, both inside a frame exactly the phone's height, level with it */}
         <div className="jc__info">
