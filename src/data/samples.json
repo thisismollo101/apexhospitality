@@ -67,6 +67,12 @@
       "label": "Hero Cards Legibility",
       "summary": "The live Welcome hero three times, only its three cards' boxes changed so their copy reads at a glance: a ticker, a large statement and a poster stack, in the same colours and with only the copy already on the cards.",
       "status": "live"
+    },
+    {
+      "slug": "welcome-swap-preview",
+      "label": "Welcome Swap Preview",
+      "summary": "The live Welcome hero and the Wrong Way vs APEX Way section with the cards swapped (APEX Way left, Wrong Way right and mirrored) and the two phones trading screens: the briefing VSL in the Wrong Way phone, the reminder text in the hero.",
+      "status": "live"
     }
   ]
 }

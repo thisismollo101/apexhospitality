@@ -1,0 +1,1012 @@
+/*
+ * Welcome Swap Preview. Everything is scoped under .wsp.
+ *
+ * The live Welcome page's hero (.hd), its Works alongside bar (.wabb) and its
+ * Wrong Way vs APEX Way section (.wx): their rules copied from
+ * welcome/official.css with .wsp rescoped to .wsp, base tokens included.
+ * The swaps (Aidan, 21 Oct) are at the foot of this file.
+ */
+
+.wsp {
+  /* the live page's two fixed bars, which the hero and the section fill the screen under */
+  --sales-h: 54px;
+  --nav-h: 69px;
+}
+html:has(.wsp) { scroll-behavior: smooth; }
+
+/* ---- page frame ---- */
+.wsp .pg { padding: 56px 0 48px; background: var(--paper); }
+.wsp .pg h1 { margin-top: 12px; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
+.wsp .pg p { margin-top: 16px; max-width: 72ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+.wsp .pg a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-soft); }
+.wsp .pg--foot { padding: 32px 0 56px; }
+.wsp .pg--foot p { margin-top: 4px; font-size: 12px; color: var(--ink-mute); }
+
+/* ---- from official.css: the page tokens and base ---- */
+  .wsp{
+    --display:"Aeonik Pro",var(--w3-display),"Hanken Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
+    --body:var(--w3-body),"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --t-hero:clamp(34px,4.4vw,60px);
+    --t-small:14px;
+    --t-eyebrow:11px;
+    --ink:#0d0e11;
+    --ink-soft:#4a5058;
+    --ink-mute:#818892;
+    --paper:#ffffff;
+    --paper-warm:#f6f5f2;
+    --line:#e4e3df;
+    --accent:#2b59e0;
+    --accent-deep:#0a1a44;
+    --night:#0b0c0e;
+    --hero-sub:#c4c7cc;
+    --maxw:1240px;
+    --gutter:32px;
+    --r-win:16px;
+    color-scheme:light;
+  }
+  @media (max-width:760px){ .wsp{--gutter:20px} }
+
+  .wsp *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  .wsp{font-family:var(--body);color:var(--ink);background:var(--paper);
+    -webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+  .wsp .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+  .wsp .brk{display:none}
+  @media (min-width:768px){ .wsp .brk{display:inline} }
+  .wsp .eye{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+
+/* ---- from official.css: the top of the page (hero, Works alongside bar, Wrong Way vs APEX Way) ---- */
+/* =====================================================================================
+   THE TOP OF THE PAGE: the hero (Top 1 · Cinematic Scrim) and the Joined Cards
+   (Bottom 1 · Wrong Way vs APEX Way), from /samples/desktop-design-samples-2.
+   The sample's rules are copied verbatim with .dd2 rescoped to .wsp .wx (both
+   sections carry .wx), then the live sizes Aidan asked for are set below them.
+   TopSections.tsx holds the markup.
+   ===================================================================================== */
+.wsp .wx {
+  /* the sample's tokens that official.css doesn't already define (same values) */
+  --hot: #c2482f;
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --r: 18px;
+}
+.wsp .wx ul, .wsp .wx ol { list-style: none; }
+
+/* (the sample's * reset is left out: .wsp * already does it, and rescoped it would outrank .wrap's padding and centring) */
+.wsp .wx img { display: block; max-width: 100%; }
+.wsp .wx button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.wsp .wx ul { list-style: none; }
+.wsp .wx a:focus-visible, .wsp .wx button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+
+.wsp .wx .ast { color: var(--accent); margin-right: 3px; }
+
+/* dark pill tags */
+.wsp .wx .tag {
+  display: inline-flex; align-items: center; align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+  background: var(--ink); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; line-height: 1.2;
+}
+.wsp .wx .tag--photo { position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(0, 0, 0, .55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: rgba(255, 255, 255, .94); }
+.wsp .wx .tag--old { background: color-mix(in srgb, var(--hot) 55%, var(--ink)); }
+.wsp .wx .tag--apex { background: var(--accent); }
+
+/* the grey source line */
+.wsp .wx .src { display: block; font-size: 10.5px; line-height: 1.45; color: var(--ink-mute); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.wsp .wx .wrap--wide { max-width: 1360px; }
+/* The block fills the screen under the jump bar and sits centred in it, with generous room above and below. */
+.wsp .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); display: flex; align-items: center; padding: 120px 0; }
+.wsp .wx.bot > .wrap { width: 100%; }
+
+/* the phones */
+.wsp .wx .tphone { flex: none; width: var(--pw); height: var(--ph); padding: var(--bz); border-radius: 26px; background: var(--ink); box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 24px 60px rgba(0, 0, 0, .4); }
+.wsp .wx .tphone__screen { position: relative; width: 100%; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 20px; background: var(--ink); }
+.wsp .wx .tphone__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Card A's screen: Aidan's reference, a plain reminder text. The pale
+   lavender-grey is the reference's own, kept so the screen reads as a stock
+   messaging app rather than ours. */
+.wsp .wx .sms { display: flex; flex-direction: column; padding: 0 10px 11px; background: #edf1fb; font-family: var(--body); }
+.wsp .wx .sms__meta { padding-top: 18px; font-size: 7.5px; line-height: 1.4; text-align: center; color: #9aa3b5; }
+.wsp .wx .sms__bubble { margin-top: 22px; padding: 9px 10px; border-radius: 11px; background: #fff; font-size: 9.6px; line-height: 1.38; color: #1d1f24; }
+.wsp .wx .sms__input {
+  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: 0 9px 0 12px; height: 26px;
+  border: 1px solid #b9c3da; border-radius: 999px; font-size: 9px; color: #a8b2c7;
+}
+.wsp .wx .sms__input svg { width: 10px; height: 10px; fill: none; stroke: #8f9ab3; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Card A · the empty month: the What Works calendar with every tile the same
+   size, lightly shaded red, and holding nothing but its date. */
+.wsp .wx .cal { height: 100%; display: flex; flex-direction: column; }
+.wsp .wx .cal__top {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 16px; border-radius: 12px;
+  background: var(--ink); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+}
+.wsp .wx .cal__top span, .wsp .wx .cal__top strong { white-space: nowrap; }
+.wsp .wx .cal__top span { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.wsp .wx .cal__top strong { font-family: var(--display); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wsp .wx .cal__dow, .wsp .wx .cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.wsp .wx .cal__dow { margin: 12px 0 6px; }
+.wsp .wx .cal__dow span { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+.wsp .wx .cal__grid { flex: 1; min-height: 0; }
+.wsp .wx .cal__d {
+  display: flex; justify-content: center; padding-top: 7px; border-radius: 9px;
+  background: color-mix(in srgb, var(--hot) 13%, var(--paper)); border: 1px solid color-mix(in srgb, var(--hot) 22%, var(--paper));
+  font-size: 13px; font-weight: 600; color: color-mix(in srgb, var(--hot) 55%, var(--ink)); font-variant-numeric: tabular-nums;
+}
+
+.wsp .wx .chev { flex: none; width: 9px; height: 9px; margin: 0 4px 4px; border-right: 2px solid var(--ink-mute); border-bottom: 2px solid var(--ink-mute); transform: rotate(45deg); transition: transform .25s; }
+
+/* Bottom 1 · Joined Cards: Aidan's approved spec.
+   Round 1's two big cards, each an info panel and a phone panel, side by side
+   on white so they read as one large card; mirrored so the phones meet in the
+   centre: [A info] [A phone] [B phone] [B info]. */
+.wsp .wx.bj { background: var(--night); color: var(--ink); }
+.wsp .wx .jc {
+  /* The phone panel keeps the size it had for a 255px phone (30% bigger than
+     Bottoms 2 and 3's 196px), so the cards stay the same size; the phone
+     itself is 10% smaller than that, for breathing room round it. */
+  --pbox: 255px;
+  --pw: calc(var(--pbox) * .9);
+  /* a slightly thinner bezel than Bottoms 2 and 3's */
+  --bz: 5px;
+  /* Both screens take the APEX film's own shape, 994 × 1920, so it shows whole
+     with nothing cropped and no bars; the Wrong Way phone matches it. */
+  --ar: 1920 / 994;
+  --phbox: calc((var(--pbox) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
+  --ph: calc((var(--pw) - 2 * var(--bz)) * var(--ar) + 2 * var(--bz));
+  /* half the height the smaller phone gives back, above it and below it */
+  --slack: calc((var(--phbox) - var(--ph)) / 2);
+  /* The Wrong Way's red, asked for by Aidan for this card alone: almost a
+     warning red, but not quite, a vivid alert red a touch softened. Chosen so
+     the dates read at 4.5:1 on its 8% tint and white reads on it as a pill. */
+  --alert: #d2262e;
+  --pp: 24px;
+  /* the pill above each phone */
+  --pillh: 26px;
+  --pillgap: 14px;
+  --rh: 54px;
+  --rh-tight: 36px;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: stretch;
+}
+/* the VS circle, in the gap between the two cards */
+.wsp .wx .jc__vs {
+  position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 999px;
+  background: var(--night); border: 1.5px solid rgba(255, 255, 255, .38); color: #fff;
+  font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+.wsp .wx .jc__card {
+  display: grid; border-radius: 28px; overflow: hidden;
+  /* No background of its own: a cream card behind the panels showed through
+     their anti-aliased rounded corners as a thin light edge. Each panel paints
+     its own ground instead. */
+  background: transparent; box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+}
+.wsp .wx .jc__card--a { grid-template-columns: minmax(0, 1fr) auto; }
+.wsp .wx .jc__card--b { grid-template-columns: auto minmax(0, 1fr); }
+/* The phone panel sets the card's height itself: the phone sits exactly where
+   the right-hand frame expects it, and the pill floats in the band above it,
+   centred between the card's top edge and the phone's top edge. */
+.wsp .wx .jc__media {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  width: calc(var(--pbox) + 2 * var(--pp));
+  padding: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)) var(--pp) calc(var(--pp) + var(--slack));
+}
+.wsp .wx .jc__pill {
+  position: absolute; left: 50%; transform: translateX(-50%); height: var(--pillh); padding: 0 12px;
+  /* half of the band above the phone, less half the pill: equal space above and below it */
+  top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2);
+}
+.wsp .wx .jc__media--a { background: linear-gradient(180deg, color-mix(in srgb, var(--alert) 34%, #180c0e), color-mix(in srgb, var(--alert) 24%, #160b0d)); }
+.wsp .wx .jc .tag--old { background: var(--alert); }
+.wsp .wx .jc__media--b { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 44%, var(--accent-deep)), color-mix(in srgb, var(--accent) 30%, var(--accent-deep))); }
+.wsp .wx .jc .tphone { background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); border-radius: 30px; }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.wsp .wx .jc .tphone__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 1; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.wsp .wx .jc .tphone__screen { border-radius: 25px; aspect-ratio: 994 / 1920; }
+/* the screen is the film's shape, so contain fills it exactly and can never crop */
+.wsp .wx .jc .tphone__film { object-fit: contain; }
+/* The info panel's padding mirrors the phone panel's, pill and slack and all,
+   so its frame (.jc__fit) is exactly the phone's height and level with it. */
+.wsp .wx .jc__info {
+  min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 24px; background: var(--paper-warm);
+  padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
+}
+.wsp .wx .jc__fit { height: var(--ph); display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+/* Card A: only the bar and the calendar, centred both ways in the whole column */
+.wsp .wx .jc__info--a { align-items: center; justify-content: center; padding: 24px; }
+.wsp .wx .jc__quote { flex: none; font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -.015em; line-height: 1.32; color: var(--ink); text-wrap: pretty; }
+.wsp .wx .jc__card--a .jc__quote { color: var(--ink); }
+/* Card A's tiles: a light tint of the alert red, the date in black */
+.wsp .wx .jc .cal__d { background: color-mix(in srgb, var(--alert) 8%, var(--paper)); border-color: color-mix(in srgb, var(--alert) 22%, var(--paper)); color: var(--ink); }
+
+/* the SMS screen, scaled with the phone */
+.wsp .wx .jc .sms { padding: 0 12px 13px; }
+.wsp .wx .jc .sms__meta { padding-top: 22px; font-size: 8.6px; }
+.wsp .wx .jc .sms__bubble { margin-top: 27px; padding: 11px 12px; border-radius: 13px; font-size: 11.2px; }
+.wsp .wx .jc .sms__input { height: 31px; padding: 0 11px 0 14px; font-size: 10.4px; }
+.wsp .wx .jc .sms__input svg { width: 11px; height: 11px; }
+/* Bottom 1's unmute: a small white pill centred at the foot of the film,
+   speaker on the left, label centred; it fades back once the sound is on */
+.wsp .wx .snd-pill {
+  position: absolute; left: 50%; bottom: 14px; z-index: 2; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px 0 11px; border-radius: 999px;
+  background: #fff; color: var(--ink); box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  transition: opacity .2s;
+}
+/* a 44px tap area round the 32px pill */
+.wsp .wx .snd-pill::before { content: ''; position: absolute; inset: -6px -4px; }
+.wsp .wx .snd-pill svg { width: 15px; height: 15px; flex: none; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wsp .wx .snd-pill .snd__cone { fill: var(--ink); }
+.wsp .wx .snd-pill span { flex: 1; text-align: center; }
+.wsp .wx .snd-pill[aria-pressed='true'] { opacity: .55; }
+
+/* Card A's month, as in Aidan's light reference, then 10% smaller: 76.5% of its
+   column's width and of the phone's height, centred both ways in the column. */
+.wsp .wx .cal--quiet { flex: none; width: calc(85% * .9); height: calc(var(--ph) * .85 * .9); min-height: 0; margin: 0; }
+.wsp .wx .cal__bar {
+  flex: none; padding: 11px 16px; border-radius: 12px; background: var(--ink); color: rgba(255, 255, 255, .62);
+  font-size: 11px; font-weight: 600; text-transform: uppercase; white-space: nowrap;
+}
+/* the label's letters spread edge to edge across the bar */
+.wsp .wx .cal__spread { display: flex; justify-content: space-between; }
+.wsp .wx .cal__sp { width: .3em; }
+.wsp .wx .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wsp .wx .cal--quiet .cal__dow { margin: 10px 0 5px; }
+.wsp .wx .cal--quiet .cal__grid { gap: 4px; }
+.wsp .wx .cal--quiet .cal__d { padding-top: 5px; font-size: 12px; border-radius: 7px; }
+
+/* Card B's rows: stacked close, everything left-aligned, chevron at the far right */
+/* the rows stacked one on another with small even gaps, the stack centred on the
+   phone, so an open row grows it evenly up and down; 'safe' pins it to the top
+   if it ever outgrows the frame, so the scroll fallback still reaches every row */
+.wsp .wx .cr { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: safe center; gap: 8px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.wsp .wx .cr li { flex: none; border-radius: 12px; background: var(--paper); overflow: hidden; box-shadow: 0 1px 3px rgba(13, 14, 17, .08); }
+.wsp .wx .cr li > button { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--rh); padding: 0 12px 0 8px; text-align: left; }
+/* While a row is open, the closed ones tighten to one line to give it room. */
+.wsp .wx .cr li > button { transition: height .3s cubic-bezier(.22, .61, .36, 1); }
+.wsp .wx .cr.has-open li:not(.is-open) > button { height: var(--rh-tight); }
+.wsp .wx .cr.has-open li:not(.is-open) .cr__title { -webkit-line-clamp: 1; line-clamp: 1; }
+.wsp .wx .cr.has-open li:not(.is-open) .cr__when small { display: none; }
+.wsp .wx .cr__when { flex: none; width: 50px; display: flex; flex-direction: column; align-items: center; padding-right: 10px; border-right: 1px solid var(--line); }
+.wsp .wx .cr__when b { font-family: var(--display); font-size: 22px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.wsp .wx .cr__when small { margin-top: 2px; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.wsp .wx .cr__title {
+  flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.wsp .wx .cr .chev { margin-left: auto; }
+.wsp .wx .cr li.is-open .chev { transform: rotate(-135deg); margin-bottom: -4px; }
+.wsp .wx .cr__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22, .61, .36, 1); }
+.wsp .wx .cr li.is-open .cr__more { grid-template-rows: 1fr; }
+.wsp .wx .cr__in { min-height: 0; overflow: hidden; }
+.wsp .wx .cr__pad { display: flex; flex-direction: column; gap: 4px; padding: 0 12px 10px; text-align: left; }
+.wsp .wx .cr__full { display: none; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.wsp .wx .cr li[data-clamped] .cr__full { display: block; }
+.wsp .wx .cr li[data-clamped].is-open .cr__title { color: var(--ink-mute); }
+.wsp .wx .cr__pad p { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+@media (hover: hover) {
+  .wsp .wx .cr li > button:hover .cr__title { color: var(--accent); }
+}
+
+/* ---- the live sizes (Aidan, 17 Oct) --------------------------------------------------------- */
+/* Both blocks fill the screen under the two fixed bars, as section-lock frames. */
+.wsp .wx.bot { min-height: calc(100svh - var(--sales-h) - var(--nav-h)); }
+
+
+
+/* Joined Cards: everything 15% smaller, phones, cards, text, VS circle and spacing alike. */
+.wsp .wx.bot { padding: 102px 0; }
+.wsp .wx .jc-scale { width: 85%; margin: 0 auto; }
+.wsp .wx .jc { zoom: .85; }
+
+/* ---- tablet, landscape (the sample's tier, checked at 1194) ---------------------------------- */
+@media (max-width: 1240px) {
+  
+  
+  /* side by side, each info panel would drop under 300px, so the joined cards stack and keep their mirror */
+  .wsp .wx .jc { --pbox: 234px; grid-template-columns: minmax(0, 1fr); }
+  .wsp .wx .jc__info { padding-left: 32px; padding-right: 32px; }
+}
+/* ---- tablet, portrait (the sample's tier, checked at 834) ------------------------------------ */
+@media (max-width: 960px) {
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .wsp .wx.bot { min-height: 0; padding: 75px 0; }
+  .wsp .wx .jc { --pbox: 229px; --pp: 24px; }
+  .wsp .wx .jc__info { padding-left: 24px; padding-right: 24px; }
+}
+/* ---- phones: the sample has no phone layout yet (Aidan is redoing mobile), so this only
+   stacks the two blocks so nothing runs off the screen ------------------------------------------ */
+@media (max-width: 600px) {
+  
+  
+  .wsp .wx.bot { padding: 56px 0; }
+  .wsp .wx .jc-scale { width: 100%; }
+  .wsp .wx .jc__card--a, .wsp .wx .jc__card--b { grid-template-columns: minmax(0, 1fr); }
+  .wsp .wx .jc__media { width: auto; }
+  /* stacked, the two cards differ in height, so the VS circle sits in the flow between them */
+  .wsp .wx .jc__card--a { order: 0; }
+  .wsp .wx .jc__vs { position: relative; left: auto; top: auto; transform: none; justify-self: center; order: 1; }
+  .wsp .wx .jc__card--b { order: 2; }
+}
+
+
+/* =====================================================================================
+   THE HERO: Gradient 1 · Cobalt Sweep, from /samples/hero-data-cards (Aidan, 18 Oct),
+   as it is on the sample. Its rules copied verbatim with .hdc rescoped to .wsp .hd
+   (the section carries .hd, .top and .hero--g1) and the phone's .vsl* renamed .hvsl*,
+   clear of the page's own .vsl rules; Gradients 2 and 3 and the sample's page
+   frame left out. The sample's chrome height (123px) is the live bars, sales + nav.
+   ===================================================================================== */
+.wsp .hd {
+  /* the sample's tokens that official.css doesn't already define (same values) */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  /* The live cards are drawn at 75%; these are 15% larger than that. */
+  --cz: calc(.75 * 1.15);
+}
+.wsp .hd button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.wsp .hd ul { list-style: none; }
+.wsp .hd a:focus-visible, .wsp .hd button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+
+/* ---- the hero, as live -------------------------------------------------------------------- */
+
+/* play button */
+.wsp .hd .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.wsp .hd .play svg { width: 38%; height: 38%; fill: var(--ink); }
+
+.wsp .hd.top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--sales-h) - var(--nav-h)); background: var(--night); color: #fff;
+}
+.wsp .hd .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.wsp .hd .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+/* the live column: the VSL at 75% of --vw, then the copy */
+/* The live column for the VSL, then the copy column only as wide as what it holds (the
+   headline's longer line or the cards, whichever is wider), the pair centred in the page
+   so the space either side of the group is equal. */
+.wsp .hd .top__in {
+  flex: 1; width: 100%; display: grid; grid-template-columns: calc(var(--vw) * .75) minmax(0, max-content); justify-content: center;
+  gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px;
+}
+.wsp .hd .top__copy { min-width: 0; }
+.wsp .hd .top__h span { display: block; }
+.wsp .hd .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+
+/* ---- the VSL as a phone, as the Wrong Way vs APEX Way phones: a thin light bezel, the notch,
+   the film whole on a screen of its own shape (994 × 1920), a play button centred on it and the
+   label under the button. The phone fills the live VSL column. --------------------------------- */
+.wsp .hd .hvsl { position: relative; width: 100%; padding: 5px; border-radius: 30px; background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); }
+.wsp .hd .hvsl__screen { position: relative; width: 100%; aspect-ratio: 994 / 1920; overflow: hidden; border-radius: 25px; background: var(--ink); }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.wsp .hd .hvsl__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 2; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.wsp .hd .hvsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.wsp .hd .hvsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 0 14px; text-align: center;
+}
+/* the live play button is 76px drawn at 75% */
+.wsp .hd .hvsl__play .play { width: 57px; height: 57px; }
+.wsp .hd .hvsl__play:hover .play { transform: scale(1.06); }
+.wsp .hd .hvsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.wsp .hd .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
+
+/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
+   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
+   figures, padding and boxes all grow together, exactly as Version 3 had them. */
+.wsp .hd .hc {
+  --hc-fig: #fff; --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
+  display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz));
+}
+.wsp .hd .hc li {
+  display: flex; align-items: center; padding: 16px 22px 16px 0;
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+/* the time-label column: the figure large, a rule on its right */
+.wsp .hd .hc__when {
+  flex: none; width: 150px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+  margin-right: 20px; border-right: 1px solid var(--hc-rule);
+}
+.wsp .hd .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+/* the range dash: shorter than the font's en dash, with a little room either side so it
+   touches neither figure */
+.wsp .hd .hc__dash { display: inline-block; width: .34em; height: .085em; margin: 0 .09em; vertical-align: .3em; overflow: hidden; color: transparent; background: var(--hc-fig); }
+.wsp .hd .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
+.wsp .hd .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
+
+/* The three gradients: site blue and the Welcome navy, slightly translucent, each carried
+   across to the middle of the card rather than fading out at the accent edge. */
+
+/* Gradient 1 · Cobalt Sweep: site blue held from the edge to the middle, then into navy */
+.wsp .hd.hero--g1 .hc li {
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
+    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
+}
+/* ====================================================================================
+   TABLET · landscape (checked at 1194): the live tier
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .wsp .hd.top { --vw: 300px; }
+  .wsp .hd .top__in { gap: 48px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834): the live tier
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .wsp .hd .play { width: 64px; height: 64px; }
+  .wsp .hd .hvsl__play .play { width: 48px; height: 48px; }
+  .wsp .hd .hvsl__cta { font-size: 12px; }
+  .wsp .hd.top { --vw: 270px; min-height: 0; }
+  .wsp .hd .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .wsp .hd .top__h { font-size: 36px; }
+  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
+  .wsp .hd .hc { margin-top: calc(24px * .75 / var(--cz)); }
+  .wsp .hd .hc li { padding: 12px 14px 12px 0; }
+  .wsp .hd .hc__when { width: 128px; margin-right: 14px; }
+  .wsp .hd .hc__when b { font-size: 29px; }
+  .wsp .hd .hc__txt { font-size: 14px; }
+}
+
+/* ====================================================================================
+   Gradient 1 · Cobalt Sweep, reworked (Aidan, 18 Oct): the whole group 15% smaller
+   (phone, headline, card boxes, padding, gaps), the text inside the cards kept at its
+   size, and each card's line set on its two given lines.
+   ==================================================================================== */
+.wsp .hd.hero--g1 .top__in { zoom: .85; }
+.wsp .hd.hero--g1 .hc__when b, .wsp .hd.hero--g1 .hc__txt { zoom: 1.17647; }
+.wsp .hd.hero--g1 .hc__line span { display: block; white-space: nowrap; }
+/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
+.wsp .hd.hero--g1 .hc { width: 640px; max-width: 100%; }
+@media (max-width: 960px) {
+  /* Here the current cards are as wide as the copy column (the page less its gutters, the
+     phone column and the gap), not their 640px; these are 15% narrower than that. */
+  .wsp .hd.hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+}
+/* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
+   grid centres it on the copy column, which runs from the headline's first line to the foot
+   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+.wsp .hd.hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
+
+
+/* =====================================================================================
+   THE WRONG WAY vs APEX WAY SECTION, as on /samples/wrong-way-headings (Aidan, 18 Oct):
+   the section above is that sample's base; these are its additions, copied verbatim
+   with .wwh rescoped to .wsp: the section heading, the two side headings, the
+   smaller unmute pill, the bigger side headings and calendar, the pills nudged down.
+   ===================================================================================== */
+/* ====================================================================================
+   ADDED: the two mini headings
+   ==================================================================================== */
+
+/* Both info columns measure their headline from their own width, so the two match. */
+.wsp .wx .jc__info { container-type: inline-size; }
+/* The section-heading style: the eyebrow, then the display headline in two set lines. */
+/* On the APEX side the frame's own 14px gap is all that sits under the heading, so an
+   opened row still has the room it had before, inside the phone. */
+.wsp .wx .jc__head { flex: none; }
+.wsp .wx .jc__head .eye { margin-bottom: 8px; }
+/* Both sides now stack the same way: the heading, the frame's 14px gap, then the
+   content, the whole group centred on the phone (safe: an opened row that would
+   outgrow the phone pins it to the top and the rows scroll, as live). The calendar
+   is exactly the closed rows' height, so the two groups match and the labels and
+   headlines on the two cards stand level. */
+.wsp .wx .jc__fit { justify-content: safe center; }
+.wsp .wx .jc__fit .cr { flex: 0 1 auto; }
+.wsp .wx .jc__h { font-family: var(--display); font-size: min(24px, 7.4cqi); font-weight: 700; letter-spacing: -.03em; line-height: 1.08; color: var(--ink); }
+.wsp .wx .jc__h span { display: block; white-space: nowrap; }
+
+/* The Wrong Way: the column now mirrors the phone panel's padding, as the APEX side's
+   does, so its frame is the phone's height and level with it. */
+.wsp .wx .jc__info--a {
+  align-items: stretch; justify-content: center;
+  padding-top: calc(var(--pp) + var(--slack) + var(--pillh) + var(--pillgap)); padding-bottom: calc(var(--pp) + var(--slack));
+}
+.wsp .wx .jc__fit--a { width: fit-content; max-width: 100%; margin-inline: auto; }
+/* The calendar, shorter: the four closed rows' height (54px each, 8px apart), its day
+   tiles sharing what is left under the bar and the weekday line. */
+.wsp .wx .jc__fit--a .cal--quiet { flex: none; width: 70cqi; height: calc(4 * var(--rh) + 3 * 8px); }
+/* The rows sit directly under their heading rather than centred under it; the rows
+   themselves are as live. */
+.wsp .wx .jc__fit .cr { justify-content: flex-start; }
+
+/* ====================================================================================
+   ADDED: the section heading over the block, the live "Why it works" heading's style
+   (.intro .eye and .intro__h in official.css), aligned with the cards' left edge
+   ==================================================================================== */
+.wsp .wx .sec-head .eye { margin-bottom: 14px; }
+.wsp .wx .sec-head__h {
+  font-family: var(--display); font-size: clamp(30px, 3.5vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.08;
+  color: #fff; margin-bottom: clamp(36px, 4vw, 48px);
+}
+
+/* ====================================================================================
+   ADDED: the APEX phone's unmute pill 30% smaller (height, padding, gap, icon, type),
+   still centred at the foot of the film; its tap area kept at 44px
+   ==================================================================================== */
+.wsp .wx .snd-pill { gap: 4.9px; height: 22.4px; padding: 0 9.8px 0 7.7px; font-size: 7.7px; }
+.wsp .wx .snd-pill svg { width: 10.5px; height: 10.5px; }
+.wsp .wx .snd-pill::before { inset: -10.8px -6px; }
+
+/* ====================================================================================
+   ADDED (round 4): bigger side headings and calendar, pills nudged down
+   ==================================================================================== */
+
+/* Both labels 20% bigger; the Standard headline 20% bigger and the Exceptional one 10%,
+   each still two set lines and still measured from its column's width. */
+.wsp .wx .jc {
+  --h-a: min(28.8px, 8.88cqi);
+  --h-b: min(26.4px, 8.14cqi);
+  /* the closed rows' stack, which the calendar used to match exactly */
+  --rows-h: calc(4 * var(--rh) + 3 * 8px);
+}
+.wsp .wx .jc__head .eye { font-size: 13.2px; }
+.wsp .wx .jc__fit--a .jc__h { font-size: var(--h-a); }
+.wsp .wx .jc__info:not(.jc__info--a) .jc__h { font-size: var(--h-b); }
+/* The calendar 10% bigger, both ways. */
+.wsp .wx .jc__fit--a .cal--quiet { width: 77cqi; height: calc(var(--rows-h) * 1.1); }
+/* Both groups hang from one shared top line, the one that centres the taller Standard
+   group on its phone; the APEX group starts from the same line. The Exceptional headline
+   takes the Standard headline's line height, so the two two-line boxes are the same
+   height, and with the frame's 14px under each, the labels, the headlines, the bar and
+   the first row all stand level across the cards. */
+.wsp .wx .jc__head .eye { line-height: 1.5; }
+.wsp .wx .jc__info:not(.jc__info--a) .jc__h { line-height: calc(1.08 * var(--h-a)); }
+.wsp .wx .jc__fit {
+  justify-content: flex-start;
+  padding-top: calc((var(--ph) - (13.2px * 1.5 + 8px + 2 * 1.08 * var(--h-a) + 14px + var(--rows-h) * 1.1)) / 2);
+}
+
+/* The pills: the gap above each (card top to pill) and below it (pill to phone top) were
+   already equal, so each moves down by 10% of that gap. */
+.wsp .wx .jc__pill { top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2 * 1.1); }
+/* While a row is open, the APEX group lets go of the shared top line and centres on its
+   phone again, so the opened row can grow up as well as down and stay inside the phone, */
+.wsp .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; padding-top: 0; }
+/* and its headline drops back to its own leading, the matched line height being needed only
+   to keep the closed groups level */
+.wsp .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) .jc__h { line-height: 1.08; }
+
+
+/* ====================================================================================
+ * "Works alongside" bar, Option B (number-led), at the foot of the hero in place of the
+ * old integrations strip. Scoped to .wsp .wabb. Full-bleed,
+ * no radius. Desktop/tablet: one 108px bar (78px systems row + 30px footer
+ * line). Under 720px it stacks into rows with the line underneath.
+ */
+
+.wsp .wabb {
+  --wabb-blue: var(--brandblue, #2a7bff);
+  --wabb-orange: #ff6b1a;
+  --wabb-ink: #0b1220;
+  --wabb-muted: #5b6474;
+  --wabb-hair: #e6e9ef;
+  --wabb-ghost: #ecf0f6;
+  --wabb-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0; /* a banner, side to side: never a card */
+  background: #fff;
+  color: var(--wabb-ink);
+  font-family: inherit;
+}
+
+/* ---- the three systems --------------------------------------------------- */
+.wsp .wabb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 78px;
+  display: flex;
+}
+.wsp .wabb-sys {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 48px;
+}
+.wsp .wabb-sys + .wabb-sys {
+  border-left: 1px solid var(--wabb-hair);
+}
+
+/* faded figure rising behind each third, forever */
+.wsp .wabb-rise {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  width: 640px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.wsp .wabb-sys:nth-child(2) .wabb-rise,
+.wsp .wabb-sys:nth-child(3) .wabb-rise {
+  left: 250px;
+}
+.wsp .wabb-rise-run {
+  display: block;
+  animation: wabb-rise calc(3.7s + var(--g) * 0.6s) linear infinite;
+}
+.wsp .wabb-rise-run span {
+  display: block;
+  height: 73.5px; /* one step of the loop */
+  font-weight: 900;
+  font-size: 70px;
+  line-height: 73.5px;
+  letter-spacing: -0.045em;
+  color: var(--wabb-ghost);
+  white-space: nowrap;
+}
+@keyframes wabb-rise {
+  to {
+    transform: translateY(-73.5px);
+  }
+}
+
+.wsp .wabb-num,
+.wsp .wabb-id {
+  position: relative; /* above the rising figure */
+}
+.wsp .wabb-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--g) * 0.15s);
+}
+.wsp .wabb-logo {
+  display: block;
+  /* the drawn height; globals' img { height: auto } would otherwise draw the file's own size */
+  height: var(--lh);
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.wsp .wabb-cap {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--wabb-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ------------------------------------------------------- */
+.wsp .wabb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.wsp .wabb-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.wsp .wabb-plus {
+  color: var(--wabb-blue);
+}
+.wsp .wabb-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.wsp .wabb-strip {
+  display: block;
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wabb-spin var(--wabb-cycle) infinite;
+  animation-delay: calc(0.4s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.wsp .wabb-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then an
+   invisible snap back — always rests on the real value */
+@keyframes wabb-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+/* ---- the footer line ------------------------------------------------------ */
+.wsp .wabb-line {
+  margin: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  border-top: 1px solid var(--wabb-hair);
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.wsp .wabb-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.wsp .wabb-caps {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wabb-blue);
+  white-space: nowrap;
+}
+.wsp .wabb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wabb-orange);
+  flex: none;
+}
+.wsp .wabb-sentence {
+  font-weight: 500;
+  font-size: 12px;
+  color: #2b3340;
+}
+
+@keyframes wabb-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---- tablet landscape / portrait: same 108px bar, tighter -------------------- */
+@media (max-width: 1280px) {
+  .wsp .wabb-sys {
+    padding-left: 28px;
+    gap: 14px;
+  }
+  .wsp .wabb-fig {
+    font-size: 34px;
+  }
+  .wsp .wabb-cap {
+    white-space: normal;
+    max-width: 130px;
+  }
+  .wsp .wabb-rise {
+    left: 200px;
+  }
+  .wsp .wabb-sys:nth-child(2) .wabb-rise,
+  .wsp .wabb-sys:nth-child(3) .wabb-rise {
+    left: 170px;
+  }
+}
+@media (max-width: 1000px) {
+  .wsp .wabb-sys {
+    padding-left: 18px;
+    gap: 10px;
+  }
+  .wsp .wabb-fig {
+    font-size: 27px;
+  }
+  .wsp .wabb-logo {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .wsp .wabb-cap {
+    font-size: 11px;
+    max-width: 104px;
+  }
+  .wsp .wabb-sentence {
+    font-size: 11px;
+  }
+  .wsp .wabb-caps {
+    font-size: 9.5px;
+  }
+  .wsp .wabb-line {
+    gap: 4px 10px;
+  }
+  .wsp .wabb-rise {
+    left: 140px;
+  }
+  .wsp .wabb-sys:nth-child(2) .wabb-rise,
+  .wsp .wabb-sys:nth-child(3) .wabb-rise {
+    left: 120px;
+  }
+}
+
+/* ---- mobile: three rows, line underneath ------------------------------------ */
+@media (max-width: 720px) {
+  .wsp .wabb-row {
+    height: auto;
+    flex-direction: column;
+  }
+  .wsp .wabb-sys {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 14px;
+    height: 66px;
+    padding: 0 20px;
+  }
+  .wsp .wabb-sys + .wabb-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wabb-hair);
+  }
+  .wsp .wabb-fig {
+    font-size: 30px;
+  }
+  .wsp .wabb-logo {
+    transform: none;
+    max-height: 22px;
+    height: auto;
+  }
+  .wsp .wabb-cap {
+    max-width: none;
+  }
+  .wsp .wabb-rise,
+  .wsp .wabb-sys:nth-child(2) .wabb-rise,
+  .wsp .wabb-sys:nth-child(3) .wabb-rise {
+    left: 220px;
+  }
+  .wsp .wabb-rise-run span {
+    font-size: 54px;
+  }
+  .wsp .wabb-line {
+    height: auto;
+    padding: 12px 18px 14px;
+    text-align: center;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .wsp .wabb-rise-run,
+  .wsp .wabb-strip,
+  .wsp .wabb-id,
+  .wsp .wabb-line {
+    animation: none;
+  }
+}
+
+
+/* ====================================================================================
+   THE SWAPS (Aidan, 21 Oct)
+   ==================================================================================== */
+
+/* 1 · The Wrong Way card on the right, mirrored: its phone first, the calendar after it. */
+.wsp .wx .jc__card--a { grid-template-columns: auto minmax(0, 1fr); }
+
+/* 2 · The reminder text up in the hero phone: the Wrong Way phone's screen rules, as live,
+   drawn at the hero phone's size (its screen is 283.25px wide where the Wrong Way phone's is
+   219.5px, both under the same .85 zoom), so it reads exactly as it did, only larger. */
+.wsp .hd .sms { display: flex; flex-direction: column; padding: 0 10px 11px; background: #edf1fb; font-family: var(--body); }
+.wsp .hd .sms__meta { padding-top: 18px; font-size: 7.5px; line-height: 1.4; text-align: center; color: #9aa3b5; }
+.wsp .hd .sms__bubble { margin-top: 22px; padding: 9px 10px; border-radius: 11px; background: #fff; font-size: 9.6px; line-height: 1.38; color: #1d1f24; }
+.wsp .hd .sms__input {
+  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: 0 9px 0 12px; height: 26px;
+  border: 1px solid #b9c3da; border-radius: 999px; font-size: 9px; color: #a8b2c7;
+}
+.wsp .hd .sms__input svg { width: 10px; height: 10px; fill: none; stroke: #8f9ab3; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wsp .hd .sms { padding: 0 12px 13px; }
+.wsp .hd .sms__meta { padding-top: 22px; font-size: 8.6px; }
+.wsp .hd .sms__bubble { margin-top: 27px; padding: 11px 12px; border-radius: 13px; font-size: 11.2px; }
+.wsp .hd .sms__input { height: 31px; padding: 0 11px 0 14px; font-size: 10.4px; }
+.wsp .hd .sms__input svg { width: 11px; height: 11px; }
+.wsp .hd .hvsl__screen .sms { position: absolute; inset: 0; zoom: 1.2904; }
+@media (max-width: 1240px) { .wsp .hd .hvsl__screen .sms { zoom: 1.2401; } }
+@media (max-width: 960px) { .wsp .hd .hvsl__screen .sms { zoom: 1.1367; } }
+
+/* 3 · The briefing VSL down in the Wrong Way phone: the hero phone's screen rules, as live,
+   drawn at the Wrong Way phone's size (the play button and label scaled by the same ratio). */
+.wsp .wx .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 44px; height: 44px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.wsp .wx .play svg { width: 38%; height: 38%; fill: var(--ink); }
+.wsp .wx .hvsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.wsp .wx .hvsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px;
+  padding: 0 11px; text-align: center;
+}
+.wsp .wx .hvsl__play:hover .play { transform: scale(1.06); }
+.wsp .wx .hvsl__cta { max-width: 100%; font-size: 11px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.wsp .wx .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
