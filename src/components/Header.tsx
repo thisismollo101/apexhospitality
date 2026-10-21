@@ -154,7 +154,7 @@ export default function Header() {
   return (
     <>
       <div className="sales">
-        80% of travelers now watch a video before making a booking decision.
+        73% say creator or influencer recommendations have influenced their booking decisions. Expedia Group, 2025 Traveler Value Index
         <Link href="/library">See the trends</Link>
       </div>
 
