@@ -1,0 +1,641 @@
+/*
+ * Hero Ticker Options. Everything is scoped under .hto.
+ *
+ * The live Welcome hero (Gradient 1 · Cobalt Sweep, as live): its rules are
+ * /samples/hero-data-cards' (the source the live hero was copied from) with
+ * Gradients 2 and 3 left out, rescoped .hdc -> .hto, and the live "Works
+ * alongside" bar's rules copied from welcome/official.css, rescoped
+ * .w3page .wabb -> .hto .wabb. Only the card box changes, per option, at the
+ * foot of this file; the cards' colours are Cobalt Sweep's, unchanged.
+ */
+
+.hto {
+  --display: 'Aeonik Pro', var(--hto-display), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: var(--hto-body), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ink: #0d0e11;
+  --ink-soft: #4a5058;
+  --ink-mute: #818892;
+  --paper: #ffffff;
+  --paper-warm: #f6f5f2;
+  --line: #e4e3df;
+  --accent: #2b59e0;
+  --accent-deep: #0a1a44;
+  --night: #0b0c0e;
+  /* The accent lifted for type on night, where the base blue is too dim to read. */
+  --accent-lit: color-mix(in srgb, var(--accent) 62%, #fff);
+  --tile: #15171b;
+  --rule: rgba(255, 255, 255, .1);
+  --maxw: 1240px;
+  --gutter: 32px;
+  --jump-h: 64px;
+  /* The live page's two fixed bars (54px sales bar, 69px nav on desktop), which the hero fills the screen under. */
+  --chrome-h: 123px;
+  /* The live cards are drawn at 75%; these are 15% larger than that. */
+  --cz: calc(.75 * 1.15);
+
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.hto * { margin: 0; padding: 0; box-sizing: border-box; }
+.hto button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; }
+.hto ul { list-style: none; }
+.hto a:focus-visible, .hto button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 3px; border-radius: 6px; }
+html:has(.hto) { scroll-behavior: smooth; scroll-padding-top: var(--jump-h); }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.hto) { scroll-behavior: auto; }
+  .hto *, .hto *::before, .hto *::after { transition: none !important; animation: none !important; }
+}
+
+.hto .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hto .eye { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+
+/* ---- page frame ------------------------------------------------------------ */
+
+.hto .jump {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 16px;
+  height: var(--jump-h); padding: 0 var(--gutter);
+  background: rgba(13, 14, 17, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.hto .jump a { color: #fff; text-decoration: none; }
+.hto .jump__home {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px;
+  font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7) !important; white-space: nowrap;
+}
+.hto .jump__opts { flex: 1; display: flex; justify-content: center; gap: 6px; }
+.hto .jump__opts a {
+  display: flex; flex-direction: column; justify-content: center; min-height: 48px; min-width: 150px;
+  padding: 4px 16px; border-radius: 12px; background: rgba(255, 255, 255, .07);
+  font-size: 13.5px; font-weight: 600; line-height: 1.2; white-space: nowrap; transition: background .2s;
+}
+.hto .jump__opts a span { font-size: 9.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-lit); }
+.hto .jump__opts a:hover, .hto .jump__opts a:active { background: var(--accent); }
+.hto .jump__opts a:hover span, .hto .jump__opts a:active span { color: rgba(255, 255, 255, .8); }
+
+.hto .intro { padding: 64px 0 56px; background: var(--paper); }
+.hto .intro__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hto .intro h1 { margin-top: 12px; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; }
+.hto .intro p { margin-top: 16px; max-width: 68ch; font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
+
+.hto .outro { padding: 40px 0 64px; background: var(--paper); }
+.hto .outro a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-soft); }
+.hto .outro p { font-size: 12px; color: var(--ink-mute); }
+
+.hto .opt { scroll-margin-top: var(--jump-h); }
+.hto .opt__head { padding: 26px 0 22px; background: var(--paper-warm); border-top: 1px solid var(--line); }
+.hto .opt__in { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.hto .opt__label { display: block; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.hto .opt__note { margin-top: 6px; max-width: 92ch; font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+
+/* ---- the hero, as live -------------------------------------------------------------------- */
+
+/* play button */
+.hto .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 76px; height: 76px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.hto .play svg { width: 38%; height: 38%; fill: var(--ink); }
+
+.hto .top {
+  --vw: 340px;
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--chrome-h)); background: var(--night); color: #fff;
+}
+.hto .bgfilm { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.hto .top__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .84) 100%); }
+/* the live column: the VSL at 75% of --vw, then the copy */
+/* The live column for the VSL, then the copy column only as wide as what it holds (the
+   headline's longer line or the cards, whichever is wider), the pair centred in the page
+   so the space either side of the group is equal. */
+.hto .top__in {
+  flex: 1; width: 100%; display: grid; grid-template-columns: calc(var(--vw) * .75) minmax(0, max-content); justify-content: center;
+  gap: 72px; align-items: center; padding-top: 72px; padding-bottom: 72px;
+}
+.hto .top__copy { min-width: 0; }
+.hto .top__h span { display: block; }
+.hto .top__h { font-family: var(--display); font-size: clamp(40px, 4.4vw, 66px); font-weight: 700; letter-spacing: -.034em; line-height: 1.04; color: #fff; text-wrap: balance; }
+
+/* ---- the VSL as a phone, as the Wrong Way vs APEX Way phones: a thin light bezel, the notch,
+   the film whole on a screen of its own shape (994 × 1920), a play button centred on it and the
+   label under the button. The phone fills the live VSL column. --------------------------------- */
+.hto .vsl { position: relative; width: 100%; padding: 5px; border-radius: 30px; background: #26282d; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); }
+.hto .vsl__screen { position: relative; width: 100%; aspect-ratio: 994 / 1920; overflow: hidden; border-radius: 25px; background: var(--ink); }
+/* the speaker/earpiece notch, a small black pill centred at the top of the screen */
+.hto .vsl__screen::after {
+  content: ''; position: absolute; top: 8px; left: 50%; z-index: 2; width: 30%; height: 6px; border-radius: 999px;
+  background: #050506; transform: translateX(-50%); pointer-events: none;
+}
+.hto .vsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hto .vsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 0 14px; text-align: center;
+}
+/* the live play button is 76px drawn at 75% */
+.hto .vsl__play .play { width: 57px; height: 57px; }
+.hto .vsl__play:hover .play { transform: scale(1.06); }
+.hto .vsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.hto .vsl__play[aria-pressed='true'] .vsl__cta { opacity: .8; }
+
+/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
+   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
+   figures, padding and boxes all grow together, exactly as Version 3 had them. */
+.hto .hc {
+  --hc-fig: #fff; --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
+  display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz));
+}
+.hto .hc li {
+  display: flex; align-items: center; padding: 16px 22px 16px 0;
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+/* the time-label column: the figure large, a rule on its right */
+.hto .hc__when {
+  flex: none; width: 150px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+  margin-right: 20px; border-right: 1px solid var(--hc-rule);
+}
+.hto .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
+/* the range dash: shorter than the font's en dash, with a little room either side so it
+   touches neither figure */
+.hto .hc__dash { display: inline-block; width: .34em; height: .085em; margin: 0 .09em; vertical-align: .3em; overflow: hidden; color: transparent; background: var(--hc-fig); }
+.hto .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
+.hto .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
+
+/* The three gradients: site blue and the Welcome navy, slightly translucent, each carried
+   across to the middle of the card rather than fading out at the accent edge. */
+
+/* Gradient 1 · Cobalt Sweep: site blue held from the edge to the middle, then into navy */
+.hto .hero--g1 .hc li {
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
+    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
+}
+/* ====================================================================================
+   TABLET · landscape (checked at 1194): the live tier
+   ==================================================================================== */
+
+@media (max-width: 1240px) {
+  .hto .top { --vw: 300px; }
+  .hto .top__in { gap: 48px; }
+}
+
+/* ====================================================================================
+   TABLET · portrait (checked at 834): the live tier
+   ==================================================================================== */
+
+@media (max-width: 960px) {
+  .hto .intro { padding: 48px 0 40px; }
+  .hto .intro h1 { font-size: 38px; }
+  .hto .jump { gap: 8px; padding: 0 12px; }
+  .hto .jump__home { font-size: 12px; }
+  .hto .jump__opts { gap: 4px; }
+  .hto .jump__opts a { flex: 1; min-width: 0; padding: 4px 8px; font-size: 12px; white-space: normal; }
+  .hto .play { width: 64px; height: 64px; }
+  .hto .vsl__play .play { width: 48px; height: 48px; }
+  .hto .vsl__cta { font-size: 12px; }
+  .hto .top { --vw: 270px; min-height: 0; }
+  .hto .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
+  .hto .top__h { font-size: 36px; }
+  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
+  .hto .hc { margin-top: calc(24px * .75 / var(--cz)); }
+  .hto .hc li { padding: 12px 14px 12px 0; }
+  .hto .hc__when { width: 128px; margin-right: 14px; }
+  .hto .hc__when b { font-size: 29px; }
+  .hto .hc__txt { font-size: 14px; }
+  }
+
+/* ====================================================================================
+   Gradient 1 · Cobalt Sweep, reworked (Aidan, 18 Oct): the whole group 15% smaller
+   (phone, headline, card boxes, padding, gaps), the text inside the cards kept at its
+   size, and each card's line set on its two given lines.
+   ==================================================================================== */
+.hto .hero--g1 .top__in { zoom: .85; }
+.hto .hero--g1 .hc__when b, .hto .hero--g1 .hc__txt { zoom: 1.17647; }
+.hto .hero--g1 .hc__line span { display: block; white-space: nowrap; }
+/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
+.hto .hero--g1 .hc { width: 640px; max-width: 100%; }
+@media (max-width: 960px) {
+  /* Here the current cards are as wide as the copy column (the page less its gutters, the
+     phone column and the gap), not their 640px; these are 15% narrower than that. */
+  .hto .hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+}
+/* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
+   grid centres it on the copy column, which runs from the headline's first line to the foot
+   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+.hto .hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
+
+
+
+/* ====================================================================================
+ * "Works alongside" bar, Option B (number-led), at the foot of the hero in place of the
+ * old integrations strip. Scoped to .hto .wabb. Full-bleed,
+ * no radius. Desktop/tablet: one 108px bar (78px systems row + 30px footer
+ * line). Under 720px it stacks into rows with the line underneath.
+ */
+
+.hto .wabb {
+  --wabb-blue: var(--brandblue, #2a7bff);
+  --wabb-orange: #ff6b1a;
+  --wabb-ink: #0b1220;
+  --wabb-muted: #5b6474;
+  --wabb-hair: #e6e9ef;
+  --wabb-ghost: #ecf0f6;
+  --wabb-cycle: 8s; /* how often each figure re-spins */
+  position: relative;
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0; /* a banner, side to side: never a card */
+  background: #fff;
+  color: var(--wabb-ink);
+  font-family: inherit;
+}
+
+/* ---- the three systems --------------------------------------------------- */
+.hto .wabb-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 78px;
+  display: flex;
+}
+.hto .wabb-sys {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 48px;
+}
+.hto .wabb-sys + .wabb-sys {
+  border-left: 1px solid var(--wabb-hair);
+}
+
+/* faded figure rising behind each third, forever */
+.hto .wabb-rise {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  width: 640px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.hto .wabb-sys:nth-child(2) .wabb-rise,
+.hto .wabb-sys:nth-child(3) .wabb-rise {
+  left: 250px;
+}
+.hto .wabb-rise-run {
+  display: block;
+  animation: wabb-rise calc(3.7s + var(--g) * 0.6s) linear infinite;
+}
+.hto .wabb-rise-run span {
+  display: block;
+  height: 73.5px; /* one step of the loop */
+  font-weight: 900;
+  font-size: 70px;
+  line-height: 73.5px;
+  letter-spacing: -0.045em;
+  color: var(--wabb-ghost);
+  white-space: nowrap;
+}
+@keyframes wabb-rise {
+  to {
+    transform: translateY(-73.5px);
+  }
+}
+
+.hto .wabb-num,
+.hto .wabb-id {
+  position: relative; /* above the rising figure */
+}
+.hto .wabb-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(0.5s + var(--g) * 0.15s);
+}
+.hto .wabb-logo {
+  display: block;
+  /* the drawn height; globals' img { height: auto } would otherwise draw the file's own size */
+  height: var(--lh);
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.hto .wabb-cap {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--wabb-muted);
+  white-space: nowrap;
+}
+
+/* ---- rolling figure ------------------------------------------------------- */
+.hto .wabb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.hto .wabb-fig {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.hto .wabb-plus {
+  color: var(--wabb-blue);
+}
+.hto .wabb-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.hto .wabb-strip {
+  display: block;
+  transform: translateY(calc((var(--d) + 10) * -1em));
+  animation: wabb-spin var(--wabb-cycle) infinite;
+  animation-delay: calc(0.4s + var(--g) * 0.15s + var(--k) * 0.06s);
+}
+.hto .wabb-strip span {
+  display: block;
+  height: 1em;
+}
+/* one full turn from the middle copy to the identical last copy, then an
+   invisible snap back — always rests on the real value */
+@keyframes wabb-spin {
+  0% {
+    transform: translateY(calc((var(--d) + 10) * -1em));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  16% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+  100% {
+    transform: translateY(calc((var(--d) + 20) * -1em));
+  }
+}
+
+/* ---- the footer line ------------------------------------------------------ */
+.hto .wabb-line {
+  margin: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  border-top: 1px solid var(--wabb-hair);
+  animation: wabb-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hto .wabb-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.hto .wabb-caps {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wabb-blue);
+  white-space: nowrap;
+}
+.hto .wabb-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--wabb-orange);
+  flex: none;
+}
+.hto .wabb-sentence {
+  font-weight: 500;
+  font-size: 12px;
+  color: #2b3340;
+}
+
+@keyframes wabb-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---- tablet landscape / portrait: same 108px bar, tighter -------------------- */
+@media (max-width: 1280px) {
+  .hto .wabb-sys {
+    padding-left: 28px;
+    gap: 14px;
+  }
+  .hto .wabb-fig {
+    font-size: 34px;
+  }
+  .hto .wabb-cap {
+    white-space: normal;
+    max-width: 130px;
+  }
+  .hto .wabb-rise {
+    left: 200px;
+  }
+  .hto .wabb-sys:nth-child(2) .wabb-rise,
+  .hto .wabb-sys:nth-child(3) .wabb-rise {
+    left: 170px;
+  }
+}
+@media (max-width: 1000px) {
+  .hto .wabb-sys {
+    padding-left: 18px;
+    gap: 10px;
+  }
+  .hto .wabb-fig {
+    font-size: 27px;
+  }
+  .hto .wabb-logo {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .hto .wabb-cap {
+    font-size: 11px;
+    max-width: 104px;
+  }
+  .hto .wabb-sentence {
+    font-size: 11px;
+  }
+  .hto .wabb-caps {
+    font-size: 9.5px;
+  }
+  .hto .wabb-line {
+    gap: 4px 10px;
+  }
+  .hto .wabb-rise {
+    left: 140px;
+  }
+  .hto .wabb-sys:nth-child(2) .wabb-rise,
+  .hto .wabb-sys:nth-child(3) .wabb-rise {
+    left: 120px;
+  }
+}
+
+/* ---- mobile: three rows, line underneath ------------------------------------ */
+@media (max-width: 720px) {
+  .hto .wabb-row {
+    height: auto;
+    flex-direction: column;
+  }
+  .hto .wabb-sys {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 14px;
+    height: 66px;
+    padding: 0 20px;
+  }
+  .hto .wabb-sys + .wabb-sys {
+    border-left: 0;
+    border-top: 1px solid var(--wabb-hair);
+  }
+  .hto .wabb-fig {
+    font-size: 30px;
+  }
+  .hto .wabb-logo {
+    transform: none;
+    max-height: 22px;
+    height: auto;
+  }
+  .hto .wabb-cap {
+    max-width: none;
+  }
+  .hto .wabb-rise,
+  .hto .wabb-sys:nth-child(2) .wabb-rise,
+  .hto .wabb-sys:nth-child(3) .wabb-rise {
+    left: 220px;
+  }
+  .hto .wabb-rise-run span {
+    font-size: 54px;
+  }
+  .hto .wabb-line {
+    height: auto;
+    padding: 12px 18px 14px;
+    text-align: center;
+  }
+}
+
+/* ---- reduced motion: still, real values ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .hto .wabb-rise-run,
+  .hto .wabb-strip,
+  .hto .wabb-id,
+  .hto .wabb-line {
+    animation: none;
+  }
+}
+
+/* ====================================================================================
+ * Section 2 · the particle field, lifted from Welcome Page Two's section 2 (welcome-two/
+
+/* ====================================================================================
+   THE OPTIONS: Motion's three ticker designs (21 Oct) for the cards' box, matched to its
+   stills. The box keeps Cobalt Sweep's colours: its gradient, the light accent edge, the
+   border, blur and shadow, and its width; figures and titles white, the lines white.
+   Each card's content (.cl) is drawn at 1 / (.85 × --cz), undoing the group's and the
+   list's zoom, so the sizes below are the sizes on screen.
+   ==================================================================================== */
+.hto {
+  /* Cobalt Sweep, as on the live cards */
+  --cobalt: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
+    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
+}
+.hto .hero--g1 .hc li { display: block; padding: 0; }
+.hto .cl { zoom: 1.36395; color: #fff; }
+.hto .cl__fig { font-family: var(--display); font-weight: 800; line-height: 1; letter-spacing: -.03em; white-space: nowrap; color: var(--hc-fig); }
+.hto .cl__title { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; line-height: 1.2; color: rgba(255, 255, 255, .82); }
+
+/* ---- the running line, shared: two copies on one track, moved by half its width ---- */
+.hto .run { display: block; overflow: hidden; white-space: nowrap; font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; color: #fff; }
+.hto .run__track { display: inline-flex; animation: hto-run var(--run, 20s) linear infinite; }
+.hto .run__copy { padding-right: 56px; }
+.hto .hc li:nth-child(2) .run__track { --run: 19s; }
+.hto .hc li:nth-child(3) .run__track { --run: 18s; }
+.hto .hc li:hover .run__track { animation-play-state: paused; }
+@keyframes hto-run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* #t1 Three tapes: the three cards as now; the figure locked left behind its rule, the caps
+   label above, the line running from the rule to the card's edge, fading in and out. */
+.hto .tp { display: grid; grid-template-columns: 132px minmax(0, 1fr); align-items: stretch; min-height: 84px; }
+.hto .tp .cl__fig { display: flex; align-items: center; justify-content: center; font-size: 44px; }
+.hto .tp__body { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 4px 0 4px 18px; margin: 10px 0; border-left: 1px solid var(--hc-rule); }
+.hto .tp__run {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent);
+}
+
+/* #t2 One rail: one box with three lanes ruled apart; each figure on a solid blue plate, each
+   line running through a dark LED-style strip under its label. */
+.hto .hero--t2 .hc {
+  gap: 0; overflow: hidden; background: var(--cobalt);
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+.hto .hero--t2 .hc li { background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hto .hero--t2 .hc li + li { border-top: 1px solid rgba(255, 255, 255, .16); }
+.hto .rl { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: stretch; min-height: 89px; }
+.hto .rl__plate { display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent) 92%, var(--accent-lit)); }
+.hto .rl .cl__fig { font-size: 44px; }
+.hto .rl__body { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 7px; padding: 12px 0 12px 16px; }
+.hto .rl .cl__title { color: rgba(255, 255, 255, .72); }
+.hto .rl__led {
+  padding: 4px 12px; border-radius: 6px 0 0 6px;
+  background: rgba(5, 10, 32, .58); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06), inset 0 1px 6px rgba(0, 0, 0, .45);
+  text-shadow: 0 0 8px rgba(255, 255, 255, .28);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .55), #000 26px, #000 calc(100% - 30px), transparent);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, .55), #000 26px, #000 calc(100% - 30px), transparent);
+}
+
+/* #t3 Big numbers: one box with three rows ruled apart; an oversized figure on the left, the
+   caps label marked with a dot, the line rolling through a rounded pill track. */
+.hto .hero--t3 .hc {
+  gap: 0; overflow: hidden; background: var(--cobalt);
+  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
+}
+.hto .hero--t3 .hc li { background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hto .hero--t3 .hc li + li .bn { border-top: 1px solid rgba(255, 255, 255, .18); }
+.hto .bn { display: grid; grid-template-columns: 146px minmax(0, 1fr); align-items: center; min-height: 86px; margin: 0 16px 0 18px; }
+.hto .bn .cl__fig { font-size: 52px; letter-spacing: -.04em; }
+.hto .bn__body { min-width: 0; display: flex; flex-direction: column; gap: 7px; padding: 12px 0; }
+.hto .bn .cl__title { display: flex; align-items: center; gap: 8px; color: #fff; }
+.hto .bn .cl__title::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff; flex: none; }
+.hto .bn__pill {
+  padding: 6px 16px; border-radius: 999px; font-size: 19px;
+  background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .6), #000 22px, #000 calc(100% - 22px), rgba(0, 0, 0, .6));
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, .6), #000 22px, #000 calc(100% - 22px), rgba(0, 0, 0, .6));
+}
+
+/* reduced motion: every line stands still and simply wraps inside its tape, strip or pill */
+@media (prefers-reduced-motion: reduce) {
+  .hto .run { white-space: normal; -webkit-mask-image: none; mask-image: none; }
+  .hto .run__track { display: inline; animation: none; transform: none; }
+  .hto .run__copy { padding-right: 0; }
+  .hto .run__dup { display: none; }
+  .hto .bn__pill { border-radius: 16px; }
+}
