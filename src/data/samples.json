@@ -61,6 +61,12 @@
       "label": "Wrong Way Headings",
       "summary": "The live Welcome page's Wrong Way vs APEX Way section with a mini heading on each side: over a smaller calendar on the Wrong Way, over the four rows on the APEX Way, each side's heading and content held to the phone's height.",
       "status": "live"
+    },
+    {
+      "slug": "hero-cards-legibility",
+      "label": "Hero Cards Legibility",
+      "summary": "The live Welcome hero three times, only its three cards' boxes changed so their copy reads at a glance: a ticker, a large statement and a poster stack, in the same colours and with only the copy already on the cards.",
+      "status": "live"
     }
   ]
 }
