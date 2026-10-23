@@ -210,21 +210,9 @@ export const VSL = {
   poster: 'hq/screen-tall.jpg',
 };
 
-/**
- * One hero card: the figure in the time-label spot, then the title and the
- * line after it. The figure is split at its range so the dash can be drawn
- * short with a little room either side; `to` is how it reads aloud.
- */
-export type HeroCard = { fig: [string] | [string, string]; title: string; text: string | [string, string] };
-
-/** Gradient 1's headline lines and three cards (Aidan, 18 Oct), each card's line word for word on its two given lines. */
-export const HERO_G1: { lines: string[]; cards: HeroCard[] } = {
+/** Gradient 1's headline lines (Aidan, 18 Oct). The three stat cards under it are StatTicker. */
+export const HERO_G1: { lines: string[] } = {
   lines: ['This Is the Single', 'Largest Commercial', 'Leak on Your P&L.'],
-  cards: [
-    { fig: ['5%'], title: 'Status Quo', text: ['Front desk check-in upsells convert at just', '2% to 5% when guests arrive tired.'] },
-    { fig: ['25%'], title: 'APEX Conversion', text: ['Data Driven Mobile Cinema converts at', '15% to 25% during pre-arrival intent.'] },
-    { fig: ['5X'], title: 'Operational Freedom', text: ['Multiplies pre-arrival revenue by 5x', 'with ZERO staff labor or IT drag.'] },
-  ],
 };
 
 /* the Wrong Way vs APEX Way section (wrong-way-headings) */
