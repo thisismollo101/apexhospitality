@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, SECTION, TOP, VSL, img } from './data';
+import StatTicker from './StatTicker';
 import WorksAlongside from './WorksAlongside';
 
 /*
@@ -96,18 +97,6 @@ function VslScreen() {
   );
 }
 
-/** A figure, its range dash drawn short with room either side (the dash stays in the text, for copying and reading aloud). */
-const Fig = ({ fig }: { fig: [string] | [string, string] }) =>
-  fig.length === 1 ? (
-    <b>{fig[0]}</b>
-  ) : (
-    <b>
-      {fig[0]}
-      <span className="hc__dash">–</span>
-      {fig[1]}
-    </b>
-  );
-
 /**
  * The hero: Gradient 1 · Cobalt Sweep from /samples/hero-data-cards. The root is
  * this page's section-lock frame (#s1, .snap) and carries .hd for its scoped
@@ -133,27 +122,10 @@ export function HeroTop() {
               <span key={l}>{l} </span>
             ))}
           </h1>
-          <ul className="hc">
-            {HERO_G1.cards.map((c) => (
-              <li key={c.title}>
-                <span className="hc__when">
-                  <Fig fig={c.fig} />
-                </span>
-                <span className="hc__txt">
-                  <b>{c.title}</b>
-                  {typeof c.text === 'string' ? (
-                    c.text
-                  ) : (
-                    // the line set on its two given lines
-                    <span className="hc__line">
-                      <span>{c.text[0]} </span>
-                      <span>{c.text[1]}</span>
-                    </span>
-                  )}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* the three stat cards as Motion's approved ticker (Aidan, 23 Oct) */}
+          <div className="hcw">
+            <StatTicker />
+          </div>
         </div>
       </div>
       <WorksAlongside />

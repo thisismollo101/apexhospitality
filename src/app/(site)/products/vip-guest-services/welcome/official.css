@@ -1049,40 +1049,6 @@
 .w3page .hd .hvsl__cta { max-width: 100%; font-size: 13px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
 .w3page .hd .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
 
-/* ---- the three cards: the APEX Way timeline rows -------------------------------------------
-   Laid out at the live cards' 100% sizes, then drawn at --cz (the live 75%, plus 15%), so text,
-   figures, padding and boxes all grow together, exactly as Version 3 had them. */
-.w3page .hd .hc {
-  --hc-fig: #fff; --hc-title: #fff; --hc-text: rgba(255, 255, 255, .86); --hc-rule: rgba(255, 255, 255, .22);
-  display: flex; flex-direction: column; gap: 10px; max-width: 640px; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz));
-}
-.w3page .hd .hc li {
-  display: flex; align-items: center; padding: 16px 22px 16px 0;
-  border-radius: 6px 14px 14px 6px; border: 1px solid rgba(255, 255, 255, .1); border-left: 3px solid var(--accent-lit);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 14px 36px rgba(0, 0, 0, .3);
-}
-/* the time-label column: the figure large, a rule on its right */
-.w3page .hd .hc__when {
-  flex: none; width: 150px; align-self: stretch; display: flex; align-items: center; justify-content: center;
-  margin-right: 20px; border-right: 1px solid var(--hc-rule);
-}
-.w3page .hd .hc__when b { font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -.035em; white-space: nowrap; color: var(--hc-fig); }
-/* the range dash: shorter than the font's en dash, with a little room either side so it
-   touches neither figure */
-.w3page .hd .hc__dash { display: inline-block; width: .34em; height: .085em; margin: 0 .09em; vertical-align: .3em; overflow: hidden; color: transparent; background: var(--hc-fig); }
-.w3page .hd .hc__txt { min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.5; color: var(--hc-text); }
-.w3page .hd .hc__txt b { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--hc-title); }
-
-/* The three gradients: site blue and the Welcome navy, slightly translucent, each carried
-   across to the middle of the card rather than fading out at the accent edge. */
-
-/* Gradient 1 · Cobalt Sweep: site blue held from the edge to the middle, then into navy */
-.w3page .hd.hero--g1 .hc li {
-  background: linear-gradient(100deg,
-    color-mix(in srgb, var(--accent) 80%, transparent) 0%,
-    color-mix(in srgb, var(--accent) 66%, transparent) 50%,
-    color-mix(in srgb, var(--accent-deep) 82%, transparent) 100%);
-}
 /* ====================================================================================
    TABLET · landscape (checked at 1194): the live tier
    ==================================================================================== */
@@ -1103,12 +1069,6 @@
   .w3page .hd.top { --vw: 270px; min-height: 0; }
   .w3page .hd .top__in { gap: 32px; padding-top: 56px; padding-bottom: 56px; }
   .w3page .hd .top__h { font-size: 36px; }
-  /* the live portrait rows: 24px above, 12/14px padding, 14px text */
-  .w3page .hd .hc { margin-top: calc(24px * .75 / var(--cz)); }
-  .w3page .hd .hc li { padding: 12px 14px 12px 0; }
-  .w3page .hd .hc__when { width: 128px; margin-right: 14px; }
-  .w3page .hd .hc__when b { font-size: 29px; }
-  .w3page .hd .hc__txt { font-size: 14px; }
 }
 
 /* ====================================================================================
@@ -1117,14 +1077,16 @@
    size, and each card's line set on its two given lines.
    ==================================================================================== */
 .w3page .hd.hero--g1 .top__in { zoom: .85; }
-.w3page .hd.hero--g1 .hc__when b, .w3page .hd.hero--g1 .hc__txt { zoom: 1.17647; }
-.w3page .hd.hero--g1 .hc__line span { display: block; white-space: nowrap; }
-/* the cards keep their full box, 15% smaller, rather than shrinking to their set lines */
-.w3page .hd.hero--g1 .hc { width: 640px; max-width: 100%; }
+/* The stat cards' box (.hcw) keeps the old cards' width and spacing: 640px drawn at --cz inside
+   the group's .85, so 469px on screen, and as wide as the copy column under 960px. The ticker
+   inside undoes both zooms, so its 68px cards and 44px figures are true pixels. */
+.w3page .hd .hcw { width: 640px; max-width: 100%; zoom: var(--cz); margin-top: calc(34px * .75 / var(--cz)); }
+.w3page .hd .hcw .stk { zoom: calc(1 / (.85 * .75 * 1.15)); }
 @media (max-width: 960px) {
-  /* Here the current cards are as wide as the copy column (the page less its gutters, the
-     phone column and the gap), not their 640px; these are 15% narrower than that. */
-  .w3page .hd.hero--g1 .hc { width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz)); }
+  .w3page .hd .hcw {
+    width: calc((100vw - 2 * var(--gutter) - 270px * .75 - 32px) / var(--cz));
+    margin-top: calc(24px * .75 / var(--cz));
+  }
 }
 /* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
    grid centres it on the copy column, which runs from the headline's first line to the foot
@@ -1738,3 +1700,145 @@
 .w3page .wx .jc__fit--a .cal--quiet { align-self: center; }
 /* an opened row: back to the 14px gap, the group centring on the phone as before */
 .w3page .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; gap: 14px; }
+
+/* ====================================================================================
+ * The hero's stat cards as a ticker (Motion hand-off, "Ticker 1", Aidan 23 Oct): stat locked
+ * left, caps label above, the sentence running right to left at 14s a pass. 68px cards, 20px
+ * gaps. Scoped to .w3page .hd .stk. Reduced motion: no ticker, the sentence still and wrapped.
+ * ==================================================================================== */
+.w3page .hd .stk {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* doubled from ~10px */
+  color: #fff;
+  font-family: inherit;
+}
+
+.w3page .hd .stk-card {
+  box-sizing: border-box;
+  height: 68px; /* 20% shorter than the ~85px cards */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid rgba(140, 165, 255, 0.55);
+  background: linear-gradient(90deg, #3a5bd8, #283ea0 60%, #203080);
+  box-shadow: 0 10px 30px rgba(5, 10, 40, 0.35);
+}
+
+.w3page .hd .stk-stat {
+  flex: none;
+  width: 132px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(190, 205, 255, 0.45);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.w3page .hd .stk-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 18px;
+}
+
+.w3page .hd .stk-label {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ---- the ticker ----------------------------------------------------------- */
+.w3page .hd .stk-tape {
+  display: block;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 92%, transparent);
+}
+.w3page .hd .stk-run {
+  display: flex;
+  width: max-content;
+  animation: stk-roll 14s linear infinite; /* one pass per 14s, right to left */
+}
+.w3page .hd .stk-copy {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.w3page .hd .stk-sep {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 26px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+@keyframes stk-roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* readable copy for screen readers; shown instead of the ticker under reduced motion */
+.w3page .hd .stk-still {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w3page .hd .stk-card {
+    height: auto;
+    min-height: 68px;
+    padding: 10px 0;
+  }
+  .w3page .hd .stk-tape {
+    display: none;
+  }
+  .w3page .hd .stk-still {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    padding-right: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+}
+
+/* ====================================================================================
+ * The hero phone (Motion hand-off, Aidan 23 Oct): 90% of its size, frame and screen together.
+ * A transform, so its grid column and everything else in the hero stay where they are.
+ * The screen is clipped to the frame's inner shape: 30px outer radius less the 5px bezel.
+ * clip-path and isolation hold the clip for the video too, which Safari otherwise lets
+ * spill past an overflow:hidden rounded box.
+ * ==================================================================================== */
+.w3page .hd.hero--g1 .hvsl { transform: scale(.9); }
+.w3page .hd .hvsl__screen { border-radius: 25px; overflow: hidden; clip-path: inset(0 round 25px); isolation: isolate; }
