@@ -1,7 +1,7 @@
 /**
  * Copy and asset names for the parts of the Welcome page that are drawn by
- * script: the touchpoint cards and their opened sheet, the reel, the guest-type
- * frames, and the journey phone. Everything else is plain markup in WelcomeBody.tsx.
+ * script: the touchpoint cards and their opened sheet, the reel and the guest-type
+ * frames. Everything else is plain markup in WelcomeBody.tsx.
  *
  * Figures marked * are unverified placeholders until the sources are checked.
  */
@@ -82,25 +82,6 @@ export const TOUCHPOINTS: Card[] = [
     ],
     cite: '* Source pending verification.',
   },
-];
-
-/* ---- section 2 · the journey phone --------------------------------------- */
-
-export type JourneyStep = {
-  day: number;
-  date: string;
-  time: string;
-  img: string;
-  dur: string;
-  chip: string;
-  msg: string;
-};
-
-export const JOURNEY: JourneyStep[] = [
-  { day: 1, date: 'Mon 3 Nov', time: '08:02', img: 't2.jpg', dur: '0:30', chip: 'See the Ocean Suite', msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd." },
-  { day: 3, date: 'Wed 5 Nov', time: '18:40', img: 'f6.jpg', dur: '0:15', chip: "Reserve the chef's table", msg: 'Chef Aris is plating something new. Your terrace table is waiting.' },
-  { day: 23, date: 'Tue 25 Nov', time: '10:15', img: 't9.jpg', dur: '0:15', chip: 'Book a treatment', msg: 'Three treatment hours are still open during your stay.' },
-  { day: 28, date: 'Sun 30 Nov', time: '09:30', img: 't16.jpg', dur: '0:15', chip: 'Add early check-in', msg: 'Your driver will meet you at arrivals. Want your room ready early?' },
 ];
 
 /* ---- section 3 · the reel ------------------------------------------------- */

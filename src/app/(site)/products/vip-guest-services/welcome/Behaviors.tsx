@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { GUESTS, JOURNEY, TOUCHPOINTS, WHEN, img, type Card } from './data';
+import { GUESTS, TOUCHPOINTS, WHEN, img, type Card } from './data';
 
 /*
  * Every interactive part of the page, ported from the design artifact's own
@@ -628,65 +628,6 @@ function init(root: HTMLElement): () => void {
       ),
     );
     render();
-  }
-
-  /* ---- section 2 · the journey phone --------------------------------------- */
-  {
-    const jr = $('journey');
-    const MS = 4800;
-    const steps = Array.from(jr.querySelectorAll<HTMLElement>('.jr__step'));
-    const bubble = $('phBubble');
-    let i = 0;
-    let t: ReturnType<typeof setTimeout> | null = null;
-    jr.style.setProperty('--jr-ms', `${MS}ms`);
-    const schedule = () => {
-      if (t) clearTimeout(t);
-      if (!reduce && !jr.classList.contains('is-paused')) t = later(() => show((i + 1) % JOURNEY.length), MS);
-    };
-    const show = (n: number) => {
-      i = n;
-      const S = JOURNEY[n];
-      steps.forEach((b, k) => {
-        b.classList.toggle('is-on', k === n);
-        b.setAttribute('aria-selected', String(k === n));
-        const pr = b.querySelector<HTMLElement>('.jr__prog')!;
-        pr.style.animation = 'none';
-        void pr.offsetWidth;
-        pr.style.animation = '';
-      });
-      $('jrDay').textContent = `Day ${S.day}`;
-      $('jrLeft').textContent = `${30 - S.day} days to arrival`;
-      $('jrBar').style.width = `${Math.round((S.day / 30) * 100)}%`;
-      bubble.classList.add('is-swap');
-      later(() => {
-        $<HTMLImageElement>('phImg').src = img(S.img);
-        $('phMsg').textContent = S.msg;
-        $('phTime').textContent = S.time;
-        $('phDate').textContent = S.date;
-        $('phChip').textContent = S.chip;
-        bubble.querySelector('.bubble__dur')!.textContent = S.dur;
-        bubble.classList.remove('is-swap');
-      }, 260);
-      schedule();
-    };
-    steps.forEach((b, k) => b.addEventListener('click', () => show(k), { signal }));
-    jr.addEventListener(
-      'mouseenter',
-      () => {
-        jr.classList.add('is-paused');
-        if (t) clearTimeout(t);
-      },
-      { signal },
-    );
-    jr.addEventListener(
-      'mouseleave',
-      () => {
-        jr.classList.remove('is-paused');
-        schedule();
-      },
-      { signal },
-    );
-    show(0);
   }
 
   return () => {
