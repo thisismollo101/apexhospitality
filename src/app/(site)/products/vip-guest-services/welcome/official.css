@@ -1706,3 +1706,35 @@
 .w3page .wx .hvsl__play:hover .play { transform: scale(1.06); }
 .w3page .wx .hvsl__cta { max-width: 100%; font-size: 11px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
 .w3page .wx .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
+
+/* ====================================================================================
+   CARD LABEL PILLS, from /samples/card-label-pills option 2, Centred column (Aidan, 23 Oct)
+   ==================================================================================== */
+
+/* Standard and Exceptional as pills: the phone panel's pill exactly, in its card's colour,
+   centred over the copy and level with the pill over the phone. */
+.w3page .wx .jc__lab { height: var(--pillh); padding: 0 12px; }
+.w3page .wx .jc__lab--apex { background: var(--accent); }
+.w3page .wx .jc__lab--old { background: var(--alert); }
+.w3page .wx .jc__info { position: relative; }
+.w3page .wx .jc__lab {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: calc((var(--pp) + var(--slack) + var(--pillgap)) / 2 * 1.1);
+}
+/* The headline centred under the pill, its capitals level with the top of the phone, so the
+   label pill sits as far above the headline as the phone's pill does above the phone. The
+   trim takes the line's leading and the space over the capitals off the top. */
+.w3page .wx .jc__h { text-align: center; margin-top: var(--o2-trim); }
+.w3page .wx .jc__fit { justify-content: flex-start; padding-top: 0; }
+/* The rows and the calendar the same gap under their headlines, one gap for both, chosen
+   so the two blocks sit about the middle of the phone screen: the screen's middle less
+   the headline and half the average of the two blocks' heights. */
+.w3page .wx .jc {
+  --o2-trim: calc(-0.2 * var(--h-a));
+  --o2-gap: max(14px, calc(var(--ph) / 2 - 2 * 1.08 * var(--h-a) - var(--o2-trim) - var(--rows-h) * 1.05 / 2));
+}
+.w3page .wx .jc__fit { gap: var(--o2-gap); }
+/* the calendar centred in its column, the same space either side, as the headline over it */
+.w3page .wx .jc__fit--a .cal--quiet { align-self: center; }
+/* an opened row: back to the 14px gap, the group centring on the phone as before */
+.w3page .wx .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; gap: 14px; }
