@@ -6,19 +6,19 @@ import StatTicker from './StatTicker';
 import './style.css';
 
 /*
- * Hero Card Finishes: the live Welcome hero's stat ticker three times, on the
- * hero's own still, each in a different translucent 3D finish (Aidan, 23 Oct).
- * Same copy, sizes and motion as live; only the cards' surface differs.
- * A is what the live page now carries. Desktop and tablet; scoped under .hcf.
+ * Hero Card Finishes: the live Welcome hero's stat ticker on the hero's own
+ * still. Round 2 (Aidan, 23 Oct): the card is C · Deep Pane with no white line
+ * along the top, now live; the three options are for the figures (5% / 25% / 5X),
+ * each 3D and translucent. Figure 1 is what the live page carries. Scoped under .hcf.
  */
 const body = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'], display: 'swap' });
 
 export const metadata: Metadata = { title: 'Hero Card Finishes' };
 
 const OPTIONS = [
-  { key: 'a', name: 'A · Glass Sweep', note: 'Live now. Site blue on the left to deep navy on the right, frosted, a lit top edge and a soft sheen.' },
-  { key: 'b', name: 'B · Frosted Bevel', note: 'More see-through. A brighter blue fading to a faint navy, a stronger bevel top and bottom, rounder corners.' },
-  { key: 'c', name: 'C · Deep Pane', note: 'Richest colour shift: near-solid blue on the left falling to almost clear on the right, lit from the top left, sitting higher off the page.' },
+  { key: 'f1', name: '1 · Glass', note: 'Live now. Letters filled with a white-to-ice-blue glass gradient, a lit top edge and a soft drop shadow under them.' },
+  { key: 'f2', name: '2 · Extruded', note: 'Solid near-white letters with a stepped blue extrusion down and to the right, like raised signage.' },
+  { key: 'f3', name: '3 · Frosted Outline', note: 'See-through glass letters: a bright white rim around a faint fill, with a cool blue glow.' },
 ];
 
 export default function HeroCardFinishes() {
@@ -27,7 +27,7 @@ export default function HeroCardFinishes() {
       <header className="hcf__head">
         <a href="/samples">← Samples</a>
         <h1>Hero Card Finishes</h1>
-        <p>The Welcome hero&apos;s three stat cards in three finishes, on the hero&apos;s own background, at their live size.</p>
+        <p>The Welcome hero&apos;s stat cards in C · Deep Pane (live), with three 3D treatments for the figures, on the hero&apos;s own background at their live size.</p>
       </header>
       {OPTIONS.map((o) => (
         <section key={o.key} className={`hcf__opt hcf--${o.key}`} id={o.key}>
