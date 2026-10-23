@@ -1,0 +1,131 @@
+/*
+ * Welcome hero stat cards — "Ticker 1", scoped to .stk. Same blue as today's
+ * cards. Each card 68px tall with a 20px dark gap between cards.
+ */
+
+.stk {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* doubled from ~10px */
+  color: #fff;
+  font-family: inherit;
+}
+
+.stk-card {
+  box-sizing: border-box;
+  height: 68px; /* 20% shorter than the ~85px cards */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid rgba(140, 165, 255, 0.55);
+  background: linear-gradient(90deg, #3a5bd8, #283ea0 60%, #203080);
+  box-shadow: 0 10px 30px rgba(5, 10, 40, 0.35);
+}
+
+.stk-stat {
+  flex: none;
+  width: 132px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(190, 205, 255, 0.45);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.stk-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 18px;
+}
+
+.stk-label {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ---- the ticker ----------------------------------------------------------- */
+.stk-tape {
+  display: block;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 92%, transparent);
+}
+.stk-run {
+  display: flex;
+  width: max-content;
+  animation: stk-roll 14s linear infinite; /* one pass per 14s, right to left */
+}
+.stk-copy {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.stk-sep {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 26px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+@keyframes stk-roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* readable copy for screen readers; shown instead of the ticker under reduced motion */
+.stk-still {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stk-card {
+    height: auto;
+    min-height: 68px;
+    padding: 10px 0;
+  }
+  .stk-tape {
+    display: none;
+  }
+  .stk-still {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    padding-right: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+}
