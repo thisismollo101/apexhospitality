@@ -79,6 +79,12 @@
       "label": "Hero Ticker Options",
       "summary": "The live Welcome hero three times with Motion's three ticker designs for the card box, working: three tapes, one rail with LED strips, and big numbers with pill tracks. Lines run right to left, pause on hover and stand still under reduced motion.",
       "status": "live"
+    },
+    {
+      "slug": "card-label-pills",
+      "label": "Card Label Pills",
+      "summary": "The swapped Wrong Way vs APEX Way section three times, with Standard and Exceptional as pills in their card's colour: centred level with the phone pills, centred with the headline under them, or over the headline with the group centred on the card.",
+      "status": "live"
     }
   ]
 }
