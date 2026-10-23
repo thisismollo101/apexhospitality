@@ -1658,3 +1658,51 @@
     animation: none;
   }
 }
+
+/* ====================================================================================
+   THE SWAPS, from /samples/welcome-swap-preview (Aidan, 21 Oct)
+   ==================================================================================== */
+
+/* 1 · The Wrong Way card on the right, mirrored: its phone first, the calendar after it. */
+.w3page .wx .jc__card--a { grid-template-columns: auto minmax(0, 1fr); }
+
+/* 2 · The APEX Way film up in the hero phone: its screen rules (the film whole, the white
+   unmute pill at the film's foot, 30% smaller as on this section), drawn at the hero phone's
+   size: the hero phone's screen is 283.25px wide where the APEX Way phone's is 219.5px, both
+   under the same .85 zoom. */
+.w3page .hd .tphone__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.w3page .hd .snd-pill {
+  position: absolute; left: 50%; bottom: 14px; z-index: 2; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px 0 11px; border-radius: 999px;
+  background: #fff; color: var(--ink); box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+  transition: opacity .2s;
+}
+.w3page .hd .snd-pill::before { content: ''; position: absolute; inset: -6px -4px; }
+.w3page .hd .snd-pill svg { width: 15px; height: 15px; flex: none; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.w3page .hd .snd-pill .snd__cone { fill: var(--ink); }
+.w3page .hd .snd-pill span { flex: 1; text-align: center; }
+.w3page .hd .snd-pill[aria-pressed='true'] { opacity: .55; }
+.w3page .hd .snd-pill { gap: 4.9px; height: 22.4px; padding: 0 9.8px 0 7.7px; font-size: 7.7px; }
+.w3page .hd .snd-pill svg { width: 10.5px; height: 10.5px; }
+.w3page .hd .snd-pill::before { inset: -10.8px -6px; }
+.w3page .hd .snd-pill { zoom: 1.2904; }
+@media (max-width: 1240px) { .w3page .hd .snd-pill { zoom: 1.2401; } }
+@media (max-width: 960px) { .w3page .hd .snd-pill { zoom: 1.1367; } }
+
+/* 3 · The briefing VSL down in the APEX Way phone: the hero phone's screen rules, as live,
+   drawn at that phone's size (the play button and label scaled by the same ratio). */
+.w3page .wx .play {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 44px; height: 44px; border-radius: 999px; background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.w3page .wx .play svg { width: 38%; height: 38%; fill: var(--ink); }
+.w3page .wx .hvsl__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.w3page .wx .hvsl__play {
+  position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px;
+  padding: 0 11px; text-align: center;
+}
+.w3page .wx .hvsl__play:hover .play { transform: scale(1.06); }
+.w3page .wx .hvsl__cta { max-width: 100%; font-size: 11px; font-weight: 700; letter-spacing: .02em; line-height: 1.3; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 14px rgba(0, 0, 0, .5); }
+.w3page .wx .hvsl__play[aria-pressed='true'] .hvsl__cta { opacity: .8; }
