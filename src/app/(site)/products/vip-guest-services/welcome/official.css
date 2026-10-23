@@ -223,7 +223,7 @@
   .w3page .tl__what{display:block;font-size:11px;color:var(--ink-soft);line-height:1.45;margin-top:3px}
   .w3page .tl__foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;line-height:1.6;color:var(--ink-soft)}
   .w3page .tl__foot strong{color:var(--ink);font-weight:600}
-  .w3page .s2-bento{padding-block:0;margin-top:clamp(120px,13vw,180px)}
+  .w3page .s2-bento{padding-block:0;margin-top:0} /* now the section's first block: the What Works journey above it is gone */
   .w3page .s2 .bx__body{padding:18px 18px 22px}
   .w3page .s2 .bx__title{margin-bottom:6px}
   .w3page .bx__figsub{display:block;margin-top:6px;font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85)}
@@ -1722,11 +1722,34 @@
   height: 68px; /* 20% shorter than the ~85px cards */
   display: flex;
   align-items: center;
+  position: relative;
   overflow: hidden;
-  border-radius: 5px;
-  border: 1px solid rgba(140, 165, 255, 0.55);
-  background: linear-gradient(90deg, #3a5bd8, #283ea0 60%, #203080);
-  box-shadow: 0 10px 30px rgba(5, 10, 40, 0.35);
+  border-radius: 6px;
+  /* Aidan, 23 Oct: no edge border; translucent glass with the old cards' bigger shift from
+     site blue on the left to deep navy on the right, and a 3D finish (a lit top edge, a
+     shaded foot, a sheen over the top half and a lifted shadow) */
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--accent) 84%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 58%, transparent) 45%,
+    color-mix(in srgb, var(--accent-deep) 74%, transparent) 100%);
+  -webkit-backdrop-filter: blur(12px) saturate(1.25);
+  backdrop-filter: blur(12px) saturate(1.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.25),
+    0 16px 36px rgba(0, 0, 0, 0.38);
+}
+.w3page .hd .stk-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 50% 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+}
+.w3page .hd .stk-stat,
+.w3page .hd .stk-body {
+  position: relative;
 }
 
 .w3page .hd .stk-stat {
@@ -1738,7 +1761,7 @@
   justify-content: center;
   border-right: 1px solid rgba(190, 205, 255, 0.45);
   font-weight: 800;
-  font-size: 44px;
+  font-size: 36px; /* Aidan, 23 Oct: smaller than the hand-off's 44px */
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -1755,7 +1778,7 @@
 
 .w3page .hd .stk-label {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 10.8px; /* Aidan, 23 Oct: 10% smaller */
   line-height: 1;
   letter-spacing: 0.16em;
   text-transform: uppercase;

@@ -85,6 +85,12 @@
       "label": "Card Label Pills",
       "summary": "The swapped Wrong Way vs APEX Way section three times, with Standard and Exceptional as pills in their card's colour: centred level with the phone pills, centred with the headline under them, or over the headline with the group centred on the card.",
       "status": "live"
+    },
+    {
+      "slug": "hero-card-finishes",
+      "label": "Hero Card Finishes",
+      "summary": "The Welcome hero's three stat cards in three translucent 3D finishes on the hero's own background. A is live.",
+      "status": "live"
     }
   ]
 }

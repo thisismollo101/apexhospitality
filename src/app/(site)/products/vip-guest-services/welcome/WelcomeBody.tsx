@@ -10,7 +10,7 @@ import { GUESTS, MARQUEE_CLIPS, REEL, SOURCES, TOUCHPOINTS, WHEN, img } from './
  * Apex Welcome: the design artifact, ported as it stands.
  *
  * Static markup is rendered here on the server. Everything that moves (VSL
- * play buttons, the journey phone, the reel, the guest-type switcher, the
+ * play buttons, the reel, the guest-type switcher, the
  * calculators, the opened sheet, the section lock) is wired up by
  * Behaviors.tsx, which runs the artifact's own scripts against this markup.
  *
@@ -210,95 +210,8 @@ export default function WelcomeBody() {
         </div>
       </section>
 
-      {/* =================== SECTION 2 — THE 4 CORE VIDEO TOUCHPOINTS =================== */}
+      {/* =================== SECTION 2 — THE FOUR FILMS (the What Works journey above it removed, Aidan 23 Oct) =================== */}
       <section className="s2" id="s2">
-        <div className="snap">
-          <div className="wrap s2-head">
-            <span className="eye">What works</span>
-            <h2>
-              Timing Is Everything:
-              <br className="brk" /> The 4-Milestone Guest Journey.
-            </h2>
-          </div>
-          <div className="wrap s2-band">
-            <ul className="quad">
-              <li>
-                <Vsl poster="vsl-poster.jpg" tag="Watch · 1:15" />
-              </li>
-              <li className="jr" id="journey">
-                <div className="jr__left">
-                  <span className="tl__kick">Booking to check-in</span>
-                  <span className="tl__title">Four films, timed to the guest</span>
-                  <div className="jr__meter">
-                    <div className="jr__meterhead">
-                      <span id="jrDay">Day 1</span>
-                      <span id="jrLeft">29 days to arrival</span>
-                    </div>
-                    <div className="jr__bar">
-                      <span id="jrBar" />
-                    </div>
-                  </div>
-                  <div className="jr__steps" role="tablist" aria-label="The four films">
-                    {['Welcome by name', 'Dining, in close-up', 'Spa, matched to open hours', 'Arrival and extensions'].map(
-                      (what, i) => (
-                        <button
-                          key={what}
-                          className={`jr__step${i === 0 ? ' is-on' : ''}`}
-                          role="tab"
-                          aria-selected={i === 0}
-                          data-i={i}
-                          type="button"
-                        >
-                          <span className="jr__when">{['Day 1', '48 hours', '7 days out', '48 hours out'][i]}</span>
-                          <span className="jr__what">{what}</span>
-                          <span className="jr__prog" />
-                        </button>
-                      ),
-                    )}
-                  </div>
-                  <p className="jr__foot">
-                    Triggered by the booking in OPERA or SynXis. Sent by SMS or WhatsApp. Nobody on your team sends a
-                    thing.
-                  </p>
-                </div>
-                <div className="phone" aria-live="polite">
-                  <div className="phone__screen">
-                    <div className="phone__top">
-                      <span className="phone__av">A</span>
-                      <span className="phone__who">
-                        The Resort<small>Verified business</small>
-                      </span>
-                    </div>
-                    <div className="phone__chat">
-                      <span className="phone__date" id="phDate">
-                        Mon 3 Nov
-                      </span>
-                      <div className="bubble" id="phBubble">
-                        <div className="bubble__vid">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img id="phImg" src={img('t2.jpg')} alt="" />
-                          <span className="bubble__play">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                              <path d="M7 4l13 8-13 8z" />
-                            </svg>
-                          </span>
-                          <span className="bubble__dur">0:30</span>
-                        </div>
-                        <p id="phMsg">Good morning, Sarah. It&apos;s Maya at the front desk. See you on the 2nd.</p>
-                        <span className="bubble__time" id="phTime">
-                          08:02
-                        </span>
-                      </div>
-                      <span className="chip" id="phChip">
-                        See the Ocean Suite
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
         <div className="wrap s2-bento snap">
           <span className="eye">The four films</span>
           <h2>
