@@ -10,7 +10,7 @@ export const OPTIONS = [
     id: 'o2',
     n: 2,
     name: 'Centred column',
-    note: 'The same pill, with the headline centred under it as well, so the pill, the headline and the rows or calendar all share one centre line down the column.',
+    note: 'The same pill, with the headline centred under it, its capitals level with the top of the phone, so the pill sits as far above the headline as the phone’s pill does above the phone. The rows and the calendar are centred under it, one gap below each headline, both about the middle of the phone screen.',
   },
   {
     id: 'o3',

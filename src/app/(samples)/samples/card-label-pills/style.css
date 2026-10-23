@@ -1044,8 +1044,25 @@ html:has(.clp) { scroll-behavior: smooth; }
 .clp .wx--o1 .jc__fit, .clp .wx--o2 .jc__fit { padding-top: calc((var(--ph) - var(--grp)) / 2); }
 
 /* Option 2 only: the headline centred under the pill, so pill, headline and content share
-   one centre line; the rows and the calendar are already centred blocks. */
+   one centre line. */
 .clp .wx--o2 .jc__h { text-align: center; }
+/* Round 2 (Aidan, 23 Oct): the headline up, its capitals level with the top of the phone,
+   so the label pill sits as far above the headline as the phone's pill does above the
+   phone. The trim takes the line's leading and the space over the capitals off the top. */
+.clp .wx--o2 .jc__fit { justify-content: flex-start; padding-top: 0; }
+.clp .wx--o2 .jc__h { margin-top: var(--o2-trim); }
+/* The rows and the calendar the same gap under their headlines, one gap for both, chosen
+   so the two blocks sit about the middle of the phone screen: the screen's middle less
+   the headline and half the average of the two blocks' heights. */
+.clp .wx--o2 .jc {
+  --o2-trim: calc(-0.2 * var(--h-a));
+  --o2-gap: max(14px, calc(var(--ph) / 2 - 2 * 1.08 * var(--h-a) - var(--o2-trim) - var(--rows-h) * 1.05 / 2));
+}
+.clp .wx--o2 .jc__fit { gap: var(--o2-gap); }
+/* the calendar centred in its column, the same space either side, as the headline over it */
+.clp .wx--o2 .jc__fit--a .cal--quiet { align-self: center; }
+/* an opened row: back to the 14px gap, the group centring on the phone as live */
+.clp .wx--o2 .jc__info:not(.jc__info--a) .jc__fit:has(.cr.has-open) { justify-content: safe center; gap: 14px; }
 
 /* Option 3: the pill in the eyebrow's place, over the headline and left-aligned with it,
    and the whole group (pill, headline, content) centred on the card's full height, so the
