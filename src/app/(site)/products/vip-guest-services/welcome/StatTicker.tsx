@@ -23,7 +23,9 @@ export default function StatTicker() {
     <ul className="stk">
       {CARDS.map((c) => (
         <li key={c.label} className="stk-card">
-          <span className="stk-stat">{c.stat}</span>
+          <span className="stk-stat">
+            <span className="stk-num">{c.stat}</span>
+          </span>
           <span className="stk-body">
             <span className="stk-label">{c.label}</span>
             {/* the readable sentence for screen readers and reduced motion */}
