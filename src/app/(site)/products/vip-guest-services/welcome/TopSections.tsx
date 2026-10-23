@@ -172,10 +172,11 @@ const Src = ({ children }: { children: React.ReactNode }) => (
 );
 
 /** added: a side's mini heading, the section-heading style (eyebrow, then a two-line display headline). */
-function Heading({ h }: { h: { label: string; lines: string[] } }) {
+function Heading({ h, tone }: { h: { label: string; lines: string[] }; tone: 'apex' | 'old' }) {
   return (
     <header className="jc__head">
-      <span className="eye">{h.label}</span>
+      {/* the label as a pill in its card's colour, from /samples/card-label-pills option 2 */}
+      <span className={`tag jc__lab jc__lab--${tone}`}>{h.label}</span>
       <h3 className="jc__h">
         {h.lines.map((l, i) => (
           <span key={i}>{l} </span>
@@ -400,7 +401,7 @@ function JoinedCards() {
         {/* added: the heading over the four rows, both inside a frame exactly the phone's height, level with it */}
         <div className="jc__info">
           <div className="jc__fit">
-            <Heading h={HEADINGS.apex} />
+            <Heading h={HEADINGS.apex} tone="apex" />
             <CompactRows />
           </div>
         </div>
@@ -413,7 +414,7 @@ function JoinedCards() {
         </div>
         <div className="jc__info jc__info--a">
           <div className="jc__fit jc__fit--a">
-            <Heading h={HEADINGS.wrong} />
+            <Heading h={HEADINGS.wrong} tone="old" />
             <QuietMonth />
           </div>
         </div>
