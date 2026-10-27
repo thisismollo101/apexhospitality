@@ -5,35 +5,13 @@ import { ALONGSIDE, BANNER, HEADLINE, PARTNERS, PHOTO, STATS, img } from './data
 import { Burger, Chevron, Film, Lockup, SoundIcon, useFilm } from './parts';
 
 /*
- * A · Grid — Formula 1. A full-bleed photo header with the headline in white
- * heavy capitals and the banner's link as a pill-outlined button; the three
- * stats as a race-schedule list (big figure, bold title, chevron; a tap opens
- * the line); then a dark timing band: the phone with the film, a floating card
- * overlapping it, and the partners as icon tabs with the active one underlined.
+ * Hero · A · Grid — Formula 1. A full-bleed photo header with the headline in
+ * heavy white capitals and the banner's link as a pill-outlined button; the
+ * three stats as a race-schedule card (figure in the date column, a hairline,
+ * then the title and its line); then the dark timing band: the phone with the
+ * film, a floating card overlapping it, and the partners as white icon tabs
+ * with the active one underlined.
  */
-
-function Schedule() {
-  const [open, setOpen] = useState(0);
-  return (
-    <ol className="ha-sched">
-      {STATS.map((s, i) => {
-        const on = open === i;
-        return (
-          <li key={s.label} className={on ? 'is-open' : undefined}>
-            <button type="button" className="ha-sched__row" aria-expanded={on} onClick={() => setOpen(on ? -1 : i)}>
-              <b className="ha-sched__fig">{s.stat}</b>
-              <span className="ha-sched__title">{s.label}</span>
-              <Chevron className="ico ha-sched__chev" />
-            </button>
-            <p className="ha-sched__copy" hidden={!on}>
-              {s.copy}
-            </p>
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
 
 function Timing() {
   const film = useFilm();
@@ -51,7 +29,6 @@ function Timing() {
             </button>
           </div>
         </div>
-        {/* the floating card, overlapping the phone: the active partner */}
         <div className="ha-float" aria-live="polite">
           {/* eslint-disable-next-line @next/next/no-img-element -- vendor logo file at fixed size */}
           <img src={p.logo} alt={p.name} width={p.w} height={p.h} />
@@ -95,7 +72,18 @@ export default function HeroA() {
         </a>
       </section>
 
-      <Schedule />
+      <ol className="f1-card">
+        {STATS.map((s) => (
+          <li key={s.label} className="f1-row">
+            <b className="f1-row__fig">{s.stat}</b>
+            <span className="f1-row__body">
+              <b>{s.label}</b>
+              <span>{s.copy}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+
       <Timing />
     </div>
   );

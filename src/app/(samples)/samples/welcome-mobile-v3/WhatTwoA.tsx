@@ -3,13 +3,13 @@ import { PlayIcon, Player } from './parts';
 
 /*
  * What · 2 · A · Grid — Formula 1. The film as the full-bleed header with its
- * title in heavy white capitals and its length in the outlined pill; the AHLA
- * callout as the very bold black heading on off-white; the four value boxes,
- * still without copy, as a compact two-by-two grid of labelled placeholders.
+ * length in the outlined pill; the AHLA callout as the heavy black heading on
+ * off-white; the four value boxes, still without copy, as a two-by-two grid of
+ * labelled placeholders.
  */
 export default function WhatTwoA() {
   return (
-    <div className="f1">
+    <div className="ha">
       <Player film={WHAT2.vsl} className="f1-head">
         <span className="f1-head__shade" aria-hidden="true" />
         <span className="f1-head__in">

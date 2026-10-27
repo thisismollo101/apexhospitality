@@ -1,20 +1,15 @@
-'use client';
-
-import { useState } from 'react';
 import { WHY } from './data';
-import { Chevron, PlayIcon, Player } from './parts';
+import { PlayIcon, Player } from './parts';
 
 /*
  * Why · A · Grid — Formula 1. The film as the full-bleed header, its title in
  * heavy white capitals and the Expedia callout in the outlined pill; the four
- * cards as a schedule list (big figure, bold title, chevron; a tap opens the
- * line); the conversion line as a dark two-row timing board.
+ * cards as a race-schedule card; the conversion line as a dark timing board.
  */
 export default function WhyA() {
-  const [open, setOpen] = useState(0);
   const c = WHY.conversion;
   return (
-    <div className="f1">
+    <div className="ha">
       <Player film={WHY.vsl} className="f1-head">
         <span className="f1-head__shade" aria-hidden="true" />
         <span className="f1-head__in">
@@ -28,22 +23,16 @@ export default function WhyA() {
         </span>
       </Player>
 
-      <ol className="f1-sched">
-        {WHY.cards.map((k, i) => {
-          const on = open === i;
-          return (
-            <li key={k.label} className={on ? 'is-open' : undefined}>
-              <button type="button" className="f1-sched__row" aria-expanded={on} onClick={() => setOpen(on ? -1 : i)}>
-                <b className="f1-sched__fig">{k.fig}</b>
-                <span className="f1-sched__title">{k.label}</span>
-                <Chevron className="ico f1-sched__chev" />
-              </button>
-              <p className="f1-sched__copy" hidden={!on}>
-                {k.line}
-              </p>
-            </li>
-          );
-        })}
+      <ol className="f1-card">
+        {WHY.cards.map((k) => (
+          <li key={k.label} className="f1-row">
+            <b className="f1-row__fig">{k.fig}</b>
+            <span className="f1-row__body">
+              <b>{k.label}</b>
+              <span>{k.line}</span>
+            </span>
+          </li>
+        ))}
       </ol>
 
       <div className="f1-board">
@@ -51,11 +40,11 @@ export default function WhyA() {
           <b>{c.apex}</b>
           <span>{c.apexLab}</span>
         </p>
-        <p className="f1-board__vs">{c.vs}</p>
         <p className="f1-board__row">
           <b>{c.desk}</b>
           <span>{c.deskLab}</span>
         </p>
+        <span className="f1-board__vs">{c.vs}</span>
       </div>
     </div>
   );

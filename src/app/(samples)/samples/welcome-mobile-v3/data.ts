@@ -54,8 +54,8 @@ export const ALONGSIDE = {
 export const SECTIONS = [
   { n: '01', key: 'hero', label: 'Hero' },
   { n: '02', key: 'why', label: 'Why' },
-  { n: '03', key: 'what1', label: 'What · 1' },
-  { n: '04', key: 'what2', label: 'What · 2' },
+  { n: '03', key: 'what1', label: 'What 1' },
+  { n: '04', key: 'what2', label: 'What 2' },
 ];
 
 export const OPTIONS = [

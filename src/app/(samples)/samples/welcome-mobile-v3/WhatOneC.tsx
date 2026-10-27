@@ -5,10 +5,11 @@ import { WHAT1, img } from './data';
 import { PlayIcon, Player } from './parts';
 
 /*
- * What · 1 · C · Glass — Revolut and Spotify. A playlist: the heading big and
- * friendly, one glass "now playing" card, and the briefing plus the four
- * milestones as tracks (thumbnail, title, line, round play button) that load
- * into that one player. The phone closes it as a Revolut card.
+ * What · 1 · C · Glass — Revolut and Spotify. A Spotify playlist: the current
+ * film as cover art (the one player), the heading and the trigger line as the
+ * playlist's title and description, a big round play, and the briefing plus
+ * the four milestones as tracks that load into the player. The phone closes it
+ * as a Revolut card.
  */
 const TRACKS = [
   { when: WHAT1.vsl.len ?? '', what: WHAT1.vsl.title, img: WHAT1.vsl.poster, film: WHAT1.vsl },
@@ -20,35 +21,28 @@ export default function WhatOneC() {
   const [on, setOn] = useState(false);
   const t = TRACKS[cur];
   return (
-    <div className="gl">
-      <span className="gl-eye">{WHAT1.eye}</span>
-      <h2 className="gl-h gl-h--sm">{WHAT1.headline}</h2>
+    <div className="gl gl--list">
+      <Player film={t.film} className="gl-cover" on={on} onStart={() => setOn(true)}>
+        <span className="gl-round gl-round--on-film" aria-hidden="true">
+          <PlayIcon />
+        </span>
+      </Player>
 
-      <section className="gl-player glass" aria-label="Now playing">
-        <Player film={t.film} className="gl-phone" on={on} onStart={() => setOn(true)}>
-          <span className="gl-round gl-round--on-film" aria-hidden="true">
-            <PlayIcon />
-          </span>
-        </Player>
-        <p className="gl-player__side gl-player__side--track">
-          <b>{t.when}</b>
-          <span className="gl-player__what">{t.what}</span>
-          <span className="gl-player__note">{WHAT1.trigger}</span>
-        </p>
-      </section>
+      <span className="gl-eye">{WHAT1.eye}</span>
+      <h2 className="gl-h gl-h--list">{WHAT1.headline}</h2>
+      <div className="gl-meta">
+        <p>{WHAT1.trigger}</p>
+        <button type="button" className="gl-round gl-round--lg" aria-label={`Play: ${t.film.title}`} onClick={() => setOn(true)}>
+          <PlayIcon />
+        </button>
+      </div>
 
       <ol className="gl-tracks">
         {TRACKS.map((r, i) => (
           <li key={r.film.clip} className={cur === i ? 'is-on' : undefined}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- thumbnail sized by CSS, lazy */}
-            <img className="gl-tracks__thumb" src={img(r.img)} alt="" loading="lazy" decoding="async" />
-            <span className="gl-tracks__txt">
-              <b>{r.when}</b>
-              <span>{r.what}</span>
-            </span>
             <button
               type="button"
-              className="gl-round gl-round--sm"
+              className="gl-tracks__btn"
               aria-label={`Play: ${r.film.title}`}
               aria-pressed={cur === i && on}
               onClick={() => {
@@ -56,7 +50,15 @@ export default function WhatOneC() {
                 setOn(true);
               }}
             >
-              <PlayIcon />
+              {/* eslint-disable-next-line @next/next/no-img-element -- thumbnail sized by CSS, lazy */}
+              <img className="gl-tracks__thumb" src={img(r.img)} alt="" loading="lazy" decoding="async" />
+              <span className="gl-tracks__txt">
+                <b>{r.when}</b>
+                <span>{r.what}</span>
+              </span>
+              <span className="gl-tracks__eq" aria-hidden="true">
+                <PlayIcon />
+              </span>
             </button>
           </li>
         ))}

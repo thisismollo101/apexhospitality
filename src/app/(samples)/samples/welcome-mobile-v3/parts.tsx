@@ -94,10 +94,9 @@ export const Burger = ({ className = '' }: { className?: string }) => (
 );
 
 /**
- * Review chrome over every page: the section index (the current section
- * active) and the A / B / C switcher for it. Both keep the other choice: a
- * section link stays on the current letter, a letter stays on the section.
- * Plain links inside the one route group.
+ * Review chrome over every page, one slim dark row: the four sections as tabs
+ * (the current one underlined) and the A / B / C switch. A section tab keeps
+ * the current letter, a letter keeps the section. Plain links in one group.
  */
 export function ReviewBar() {
   const path = usePathname() ?? '';
@@ -111,7 +110,8 @@ export function ReviewBar() {
           const on = s.key === sec;
           return (
             <Link key={s.key} href={`/samples/welcome-mobile-v3/${s.key}-${opt}`} className={on ? 'is-on' : undefined} aria-current={on ? 'page' : undefined}>
-              <b>{s.n}</b> {s.label}
+              <i>{s.n}</i>
+              {s.label}
             </Link>
           );
         })}
@@ -120,8 +120,14 @@ export function ReviewBar() {
         {OPTIONS.map((o) => {
           const on = o.key === opt;
           return (
-            <Link key={o.key} href={`/samples/welcome-mobile-v3/${sec}-${o.key}`} className={on ? 'is-on' : undefined} aria-current={on ? 'page' : undefined}>
-              <b>{o.letter}</b> {o.name}
+            <Link
+              key={o.key}
+              href={`/samples/welcome-mobile-v3/${sec}-${o.key}`}
+              className={on ? 'is-on' : undefined}
+              aria-current={on ? 'page' : undefined}
+              aria-label={`${o.letter} · ${o.name}`}
+            >
+              {o.letter}
             </Link>
           );
         })}
@@ -189,5 +195,14 @@ export function Player({
 export const PlayIcon = ({ className = 'ico' }: { className?: string }) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
     <path d="M7 4.5l13 7.5-13 7.5z" fill="currentColor" />
+  </svg>
+);
+
+/** The Apex mark at the pack's opacities, in currentColor: a small badge for meta lines. */
+export const Mark = ({ className = 'mark' }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" aria-hidden="true" className={className}>
+    <polygon points="50,11 9,85 50,63" fill="currentColor" opacity=".45" />
+    <polygon points="50,11 91,85 50,63" fill="currentColor" />
+    <polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22" />
   </svg>
 );

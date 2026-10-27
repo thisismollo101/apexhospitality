@@ -1,40 +1,39 @@
-import { WHY } from './data';
-import { PlayIcon, Player } from './parts';
+import { WHY, img } from './data';
+import { Mark, PlayIcon, Player } from './parts';
 
 /*
- * Why · B · Billboard — Netflix and MasterClass. The film as a dark billboard
- * with its title set like a show's, the callout as a ranked badge line, the
- * four cards as a MasterClass row of square tiles, and the conversion line as
- * one wide split tile.
+ * Why · B · Billboard — Netflix and MasterClass. The film as a rounded
+ * billboard card with its title and the callout set on it like a show's, a
+ * row of four stat posters on darkened stills, and the conversion line as one
+ * wide split tile.
  */
+const STILLS = ['t2.jpg', 'f6.jpg', 't9.jpg', 't16.jpg'];
+
 export default function WhyB() {
   const c = WHY.conversion;
   return (
-    <div className="nf">
-      <Player film={WHY.vsl} className="nf-bill">
-        <span className="nf-bill__shade" aria-hidden="true" />
-        <span className="nf-bill__play" aria-hidden="true">
-          <PlayIcon />
+    <div className="hb hb--sec">
+      <Player film={WHY.vsl} className="hb-card hb-card--sq">
+        <span className="hb-card__shade" aria-hidden="true" />
+        <span className="hb-card__foot">
+          <span className="hb-h">{WHY.vsl.title}</span>
+          <span className="hb-meta">
+            <Mark />
+            {WHY.callout}
+          </span>
+          <span className="hb-play">
+            <PlayIcon />
+          </span>
         </span>
       </Player>
-      <div className="nf-title">
-        <h2 className="nf-title__h">{WHY.vsl.title}</h2>
-        <p className="nf-badge">
-          <svg className="nf-badge__mark" viewBox="0 0 100 100" aria-hidden="true">
-            <polygon points="50,11 9,85 50,63" fill="currentColor" opacity=".45" />
-            <polygon points="50,11 91,85 50,63" fill="currentColor" />
-            <polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22" />
-          </svg>
-          {WHY.callout}
-        </p>
-      </div>
 
       <ul className="nf-row">
-        {WHY.cards.map((k) => (
-          <li key={k.label} className="nf-sq">
-            <span className="nf-sq__lab">{k.label}</span>
-            <b className="nf-sq__fig">{k.fig}</b>
-            <span className="nf-sq__copy">{k.line}</span>
+        {WHY.cards.map((k, i) => (
+          <li key={k.label} className="nf-poster" style={{ backgroundImage: `url(${img(STILLS[i])})` }}>
+            <span className="nf-poster__shade" aria-hidden="true" />
+            <span className="nf-poster__lab nf-poster__lab--top">{k.label}</span>
+            <b className="nf-poster__fig">{k.fig}</b>
+            <span className="nf-poster__copy">{k.line}</span>
           </li>
         ))}
       </ul>
