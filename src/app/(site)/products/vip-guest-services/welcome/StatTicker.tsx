@@ -11,11 +11,11 @@
  * prefers-reduced-motion: no ticker; the sentence is shown wrapped and still.
  */
 
-// Only the existing copy.
+// Vetted figures only (Evidence Ledger v1.0 / EVIDENCE-SSOT); ledger IDs in comments.
 const CARDS = [
-  { label: 'Status Quo', stat: '5%', copy: 'Front desk check-in upsells convert at just 2% to 5% when guests arrive tired.' },
-  { label: 'APEX Conversion', stat: '25%', copy: 'Data Driven Mobile Cinema converts at 15% to 25% during pre-arrival intent.' },
-  { label: 'Operational Freedom', stat: '5X', copy: 'Multiplies pre-arrival revenue by 5x with ZERO staff labor or IT drag.' },
+  { label: 'Direct Value', stat: '$519', copy: 'The average direct booking, against $320 through an OTA (SiteMinder Hotel Booking Trends 2025).' }, // G-10
+  { label: 'Own Language', stat: '76%', copy: 'Of consumers prefer to buy with information in their own language (CSA Research, 2020).' }, // P04-1
+  { label: 'Front Desk', stat: '65%', copy: 'Of US hotels report staffing shortages. The films add nothing to the desk (AHLA, Feb 2025).' }, // G-18
 ];
 
 export default function StatTicker() {

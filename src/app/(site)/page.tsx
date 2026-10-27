@@ -8,30 +8,31 @@ import type { NavColumn, NavDropdown } from '@/lib/nav';
 const products = (nav.header.dropdowns as NavDropdown[]).find((d) => d.id === 'products');
 const categories = (products?.columns ?? []) as NavColumn[];
 
-// Figures are the owner's own, from the 18-product commercial hierarchy.
+// Every figure below is from the vetted evidence bank (Evidence Ledger v1.0 /
+// EVIDENCE-SSOT) and names its source in the label. Ledger IDs in comments.
 // Placeholder only in the sense that award badges will replace the tiles.
 const MARKET_PROOF = [
-  { figure: '80%', label: 'of high-intent travelers watch video before booking' },
-  { figure: '270%', label: 'lift in conversion from suite micro-tours' },
-  { figure: '2.4x', label: 'engagement once assets are localised' },
-  { figure: '74%', label: 'more likely to book within seven days' },
+  { figure: '73%', label: 'say creator content has influenced a booking (Expedia, 2025)' }, // G-05
+  { figure: '141', label: 'pages viewed over about 45 days before a booking (Expedia Group, 2023)' }, // G-04
+  { figure: '$519', label: 'average direct booking, against $320 through an OTA (SiteMinder, 2025)' }, // G-10
+  { figure: '76%', label: 'prefer to buy in their own language (CSA Research, 2020)' }, // P04-1
 ];
 
 const CATEGORY_PROOF = [
-  { figure: '92%', label: 'trust recommendations from friends and family above all other marketing' },
-  { figure: '37%', label: 'better performance from experience-based bundles than hotel-only offers' },
-  { figure: '2.8x', label: 'more engagement from cinematic motion than static advertising' },
+  { figure: '88%', label: 'trust recommendations from people they know (Nielsen, 2021)' }, // G-02
+  { figure: '11.2%', label: 'higher rate per review-score point at the same occupancy (Cornell, 2012)' }, // G-15
+  { figure: '50ms', label: 'to form a visual judgement of what is on screen (Lindgaard et al., 2006)' }, // G-08
 ];
 
 const FEATURE_TABS = [
   {
     id: 'weddings',
     caption: 'Weddings',
-    title: 'Six-figure weekends, sold in advance',
+    title: 'Wedding weekends, sold in advance',
     description:
-      'A 10-clip “Day 1 + Day 2” blueprint that resolves the logistics couples and planners stress over, while capturing the emotional gravity that fills a multi-year waiting list.',
+      'A 10-clip “Day 1 + Day 2” blueprint that resolves the logistics couples and planners stress over, while capturing the emotional gravity that fills the calendar.',
     footnote:
-      'Weddings are the single most profitable event a luxury property can host. Experience-based bundled packages outperform hotel-only offers by 37%.',
+      'The average US wedding cost $34,000 with 117 guests in 2025 (The Knot Real Weddings Study 2026).',
     cta: { label: 'Explore Weddings', href: '/products/specialized-venues/weddings' },
   },
   {
@@ -49,7 +50,7 @@ const FEATURE_TABS = [
     title: 'Turn the restaurant into a funnel',
     description:
       'Sensory culinary work that replaces sterile menu listings, driving resident and non-resident covers into the slow blocks where the margin actually leaks.',
-    footnote: 'Culinary travel content drives a 52% boost in engagement; 35% of travelers choose destinations on food culture.',
+    footnote: 'Only about one in eight hotel guests eats dinner at the hotel (CBRE Hotels Americas, via Regulr).',
     cta: { label: 'Explore Dining', href: '/products/billboards/dining' },
   },
 ];
@@ -95,7 +96,7 @@ export default function Home() {
         <div className="pwrap">
           <h2>You spent millions building a physical masterpiece.</h2>
           <p>Your digital storefront should not be sitting silent.</p>
-          <Link className="btn btn-solid" href="/contact-sales">Book an on-site visit</Link>
+          <Link className="btn btn-solid" href="/contact-sales">Book a private demo</Link>
         </div>
       </section>
     </main>

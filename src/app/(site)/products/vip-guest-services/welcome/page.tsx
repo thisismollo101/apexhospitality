@@ -17,7 +17,7 @@ import './official.css';
 export const metadata: Metadata = {
   title: 'Apex Welcome',
   description:
-    'Personal pre-arrival films, starring your own team, sent to every guest between booking and check-in. Zero staff labor.',
+    'Personal pre-arrival films, starring your own team, sent to every guest between booking and check-in. Works alongside your PMS, with no integration needed.',
 };
 
 export default function WelcomePage() {

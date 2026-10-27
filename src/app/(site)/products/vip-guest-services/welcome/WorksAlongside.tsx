@@ -6,8 +6,12 @@
  * it. The line runs along a footer row. Behind each third its own faded figure
  * rises in a column, forever.
  *
- * Its CSS is folded into official.css under .w3page .wabb; logos live in
- * /public/media/partners/. A full-bleed banner, square at every corner.
+ * Its CSS is folded into official.css under .w3page .wabb.
+ *
+ * 27 Oct 2026: the Oracle / Aven / Agilysys logos and their figures came out.
+ * Apex has no integration or partnership with any PMS vendor, and the logos
+ * implied one. Each third now carries an Apex fact, with a word where the logo
+ * sat, and the line states the PMS position plainly. A full-bleed banner, square at every corner.
  * Pure CSS motion, so this stays a server component:
  *  - the faded figures rise continuously (each column at its own speed);
  *  - each figure spins one full turn and lands back on its real value every 8s;
@@ -16,13 +20,13 @@
  */
 import type { CSSProperties } from 'react';
 
-type System = { key: string; name: string; logo: string; w: number; h: number; figure: string; caption: string };
+type System = { key: string; name: string; figure: string; caption: string };
 
-// Figures and captions as published by each vendor — do not change.
+// Apex's own facts — product facts, not market statistics.
 const SYSTEMS: System[] = [
-  { key: 'oracle', name: 'Oracle', logo: '/media/partners/oracle.svg', w: 76, h: 16, figure: '236', caption: 'countries & territories live' },
-  { key: 'aven', name: 'Aven Hospitality', logo: '/media/partners/aven.png', w: 58, h: 25, figure: '35,000+', caption: "hotels use Aven's solutions" },
-  { key: 'agilysys', name: 'Agilysys', logo: '/media/partners/agilysys.svg', w: 46, h: 26, figure: '4,000+', caption: 'properties worldwide' },
+  { key: 'pms', name: 'Your PMS', figure: '0', caption: 'integrations to build' },
+  { key: 'export', name: 'Arrivals export', figure: '1', caption: 'daily file, or your booking emails' },
+  { key: 'apex365', name: 'Apex 365', figure: '365', caption: 'days a year, one system' },
 ];
 
 /** One rolling figure: each digit is a strip 0–9 ×3 resting on its middle copy. */
@@ -55,7 +59,7 @@ function Figure({ value, index }: { value: string; index: number }) {
 
 export default function WorksAlongside() {
   return (
-    <section className="wabb" aria-label="Works alongside the systems your hotel already runs">
+    <section className="wabb" aria-label="Works alongside your PMS">
       <ul className="wabb-row">
         {SYSTEMS.map((s, i) => (
           <li key={s.key} className="wabb-sys" style={{ '--g': i } as CSSProperties}>
@@ -72,15 +76,7 @@ export default function WorksAlongside() {
               <Figure value={s.figure} index={i} />
             </span>
             <span className="wabb-id">
-              {/* eslint-disable-next-line @next/next/no-img-element -- official vendor logo files at fixed size */}
-              <img
-                className="wabb-logo"
-                src={s.logo}
-                alt={s.name}
-                width={s.w}
-                height={s.h}
-                style={{ '--lh': `${s.h}px` } as CSSProperties}
-              />
+              <span className="wabb-word">{s.name}</span>
               <span className="wabb-cap">{s.caption}</span>
             </span>
           </li>
@@ -92,10 +88,12 @@ export default function WorksAlongside() {
           <strong className="wabb-caps">Works alongside</strong>
           <i className="wabb-dot" aria-hidden="true" />
         </span>
-        <span className="wabb-sentence">Built to work alongside the systems your hotel already runs.</span>
+        <span className="wabb-sentence">
+          Works alongside your PMS. No integration needed — we work from a daily arrivals export or your booking emails.
+        </span>
         <span className="wabb-pair">
           <i className="wabb-dot" aria-hidden="true" />
-          <strong className="wabb-caps">Zero operational drag.</strong>
+          <strong className="wabb-caps">Nothing to install.</strong>
         </span>
       </p>
     </section>

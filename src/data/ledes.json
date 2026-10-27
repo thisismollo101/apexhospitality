@@ -1,0 +1,7 @@
+{
+  "/plans": "Three plans. Signature, $10,000 a month. Elite, $25,000 a month: everything, for one property. Global, $50,000 a month: Elite × your locations. Every plan carries a separate, one-off $5,000 setup fee.",
+  "/plans/signature": "$10,000 a month, on a yearly contract paid monthly. You may leave at month six, owning nothing, or pay a $30,000 buyout to own the clips. A separate, one-off $5,000 setup fee applies.",
+  "/plans/elite": "$25,000 a month: everything, for one property. The buyout is set in the agreement. A separate, one-off $5,000 setup fee applies.",
+  "/plans/global": "$50,000 a month: Elite × your locations. The buyout is set in the agreement. A separate, one-off $5,000 setup fee applies.",
+  "/deployment/setup-fee": "A one-off $5,000 fee, separate from your monthly plan. It is not a deposit and is not credited to the first month."
+}
