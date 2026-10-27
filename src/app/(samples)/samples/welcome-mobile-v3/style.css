@@ -1,0 +1,286 @@
+/*
+ * Welcome · mobile v3 — the route's one stylesheet (imported once, by
+ * layout.tsx), scoped under .wm3. Phones only: the column is 430px at most and
+ * nothing changes above that.
+ *
+ * Tokens are the live Welcome page's (official.css): ink and paper, the cobalt
+ * accent and its navy, brand blue, Hanken Grotesk over Inter. Each reference's
+ * signal colour (F1 red, Netflix red, Spotify green) is mapped onto the blues.
+ */
+
+.wm3 {
+  --display: 'Aeonik Pro', var(--wm3-display), 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: var(--wm3-body), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ink: #0d0e11;
+  --ink-soft: #4a5058;
+  --ink-mute: #818892;
+  --paper: #ffffff;
+  --paper-warm: #f6f5f2;
+  --line: #e4e3df;
+  --accent: #2b59e0;
+  --accent-lit: #5d8dff;
+  --accent-deep: #0a1a44;
+  --brand: #2a7bff;
+  --night: #0b0c0e;
+  --col: 430px;
+
+  min-height: 100vh;
+  background: #e7e5e0;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wm3 * { box-sizing: border-box; margin: 0; padding: 0; }
+.wm3 img, .wm3 video { display: block; max-width: 100%; }
+.wm3 button { cursor: pointer; border: 0; background: none; font: inherit; color: inherit; text-align: left; }
+.wm3 a { color: inherit; text-decoration: none; }
+.wm3 ul, .wm3 ol { list-style: none; }
+.wm3 a:focus-visible, .wm3 button:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 2px; }
+.wm3 .ico { width: 18px; height: 18px; flex: none; }
+
+.wm3-col { max-width: var(--col); margin: 0 auto; min-height: 100vh; overflow-x: clip; background: var(--paper); box-shadow: 0 0 60px rgba(0, 0, 0, .08); }
+
+/* ---- review chrome: section index + option switcher ----------------------- */
+
+.wm3 .rv { padding: 10px 12px; background: #e7e5e0; border-bottom: 1px solid #d6d3cc; }
+.wm3 .rv__idx { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.wm3 .rv__idx::-webkit-scrollbar { display: none; }
+.wm3 .rv__idx li {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; color: var(--ink-mute); background: rgba(13, 14, 17, .05);
+}
+.wm3 .rv__idx li b { font-variant-numeric: tabular-nums; }
+.wm3 .rv__idx li i { font-style: normal; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+.wm3 .rv__idx li.is-on { background: var(--ink); color: #fff; }
+.wm3 .rv__opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 8px; padding: 3px; border-radius: 12px; background: rgba(13, 14, 17, .08); }
+.wm3 .rv__opts a {
+  display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border-radius: 9px;
+  font-size: 13px; font-weight: 600; color: var(--ink-soft);
+}
+.wm3 .rv__opts a b { font-family: var(--display); font-size: 15px; font-weight: 800; }
+.wm3 .rv__opts a.is-on { background: var(--paper); color: var(--ink); box-shadow: 0 1px 4px rgba(13, 14, 17, .12); }
+
+/* ---- shared pieces --------------------------------------------------------- */
+
+/* the lockup: "Apex" heavy, HOSPITALITY at .74em, +.13em, brand blue (CLAUDE.md) */
+.wm3 .lockup { display: inline-flex; align-items: center; gap: .32em; font-size: 17px; line-height: 1; white-space: nowrap; }
+.wm3 .lockup svg { width: 1.25em; height: 1.25em; flex: none; color: var(--brand); }
+.wm3 .lockup__apex { font-family: var(--body); font-weight: 800; letter-spacing: -.02em; }
+.wm3 .lockup__hosp { font-size: .74em; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--brand); }
+/* over a photo or film: the mark and HOSPITALITY go white, as on the live transparent nav */
+.wm3 .lockup--over { color: #fff; }
+.wm3 .lockup--over svg { color: #fff; }
+.wm3 .lockup--over .lockup__hosp { color: rgba(255, 255, 255, .72); }
+.wm3 .lockup--sm { font-size: 13px; }
+
+.wm3 .burger { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; margin-right: -10px; }
+.wm3 .burger span { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; }
+
+/* ============================================================================
+   A · Grid — Formula 1
+   ============================================================================ */
+
+.wm3 .ha { background: var(--paper-warm); }
+.wm3 .ha-banner { padding: 8px 16px; background: var(--ink); color: rgba(255, 255, 255, .82); font-size: 11.5px; line-height: 1.4; text-align: center; }
+
+.wm3 .ha-head {
+  position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 330px; padding: 0 16px 18px; background-size: cover; background-position: center 40%; color: #fff;
+}
+.wm3 .ha-head::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, .1) 30%, rgba(0, 0, 0, .35) 55%, rgba(0, 0, 0, .82) 100%);
+}
+.wm3 .ha-nav { position: absolute; top: 0; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
+.wm3 .ha-h {
+  font-family: var(--display); font-size: 29px; font-weight: 900; line-height: .98; letter-spacing: .005em;
+  text-transform: uppercase; text-wrap: balance;
+}
+.wm3 .ha-pill {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin-top: 14px; padding: 0 14px 0 18px;
+  border: 1.5px solid #fff; border-radius: 999px; font-size: 14px; font-weight: 600;
+}
+
+/* the schedule list: big figure, bold title, chevron; a tap opens the line */
+.wm3 .ha-sched { padding: 4px 16px 16px; }
+.wm3 .ha-sched li { border-bottom: 1px solid var(--line); }
+.wm3 .ha-sched__row { display: grid; grid-template-columns: 78px 1fr 24px; align-items: center; width: 100%; min-height: 60px; }
+.wm3 .ha-sched__fig { font-family: var(--display); font-size: 30px; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.wm3 .ha-sched__title { font-family: var(--display); font-size: 15px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; }
+.wm3 .ha-sched__chev { justify-self: end; color: var(--ink-mute); transition: rotate .2s ease; }
+.wm3 .ha-sched li.is-open .ha-sched__chev { rotate: 90deg; color: var(--accent); }
+.wm3 .ha-sched li.is-open .ha-sched__fig { color: var(--accent); }
+.wm3 .ha-sched__copy { padding: 0 0 14px 78px; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
+
+/* the timing band: phone, floating card, icon tabs */
+.wm3 .ha-band { padding: 20px 16px 16px; background: var(--night); color: #fff; }
+.wm3 .ha-band__stage { position: relative; height: 296px; }
+.wm3 .ha-phone {
+  position: absolute; left: 8px; top: 0; width: 152px; padding: 5px; border-radius: 28px; background: #1f2126;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 24px 60px rgba(43, 89, 224, .25);
+}
+.wm3 .ha-phone__screen { position: relative; overflow: hidden; aspect-ratio: 994 / 1920; border-radius: 23px; background: #000; }
+.wm3 .ha-phone__film { width: 100%; height: 100%; object-fit: cover; }
+.wm3 .ha-snd {
+  position: absolute; left: 50%; bottom: 8px; translate: -50% 0;
+  display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 14px 0 11px; border-radius: 999px;
+  background: #fff; color: var(--ink); font-size: 12.5px; font-weight: 700; white-space: nowrap;
+}
+.wm3 .ha-snd .ico { width: 16px; height: 16px; }
+.wm3 .ha-float {
+  position: absolute; right: 0; bottom: 22px; width: 206px; display: flex; flex-direction: column; gap: 6px;
+  padding: 14px 16px 16px; border-radius: 16px; background: var(--paper); color: var(--ink);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .45);
+}
+.wm3 .ha-float img { align-self: flex-start; height: 20px; width: auto; }
+.wm3 .ha-float b { font-family: var(--display); font-size: 34px; font-weight: 900; letter-spacing: -.03em; line-height: 1; margin-top: 4px; }
+.wm3 .ha-float span { font-size: 13px; line-height: 1.35; color: var(--ink-soft); }
+
+.wm3 .ha-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+.wm3 .ha-tabs button {
+  position: relative; display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 10px;
+  background: rgba(255, 255, 255, .94);
+}
+.wm3 .ha-tabs img { height: 18px; width: auto; max-width: 76%; }
+.wm3 .ha-tabs button::after {
+  content: ''; position: absolute; left: 22%; right: 22%; bottom: -8px; height: 3px; border-radius: 3px; background: transparent;
+}
+.wm3 .ha-tabs button.is-on::after { background: var(--brand); }
+.wm3 .ha-tabs button:not(.is-on) { opacity: .62; }
+
+.wm3 .ha-along {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; margin-top: 20px; padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, .1); font-size: 12px; line-height: 1.4; color: rgba(255, 255, 255, .68); text-align: center;
+}
+.wm3 .ha-along b { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+.wm3 .ha-along b:first-child::after, .wm3 .ha-along b:last-child::before {
+  content: ''; display: inline-block; width: 5px; height: 5px; margin: 0 0 1px 10px; border-radius: 50%; background: var(--brand); vertical-align: middle;
+}
+.wm3 .ha-along b:last-child::before { margin: 0 10px 1px 0; }
+
+/* ============================================================================
+   B · Billboard — Netflix + MasterClass
+   ============================================================================ */
+
+.wm3 .hb { background: var(--night); color: #fff; }
+.wm3 .hb-banner { display: flex; align-items: center; gap: 12px; padding: 4px 16px; font-size: 11.5px; line-height: 1.4; color: rgba(255, 255, 255, .68); }
+.wm3 .hb-banner a { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--accent-lit); }
+
+.wm3 .hb-bill { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #000; }
+.wm3 .hb-bill__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 70%; }
+.wm3 .hb-bill__shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, transparent 18%, transparent 88%, var(--night) 100%);
+}
+.wm3 .hb-nav { position: absolute; top: 0; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+
+.wm3 .hb-bill__foot { padding: 4px 16px 0; }
+.wm3 .hb-h { font-family: var(--display); font-size: 27px; font-weight: 800; letter-spacing: -.025em; line-height: 1.06; text-align: center; text-wrap: balance; }
+.wm3 .hb-play {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 46px; margin-top: 14px; border-radius: 6px;
+  background: #fff; color: var(--ink); font-size: 16px; font-weight: 700; text-align: center;
+}
+.wm3 .hb-play .ico { width: 22px; height: 22px; }
+
+.wm3 .hb-row {
+  display: flex; gap: 8px; padding: 16px 16px 2px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px;
+  scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.wm3 .hb-row::-webkit-scrollbar { display: none; }
+.wm3 .hb-row > li { scroll-snap-align: start; }
+
+/* MasterClass's square tiles: the three stats */
+.wm3 .hb-sq {
+  flex: 0 0 182px; aspect-ratio: 1; display: flex; flex-direction: column; padding: 14px; border-radius: 6px;
+  background: linear-gradient(155deg, var(--accent) 0%, var(--accent-deep) 100%);
+}
+.wm3 .hb-sq__fig { font-family: var(--display); font-size: 38px; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.wm3 .hb-sq__lab { margin-top: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .78); }
+.wm3 .hb-sq__copy { margin-top: auto; font-size: 12.5px; line-height: 1.38; color: rgba(255, 255, 255, .92); }
+
+/* Netflix's wide full-bleed tiles: the three systems */
+.wm3 .hb-row--wide { padding-top: 10px; }
+.wm3 .hb-wide {
+  position: relative; flex: 0 0 236px; aspect-ratio: 16 / 9; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px 14px;
+  border-radius: 6px; overflow: hidden; background: radial-gradient(120% 90% at 100% 0%, #24314f 0%, #15171c 60%);
+}
+.wm3 .hb-wide__plate { position: absolute; top: 12px; left: 14px; display: flex; align-items: center; height: 30px; padding: 0 10px; border-radius: 4px; background: #fff; }
+.wm3 .hb-wide__plate img { height: 15px; width: auto; }
+.wm3 .hb-wide__fig { font-family: var(--display); font-size: 30px; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.wm3 .hb-wide__cap { margin-top: 3px; font-size: 12.5px; color: rgba(255, 255, 255, .72); }
+
+.wm3 .hb-along { padding: 14px 16px 20px; font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, .62); text-align: center; }
+.wm3 .hb-along b { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+.wm3 .hb-along i { font-style: normal; color: var(--accent-lit); }
+
+/* ============================================================================
+   C · Glass — Revolut + Spotify
+   ============================================================================ */
+
+.wm3 .hc3 { position: relative; isolation: isolate; overflow: hidden; padding: 0 16px 18px; background: var(--night); color: #fff; }
+.wm3 .hc3-photo {
+  position: absolute; left: 0; right: 0; top: 0; height: 380px; z-index: -1; background-size: cover; background-position: center 35%;
+  opacity: .62; -webkit-mask-image: linear-gradient(#000 35%, transparent); mask-image: linear-gradient(#000 35%, transparent);
+}
+.wm3 .glass {
+  border: 1px solid rgba(255, 255, 255, .12); border-radius: 24px; background: rgba(28, 30, 36, .55);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.wm3 .hc3-nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.wm3 .burger--glass { margin-right: 0; border-radius: 50%; background: rgba(255, 255, 255, .12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+/* the banner as a tappable row: icon, line, link, arrow */
+.wm3 .hc3-banner { display: grid; grid-template-columns: 38px 1fr 18px; align-items: center; gap: 12px; padding: 12px 14px; }
+.wm3 .hc3-banner__ico { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--brand); }
+.wm3 .hc3-banner__ico svg { width: 20px; height: 20px; }
+.wm3 .hc3-banner__txt { font-size: 12.5px; line-height: 1.4; color: rgba(255, 255, 255, .86); }
+.wm3 .hc3-banner__txt b { display: block; margin-top: 3px; font-size: 13px; font-weight: 600; color: var(--accent-lit); }
+.wm3 .hc3-banner .ico { color: rgba(255, 255, 255, .55); }
+
+.wm3 .hc3-h { margin: 22px 2px 16px; font-family: var(--display); font-size: 33px; font-weight: 800; letter-spacing: -.03em; line-height: 1.04; text-wrap: balance; }
+
+/* the "now playing" card: phone left, controls right */
+.wm3 .hc3-player { display: grid; grid-template-columns: 116px 1fr; gap: 16px; padding: 10px; }
+.wm3 .hc3-phone { overflow: hidden; aspect-ratio: 994 / 1920; border-radius: 16px; border: 3px solid #000; background: #000; }
+.wm3 .hc3-phone__film { width: 100%; height: 100%; object-fit: cover; }
+.wm3 .hc3-ctl { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px; padding: 6px 4px 6px 0; }
+.wm3 .hc3-bar { display: block; width: 100%; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .18); overflow: hidden; }
+.wm3 .hc3-bar span { display: block; height: 100%; border-radius: 4px; background: #fff; }
+.wm3 .hc3-round {
+  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--brand); color: #fff;
+  box-shadow: 0 10px 24px rgba(42, 123, 255, .4);
+}
+.wm3 .hc3-round .ico { width: 24px; height: 24px; }
+.wm3 .hc3-round__lab { margin-top: -6px; font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, .7); }
+
+/* the stats: a short list of icon rows */
+.wm3 .hc3-list { margin-top: 12px; padding: 4px 14px; }
+.wm3 .hc3-stat { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 14px; padding: 12px 0; }
+.wm3 .hc3-stat + .hc3-stat { border-top: 1px solid rgba(255, 255, 255, .08); }
+.wm3 .hc3-stat__ico {
+  display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px;
+  background: linear-gradient(150deg, var(--brand) 0%, var(--accent-deep) 100%);
+  font-family: var(--display); font-size: 17px; font-weight: 800; letter-spacing: -.02em;
+}
+.wm3 .hc3-stat__txt { display: flex; flex-direction: column; gap: 2px; }
+.wm3 .hc3-stat__txt b { font-size: 15px; font-weight: 600; }
+.wm3 .hc3-stat__txt span { font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, .66); }
+
+/* the systems: Spotify rows with logo thumbnails */
+.wm3 .hc3-tracks { margin-top: 14px; }
+.wm3 .hc3-track { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 14px; padding: 6px 2px; }
+.wm3 .hc3-track__thumb { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 8px; background: #fff; }
+.wm3 .hc3-track__thumb img { width: 40px; height: auto; max-height: 26px; object-fit: contain; }
+.wm3 .hc3-track__txt { display: flex; flex-direction: column; }
+.wm3 .hc3-track__txt b { font-family: var(--display); font-size: 19px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.wm3 .hc3-track__txt span { font-size: 13px; color: rgba(255, 255, 255, .62); }
+
+.wm3 .hc3-along { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 8px; margin-top: 14px; padding: 12px 16px; border-radius: 20px; font-size: 12px; line-height: 1.45; color: rgba(255, 255, 255, .68); text-align: center; }
+.wm3 .hc3-along b { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wm3 *, .wm3 *::before, .wm3 *::after { transition: none !important; }
+}

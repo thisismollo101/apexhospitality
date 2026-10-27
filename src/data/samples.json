@@ -79,6 +79,12 @@
       "label": "Hero Ticker Options",
       "summary": "The live Welcome hero three times with Motion's three ticker designs for the card box, working: three tapes, one rail with LED strips, and big numbers with pill tracks. Lines run right to left, pause on hover and stand still under reduced motion.",
       "status": "live"
+    },
+    {
+      "slug": "welcome-mobile-v3",
+      "label": "Welcome · Mobile v3",
+      "summary": "The Welcome hero for phones three new ways, each on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A section index on top, Hero active.",
+      "status": "live"
     }
   ]
 }
