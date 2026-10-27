@@ -50,15 +50,64 @@ export const ALONGSIDE = {
 
 /* ---- review chrome: the section index and the option switcher ------------- */
 
+/** The four sections, each built three ways: /<key>-a, /<key>-b, /<key>-c. */
 export const SECTIONS = [
-  { n: '01', label: 'Hero', live: true },
-  { n: '02', label: 'Why', live: false },
-  { n: '03', label: 'What · 1', live: false },
-  { n: '04', label: 'What · 2', live: false },
+  { n: '01', key: 'hero', label: 'Hero' },
+  { n: '02', key: 'why', label: 'Why' },
+  { n: '03', key: 'what1', label: 'What · 1' },
+  { n: '04', key: 'what2', label: 'What · 2' },
 ];
 
 export const OPTIONS = [
-  { slug: 'hero-a', letter: 'A', name: 'Grid' },
-  { slug: 'hero-b', letter: 'B', name: 'Billboard' },
-  { slug: 'hero-c', letter: 'C', name: 'Glass' },
+  { key: 'a', letter: 'A', name: 'Grid' },
+  { key: 'b', letter: 'B', name: 'Billboard' },
+  { key: 'c', letter: 'C', name: 'Glass' },
 ];
+
+/* ---- Sections 1–3 ----------------------------------------------------------
+   The locked decision log's copy, word for word, as on /samples/welcome-mobile-preview
+   (copied, not imported). Ranges take the live page's en dash. Films load only
+   when tapped. */
+
+/** One film: an H.264 copy every browser plays, plus HEVC/WebM where they exist. */
+export type Film = { title: string; len?: string; clip: string; hevc?: string; webm?: string; poster: string };
+
+export const WHY = {
+  vsl: { title: 'Silent 30-Day Window', clip: 'hq/screen-tall.mp4', hevc: 'hq/screen-tall-hevc.mp4', webm: 'hq/screen-tall.webm', poster: 'hq/screen-tall.jpg' } as Film,
+  callout: '141 pages in 45 days (Expedia)',
+  cards: [
+    { label: 'Dream', fig: '20–30%', line: 'more ancillary revenue per guest from pre-arrival offers' },
+    { label: 'Likelihood', fig: '74%', line: 'of affluent travellers book after watching travel video' },
+    { label: 'Time', fig: '99%', line: 'TripAdvisor' },
+    { label: 'Effort', fig: '95%', line: 'open rate plus zero staff labour' },
+  ],
+  conversion: { apex: '15–25%', apexLab: 'pre-arrival', vs: 'vs', desk: '2–5%', deskLab: 'at the front desk' },
+};
+
+export const WHAT1 = {
+  vsl: { title: 'Timing is Everything: The 4-Milestone Guest Journey', len: '1:15', clip: 'vsl.mp4', poster: 'vsl-poster.jpg' } as Film,
+  rows: [
+    { when: 'Day 1', what: 'welcome by name', img: 't2.jpg' },
+    { when: '48h', what: 'dining', img: 'f6.jpg' },
+    { when: '7 days', what: 'spa', img: 't9.jpg' },
+    { when: '48h out', what: 'arrival and extensions', img: 't16.jpg' },
+  ],
+  trigger: 'triggered by OPERA/SynXis, sent by SMS/WhatsApp',
+  phone: { img: 't9.jpg', button: 'Book a treatment' },
+  eye: 'The Four Films.',
+  headline: 'Four Films, Four Moments. Every One Sells the Stay.',
+  /** One film per milestone, in the rows' order (the round 2 mobile page's mapping, still to be confirmed). */
+  films: [
+    { title: 'welcome by name', clip: 'hq/card.mp4', hevc: 'hq/card-hevc.mp4', poster: 'hq/card.jpg' },
+    { title: 'dining', clip: 'hq/apex-reveal.mp4', poster: 'hq/apex-reveal.jpg' },
+    { title: 'spa', clip: 'hq/screen.mp4', hevc: 'hq/screen-hevc.mp4', poster: 'hq/screen.jpg' },
+    { title: 'arrival and extensions', clip: 'm9.mp4', poster: 'm9.jpg' },
+  ] as Film[],
+};
+
+export const WHAT2 = {
+  vsl: { title: 'Real Staff Voice vs. AI Slop', len: '90s', clip: 'hq/apex-way.mp4', hevc: 'hq/apex-way-hevc.mp4', webm: 'hq/apex-way.webm', poster: 'hq/apex-way.jpg' } as Film,
+  callout: '65% of US hotels are short-staffed (AHLA)',
+  /** No copy yet: shown as labelled placeholders. */
+  boxes: ['Value box 1 · content pending', 'Value box 2 · content pending', 'Value box 3 · content pending', 'Value box 4 · content pending'],
+};

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { FILM, OPTIONS, SECTIONS, img } from './data';
+import { FILM, OPTIONS, SECTIONS, img, type Film } from './data';
 
 /**
  * The hero film, shared by all three options. It starts muted (the only way a
@@ -94,26 +94,33 @@ export const Burger = ({ className = '' }: { className?: string }) => (
 );
 
 /**
- * Review chrome over every option: the section index (Hero active, the rest
- * next) and the A / B / C switcher. Plain links inside the one route group.
+ * Review chrome over every page: the section index (the current section
+ * active) and the A / B / C switcher for it. Both keep the other choice: a
+ * section link stays on the current letter, a letter stays on the section.
+ * Plain links inside the one route group.
  */
 export function ReviewBar() {
-  const path = usePathname();
+  const path = usePathname() ?? '';
+  const m = path.match(/\/(hero|why|what1|what2)-([abc])$/);
+  const sec = m?.[1] ?? 'hero';
+  const opt = m?.[2] ?? 'a';
   return (
     <header className="rv">
-      <ol className="rv__idx" aria-label="Sections">
-        {SECTIONS.map((s) => (
-          <li key={s.n} className={s.live ? 'is-on' : undefined} aria-current={s.live ? 'step' : undefined}>
-            <b>{s.n}</b> {s.label}
-            {!s.live && <i>next</i>}
-          </li>
-        ))}
-      </ol>
-      <nav className="rv__opts" aria-label="Hero options">
-        {OPTIONS.map((o) => {
-          const on = path?.endsWith(o.slug);
+      <nav className="rv__idx" aria-label="Sections">
+        {SECTIONS.map((s) => {
+          const on = s.key === sec;
           return (
-            <Link key={o.slug} href={`/samples/welcome-mobile-v3/${o.slug}`} className={on ? 'is-on' : undefined} aria-current={on ? 'page' : undefined}>
+            <Link key={s.key} href={`/samples/welcome-mobile-v3/${s.key}-${opt}`} className={on ? 'is-on' : undefined} aria-current={on ? 'page' : undefined}>
+              <b>{s.n}</b> {s.label}
+            </Link>
+          );
+        })}
+      </nav>
+      <nav className="rv__opts" aria-label="Options">
+        {OPTIONS.map((o) => {
+          const on = o.key === opt;
+          return (
+            <Link key={o.key} href={`/samples/welcome-mobile-v3/${sec}-${o.key}`} className={on ? 'is-on' : undefined} aria-current={on ? 'page' : undefined}>
               <b>{o.letter}</b> {o.name}
             </Link>
           );
@@ -122,3 +129,65 @@ export function ReviewBar() {
     </header>
   );
 }
+
+/**
+ * A tap-to-play film for Sections 1–3. Until it is tapped it is only its
+ * poster (lazy) under whatever overlay the option draws (`children`), so the
+ * page carries no video weight; a tap swaps in the player and starts it with
+ * sound. Changing `film` while it plays switches to the new one. Starting one
+ * film pauses any other on the page.
+ */
+export function Player({
+  film,
+  className,
+  children,
+  label,
+  on: onProp,
+  onStart,
+}: {
+  film: Film;
+  className: string;
+  children?: React.ReactNode;
+  label?: string;
+  /** controlled: whether the player is live (an option that picks films from a list starts it from outside) */
+  on?: boolean;
+  onStart?: () => void;
+}) {
+  const [own, setOwn] = useState(false);
+  const on = onProp ?? own;
+  const start = onStart ?? (() => setOwn(true));
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!on || !v) return;
+    const solo = () => document.querySelectorAll('video').forEach((o) => o !== v && o.pause());
+    v.addEventListener('play', solo);
+    v.play().catch(() => {});
+    return () => v.removeEventListener('play', solo);
+  }, [on, film.clip]);
+
+  return (
+    <div className={`player ${className}`}>
+      {on ? (
+        <video key={film.clip} ref={ref} className="player__media" poster={img(film.poster)} controls playsInline preload="auto">
+          {film.hevc && <source src={img(film.hevc)} type='video/mp4; codecs="hvc1"' />}
+          {film.webm && <source src={img(film.webm)} type="video/webm" />}
+          <source src={img(film.clip)} type="video/mp4" />
+        </video>
+      ) : (
+        <button type="button" className="player__btn" onClick={start} aria-label={`Play: ${label ?? film.title}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- poster sized by CSS, lazy */}
+          <img className="player__media" src={img(film.poster)} alt="" loading="lazy" decoding="async" />
+          {children}
+        </button>
+      )}
+    </div>
+  );
+}
+
+export const PlayIcon = ({ className = 'ico' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
+    <path d="M7 4.5l13 7.5-13 7.5z" fill="currentColor" />
+  </svg>
+);

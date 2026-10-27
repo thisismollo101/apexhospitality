@@ -83,7 +83,7 @@
     {
       "slug": "welcome-mobile-v3",
       "label": "Welcome · Mobile v3",
-      "summary": "The Welcome hero for phones three new ways, each on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A section index on top, Hero active.",
+      "summary": "The Welcome page's Hero, Why, What 1 and What 2 for phones, each three ways on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A section index and an A/B/C switcher on top.",
       "status": "live"
     }
   ]
