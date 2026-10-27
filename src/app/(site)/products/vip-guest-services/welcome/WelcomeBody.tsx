@@ -118,7 +118,7 @@ const SUBTRACTION = [
         <strong>Your property.</strong> Every frame filmed on site, at your hotel.
       </>,
       <>
-        <strong>Real voices.</strong> Cloned from your own team, ideally the GM.
+        <strong>Real voices.</strong> Recorded by your own team, with consent, ideally the GM.
       </>,
     ],
   },
@@ -142,7 +142,7 @@ const SUBTRACTION = [
   },
   {
     k: 'Effort',
-    title: 'Zero Operational Burden.',
+    title: 'Light on Your Operation.',
     stat: (
       <>
         <strong>1</strong> monthly offers meeting
@@ -154,7 +154,7 @@ const SUBTRACTION = [
         <strong>One monthly offers meeting.</strong> The only ongoing commitment.
       </>,
       <>
-        <strong>Its own platform.</strong> Alongside your PMS. No replacement, no overhaul, no integration project.
+        <strong>Its own platform.</strong> Works alongside your PMS. No integration needed: we work from a daily arrivals export or your booking emails.
       </>,
     ],
   },
@@ -181,30 +181,30 @@ export default function WelcomeBody() {
             <Split
               image="f7.jpg"
               k="Dream"
-              fig="20–30%"
-              text="20–30% more ancillary revenue per guest from automated pre-arrival offers"
-              src="BookingWhizz, 2025–26 (vendor data)"
+              fig="7 in 8"
+              text="Hotel guests eat dinner somewhere other than the hotel, so the dining budget leaves before it is spent"
+              src="CBRE Hotels Americas, via Regulr [P05-2]"
             />
             <Split
               image="f6.jpg"
               k="Likelihood"
-              fig="74%"
-              text="74% of affluent travellers book after watching activity video"
-              src="Travel Iowa video-marketing presentation"
+              fig="73%"
+              text="73% of travellers say creator or influencer recommendations have influenced their booking decisions"
+              src="Expedia Group, 2025 Traveler Value Index [G-05]"
             />
             <Split
               image="f5.jpg"
               k="Time"
               fig="99%"
               text="Hotel listings with property video get 99% more clicks to the hotel's website"
-              src="TripAdvisor Business Advantage"
+              src="TripAdvisor Business Advantage (correlational) [P01-2]"
             />
             <Split
               image="f3.jpg"
               k="Effort"
-              fig="95%"
-              text="95% open rate (Apex's own figure), converts at up to 25%, zero staff labour, while 65% of US hotels report staffing shortages"
-              src="Apex first-party; BookingWhizz; AHLA, Feb 2025"
+              fig="65%"
+              text="65% of US hotels report staffing shortages. Once your team has recorded, the films ask nothing more of them"
+              src="AHLA Front Desk Feedback, Feb 2025 [G-18]"
             />
           </ul>
         </div>
@@ -404,7 +404,7 @@ export default function WelcomeBody() {
           <span className="eye">Built on subtraction</span>
           <h2 className="hx">
             Zero PMS Overhaul.
-            <br className="brk" /> Zero Staff Burden.
+            <br className="brk" /> No Daily Staff Work.
           </h2>
           <div className="bs__top">
             <div className="w2">
@@ -586,7 +586,7 @@ export default function WelcomeBody() {
           <div className="ua2__data">
             <div className="ua2__d">
               <strong>88%{A}</strong>
-              <span>Trust recommendations from people they know above all other channels (Nielsen 2021) [G-02].</span>
+              <span>Trust recommendations from people they know (Nielsen Trust in Advertising 2021) [G-02].</span>
             </div>
           </div>
         </div>
@@ -690,7 +690,7 @@ export default function WelcomeBody() {
               <div className="ac__body">
                 <h3>Your staff, the stars. Your property, the show.</h3>
                 <p className="ac__plans">
-                  <b>Signature</b> $5k · <b>Premium</b> $10k · <b>Elite</b> $25k a month. $5,000 deposit.
+                  <b>Signature</b> $10k · <b>Elite</b> $25k · <b>Global</b> $50k a month. $5,000 setup fee.
                 </p>
                 <Link className="w3btn w3btn--dark" href="/contact-sales">
                   Contact sales &rarr;

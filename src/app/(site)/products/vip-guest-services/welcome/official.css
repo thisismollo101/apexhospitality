@@ -1090,7 +1090,7 @@
 }
 /* Gradient 1's phone 15% bigger than the rest of its group, still the film's own shape. The
    grid centres it on the copy column, which runs from the headline's first line to the foot
-   of the 5X card, so the space above and below it match; the pair stays centred on the page. */
+   of the third card, so the space above and below it match; the pair stays centred on the page. */
 .w3page .hd.hero--g1 .top__in { grid-template-columns: calc(var(--vw) * .75 * 1.15) minmax(0, max-content); }
 
 
@@ -1296,6 +1296,15 @@
   object-fit: contain;
   object-position: left center;
 }
+.w3page .wabb-word {
+  /* stands where the vendor logos sat: one line, the logos' drawn height */
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
 .w3page .wabb-cap {
   font-weight: 500;
   font-size: 12px;
@@ -1431,6 +1440,14 @@
   .w3page .wabb-logo {
     transform: scale(0.85);
     transform-origin: left center;
+  }
+  .w3page .wabb-word {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  /* the PMS sentence is longer than the old one: drop the closing caps so the line stays one row */
+  .w3page .wabb-line > .wabb-pair:last-child {
+    display: none;
   }
   .w3page .wabb-cap {
     font-size: 11px;

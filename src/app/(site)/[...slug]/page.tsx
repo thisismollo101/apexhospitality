@@ -2,6 +2,10 @@ import { notFound } from 'next/navigation';
 import PageShell from '@/components/PageShell';
 import ProductDetail, { catalogue } from '@/components/ProductDetail';
 import { internalHrefs, breadcrumbs } from '@/lib/nav';
+import ledes from '@/data/ledes.json';
+
+/** Page-specific ledes for scaffolded pages that already have settled copy (plans, setup fee). */
+const LEDES = ledes as Record<string, string>;
 
 /**
  * Every route below / is generated from navigation.json.
@@ -60,7 +64,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
     <PageShell
       path={path}
       title={titleFor(path)}
-      lede="This page is scaffolded from navigation.json. Content lands with its template."
+      lede={LEDES[path] ?? 'This page is scaffolded from navigation.json. Content lands with its template.'}
     />
   );
 }
