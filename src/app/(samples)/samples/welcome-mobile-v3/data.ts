@@ -8,7 +8,8 @@
  */
 
 export const MEDIA = '/media/welcome/';
-export const img = (name: string) => `${MEDIA}${name}`;
+/** A media path: names are under /media/welcome/; a root-relative path is used as it is. */
+export const img = (name: string) => (name.startsWith('/') ? name : `${MEDIA}${name}`);
 
 export const BANNER = {
   text: '73% say creator or influencer recommendations have influenced their booking decisions. Expedia Group, 2025 Traveler Value Index',
@@ -96,11 +97,15 @@ export const WHAT1 = {
   phone: { img: 't9.jpg', button: 'Book a treatment' },
   eye: 'The Four Films.',
   headline: 'Four Films, Four Moments. Every One Sells the Stay.',
-  /** One film per milestone, in the rows' order (the round 2 mobile page's mapping, still to be confirmed). */
+  /**
+   * One film per milestone, in the rows' order. Dining and spa use the repo's own
+   * dining and accommodation (pool) clips, which show those moments; the round 2
+   * page had the Apex logo reveal and a laptop scene there.
+   */
   films: [
     { title: 'welcome by name', clip: 'hq/card.mp4', hevc: 'hq/card-hevc.mp4', poster: 'hq/card.jpg' },
-    { title: 'dining', clip: 'hq/apex-reveal.mp4', poster: 'hq/apex-reveal.jpg' },
-    { title: 'spa', clip: 'hq/screen.mp4', hevc: 'hq/screen-hevc.mp4', poster: 'hq/screen.jpg' },
+    { title: 'dining', clip: '/media/cards/dining.mp4', webm: '/media/cards/dining.webm', poster: '/media/cards/dining.jpg' },
+    { title: 'spa', clip: '/media/cards/accommodation.mp4', webm: '/media/cards/accommodation.webm', poster: '/media/cards/accommodation.jpg' },
     { title: 'arrival and extensions', clip: 'm9.mp4', poster: 'm9.jpg' },
   ] as Film[],
 };

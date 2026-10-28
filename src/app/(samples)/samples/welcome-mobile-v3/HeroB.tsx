@@ -10,7 +10,7 @@ import { Burger, Film, Lockup, SoundIcon, useFilm } from './parts';
  * of stat posters and a row of wide partner tiles, each on a darkened still
  * from the live page, swiped sideways.
  */
-const STAT_STILLS = ['hq/card.jpg', 'hq/screen.jpg', 'hq/apex-reveal.jpg'];
+const STAT_STILLS = ['hq/card.jpg', 'hq/screen.jpg', '/media/cards/corporate.jpg'];
 const PARTNER_STILLS = ['t2.jpg', 'f6.jpg', 't16.jpg'];
 
 export default function HeroB() {
