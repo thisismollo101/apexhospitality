@@ -28,7 +28,10 @@ const sampleMenu: NavDropdown = {
   ],
 };
 
-const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), sampleMenu];
+/** Sample Pages taken out of the menu for now (Aidan, 28 Oct); set true to bring it back. The pages themselves stay up. */
+const SHOW_SAMPLES_MENU = false;
+
+const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), ...(SHOW_SAMPLES_MENU ? [sampleMenu] : [])];
 const auth = nav.header.auth as { label: string; href: string; style: string }[];
 
 function Caret() {
