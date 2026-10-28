@@ -81,6 +81,18 @@
       "status": "live"
     },
     {
+      "slug": "card-label-pills",
+      "label": "Card Label Pills",
+      "summary": "The swapped Wrong Way vs APEX Way section three times, with Standard and Exceptional as pills in their card's colour: centred level with the phone pills, centred with the headline under them, or over the headline with the group centred on the card.",
+      "status": "live"
+    },
+    {
+      "slug": "hero-card-finishes",
+      "label": "Hero Card Finishes",
+      "summary": "The Welcome hero's stat cards in C · Deep Pane (live), with three 3D, translucent treatments for the 5% / 25% / 5X figures. Figure 1 is live.",
+      "status": "live"
+    },
+    {
       "slug": "welcome-mobile-v3",
       "label": "Welcome · Mobile v3",
       "summary": "The Welcome page's Hero, Why, What 1 and What 2 for phones, each three ways on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A section index and an A/B/C switcher on top.",

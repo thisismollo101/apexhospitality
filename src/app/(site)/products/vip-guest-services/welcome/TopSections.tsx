@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { APEX_WAY, HEADINGS, HERO_G1, JOINED_ROWS, OLD_WAY, SECTION, TOP, VSL, img } from './data';
+import StatTicker from './StatTicker';
 import WorksAlongside from './WorksAlongside';
 
 /*
@@ -12,6 +13,11 @@ import WorksAlongside from './WorksAlongside';
  *   (hero-data-cards/Hero.tsx), scoped .hd in official.css;
  * - the Wrong Way vs APEX Way section, from /samples/wrong-way-headings
  *   (wrong-way-headings/Joined.tsx), scoped .wx.
+ *
+ * Then swapped, from /samples/welcome-swap-preview (Aidan, 21 Oct): the APEX
+ * Way film plays in the hero phone and the briefing VSL in the APEX Way card's
+ * phone, and the APEX Way card sits left with the Wrong Way card mirrored on
+ * the right, its phone first. The Wrong Way phone keeps its reminder text.
  */
 
 /* ==== the hero (hero-data-cards/Hero.tsx) ============================================ */
@@ -51,7 +57,7 @@ function BgFilm() {
  * is no cut of the briefing yet, so play starts this film from the top with
  * its sound, and pressing again returns it to the silent loop.
  */
-function Vsl() {
+function VslScreen() {
   const ref = useLoop(0.2);
   const [sound, setSound] = useState(false);
 
@@ -67,43 +73,29 @@ function Vsl() {
   };
 
   return (
-    <div className="hvsl top__vsl">
-      <div className="hvsl__screen">
-        <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
-          <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(VSL.clipWebm)} type="video/webm" />
-          <source src={img(VSL.clip)} type="video/mp4" />
-        </video>
-        <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
-          <span className="play" aria-hidden="true">
-            {sound ? (
-              <svg viewBox="0 0 24 24">
-                <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24">
-                <path d="M7 4.5l13 7.5-13 7.5z" />
-              </svg>
-            )}
-          </span>
-          <span className="hvsl__cta">{VSL.cta}</span>
-        </button>
-      </div>
-    </div>
+    <>
+      <video ref={ref} className="hvsl__film" poster={img(VSL.poster)} muted loop playsInline preload="metadata">
+        <source src={img(VSL.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+        <source src={img(VSL.clipWebm)} type="video/webm" />
+        <source src={img(VSL.clip)} type="video/mp4" />
+      </video>
+      <button type="button" className="hvsl__play" onClick={toggle} aria-pressed={sound}>
+        <span className="play" aria-hidden="true">
+          {sound ? (
+            <svg viewBox="0 0 24 24">
+              <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24">
+              <path d="M7 4.5l13 7.5-13 7.5z" />
+            </svg>
+          )}
+        </span>
+        <span className="hvsl__cta">{VSL.cta}</span>
+      </button>
+    </>
   );
 }
-
-/** A figure, its range dash drawn short with room either side (the dash stays in the text, for copying and reading aloud). */
-const Fig = ({ fig }: { fig: [string] | [string, string] }) =>
-  fig.length === 1 ? (
-    <b>{fig[0]}</b>
-  ) : (
-    <b>
-      {fig[0]}
-      <span className="hc__dash">–</span>
-      {fig[1]}
-    </b>
-  );
 
 /**
  * The hero: Gradient 1 · Cobalt Sweep from /samples/hero-data-cards. The root is
@@ -117,7 +109,12 @@ export function HeroTop() {
       <BgFilm />
       <span className="top__scrim" aria-hidden="true" />
       <div className="wrap top__in">
-        <Vsl />
+        {/* the APEX Way film, with its unmute pill, in the hero phone */}
+        <div className="hvsl top__vsl">
+          <div className="hvsl__screen">
+            <LoopScreen />
+          </div>
+        </div>
         <div className="top__copy">
           {/* the headline's own lines, set as blocks so the copy column is only as wide as what it holds */}
           <h1 className="top__h">
@@ -125,27 +122,10 @@ export function HeroTop() {
               <span key={l}>{l} </span>
             ))}
           </h1>
-          <ul className="hc">
-            {HERO_G1.cards.map((c) => (
-              <li key={c.title}>
-                <span className="hc__when">
-                  <Fig fig={c.fig} />
-                </span>
-                <span className="hc__txt">
-                  <b>{c.title}</b>
-                  {typeof c.text === 'string' ? (
-                    c.text
-                  ) : (
-                    // the line set on its two given lines
-                    <span className="hc__line">
-                      <span>{c.text[0]} </span>
-                      <span>{c.text[1]}</span>
-                    </span>
-                  )}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* the three stat cards as Motion's approved ticker (Aidan, 23 Oct) */}
+          <div className="hcw">
+            <StatTicker />
+          </div>
         </div>
       </div>
       <WorksAlongside />
@@ -164,10 +144,11 @@ const Src = ({ children }: { children: React.ReactNode }) => (
 );
 
 /** added: a side's mini heading, the section-heading style (eyebrow, then a two-line display headline). */
-function Heading({ h }: { h: { label: string; lines: string[] } }) {
+function Heading({ h, tone }: { h: { label: string; lines: string[] }; tone: 'apex' | 'old' }) {
   return (
     <header className="jc__head">
-      <span className="eye">{h.label}</span>
+      {/* the label as a pill in its card's colour, from /samples/card-label-pills option 2 */}
+      <span className={`tag jc__lab jc__lab--${tone}`}>{h.label}</span>
       <h3 className="jc__h">
         {h.lines.map((l, i) => (
           <span key={i}>{l} </span>
@@ -216,7 +197,7 @@ const SoundIcon = ({ on }: { on: boolean }) => (
  * off it; muted is set as a property, since React does not reliably emit the
  * attribute. Reduced motion leaves the poster up until someone presses unmute.
  */
-function LoopPhone() {
+function LoopScreen() {
   const ref = useRef<HTMLVideoElement>(null);
   const film = APEX_WAY.joined;
   const [sound, setSound] = useState(false);
@@ -240,19 +221,17 @@ function LoopPhone() {
   };
 
   return (
-    <div className="tphone">
-      <div className="tphone__screen">
-        <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
-          <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
-          <source src={img(film.clipWebm)} type="video/webm" />
-          <source src={img(film.clip)} type="video/mp4" />
-        </video>
-        <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
-          <SoundIcon on={sound} />
-          <span>{sound ? 'Mute' : 'Unmute'}</span>
-        </button>
-      </div>
-    </div>
+    <>
+      <video ref={ref} className="tphone__film" poster={img(film.poster)} muted loop playsInline preload="auto">
+        <source src={img(film.clipHevc)} type='video/mp4; codecs="hvc1.2.4.L120.B0"' />
+        <source src={img(film.clipWebm)} type="video/webm" />
+        <source src={img(film.clip)} type="video/mp4" />
+      </video>
+      <button type="button" className="snd-pill" onClick={toggle} aria-pressed={sound}>
+        <SoundIcon on={sound} />
+        <span>{sound ? 'Mute' : 'Unmute'}</span>
+      </button>
+    </>
   );
 }
 
@@ -371,8 +350,8 @@ function CompactRows() {
 
 /* ---- Joined Cards: Bottom 1 ----------------------------------------------------------
    Two cards, each an info panel and a phone panel, joined side by side so they
-   read as one, and mirrored so the phones meet in the centre round the VS
-   circle: [A info] [A phone] [B phone] [B info]. */
+   read as one. [B phone] [B info] [A phone] [A info]: the APEX Way card first and
+   the Wrong Way card mirrored so its phone leads. */
 
 function JoinedCards() {
   return (
@@ -380,29 +359,35 @@ function JoinedCards() {
       <span className="jc__vs" aria-hidden="true">
         vs
       </span>
-      <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
-        {/* added: the heading over the calendar, the two together exactly the phone's height, level with it */}
-        <div className="jc__info jc__info--a">
-          <div className="jc__fit jc__fit--a">
-            <Heading h={HEADINGS.wrong} />
-            <QuietMonth />
-          </div>
-        </div>
-        <div className="jc__media jc__media--a">
-          <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
-          <SmsPhone />
-        </div>
-      </article>
+      {/* the APEX Way card on the left, the Wrong Way card on the right */}
       <article className="jc__card jc__card--b" aria-label={APEX_WAY.title}>
         <div className="jc__media jc__media--b">
           <span className="tag tag--apex jc__pill">{APEX_WAY.pill}</span>
-          <LoopPhone />
+          {/* the briefing VSL, from the hero, in the APEX Way phone */}
+          <div className="tphone">
+            <div className="tphone__screen">
+              <VslScreen />
+            </div>
+          </div>
         </div>
         {/* added: the heading over the four rows, both inside a frame exactly the phone's height, level with it */}
         <div className="jc__info">
           <div className="jc__fit">
-            <Heading h={HEADINGS.apex} />
+            <Heading h={HEADINGS.apex} tone="apex" />
             <CompactRows />
+          </div>
+        </div>
+      </article>
+      <article className="jc__card jc__card--a" aria-label={OLD_WAY.title}>
+        {/* mirrored, the phone first and the calendar after it */}
+        <div className="jc__media jc__media--a">
+          <span className="tag tag--old jc__pill">{OLD_WAY.pill}</span>
+          <SmsPhone />
+        </div>
+        <div className="jc__info jc__info--a">
+          <div className="jc__fit jc__fit--a">
+            <Heading h={HEADINGS.wrong} tone="old" />
+            <QuietMonth />
           </div>
         </div>
       </article>

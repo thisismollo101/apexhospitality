@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { GUESTS, JOURNEY, TOUCHPOINTS, WHEN, img, type Card } from './data';
+import { GUESTS, TOUCHPOINTS, WHEN, img, type Card } from './data';
 
 /*
  * Every interactive part of the page, ported from the design artifact's own
@@ -59,11 +59,11 @@ const MODULES: Module[] = [
   },
   {
     tab: 'Fine Dining & F&B',
-    hero: '75%',
-    tag: 'P05-4',
-    heroNote: 'Of tourists are culinary travellers and rate food 8.2/10 (World Food Travel Association 2026) [P05-4].',
+    hero: '29.1%',
+    tag: 'P05-1',
+    heroNote: 'Hotel F&B departmental margin in H1 2025, across 2,669 US hotels (CBRE Hotels Research 2025) [P05-1].',
     vsl: { poster: 'f6.jpg', len: '0:55', line: 'Here is how your table gets booked before your guest looks anywhere else.' },
-    why: [['380%', 'Reviews lift conversion on higher-priced items by 380% (Spiegel Research Center) [G-13].']],
+    why: [['7 in 8', 'Hotel guests eat dinner somewhere other than the hotel (CBRE Hotels Americas, via Regulr) [P05-2].']],
     f: [
       { id: 'cov', label: 'Dinner covers per month', min: 1, max: 1e7 },
       { id: 'chk', label: 'Your average check', pre: '$', min: 1, max: 1e5 },
@@ -84,7 +84,7 @@ const MODULES: Module[] = [
     tab: 'Spa',
     hero: '$6.8T',
     tag: 'P08-1',
-    heroNote: 'The wellness economy is bigger than global tourism (Global Wellness Institute) [P08-1].',
+    heroNote: 'The global wellness economy, forecast to reach $9.8T (Global Wellness Institute, Nov 2025) [P08-1].',
     vsl: { poster: 't9.jpg', len: '0:50', line: 'An empty treatment hour never comes back. Fill it before the guest lands.' },
     why: [
       ['50–75%', 'Ideal therapist utilisation (Cornell / Horwath) [P08-4].'],
@@ -111,7 +111,7 @@ const MODULES: Module[] = [
     tag: 'P15-3',
     heroNote: 'Ancillary revenue is more than 18% of total hotel income (Cloudbeds, vendor data) [P15-3].',
     vsl: { poster: 't2.jpg', len: '0:45', line: 'Your best rooms, shown before arrival, sold before check-in.' },
-    why: [['380%', 'Reviews lift conversion on higher-priced items by 380% (Spiegel Research Center) [G-13].']],
+    why: [['11.2%', 'Higher rate for each one-point gain in review score, at the same occupancy (Cornell CHR, 2012) [G-15].']],
     f: [
       { id: 'rooms', label: 'Room count', min: 1, max: 1e5 },
       { id: 'adr', label: 'Your ADR', pre: '$', min: 1, max: 1e5 },
@@ -628,65 +628,6 @@ function init(root: HTMLElement): () => void {
       ),
     );
     render();
-  }
-
-  /* ---- section 2 · the journey phone --------------------------------------- */
-  {
-    const jr = $('journey');
-    const MS = 4800;
-    const steps = Array.from(jr.querySelectorAll<HTMLElement>('.jr__step'));
-    const bubble = $('phBubble');
-    let i = 0;
-    let t: ReturnType<typeof setTimeout> | null = null;
-    jr.style.setProperty('--jr-ms', `${MS}ms`);
-    const schedule = () => {
-      if (t) clearTimeout(t);
-      if (!reduce && !jr.classList.contains('is-paused')) t = later(() => show((i + 1) % JOURNEY.length), MS);
-    };
-    const show = (n: number) => {
-      i = n;
-      const S = JOURNEY[n];
-      steps.forEach((b, k) => {
-        b.classList.toggle('is-on', k === n);
-        b.setAttribute('aria-selected', String(k === n));
-        const pr = b.querySelector<HTMLElement>('.jr__prog')!;
-        pr.style.animation = 'none';
-        void pr.offsetWidth;
-        pr.style.animation = '';
-      });
-      $('jrDay').textContent = `Day ${S.day}`;
-      $('jrLeft').textContent = `${30 - S.day} days to arrival`;
-      $('jrBar').style.width = `${Math.round((S.day / 30) * 100)}%`;
-      bubble.classList.add('is-swap');
-      later(() => {
-        $<HTMLImageElement>('phImg').src = img(S.img);
-        $('phMsg').textContent = S.msg;
-        $('phTime').textContent = S.time;
-        $('phDate').textContent = S.date;
-        $('phChip').textContent = S.chip;
-        bubble.querySelector('.bubble__dur')!.textContent = S.dur;
-        bubble.classList.remove('is-swap');
-      }, 260);
-      schedule();
-    };
-    steps.forEach((b, k) => b.addEventListener('click', () => show(k), { signal }));
-    jr.addEventListener(
-      'mouseenter',
-      () => {
-        jr.classList.add('is-paused');
-        if (t) clearTimeout(t);
-      },
-      { signal },
-    );
-    jr.addEventListener(
-      'mouseleave',
-      () => {
-        jr.classList.remove('is-paused');
-        schedule();
-      },
-      { signal },
-    );
-    show(0);
   }
 
   return () => {

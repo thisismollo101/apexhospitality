@@ -1,9 +1,11 @@
 /**
  * Copy and asset names for the parts of the Welcome page that are drawn by
- * script: the touchpoint cards and their opened sheet, the reel, the guest-type
- * frames, and the journey phone. Everything else is plain markup in WelcomeBody.tsx.
+ * script: the touchpoint cards and their opened sheet, the reel and the guest-type
+ * frames. Everything else is plain markup in WelcomeBody.tsx.
  *
- * Figures marked * are unverified placeholders until the sources are checked.
+ * Every figure marked * is from the vetted evidence bank (Evidence Ledger v1.0 /
+ * EVIDENCE-SSOT) and is listed in SOURCES with its ledger ID. Kill-List and
+ * unsourced figures were removed on 27 Oct 2026.
  */
 
 /** Everything the page shows lives here, copied from the design artifact. */
@@ -33,12 +35,12 @@ export const TOUCHPOINTS: Card[] = [
     fig: 'Day 1',
     figSub: 'Morning after booking',
     desc: 'Your team welcomes the guest by name, in their own voice.',
-    lede: 'Your own team, in their own cloned voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead.',
+    lede: 'Your own team, in their own recorded voice, welcomes the guest by name, then a teaser of the room they booked turns into the suite they could have instead.',
     pays: [
-      ['50%*', 'Lower cancellation rate. A direct human greeting within 24 hours takes the remorse out of the booking.'],
-      ['4x*', 'Conversion of personal video messages against generic email links.'],
+      ['10.6%*', 'Cancellation rate on direct bookings, against 21.8% through OTAs. A channel fact, not a Welcome result.'],
+      ['$519*', 'Average direct booking value, against $320 through an OTA. The guest relationship is worth keeping warm.'],
     ],
-    cite: '* Cloudbeds; Canary Technologies. Sources pending verification.',
+    cite: '* Cloudbeds via Prostay 2026 (vendor data) [P03-6]; SiteMinder Hotel Booking Trends 2025 [G-10].',
   },
   {
     kick: 'Touchpoint 02',
@@ -49,10 +51,10 @@ export const TOUCHPOINTS: Card[] = [
     desc: 'Signature dishes in close-up, with one tap to book the table.',
     lede: "Fifteen seconds of signature dishes, the cocktail pour and the kitchen at work, with one tap to reserve the chef's table.",
     pays: [
-      ['85–90%*', 'Off-site dining leakage, captured as dinner covers before guests research anywhere else.'],
-      ['380%*', 'Conversion lift on high-end culinary offers when backed by visual proof.'],
+      ['7 in 8*', 'Hotel guests eat dinner somewhere other than the hotel. The film puts your table in front of them first.'],
+      ['29.1%*', 'Hotel F&B departmental margin in the first half of 2025, across 2,669 US hotels.'],
     ],
-    cite: '* CBRE Americas / Regulr; Spiegel Research Center. Sources pending verification.',
+    cite: '* CBRE Hotels Americas, via Regulr [P05-2]; CBRE Hotels Research 2025 [P05-1].',
   },
   {
     kick: 'Touchpoint 03',
@@ -64,9 +66,9 @@ export const TOUCHPOINTS: Card[] = [
     lede: "A hydrotherapy teaser sent a week before arrival, matched to the therapist hours still open on the guest's dates.",
     pays: [
       ['20–33%*', 'Departmental operating margin for resort and hotel spas, so every filled hour lands as profit.'],
-      ['Up to €250*', 'Per-guest spend lift from visual pre-arrival upselling, a 10% to 20% increase.'],
+      ['50–75%*', 'Ideal therapist utilisation. An unsold treatment hour never comes back.'],
     ],
-    cite: '* ISPA / PwC; Oaky / Akia. Sources pending verification.',
+    cite: '* ISPA / PwC; PKF-CBRE; HVS [P08-3]; Kimes, Cornell Hospitality Quarterly 2009; Horwath HTL [P08-4].',
   },
   {
     kick: 'Touchpoint 04',
@@ -77,30 +79,11 @@ export const TOUCHPOINTS: Card[] = [
     desc: 'Valet, arrival, and one tap for early check-in or an extra night.',
     lede: 'Valet, the chilled-towel greeting, and one tap to lock in early check-in, late checkout or an extra night.',
     pays: [
-      ['65%*', 'Early check-in revenue captured through direct mobile triggers.'],
-      ['0', 'Front-desk queries about arrival. The guest already knows where to go and what happens next.'],
+      ['65%*', 'Of US hotels report staffing shortages. A guest who already knows where to go asks the desk less.'],
+      ['71%*', 'Of US hoteliers report openings they cannot fill. The films add nothing to the front desk’s day.'],
     ],
-    cite: '* Source pending verification.',
+    cite: '* AHLA Front Desk Feedback, Feb 2025, 282 hoteliers [G-18].',
   },
-];
-
-/* ---- section 2 · the journey phone --------------------------------------- */
-
-export type JourneyStep = {
-  day: number;
-  date: string;
-  time: string;
-  img: string;
-  dur: string;
-  chip: string;
-  msg: string;
-};
-
-export const JOURNEY: JourneyStep[] = [
-  { day: 1, date: 'Mon 3 Nov', time: '08:02', img: 't2.jpg', dur: '0:30', chip: 'See the Ocean Suite', msg: "Good morning, Sarah. It's Maya at the front desk. See you on the 2nd." },
-  { day: 3, date: 'Wed 5 Nov', time: '18:40', img: 'f6.jpg', dur: '0:15', chip: "Reserve the chef's table", msg: 'Chef Aris is plating something new. Your terrace table is waiting.' },
-  { day: 23, date: 'Tue 25 Nov', time: '10:15', img: 't9.jpg', dur: '0:15', chip: 'Book a treatment', msg: 'Three treatment hours are still open during your stay.' },
-  { day: 28, date: 'Sun 30 Nov', time: '09:30', img: 't16.jpg', dur: '0:15', chip: 'Add early check-in', msg: 'Your driver will meet you at arrivals. Want your room ready early?' },
 ];
 
 /* ---- section 3 · the reel ------------------------------------------------- */
@@ -118,11 +101,11 @@ export type ReelStep = {
 };
 
 export const REEL: ReelStep[] = [
-  { name: 'Press play', c: '#2b59e0', poster: 'vsl-poster.jpg', len: '1:30', fig: 'Once', figLab: 'Your team records their voice', title: 'Ninety Seconds. The Whole Machine.', desc: 'One voice recording and one filming residency become a personal film for every guest who books.', foot: '4–5 days on site. Nothing for your team after that.' },
-  { name: 'Your property, starring', c: '#c9803a', poster: 'f4.jpg', len: '0:45', fig: '16', figLab: 'Clips in the matrix', title: 'Your Property, Filmed Before We Even Talk.', desc: 'Book a demo and we make a 4K spec film of your hotel first. You see it working before the first call.', foot: 'Day 1 proof, before any contract is signed.' },
-  { name: 'Your team, famous', c: '#b8902a', poster: 'f1.jpg', len: '0:45', fig: '88%*', figLab: 'Trust real people over ads', title: 'The Voice Your Guests Remember.', desc: 'We record your team once and clone their voice. Every welcome after that is theirs, cut with your 4K footage.', foot: '*Nielsen. Source pending verification.' },
-  { name: 'Your events, sold out', c: '#2e8b8f', poster: 'h19.jpg', len: '0:45', fig: '365', figLab: 'Days a year, one residency', title: 'Your Events, Booked Before Guests Arrive.', desc: 'Galas, chef pop-ups and seasonal menus go into the films of guests whose dates overlap, weeks ahead.', foot: 'Limited-capacity events fill before arrival.' },
-  { name: 'In every pocket', c: '#6a3fa0', poster: 'h5.jpg', len: '0:45', fig: '0', figLab: 'Apps, logins or portals', title: 'Your Brand, Straight to Their Phone.', desc: 'Triggered from OPERA or SynXis, delivered by SMS or WhatsApp. One tap and it plays.', foot: '*52% abandon clunky digital experiences (SiteMinder).' },
+  { name: 'Press play', c: '#2b59e0', poster: 'vsl-poster.jpg', len: '1:30', fig: 'Once', figLab: 'Your team records their voice', title: 'Ninety Seconds. The Whole Machine.', desc: 'One voice recording and your property’s own footage become a personal film for every guest who books.', foot: 'One recording session. Nothing for your team after that.' },
+  { name: 'Your property, starring', c: '#c9803a', poster: 'f4.jpg', len: '0:45', fig: '16', figLab: 'Clips in the matrix', title: 'See It Working Before You Sign.', desc: 'Book a private demo and we make a sample film first, so you see the format working before any contract.', foot: 'Proof first, before any contract is signed.' },
+  { name: 'Your team, famous', c: '#b8902a', poster: 'f1.jpg', len: '0:45', fig: '88%*', figLab: 'Trust recommendations from people they know', title: 'The Voice Your Guests Remember.', desc: 'We record your team once, with their written consent. Every welcome after that carries their own voice, cut with your property’s footage.', foot: '*Nielsen Trust in Advertising, 2021 [G-02].' },
+  { name: 'Your events, sold out', c: '#2e8b8f', poster: 'h19.jpg', len: '0:45', fig: '365', figLab: 'Days a year, one system', title: 'Your Events, Booked Before Guests Arrive.', desc: 'Galas, chef pop-ups and seasonal menus go into the films of guests whose dates overlap, weeks ahead.', foot: 'Limited-capacity events reach guests before they arrive.' },
+  { name: 'In every pocket', c: '#6a3fa0', poster: 'h5.jpg', len: '0:45', fig: '0', figLab: 'Apps, logins or portals', title: 'Your Brand, Straight to Their Phone.', desc: 'Sent from your daily arrivals export or booking emails, delivered by SMS or WhatsApp. One tap and it plays.', foot: 'Works alongside your PMS. No integration needed.' },
 ];
 
 /* ---- section 4 · the marquee --------------------------------------------- */
@@ -147,7 +130,7 @@ export const GUESTS: Guest[] = [
     name: 'Couple',
     imgs: ['t2.jpg', 'f6.jpg', 't9.jpg', 'p27.jpg'],
     lines: ['Welcomed by name, then the suite upgrade', 'The candlelit tasting menu', 'Couples’ spa, side by side', 'Champagne on arrival'],
-    data: '<span class="ast">*</span>75% of tourists are culinary travellers and rate food 8.2/10 when choosing a destination (WFTA 2026) [P05-4].',
+    data: '<span class="ast">*</span>96% of leisure travellers seek unique culinary experiences (World Food Travel Association, Food Travel Monitor 2020) [P05-3].',
   },
   {
     name: 'Family',
@@ -160,21 +143,26 @@ export const GUESTS: Guest[] = [
 /* ---- sources footer ------------------------------------------------------- */
 
 export const SOURCES: { claim: string; src: string; vendor?: boolean }[] = [
-  { claim: 'Front-desk upsells 2–5%; pre-arrival offers 15–25%.', src: 'BookingWhizz [P15-1]', vendor: true },
-  { claim: '52% booking abandonment.', src: 'SiteMinder Changing Traveller Report 2025' },
-  { claim: '85–90% of guests eat elsewhere; dinner capture 10–15%.', src: 'CBRE Americas / Regulr [P05-2]' },
-  { claim: 'OTA commission 15–30% vs 4–5% direct.', src: 'Cloudbeds / Lighthouse [G-09]' },
-  { claim: 'Cancellations 10.6% direct vs 21.8% OTA (a channel fact, not a Welcome result).', src: 'Cloudbeds [P03-6]', vendor: true },
+  { claim: 'Average direct booking $519 vs $320 through an OTA.', src: 'SiteMinder Hotel Booking Trends 2025 [G-10]' },
+  { claim: '76% prefer to buy in their own language.', src: 'CSA Research, Can’t Read, Won’t Buy B2C, 2020 (8,709 consumers) [P04-1]' },
+  { claim: '65% of US hotels report staffing shortages; 71% report openings they cannot fill.', src: 'AHLA Front Desk Feedback, Feb 2025 (282 hoteliers) [G-18]' },
+  { claim: 'Only about one in eight hotel guests eats dinner at the hotel.', src: 'CBRE Hotels Americas, via Regulr [P05-2]' },
+  { claim: 'Hotel F&B departmental margin 29.1%, H1 2025 (2,669 US hotels).', src: 'CBRE Hotels Research 2025 [P05-1]' },
+  { claim: 'OTA commission 15–30% vs 4–5% direct.', src: 'Cloudbeds 2026 / Lighthouse via Hospitality Net [G-09]', vendor: true },
+  { claim: 'Cancellations 10.6% direct vs 21.8% OTA (a channel fact, not a Welcome result).', src: 'Cloudbeds via Prostay 2026 [P03-6]', vendor: true },
   { claim: 'Ancillary revenue is 18%+ of hotel income.', src: 'Cloudbeds [P15-3]', vendor: true },
-  { claim: '380% conversion lift on higher-priced items with reviews.', src: 'Spiegel Research Center [G-13]' },
-  { claim: '75% of tourists are culinary travellers; food rated 8.2/10.', src: 'World Food Travel Association 2026 [P05-4]' },
-  { claim: '$6.8T wellness economy, larger than global tourism.', src: 'Global Wellness Institute [P08-1]' },
+  { claim: 'One review-score point supports an 11.2% higher rate at the same occupancy.', src: 'Anderson, Cornell Center for Hospitality Research 2012 [G-15]' },
+  { claim: '96% of leisure travellers seek unique culinary experiences.', src: 'World Food Travel Association, Food Travel Monitor 2020 [P05-3]' },
+  { claim: '$6.8T global wellness economy, forecast to reach $9.8T.', src: 'Global Wellness Institute, Nov 2025 [P08-1]' },
   { claim: 'Wellness travellers spend more per trip.', src: 'Global Wellness Institute [P08-5]' },
-  { claim: 'Ideal therapist utilisation 50–75%.', src: 'Cornell / Horwath [P08-4]' },
-  { claim: '88% trust recommendations from people they know.', src: 'Nielsen 2021 [G-02]' },
-  { claim: '74% of affluent travellers book after watching activity video.', src: 'Travel Iowa video-marketing presentation' },
-  { claim: "Hotel listings with property video get 99% more clicks to the hotel's website.", src: 'TripAdvisor Business Advantage' },
-  { claim: '65% of US hotels report staffing shortages.', src: 'AHLA, Feb 2025' },
+  { claim: 'Resort and hotel spa departmental margin about 20–33%.', src: 'ISPA / PwC; PKF-CBRE; HVS [P08-3]' },
+  { claim: 'Ideal therapist utilisation 50–75%.', src: 'Kimes, Cornell Hospitality Quarterly 2009; Horwath HTL [P08-4]' },
+  { claim: '88% trust recommendations from people they know.', src: 'Nielsen Trust in Advertising 2021 [G-02]' },
+  { claim: "Hotel listings with property video get 99% more clicks to the hotel's website (correlational).", src: 'TripAdvisor Business Advantage [P01-2]' },
+  {
+    claim: '73% say creator or influencer recommendations have influenced their booking decisions.',
+    src: 'Expedia Group, 2025 Traveler Value Index (May 2025), https://secure.businesswire.com/news/home/20250520512943/en/ [G-05]',
+  },
 ];
 
 /* ---- the top of the page: the hero and the Wrong Way vs APEX Way section ---------
@@ -206,21 +194,9 @@ export const VSL = {
   poster: 'hq/screen-tall.jpg',
 };
 
-/**
- * One hero card: the figure in the time-label spot, then the title and the
- * line after it. The figure is split at its range so the dash can be drawn
- * short with a little room either side; `to` is how it reads aloud.
- */
-export type HeroCard = { fig: [string] | [string, string]; title: string; text: string | [string, string] };
-
-/** Gradient 1's headline lines and three cards (Aidan, 18 Oct), each card's line word for word on its two given lines. */
-export const HERO_G1: { lines: string[]; cards: HeroCard[] } = {
+/** Gradient 1's headline lines (Aidan, 18 Oct). The three stat cards under it are StatTicker. */
+export const HERO_G1: { lines: string[] } = {
   lines: ['This Is the Single', 'Largest Commercial', 'Leak on Your P&L.'],
-  cards: [
-    { fig: ['5%'], title: 'Status Quo', text: ['Front desk check-in upsells convert at just', '2% to 5% when guests arrive tired.'] },
-    { fig: ['25%'], title: 'APEX Conversion', text: ['Data Driven Mobile Cinema converts at', '15% to 25% during pre-arrival intent.'] },
-    { fig: ['5X'], title: 'Operational Freedom', text: ['Multiplies pre-arrival revenue by 5x', 'with ZERO staff labor or IT drag.'] },
-  ],
 };
 
 /* the Wrong Way vs APEX Way section (wrong-way-headings) */
@@ -274,9 +250,9 @@ export const APEX_WAY = {
   /** Bottom 1's pill, above the phone. */
   pill: 'The APEX Way',
   title: 'The APEX Way',
-  headline: 'Apex Welcome captures their spend commitment while excitement is at its absolute peak, locking in 5x more pre-arrival cash.',
+  headline: 'Apex Welcome reaches the guest while excitement is at its absolute peak, so dining, spa and upgrades are chosen before check-in.',
   /** Bottom 1's heading (Bottoms 2 and 3 keep the headline above). */
-  quote: 'Apex Welcome strikes at peak excitement, locking in 5x more pre-arrival spend before check-in.',
+  quote: 'Apex Welcome strikes at peak excitement, putting dining, spa and upgrades in front of the guest before check-in.',
   /**
    * One placeholder film from the Bento Expand set, to be swapped; it has a
    * sound track, for the unmute button. Safari takes the HEVC master; Chrome
@@ -295,37 +271,37 @@ export const APEX_WAY = {
     {
       num: '24',
       unit: 'Hours',
-      title: '380% Conversion Lift on High-Priced Inventory',
-      text: 'Spiegel Research Center proved that visual social proof lifts online conversions by 270% on average, jumping to 380% on higher-priced luxury suite upgrades.',
-      src: 'Spiegel / Northwestern, unverified',
+      title: '7 in 8 Guests Eat Dinner Elsewhere',
+      text: 'Only about one in eight hotel guests eats dinner at the hotel. Reaching them before they arrive is how the table gets booked before they look anywhere else.',
+      src: 'CBRE Hotels Americas, via Regulr [P05-2]',
     },
     {
       num: '48',
       unit: 'Hours',
-      title: '4x Higher Conversion via Digital Touchpoints',
-      text: 'Pre-arrival room upgrade offers delivered via personalized digital touchpoints generate 4x the conversion rate of generic confirmation email links or front-desk check-in pitches.',
-      src: 'Canary Technologies, unverified',
+      title: '73% Influenced by Creator Content',
+      text: '73% of travellers say creator or influencer recommendations have influenced their booking decisions. A personal film speaks that same language.',
+      src: 'Expedia Group, 2025 Traveler Value Index [G-05]',
     },
     {
       num: '7',
       unit: 'Days',
-      title: '60%+ Pre-Arrival Dining Decision Window',
-      text: 'Over 60% of luxury hotel guests select and book their dining experiences prior to arrival or within their first 2 hours on property; failing to engage guests pre-arrival guarantees leakage to off-site competitors.',
-      src: 'Cornell / OpenTable, unverified',
+      title: '76% Prefer Their Own Language',
+      text: '76% of consumers prefer to buy with information in their own language, and 40% will not buy from websites in other languages.',
+      src: 'CSA Research, 2020, 8,709 consumers [P04-1]',
     },
     {
       num: '48',
       unit: 'Hours',
-      title: '50% Lower Cancellation Rate',
-      text: 'Direct guests engaged pre-arrival cancel at just 10.6%, compared to 21.8% for OTA bookers, stabilizing cash flow weeks in advance.',
-      src: 'Cloudbeds, unverified',
+      title: 'Direct Bookings Cancel Less',
+      text: 'Direct bookings cancel at 10.6%, against 21.8% for OTA bookings. A channel fact, not an Apex result: the more of the relationship you hold directly, the steadier it is.',
+      src: 'Cloudbeds via Prostay 2026, vendor data [P03-6]',
     },
   ] as Row[],
 };
 
 /**
  * Bottom 1's order for Card B's rows (Bottoms 2 and 3 keep the order above):
- * the 4x row goes first at 24 hours and the 380% row second at 48 hours; each
+ * the creator-content row goes first at 24 hours and the dining row second at 48 hours; each
  * takes its title, text and source with it.
  */
 export const JOINED_ROWS: Row[] = [

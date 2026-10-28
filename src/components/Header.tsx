@@ -28,7 +28,10 @@ const sampleMenu: NavDropdown = {
   ],
 };
 
-const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), sampleMenu];
+/** Sample Pages taken out of the menu for now (Aidan, 28 Oct); set true to bring it back. The pages themselves stay up. */
+const SHOW_SAMPLES_MENU = false;
+
+const dropdowns = [...(nav.header.dropdowns as NavDropdown[]), ...(SHOW_SAMPLES_MENU ? [sampleMenu] : [])];
 const auth = nav.header.auth as { label: string; href: string; style: string }[];
 
 function Caret() {
@@ -154,7 +157,7 @@ export default function Header() {
   return (
     <>
       <div className="sales">
-        80% of travelers now watch a video before making a booking decision.
+        73% say creator or influencer recommendations have influenced their booking decisions. Expedia Group, 2025 Traveler Value Index
         <Link href="/library">See the trends</Link>
       </div>
 
