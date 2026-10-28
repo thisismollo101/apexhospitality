@@ -95,7 +95,7 @@
     {
       "slug": "welcome-mobile-v3",
       "label": "Welcome · Mobile v3",
-      "summary": "The Welcome page's Hero, Why, What 1 and What 2 for phones, each three ways on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A section index and an A/B/C switcher on top.",
+      "summary": "Every section of the Welcome page for phones, fifteen in all, each three ways on its own page: A · Grid (Formula 1), B · Billboard (Netflix and MasterClass), C · Glass (Revolut and Spotify). A scrolling section bar and an A/B/C switch on top.",
       "status": "live"
     }
   ]

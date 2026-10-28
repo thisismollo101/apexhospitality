@@ -100,12 +100,18 @@ export const Burger = ({ className = '' }: { className?: string }) => (
  */
 export function ReviewBar() {
   const path = usePathname() ?? '';
-  const m = path.match(/\/(hero|why|what1|what2)-([abc])$/);
+  const m = path.match(/\/([a-z0-9]+)-([abc])$/);
   const sec = m?.[1] ?? 'hero';
   const opt = m?.[2] ?? 'a';
+  const idx = useRef<HTMLElement>(null);
+  // keep the current section's tab in view in the scrolling row
+  useEffect(() => {
+    const on = idx.current?.querySelector<HTMLElement>('.is-on');
+    if (on && idx.current) idx.current.scrollLeft = on.offsetLeft - idx.current.clientWidth / 2 + on.clientWidth / 2;
+  }, [sec]);
   return (
     <header className="rv">
-      <nav className="rv__idx" aria-label="Sections">
+      <nav className="rv__idx" aria-label="Sections" ref={idx}>
         {SECTIONS.map((s) => {
           const on = s.key === sec;
           return (
@@ -205,4 +211,16 @@ export const Mark = ({ className = 'mark' }: { className?: string }) => (
     <polygon points="50,11 91,85 50,63" fill="currentColor" />
     <polygon points="9,85 91,85 50,63" fill="currentColor" opacity=".22" />
   </svg>
+);
+
+/** Text with each '*' set as the live page's blue source marker. */
+export const Ast = ({ t }: { t: string }) => (
+  <>
+    {t.split('*').map((part, i, all) => (
+      <span key={i}>
+        {part}
+        {i < all.length - 1 && <span className="ast">*</span>}
+      </span>
+    ))}
+  </>
 );

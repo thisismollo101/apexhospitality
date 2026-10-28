@@ -52,11 +52,23 @@ export const ALONGSIDE = {
 /* ---- review chrome: the section index and the option switcher ------------- */
 
 /** The four sections, each built three ways: /<key>-a, /<key>-b, /<key>-c. */
+/** Every section of the Welcome page, in page order; What 2 is the decision log's, after the four films. */
 export const SECTIONS = [
   { n: '01', key: 'hero', label: 'Hero' },
-  { n: '02', key: 'why', label: 'Why' },
-  { n: '03', key: 'what1', label: 'What 1' },
-  { n: '04', key: 'what2', label: 'What 2' },
+  { n: '02', key: 'wrongway', label: 'Wrong Way' },
+  { n: '03', key: 'why', label: 'Why' },
+  { n: '04', key: 'what1', label: 'Films' },
+  { n: '05', key: 'what2', label: 'Staff voice' },
+  { n: '06', key: 'stars', label: 'Stars' },
+  { n: '07', key: 'how', label: 'How' },
+  { n: '08', key: 'expect', label: 'Expect' },
+  { n: '09', key: 'who', label: 'Who' },
+  { n: '10', key: 'sub', label: 'Subtraction' },
+  { n: '11', key: 'whatif', label: 'What if' },
+  { n: '12', key: 'unlock', label: 'Unlock' },
+  { n: '13', key: 'events', label: 'Events' },
+  { n: '14', key: 'continuum', label: 'Continuum' },
+  { n: '15', key: 'sources', label: 'Sources' },
 ];
 
 export const OPTIONS = [
